@@ -7,10 +7,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* ==========================================================================
-   1. DESIGN TOKENS (LIGHT & DARK MODE)
+   1. DESIGN TOKENS (LIGHT MODE DEFAULT, EXPLICIT DARK MODE)
    ========================================================================== */
 
 :root,
+body,
 [data-bs-theme="light"] {
     --h5p-theme-background: transparent !important;
     --busola-bg-canvas: #F5F6FB;
@@ -27,10 +28,12 @@
     --busola-shadow-card: 0 1px 2px rgba(20, 27, 94, 0.06), 0 12px 32px rgba(20, 27, 94, 0.07);
 }
 
+/* Tryb ciemny TYLKO przy wyraźnym ustawieniu w Moodle (bez prefers-color-scheme z OS) */
 [data-bs-theme="dark"],
 body[data-bs-theme="dark"],
 html[data-bs-theme="dark"],
-body.moove-darkmode {
+body.moove-darkmode,
+html.moove-darkmode {
     --h5p-theme-background: transparent !important;
     --busola-bg-canvas: #0B0E2A;
     --busola-surface-card: #15193B;
@@ -44,24 +47,6 @@ body.moove-darkmode {
     --busola-accent-navy: #7A8AFF;
     --busola-progress-track: #2D3768;
     --busola-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root:not([data-bs-theme="light"]) {
-        --h5p-theme-background: transparent !important;
-        --busola-bg-canvas: #0B0E2A;
-        --busola-surface-card: #15193B;
-        --busola-surface-subtle: #1C224B;
-        --busola-surface-hover: #262D63;
-        --busola-surface-selected: #2B233D;
-        --busola-surface-border: #2D3768;
-        --busola-text-primary: #FFFFFF;
-        --busola-text-secondary: #94A3B8;
-        --busola-accent-orange: #FF7A1A;
-        --busola-accent-navy: #7A8AFF;
-        --busola-progress-track: #2D3768;
-        --busola-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
-    }
 }
 
 /* ==========================================================================
@@ -186,6 +171,7 @@ div.questionset.started > div,
 
 /* Treść pytania / Polecenie */
 .h5p-question-introduction,
+.h5p-question-introduction *,
 .h5p-question-introduction p,
 .h5p-sub-content h2,
 .h5p-question-content legend {
@@ -325,7 +311,10 @@ ul.h5p-answers li[aria-checked="true"],
 /* Styl tekstu wewnątrz odpowiedzi */
 .h5p-answer-label,
 .h5p-sc-label,
-.h5p-answer-text {
+.h5p-answer-text,
+.h5p-label,
+.h5p-alternative-container,
+.h5p-answer {
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
     font-size: 18px !important;
     font-weight: 600 !important;
