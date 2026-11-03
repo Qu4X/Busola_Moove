@@ -33,9 +33,21 @@ class theme_ebusola_mod_hvp_renderer extends \mod_hvp_renderer {
      * @param string $embedtype Possible values: div, iframe, external, editor
      */
     public function hvp_alter_styles(&$styles, $libraries, $embedtype) {
+        global $CFG;
+
         $theme = \theme_config::load('ebusola');
 
-        $content = $theme->settings->hvpcss;
+        // Built-in theme H5P styles.
+        $themeh5pfile = $CFG->dirroot . '/theme/ebusola/style/h5p.css';
+        if (file_exists($themeh5pfile)) {
+            $version = filemtime($themeh5pfile);
+            $styles[] = (object) [
+                'path' => (new \moodle_url('/theme/ebusola/style/h5p.css', ['v' => $version]))->out(false),
+                'version' => '',
+            ];
+        }
+
+        $content = $theme->settings->hvpcss ?? '';
 
         if (!empty($content)) {
             $styles[] = (object) [

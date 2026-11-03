@@ -1,0 +1,334 @@
+/**
+ * Busola Theme - H5P Activity Custom Styles
+ * Replicating temp/Test – desktop-html/Quiz.dc.html
+ * Supported content types: H5P.QuestionSet, H5P.MultiChoice, H5P.SingleChoiceSet, JoubelUI
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* ==========================================================================
+   1. GLOBAL & RESET DLA H5P
+   ========================================================================== */
+
+body,
+.h5p-content,
+.h5p-question-set {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+    color: #141B5E !important;
+    background: transparent !important;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Ukrycie domyślnych szarych ramek H5P */
+.h5p-frame {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+/* ==========================================================================
+   2. NAGŁÓWEK TESTU, TYTUŁ I LICZNIK (QUESTION SET)
+   ========================================================================== */
+
+/* Nagłówek i licznik pytań */
+.h5p-question-set-title,
+.h5p-question-title {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    font-size: 34px !important;
+    line-height: 1.1 !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
+    color: #141B5E !important;
+    margin-bottom: 8px !important;
+}
+
+.h5p-question-counter,
+.h5p-sc-question-counter {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #141B5E !important;
+    margin-bottom: 12px !important;
+}
+
+/* Pasek postępu (wysokość 8px, zaokrąglenie 4px) */
+.h5p-progressbar,
+.h5p-sc-progressbar {
+    height: 8px !important;
+    border-radius: 4px !important;
+    background: #DDE1F2 !important;
+    border: none !important;
+    overflow: hidden !important;
+    margin: 12px 0 24px 0 !important;
+    box-shadow: none !important;
+}
+
+.h5p-progressbar-fill,
+.h5p-sc-progressbar-fill {
+    height: 100% !important;
+    background: #FF7A1A !important;
+    border-radius: 4px !important;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* ==========================================================================
+   3. KARTA PYTANIA (BIAŁY KAFEL Z CIENIEM I ZAOKRĄGLENIEM 24px)
+   ========================================================================== */
+
+.h5p-question,
+.h5p-question-content,
+.h5p-question-set .h5p-question,
+.h5p-sub-content {
+    background: #FFFFFF !important;
+    border-radius: 24px !important;
+    padding: 36px !important;
+    box-shadow: 0 1px 2px rgba(20, 27, 94, 0.06), 0 12px 32px rgba(20, 27, 94, 0.07) !important;
+    border: none !important;
+    box-sizing: border-box !important;
+    margin-top: 16px !important;
+}
+
+@media (max-width: 600px) {
+    .h5p-question,
+    .h5p-question-content,
+    .h5p-sub-content {
+        padding: 20px !important;
+        border-radius: 16px !important;
+    }
+}
+
+/* Treść pytania / Polecenie */
+.h5p-question-introduction,
+.h5p-question-introduction p,
+.h5p-sub-content h2,
+.h5p-question-content legend {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    font-size: 24px !important;
+    line-height: 1.3 !important;
+    font-weight: 800 !important;
+    color: #141B5E !important;
+    letter-spacing: -0.01em !important;
+    margin: 0 0 24px 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+@media (max-width: 600px) {
+    .h5p-question-introduction,
+    .h5p-question-introduction p,
+    .h5p-sub-content h2 {
+        font-size: 20px !important;
+    }
+}
+
+/* ==========================================================================
+   4. ODPOWIEDZI (MULTI CHOICE & SINGLE CHOICE SET)
+   ========================================================================== */
+
+/* Kontener odpowiedzi */
+ul.h5p-answers,
+.h5p-sc-alternatives,
+.h5p-sc-set {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+    border: none !important;
+}
+
+/* Pojedynczy kafel odpowiedzi - stan domyślny */
+.h5p-answer,
+.h5p-sc-alternative,
+ul.h5p-answers li,
+.h5p-answers .h5p-answer-container {
+    display: flex !important;
+    align-items: center !important;
+    min-height: 60px !important;
+    box-sizing: border-box !important;
+    padding: 12px 20px !important;
+    border-radius: 16px !important;
+    background: #F5F6FB !important;
+    box-shadow: inset 0 0 0 2px transparent !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #141B5E !important;
+    cursor: pointer !important;
+    border: none !important;
+    margin: 0 !important;
+    transition: background 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+/* Kafel odpowiedzi - hover */
+.h5p-answer:hover,
+.h5p-sc-alternative:hover,
+ul.h5p-answers li:hover {
+    background: #F0F2FC !important;
+}
+
+/* Kafel odpowiedzi - zaznaczony (selected) */
+.h5p-answer.h5p-selected,
+.h5p-sc-selected,
+.h5p-sc-alternative[aria-checked="true"],
+ul.h5p-answers li[aria-checked="true"],
+.h5p-answer[aria-checked="true"] {
+    background: #FFF4EA !important;
+    box-shadow: inset 0 0 0 2px #FF7A1A !important;
+}
+
+/* Radio button i checkbox */
+.h5p-answer input[type="radio"],
+.h5p-answer input[type="checkbox"],
+.h5p-sc-alternative input {
+    accent-color: #FF7A1A !important;
+    width: 22px !important;
+    height: 22px !important;
+    margin: 0 16px 0 0 !important;
+    flex: 0 0 22px !important;
+    cursor: pointer !important;
+}
+
+/* Styl tekstu wewnątrz odpowiedzi */
+.h5p-answer-label,
+.h5p-sc-label,
+.h5p-answer-text {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #141B5E !important;
+    line-height: 1.4 !important;
+}
+
+/* Poprawna odpowiedź (po sprawdzeniu) */
+.h5p-answer.h5p-correct,
+.h5p-answer.h5p-is-correct,
+.h5p-sc-is-correct {
+    background: #E8F5E9 !important;
+    box-shadow: inset 0 0 0 2px #2E7D32 !important;
+    color: #1B5E20 !important;
+}
+
+/* Błędna odpowiedź (po sprawdzeniu) */
+.h5p-answer.h5p-wrong,
+.h5p-answer.h5p-is-wrong,
+.h5p-sc-is-wrong {
+    background: #FFEBEE !important;
+    box-shadow: inset 0 0 0 2px #C62828 !important;
+    color: #B71C1C !important;
+}
+
+/* ==========================================================================
+   5. PRZYCISKI AKCJI (JOUBEL UI)
+   ========================================================================== */
+
+.h5p-question-buttons,
+.h5p-sc-question-buttons {
+    margin-top: 28px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+/* Główny przycisk „Sprawdź” (pomarańczowy, 52px wysokości) */
+.h5p-question-check-answer,
+.h5p-question-buttons .h5p-joubelui-button,
+.joubel-simple-rounded-button {
+    height: 52px !important;
+    line-height: 52px !important;
+    padding: 0 32px !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    background: #FF7A1A !important;
+    color: #141B5E !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: opacity 0.15s ease, transform 0.15s ease !important;
+}
+
+.h5p-question-check-answer:hover,
+.joubel-simple-rounded-button:hover {
+    opacity: 0.9 !important;
+    background: #FF7A1A !important;
+}
+
+/* Przycisk przejścia do następnego pytania (Next) */
+.h5p-question-next,
+.h5p-next-button {
+    height: 52px !important;
+    line-height: 52px !important;
+    padding: 0 32px !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    background: #141B5E !important;
+    color: #FFFFFF !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    transition: opacity 0.15s ease !important;
+}
+
+.h5p-question-next:hover,
+.h5p-next-button:hover {
+    opacity: 0.9 !important;
+}
+
+/* Przyciski drugorzędne (Ponów, Pokaż rozwiązanie) */
+.h5p-question-try-again,
+.h5p-question-show-solution {
+    height: 52px !important;
+    line-height: 52px !important;
+    padding: 0 20px !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    background: transparent !important;
+    color: #5B6280 !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.h5p-question-try-again:hover,
+.h5p-question-show-solution:hover {
+    color: #141B5E !important;
+    background: #F0F2FC !important;
+}
+
+/* ==========================================================================
+   6. PODSUMOWANIE / WIDOK WYNIKÓW (SOLUTION VIEW)
+   ========================================================================== */
+
+.h5p-question-set-solution-view {
+    background: #FFFFFF !important;
+    border-radius: 24px !important;
+    padding: 36px !important;
+    box-shadow: 0 1px 2px rgba(20, 27, 94, 0.06), 0 12px 32px rgba(20, 27, 94, 0.07) !important;
+}
+
+.h5p-question-set-solution-view .h5p-score-bar {
+    background: #DDE1F2 !important;
+    border-radius: 8px !important;
+    height: 12px !important;
+    overflow: hidden !important;
+}
+
+.h5p-question-set-solution-view .h5p-score-bar-fill {
+    background: #FF7A1A !important;
+}

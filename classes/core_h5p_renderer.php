@@ -33,9 +33,21 @@ class theme_ebusola_core_h5p_renderer extends \core_h5p\output\renderer {
      * @param string $embedtype How the H5P is displayed.
      */
     public function h5p_alter_styles(&$styles, array $libraries, string $embedtype) {
+        global $CFG;
+
         $theme = \theme_config::load('ebusola');
 
-        $content = $theme->settings->hvpcss;
+        // Built-in theme H5P styles.
+        $themeh5pfile = $CFG->dirroot . '/theme/ebusola/style/h5p.css';
+        if (file_exists($themeh5pfile)) {
+            $version = filemtime($themeh5pfile);
+            $styles[] = (object) [
+                'path' => (new \moodle_url('/theme/ebusola/style/h5p.css', ['v' => $version]))->out(false),
+                'version' => '',
+            ];
+        }
+
+        $content = $theme->settings->hvpcss ?? '';
 
         if (!empty($content)) {
             $styles[] = (object) [
