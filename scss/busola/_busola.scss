@@ -286,6 +286,15 @@ body.has-busola-dashboard #page.drawers {
             background-color: var(--busola-accent-orange, #FF7A1A) !important;
             border-color: var(--busola-accent-orange, #FF7A1A) !important;
         }
+
+        .edit-switch-pencil {
+            color: var(--busola-text-secondary, #5B6280);
+            transition: color 0.2s ease;
+        }
+
+        .custom-control-input:checked ~ .custom-control-label .edit-switch-pencil {
+            color: var(--busola-accent-orange, #FF7A1A);
+        }
     }
 }
 
@@ -405,9 +414,11 @@ body#page-login-signup .login-layout-right-content {
 }
 
 .busola-hub-wrapper {
-    background-color: $busola-bg;
-    min-height: 100%;
-    padding-bottom: 20px;
+    background-color: var(--busola-bg-canvas);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: 0 !important;
 }
 
 /* Hero */
@@ -967,7 +978,10 @@ body#page-login-signup .login-layout-right-content {
 .busola-hub-wrapper {
     background: var(--busola-bg-canvas);
     color: var(--busola-text-secondary);
-    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: 0 !important;
     font-size: 16px;
     line-height: 1.5;
 }
@@ -975,10 +989,20 @@ body#page-login-signup .login-layout-right-content {
 .busola-main-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 16px 32px 72px;
+    padding: 16px 32px 0;
+    padding-bottom: 0 !important;
     display: flex;
     flex-direction: column;
+    flex: 1 0 auto;
     gap: 64px;
+}
+
+.busola-section-discover {
+    margin-bottom: 64px !important;
+}
+
+.footer-content-debugging:empty {
+    display: none !important;
 }
 
 /* Sekcja Hero */
