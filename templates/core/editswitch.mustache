@@ -17,26 +17,24 @@
 {{!
     @template core/editswitch
 
-    Native Moodle Boost/Moove edit mode toggle switch.
+    Site-wide Edit mode switch with reliable submit and perfect hitbox matching.
 }}
-<form action="{{{legacyseturl}}}" method="post" class="d-flex align-items-center editmode-switch-form m-0">
-    <div class="custom-control custom-switch d-flex align-items-center m-0">
-        <input type="checkbox" name="setmode" class="custom-control-input" id="{{elementid}}" {{#checked}}checked{{/checked}} data-context="{{{pagecontextid}}}" data-pageurl="{{{pageurl}}}">
-        <label class="custom-control-label mb-0 ms-1 cursor-pointer font-weight-bold" for="{{elementid}}">
-            <span class="d-none d-md-inline">{{#str}} editmode, core {{/str}}</span>
-        </label>
-    </div>
+<form action="{{{legacyseturl}}}" method="post" class="d-flex align-items-center editmode-switch-form m-0 ms-2" id="busola-editmode-form">
     <input type="hidden" name="sesskey" value="{{{sesskey}}}">
     <input type="hidden" name="pageurl" value="{{{pageurl}}}">
     <input type="hidden" name="context" value="{{{pagecontextid}}}">
-    <noscript>
-        <input type="submit" value="{{#str}}setmode, core{{/str}}">
-    </noscript>
+    <input type="hidden" name="setmode" id="busola-editmode-setmode-val" value="{{#checked}}0{{/checked}}{{^checked}}1{{/checked}}">
+
+    <div class="custom-control custom-switch d-inline-flex align-items-center mb-0 cursor-pointer" style="cursor: pointer;">
+        <input type="checkbox"
+            name="setmode_checkbox"
+            class="custom-control-input cursor-pointer"
+            id="{{elementid}}"
+            {{#checked}}checked{{/checked}}
+            onchange="document.getElementById('busola-editmode-setmode-val').value = this.checked ? '1' : '0'; document.getElementById('busola-editmode-form').submit();"
+        >
+        <label class="custom-control-label cursor-pointer mb-0 font-weight-bold" for="{{elementid}}" style="cursor: pointer; user-select: none;">
+            <span class="d-none d-lg-inline ms-1">{{#str}} editmode, core {{/str}}</span>
+        </label>
+    </div>
 </form>
-{{#js}}
-require(['core/edit_switch'], function(editSwitch) {
-    if (editSwitch && typeof editSwitch.init === 'function') {
-        editSwitch.init('{{elementid}}');
-    }
-});
-{{/js}}

@@ -254,9 +254,18 @@ body.has-busola-dashboard #page.drawers {
     .custom-switch {
         cursor: pointer;
         user-select: none;
+        padding-left: 2.25rem;
+        position: relative;
 
         .custom-control-input {
             cursor: pointer;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2.25rem;
+            height: 1.5rem;
+            z-index: 2;
+            opacity: 0;
         }
 
         .custom-control-label {
