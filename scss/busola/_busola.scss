@@ -1000,11 +1000,6 @@ section.busola-section-discover {
     margin-bottom: 0 !important;
 }
 
-.footer-content-debugging:empty,
-.footer-content-debugging:has(> .container-fluid:empty) {
-    display: none !important;
-}
-
 /* Sekcja Hero */
 .busola-hero {
     background: var(--busola-hero-bg);
