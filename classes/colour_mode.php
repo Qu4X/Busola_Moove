@@ -22,19 +22,28 @@ if (!class_exists('theme_boost\colour_mode')) {
         public const LIGHT = 'light';
         public const DARK = 'dark';
         public const AUTO = 'auto';
+
+        public static function get_modes(): array {
+            return [self::LIGHT, self::DARK, self::AUTO];
+        }
+
+        public static function is_valid_mode(?string $mode): bool {
+            return in_array($mode, self::get_modes(), true);
+        }
+
+        public static function get_current_mode(): string {
+            return self::LIGHT;
+        }
+
+        public static function get_cookie_attributes(): array {
+            return [];
+        }
     }
     class_alias('theme_ebusola\fallback_boost_colour_mode', 'theme_boost\colour_mode');
 }
 
 /**
  * Helper for the Boost light and dark colour modes.
- *
- * Boost renders the colour mode using the Bootstrap 5.3 colour modes API. The resolved mode is written to the
- * data-bs-theme attribute of the html tag, and the mode chosen by the user is written to data-colourmode so that
- * the "auto" mode can be resolved in the browser.
- *
- * The mode is stored as a user preference, and mirrored into a cookie of the same name so that a page which nobody
- * is logged in to can be rendered in it. The preference is authoritative whenever it can be read.
  *
  * @package    theme_ebusola
  * @copyright  2026 Willian Mano <willianmanoaraujo@gmail.com>
@@ -51,16 +60,9 @@ class colour_mode extends \theme_boost\colour_mode {
     /**
      * Whether users are allowed to switch between colour modes on this site.
      *
-     * Colour modes are an experimental feature which a site opts in to, so they are off until an admin turns them on.
-     * A Behat run started with --colourmode turns them on for the run, as the option exists in order to exercise the
-     * whole suite in one mode.
-     *
      * @return bool
      */
     public static function is_enabled(): bool {
-        // The output hooks that this method gates run on the installer's own pages, where there is no configuration to read yet:
-        // get_config() throws until the database has been installed, and that exception is how core detects that it
-        // still needs to be. Every other entry point to this class goes through here.
         if (during_initial_install()) {
             return false;
         }
@@ -79,8 +81,6 @@ class colour_mode extends \theme_boost\colour_mode {
     /**
      * Whether the current user can choose their own colour mode.
      *
-     * Guests and users who are not logged in cannot store user preferences, so they always get the site default.
-     *
      * @return bool
      */
     public static function can_choose_mode(): bool {
@@ -90,18 +90,9 @@ class colour_mode extends \theme_boost\colour_mode {
     /**
      * The colour mode used for users who have not chosen one.
      *
-     * A Behat run started with --colourmode takes precedence over the site setting, so that the whole suite can be
-     * exercised in one mode without every feature having to set a user preference. A preference set by a scenario
-     * still wins, so a feature can pin itself to the mode it is about.
-     *
-     * The setting defaults to light while colour modes are experimental, rather than following the device, so that
-     * turning them on does not move anybody into dark mode without them choosing it. See MDL-89379.
-     *
      * @return string One of the self::LIGHT, self::DARK or self::AUTO constants.
      */
     public static function get_site_default(): string {
-        // Reached through is_enabled() in every path there is today, so this only guards against a future caller
-        // reaching it directly on an installer page, where get_config() would throw.
         if (during_initial_install()) {
             return self::LIGHT;
         }
@@ -113,17 +104,12 @@ class colour_mode extends \theme_boost\colour_mode {
             }
         }
 
-        // Falls back to the same mode the setting defaults to, so that a site which has never saved the setting and a
-        // site which has saved something unusable are rendered the same way.
         $default = get_config('theme_ebusola', 'defaultcolourmode');
         return self::is_valid_mode($default) ? $default : self::LIGHT;
     }
 
     /**
      * Whether the colour mode features apply to the theme currently in use.
-     *
-     * The hook callbacks in this plugin are called whatever the current theme is, so they must check that Boost is
-     * actually involved in rendering the page.
      *
      * @return bool
      */
@@ -136,9 +122,6 @@ class colour_mode extends \theme_boost\colour_mode {
 
     /**
      * Render the navbar menu for switching between the colour modes.
-     *
-     * Nothing is rendered when colour modes are not turned on for the site, or for people who cannot store a user
-     * preference (guests and users who are not logged in), as they always get the site default.
      *
      * @param \renderer_base $output The renderer to render the menu with.
      * @return string HTML for the colour mode menu, or an empty string.
