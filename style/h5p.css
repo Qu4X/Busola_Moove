@@ -75,10 +75,9 @@ body,
    3. KARTA PYTANIA (BIAŁY KAFEL Z CIENIEM I ZAOKRĄGLENIEM 24px)
    ========================================================================== */
 
+/* Główny zewnętrzny kafel pytania */
 .h5p-question,
-.h5p-question-content,
-.h5p-question-set .h5p-question,
-.h5p-sub-content {
+.h5p-question-set .h5p-question {
     background: #FFFFFF !important;
     border-radius: 24px !important;
     padding: 36px !important;
@@ -88,10 +87,21 @@ body,
     margin-top: 16px !important;
 }
 
+/* Wewnętrzna treść pytania - usunięcie podwójnego tła, cienia i obramowania */
+.h5p-question-content,
+.h5p-question-content.h5p-radio,
+.h5p-sub-content {
+    background: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 @media (max-width: 600px) {
     .h5p-question,
-    .h5p-question-content,
-    .h5p-sub-content {
+    .h5p-question-set .h5p-question {
         padding: 20px !important;
         border-radius: 16px !important;
     }
