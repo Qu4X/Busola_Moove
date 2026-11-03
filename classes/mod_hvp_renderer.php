@@ -58,6 +58,26 @@ class theme_ebusola_mod_hvp_renderer extends \mod_hvp_renderer {
     }
 
     /**
+     * Add scripts when an HVP is displayed.
+     *
+     * @param array $scripts List of scripts that will be loaded
+     * @param array $libraries Array of libraries indexed by the library's machineName
+     * @param string $embedtype Possible values: div, iframe, external, editor
+     */
+    public function hvp_alter_scripts(&$scripts, $libraries, $embedtype) {
+        global $CFG;
+
+        $themeh5pjs = $CFG->dirroot . '/theme/ebusola/style/h5p_darkmode.js';
+        if (file_exists($themeh5pjs)) {
+            $version = filemtime($themeh5pjs);
+            $scripts[] = (object) [
+                'path' => (new \moodle_url('/theme/ebusola/style/h5p_darkmode.js', ['v' => $version]))->out(false),
+                'version' => '',
+            ];
+        }
+    }
+
+    /**
      * Get style URL when an H5P is displayed.
      *
      * @param string $content Content.
