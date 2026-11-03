@@ -73,6 +73,8 @@ $string['enablecolourmodes_desc'] = 'Allow people to switch the site between a l
 This feature is experimental. Plugins are only shown in the dark colour scheme if they take their colours from the theme, so pages of a plugin which has not been checked yet may be shown with light backgrounds, or with text which is hard to read against them.';
 $string['enablecourseindex'] = 'Enable course index';
 $string['enablecourseindex_desc'] = 'You can show/hide course index navigation';
+$string['examurl'] = 'Exam information link';
+$string['examurl_desc'] = 'Custom URL for the adult exams card button. If left empty, the theme will automatically search for an exam page or activity.';
 $string['enablewhatsappbutton'] = 'Enable WhatsApp floating button';
 $string['enablewhatsappbutton_desc'] = 'Show a floating WhatsApp contact button on every page, using the WhatsApp number configured above.';
 $string['facebook'] = 'Facebook URL';

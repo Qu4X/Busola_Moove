@@ -17,223 +17,75 @@ along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 {{!
     @template theme_ebusola/footer
 
-    Page footer.
-
-    Example context (json):
-    {
-        "output": {
-            "page_doc_link": "Help and documentation",
-            "supportemail": "<a href=\"#\">Contact site support</a>",
-            "has_popover_links": true,
-            "services_support": "Services and support",
-            "login_info": "You are logged in as cute kitten",
-            "moodle_release": "90210"
-        }
-    }
+    Stopka Szkoły Żeglarstwa Busola zgodna z mockupem projektu.
 }}
 
-<footer id="page-footer" class="footer-popover">
-    <div class="moove-container-fluid footer-columns">
-        <div class="row">
-            <div class="col-md-4 column-left">
-                {{#hasfootercontact}}
-                    <div class="contact">
-                        <h3 class="footer-title">{{#str}}contactus, theme_ebusola{{/str}}</h3>
-
-                        <ul>
-                            {{#website}}
-                                <li>
-                                    <a href="{{{website}}}" target="_blank" class="website btn btn-link">
-                                        <i class="fa fa-globe"></i>
-                                    </a>
-                                </li>
-                            {{/website}}
-                            {{#mobile}}
-                                <li>
-                                    <a href="tel:{{{mobile}}}" target="_blank" class="mobile btn btn-link">
-                                        <i class="fa fa-phone"></i>
-                                    </a>
-                                </li>
-                            {{/mobile}}
-                            {{#mail}}
-                                <li>
-                                    <a href="mailto:{{{mail}}}" target="_blank" class="mail btn btn-link">
-                                        <i class="fa fa-envelope"></i>
-                                    </a>
-                                </li>
-                            {{/mail}}
-                        </ul>
-                    </div>
-                {{/hasfootercontact}}
-
-                {{#hasfootersocial}}
-                    <div class="socialnetworks">
-                        <h3 class="footer-title">{{#str}}followus, theme_ebusola{{/str}}</h3>
-
-                        <ul class="mb-0">
-                            {{#tiktok}}
-                                <li>
-                                    <a href="{{{tiktok}}}" target="_blank" class="tiktok btn btn-link btn-rounded">
-                                        <i class="fab fa-tiktok"></i>
-                                    </a>
-                                </li>
-                            {{/tiktok}}
-
-                            {{#facebook}}
-                                <li>
-                                    <a href="{{{facebook}}}" target="_blank" class="facebook btn btn-link btn-rounded">
-                                        <i class="fa fa-facebook"></i>
-                                    </a>
-                                </li>
-                            {{/facebook}}
-
-                            {{#twitter}}
-                                <li>
-                                    <a href="{{{twitter}}}" target="_blank" class="twitter btn btn-link btn-rounded">
-                                        <i class="fa fa-twitter"></i>
-                                    </a>
-                                </li>
-                            {{/twitter}}
-
-                            {{#instagram}}
-                                <li>
-                                    <a href="{{{instagram}}}" target="_blank" class="instagram btn btn-link btn-rounded">
-                                        <i class="fa fa-instagram"></i>
-                                    </a>
-                                </li>
-                            {{/instagram}}
-
-                            {{#linkedin}}
-                                <li>
-                                    <a href="{{{linkedin}}}" target="_blank" class="linkedin btn btn-link btn-rounded">
-                                        <i class="fa fa-linkedin"></i>
-                                    </a>
-                                </li>
-                            {{/linkedin}}
-
-                            {{#pinterest}}
-                                <li>
-                                    <a href="{{{pinterest}}}" target="_blank" class="pinterest btn btn-link btn-rounded">
-                                        <i class="fa fa-pinterest"></i>
-                                    </a>
-                                </li>
-                            {{/pinterest}}
-
-                            {{#youtube}}
-                                <li>
-                                    <a href="{{{youtube}}}" target="_blank" class="youtube btn btn-link btn-rounded">
-                                        <i class="fa fa-youtube"></i>
-                                    </a>
-                                </li>
-                            {{/youtube}}
-
-                            {{#whatsapp}}
-                                <li>
-                                    <a href="https://api.whatsapp.com/send?phone={{{whatsapp}}}" target="_blank" class="whatsapp btn btn-link btn-rounded">
-                                    <i class="fa fa-whatsapp"></i>
-                                    </a>
-                                </li>
-                            {{/whatsapp}}
-
-                            {{#telegram}}
-                                <li>
-                                    <a href="{{{telegram}}}" target="_blank" class="telegram btn btn-link btn-rounded">
-                                        <i class="fa fa-telegram"></i>
-                                    </a>
-                                </li>
-                            {{/telegram}}
-                        </ul>
-                    </div>
-                {{/hasfootersocial}}
-            </div>
-            <div class="col-md-4 column-center">
-                {{# output.supportemail }}
-                    <div class="supportemail">{{{ output.supportemail }}}</div>
-                {{/ output.supportemail }}
-
-                {{{ output.login_info }}}
-
-                {{{ output.standard_footer_html }}}
-
-                <div class="tool_usertours-resettourcontainer"></div>
-            </div>
-            <div class="col-md-4 column-right">
-                {{#enablemobilewebservice}}
-                    {{#mobilesetuplink}}
-                        <a href="{{{mobilesetuplink}}}">{{#str}}getmoodleonyourmobile, tool_mobile{{/str}}</a>
-                    {{/mobilesetuplink}}
-                    {{^mobilesetuplink}}
-                        <h3 class="footer-title">{{#str}}getmoodleonyourmobile, tool_mobile{{/str}}</h3>
-                    {{/mobilesetuplink}}
-                    <div class="stores">
-                        {{#androidappid}}
-                            <a href="https://play.google.com/store/apps/details?id={{androidappid}}">
-                            <img src="{{config.wwwroot}}/theme/ebusola/pix/store_google.svg" alt="Play Store">
-                            </a>
-                        {{/androidappid}}
-                        {{#iosappid}}
-                            <a class="mt-1" href="https://apps.apple.com/app/id{{iosappid}}">
-                                <img src="{{config.wwwroot}}/theme/ebusola/pix/store_apple.svg" alt="App Store">
-                            </a>
-                        {{/iosappid}}
-                    </div>
-                {{/enablemobilewebservice}}
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-content-debugging footer-dark bg-dark text-light">
-        <div class="moove-container-fluid footer-dark-inner">
-            {{{ output.debug_footer_html }}}
-        </div>
-    </div>
-
-    <div data-region="footer-container-popover">
-        {{#output.has_communication_links}}
-            <button onclick="window.open('{{output.communication_url}}', '_blank', 'noreferrer')" class="btn btn-icon rounded-circle bg-primary text-white btn-footer-communication" aria-label="{{#str}}communicationroomlink, course{{/str}}">
-                {{#pix}}t/messages-o, core{{/pix}}
-            </button>
-        {{/output.has_communication_links}}
-        <button class="btn btn-icon rounded-circle bg-secondary btn-footer-popover" data-action="footer-popover" aria-label="{{#str}}showfooter, theme_boost{{/str}}">
-            {{#pix}}e/question, core{{/pix}}
-        </button>
-    </div>
-    <div class="footer-content-popover container" data-region="footer-content-popover">
-        {{# output.has_popover_links }}
-            <div class="footer-section p-3 border-bottom">
-                {{# output.page_doc_link }}
-                    <div>{{{ output.page_doc_link }}}</div>
-                {{/ output.page_doc_link }}
-
-                {{# output.services_support_link }}
-                    <div>{{{ output.services_support_link }}}</div>
-                {{/ output.services_support_link }}
-            </div>
-        {{/ output.has_popover_links }}
-        <div class="footer-section p-3">
-            <div>{{#str}}poweredbymoodle, core{{/str}}</div>
-            {{#output.moodle_release}}
-                <div>
-                    {{#str}}version, core{{/str}} {{{ output.moodle_release }}}
+<footer id="page-footer" style="background:#0F1547;color:#FFFFFF;margin-top:auto;border-top:none;">
+    <div style="max-width:1200px;margin:0 auto;padding:56px 32px 28px;box-sizing:border-box;">
+        <div style="display:flex;flex-wrap:wrap;gap:40px 56px;">
+            <div style="flex:1 1 260px;min-width:0;">
+                <div style="display:flex;flex-direction:column;line-height:1;">
+                    <span style="font-size:26px;font-weight:700;letter-spacing:.2em;color:#FFFFFF;">BUSOLA</span>
+                    <span style="font-size:10px;font-weight:700;letter-spacing:.42em;color:#FFB27A;margin-top:4px;">E-LEARNING</span>
                 </div>
-            {{/output.moodle_release}}
+                <p style="margin:16px 0 0;font-size:15px;color:#C9CFF2;max-width:280px;line-height:1.5;">Kursy żeglarskie i motorowodne online, w Twoim tempie.</p>
+            </div>
+
+            <div style="flex:0 1 180px;min-width:0;">
+                <div style="font-size:13px;font-weight:700;letter-spacing:.12em;color:#FFB27A;margin-bottom:12px;">DOKUMENTY</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <a href="https://kursybusola.pl" style="color:#FFFFFF;text-decoration:none;font-size:15px;">Regulamin</a>
+                    <a href="https://kursybusola.pl" style="color:#FFFFFF;text-decoration:none;font-size:15px;">Polityka prywatności</a>
+                    <a href="https://kursybusola.pl" style="color:#FFFFFF;text-decoration:none;font-size:15px;">RODO</a>
+                </div>
+            </div>
+
+            <div style="flex:0 1 180px;min-width:0;">
+                <div style="font-size:13px;font-weight:700;letter-spacing:.12em;color:#FFB27A;margin-bottom:12px;">KONTAKT</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <a href="{{#website}}{{{website}}}{{/website}}{{^website}}https://kursybusola.pl{{/website}}" target="_blank" rel="noopener noreferrer" style="color:#FFFFFF;text-decoration:none;font-size:15px;">Strona internetowa</a>
+                    <a href="mailto:{{#mail}}{{{mail}}}{{/mail}}{{^mail}}kontakt@kursybusola.pl{{/mail}}" style="color:#FFFFFF;text-decoration:none;font-size:15px;">Napisz do nas</a>
+                    {{#mobile}}
+                        <a href="tel:{{{mobile}}}" style="color:#FFFFFF;text-decoration:none;font-size:15px;">{{{mobile}}}</a>
+                    {{/mobile}}
+                </div>
+            </div>
+
+            <div style="flex:0 1 200px;min-width:0;">
+                <div style="font-size:13px;font-weight:700;letter-spacing:.12em;color:#FFB27A;margin-bottom:12px;">OBSERWUJ NAS</div>
+                <div style="display:flex;gap:10px;align-items:center;">
+                    <a href="{{#tiktok}}{{{tiktok}}}{{/tiktok}}{{^tiktok}}https://www.tiktok.com/@kursybusola{{/tiktok}}" target="_blank" rel="noopener noreferrer" aria-label="TikTok" style="width:44px;height:44px;border-radius:22px;border:1.5px solid rgba(255,255,255,.4);display:inline-flex;align-items:center;justify-content:center;color:#FFFFFF;text-decoration:none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v11.5a3.5 3.5 0 1 1-3.5-3.5"></path><path d="M12 3c.4 2.6 2.2 4.2 4.8 4.4"></path></svg>
+                    </a>
+                    <a href="{{#facebook}}{{{facebook}}}{{/facebook}}{{^facebook}}https://www.facebook.com/kursybusola{{/facebook}}" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style="width:44px;height:44px;border-radius:22px;border:1.5px solid rgba(255,255,255,.4);display:inline-flex;align-items:center;justify-content:center;color:#FFFFFF;text-decoration:none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h2.5V4.5H14A4 4 0 0 0 10 8.5V11H7.5v3.5H10V21h3.5v-6.5h2.6l.6-3.5h-3.2V9c0-.6.4-1 1-1z"></path></svg>
+                    </a>
+                    <a href="{{#instagram}}{{{instagram}}}{{/instagram}}{{^instagram}}https://www.instagram.com/kursybusola{{/instagram}}" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="width:44px;height:44px;border-radius:22px;border:1.5px solid rgba(255,255,255,.4);display:inline-flex;align-items:center;justify-content:center;color:#FFFFFF;text-decoration:none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"></rect><circle cx="12" cy="12" r="3.6"></circle><path d="M16.8 7.2h.01"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,.16);font-size:13px;color:#B7BEE6;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+            <div>Wspierane przez <a href="https://moodle.org" target="_blank" rel="noopener noreferrer" style="color:#FFFFFF;text-decoration:underline;">Moodle</a></div>
+            <div style="color:#B7BEE6;font-size:12px;">Szkoła Żeglarstwa Busola &copy; 2026</div>
         </div>
     </div>
 
-    <div class="copyright">
-        <div class="madeby">
-            <p>{{#str}}themedevelopedby, theme_ebusola{{/str}}</p>
-            <a href="https://conecti.me">
-                <img src="{{config.wwwroot}}/theme/ebusola/pix/logo_conectime.svg" alt="Conecti.me" style="height: 40px;">
-            </a>
+    {{#output.debug_footer_html}}
+        <div class="footer-content-debugging footer-dark bg-dark text-light p-3">
+            <div class="container-fluid">
+                {{{ output.debug_footer_html }}}
+            </div>
         </div>
+    {{/output.debug_footer_html}}
+
+    <div class="d-none">
+        {{{ output.standard_footer_html }}}
+        {{{ output.login_info }}}
+        <div class="tool_usertours-resettourcontainer"></div>
     </div>
 </footer>
 
 {{{ output.standard_end_of_body_html }}}
-
-{{#js}}
-    require(['theme_boost/footer-popover'], function(FooterPopover) {
-    FooterPopover.init();
-    });
-{{/js}}

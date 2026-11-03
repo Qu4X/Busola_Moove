@@ -102,7 +102,7 @@
             {{/closebuttonicon}}
         {{/ theme_boost/drawer}}
     {{/hasblocks}}
-    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#is_busola_dashboard}}has-busola-dashboard p-0{{/is_busola_dashboard}} {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container" {{#is_busola_dashboard}}style="padding-left:0 !important; padding-right:0 !important; max-width:100% !important;"{{/is_busola_dashboard}}>
 
         {{#is_busola_dashboard}}
             {{> theme_ebusola/ebusola/busola_dashboard }}

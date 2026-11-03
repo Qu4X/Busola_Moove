@@ -159,6 +159,13 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $page->add($setting);
 
+    // Exam info URL setting.
+    $name = 'theme_ebusola/examurl';
+    $title = get_string('examurl', 'theme_ebusola');
+    $description = get_string('examurl_desc', 'theme_ebusola');
+    $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_RAW_TRIMMED);
+    $page->add($setting);
+
     // Must add the page after definiting all the settings!
     $settings->add($page);
 

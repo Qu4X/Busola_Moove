@@ -82,6 +82,31 @@ body {
 
 #page {
     flex: 1;
+
+    &.has-busola-dashboard,
+    &.drawers.has-busola-dashboard {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+body.has-busola-dashboard #page,
+body.has-busola-dashboard #page.drawers {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+#page-footer {
+    background-color: #0F1547 !important;
+    color: #FFFFFF !important;
+    border-top: none !important;
+
+    .copyright {
+        display: none !important;
+    }
 }
 
 /* --------------------------------------------------------------------------

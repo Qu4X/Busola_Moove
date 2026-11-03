@@ -159,7 +159,7 @@ class busola {
             'homeurl' => (new moodle_url('/'))->out(false),
             'messagesurl' => (new moodle_url('/message/index.php'))->out(false),
             'profileurl' => (new moodle_url('/user/profile.php', ['id' => $USER->id]))->out(false),
-            'examurl' => 'https://kursybusola.pl',
+            'examurl' => self::resolve_exam_url(),
             'discover' => $discover,
         ];
     }
@@ -320,5 +320,74 @@ class busola {
      */
     private static function pluralize_inprogress(int $count): string {
         return $count . ' w trakcie';
+    }
+
+    /**
+     * Resolve exam information URL dynamically.
+     *
+     * @return string
+     */
+    public static function resolve_exam_url(): string {
+        global $DB;
+
+        $custom = get_config('theme_ebusola', 'examurl');
+        if (!empty($custom)) {
+            return $custom;
+        }
+
+        try {
+            // First look on the front page course (SITEID).
+            $sql = "
+                SELECT cm.id, m.name AS modname
+                FROM {course_modules} cm
+                JOIN {modules} m ON m.id = cm.module
+                WHERE cm.course = :siteid AND cm.visible = 1
+                  AND (
+                      (m.name = 'page' AND cm.instance IN (SELECT p.id FROM {page} p WHERE LOWER(p.name) LIKE '%egzamin%' OR LOWER(p.name) LIKE '%informacj%'))
+                      OR (m.name = 'resource' AND cm.instance IN (SELECT r.id FROM {resource} r WHERE LOWER(r.name) LIKE '%egzamin%' OR LOWER(r.name) LIKE '%informacj%'))
+                      OR (m.name = 'url' AND cm.instance IN (SELECT u.id FROM {url} u WHERE LOWER(u.name) LIKE '%egzamin%' OR LOWER(u.name) LIKE '%informacj%'))
+                  )
+                ORDER BY cm.id ASC
+            ";
+            $rec = $DB->get_record_sql($sql, ['siteid' => SITEID], IGNORE_MULTIPLE);
+            if ($rec) {
+                return (new \moodle_url('/mod/' . $rec->modname . '/view.php', ['id' => $rec->id]))->out(false);
+            }
+
+            // Next check any course activity matching "egzamin".
+            $sqlany = "
+                SELECT cm.id, m.name AS modname
+                FROM {course_modules} cm
+                JOIN {modules} m ON m.id = cm.module
+                WHERE cm.visible = 1
+                  AND (
+                      (m.name = 'page' AND cm.instance IN (SELECT p.id FROM {page} p WHERE LOWER(p.name) LIKE '%egzamin%'))
+                      OR (m.name = 'resource' AND cm.instance IN (SELECT r.id FROM {resource} r WHERE LOWER(r.name) LIKE '%egzamin%'))
+                      OR (m.name = 'url' AND cm.instance IN (SELECT u.id FROM {url} u WHERE LOWER(u.name) LIKE '%egzamin%'))
+                  )
+                ORDER BY cm.id ASC
+            ";
+            $recany = $DB->get_record_sql($sqlany, [], IGNORE_MULTIPLE);
+            if ($recany) {
+                return (new \moodle_url('/mod/' . $recany->modname . '/view.php', ['id' => $recany->id]))->out(false);
+            }
+
+            // Fallback: any visible page on SITEID.
+            $sqlpage = "
+                SELECT cm.id, m.name AS modname
+                FROM {course_modules} cm
+                JOIN {modules} m ON m.id = cm.module
+                WHERE cm.course = :siteid AND cm.visible = 1 AND m.name = 'page'
+                ORDER BY cm.id ASC
+            ";
+            $recpage = $DB->get_record_sql($sqlpage, ['siteid' => SITEID], IGNORE_MULTIPLE);
+            if ($recpage) {
+                return (new \moodle_url('/mod/page/view.php', ['id' => $recpage->id]))->out(false);
+            }
+        } catch (\Exception $e) {
+            // Keep fallback below.
+        }
+
+        return (new \moodle_url('/course/view.php', ['id' => SITEID]))->out(false);
     }
 }
