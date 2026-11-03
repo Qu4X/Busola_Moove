@@ -801,9 +801,10 @@ html body button.h5p-theme-button.h5p-theme-primary-cta:hover {
     background: var(--busola-accent-orange) !important;
 }
 
-/* Ikona wewnątrz przycisku nachodzi na tekst - ukrycie */
-html body button.h5p-theme-button::before,
-html body button.h5p-theme-button::after {
+/* Ikona wewnątrz przycisku „Sprawdź” nachodzi na tekst - ukrycie tylko tam.
+   Inne przyciski (Ponów, Pokaż rozwiązanie) bywają same ikoną - nie ruszamy ich. */
+html body button.h5p-theme-button.h5p-theme-check::before,
+html body button.h5p-theme-button.h5p-theme-check::after {
     display: none !important;
     content: none !important;
 }
@@ -882,4 +883,34 @@ html body .h5p-question-feedback {
     background: transparent !important;
     order: -1;
     flex-basis: 100%;
+}
+
+/* Pas pod odpowiedziami (wynik + przyciski) - bez własnego tła, w obu trybach */
+html body .h5p-question-buttons,
+html body .h5p-question-feedback-container,
+html body .h5p-question-scorebar-container,
+html body .h5p-question .h5p-question-feedback {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Przyciski drugorzędne (Ponów, Pokaż rozwiązanie): widoczna obwódka i ikona w kolorze tekstu */
+html body .h5p-question-buttons button.h5p-theme-button:not(.h5p-theme-check):not([class*="next"]):not([class*="prev"]) {
+    min-width: 52px !important;
+    height: 52px !important;
+    border-radius: 14px !important;
+    background: var(--busola-surface-card) !important;
+    color: var(--busola-text-primary) !important;
+    box-shadow: inset 0 0 0 2px var(--busola-surface-border) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+html body .h5p-question-buttons button.h5p-theme-button:not(.h5p-theme-check)::before {
+    color: var(--busola-text-primary) !important;
+}
+
+html body .h5p-question-buttons button.h5p-theme-button:not(.h5p-theme-check):hover {
+    background: var(--busola-surface-hover) !important;
 }
