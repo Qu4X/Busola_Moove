@@ -125,6 +125,7 @@ $templatecontext = [
     'overflow' => $overflow,
     'headercontent' => $headercontent,
     'addblockbutton' => $addblockbutton,
+    'user_is_editing' => $PAGE->user_is_editing(),
 ];
 
 $themesettings = new \theme_ebusola\util\settings();

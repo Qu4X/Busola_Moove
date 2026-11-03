@@ -125,6 +125,9 @@
                     </div>
                 </div>
             {{/hasblocks}}
+            <div class="{{^user_is_editing}}d-none{{/user_is_editing}}{{#user_is_editing}}container py-4{{/user_is_editing}}">
+                {{{ output.main_content }}}
+            </div>
         {{/is_busola_dashboard}}
 
         {{^is_busola_dashboard}}
