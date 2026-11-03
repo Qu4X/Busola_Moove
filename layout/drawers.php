@@ -131,4 +131,13 @@ $themesettings = new \theme_ebusola\util\settings();
 
 $templatecontext = array_merge($templatecontext, $themesettings->footer());
 
+$isdashboard = ($PAGE->pagetype === 'my-index' || $PAGE->pagetype === 'site-index');
+if ($isdashboard && isloggedin() && !isguestuser()) {
+    $busoladata = \theme_ebusola\util\busola::get_dashboard_context();
+    if ($busoladata) {
+        $templatecontext['is_busola_dashboard'] = true;
+        $templatecontext['busola_hub'] = $busoladata;
+    }
+}
+
 echo $OUTPUT->render_from_template('theme_ebusola/drawers', $templatecontext);

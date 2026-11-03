@@ -1,0 +1,80 @@
+{{!
+    Sekcja Moje Kursy - kafelki z pastelowymi tłami, postępem, ikonami kursów i statusami.
+}}
+<section class="busola-section" aria-labelledby="h-moje">
+    <div class="busola-section-header">
+        <h2 id="h-moje" class="busola-section-title">Moje kursy</h2>
+        <a href="{{allcoursesurl}}" class="busola-section-link">
+            Wszystkie kursy
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        </a>
+    </div>
+
+    {{#hascourses}}
+    <div class="busola-cards-grid">
+        {{#courses}}
+        <a href="{{url}}" class="bcard busola-course-card" style="text-decoration:none;">
+            <div class="busola-card-media" style="background-color: {{bgcolor}};">
+                <span class="busola-card-badge">{{categoryname}}</span>
+                {{#hascustomicon}}
+                    <img src="{{iconurl}}" alt="{{fullname}}" class="busola-card-icon-img" />
+                {{/hascustomicon}}
+                {{^hascustomicon}}
+                    <svg viewBox="0 0 160 100" width="160" height="100" aria-hidden="true" class="busola-card-icon-svg">
+                        <rect x="24" y="48" width="12" height="22" rx="3" fill="#FF7A1A" stroke="#141B5E" stroke-width="2.5"></rect>
+                        <path d="M32 62 H132 L120 80 H48 Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                        <path d="M66 62 L80 42 H104 L112 62" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                    </svg>
+                {{/hascustomicon}}
+            </div>
+            <div class="busola-card-body">
+                <div class="busola-card-title">{{fullname}}</div>
+                <div class="busola-card-desc">
+                    {{#iscompleted}}Kurs ukończony (100%){{/iscompleted}}
+                    {{#isinprogress}}{{progress}}% ukończono{{/isinprogress}}
+                    {{#isnotstarted}}Jeszcze nie zacząłeś{{/isnotstarted}}
+                </div>
+                <div class="busola-card-footer mt-auto">
+                    {{#iscompleted}}
+                        <div class="busola-progress-container mb-2">
+                            <div class="busola-progress-track">
+                                <div class="busola-progress-fill" style="width: 100%; background-color: #141B5E;"></div>
+                            </div>
+                        </div>
+                        <span class="busola-status-completed">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+                            Ukończony
+                        </span>
+                    {{/iscompleted}}
+                    {{#isinprogress}}
+                        <div class="busola-progress-container mb-2">
+                            <div class="busola-progress-track">
+                                <div class="busola-progress-fill" style="width: {{progress}}%; background-color: #FF7A1A;"></div>
+                            </div>
+                            <span class="busola-progress-val">{{progress}}%</span>
+                        </div>
+                        <span class="busola-card-action">
+                            Kontynuuj kurs
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                        </span>
+                    {{/isinprogress}}
+                    {{#isnotstarted}}
+                        <span class="busola-card-action mt-2">
+                            Rozpocznij kurs
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                        </span>
+                    {{/isnotstarted}}
+                </div>
+            </div>
+        </a>
+        {{/courses}}
+    </div>
+    {{/hascourses}}
+
+    {{^hascourses}}
+    <div class="busola-empty-state">
+        <p>Nie jesteś jeszcze zapisany na żaden kurs.</p>
+        <a href="{{allcoursesurl}}" class="busola-btn-primary">Przeglądaj ofertę kursów</a>
+    </div>
+    {{/hascourses}}
+</section>

@@ -1,0 +1,75 @@
+{{!
+    Sekcja Hero - powitanie kursanta, radar w tle, karta "Kontynuuj" i fala przejścia.
+}}
+<section class="busola-hero" aria-label="Sekcja powitalna">
+    <svg class="busola-hero-radar" viewBox="0 0 400 400" width="560" height="560" aria-hidden="true" fill="none" stroke="#FFFFFF" stroke-width="1.5">
+        <circle cx="200" cy="200" r="190"></circle>
+        <circle cx="200" cy="200" r="140"></circle>
+        <circle cx="200" cy="200" r="90"></circle>
+        <path d="M200 0V400M0 200H400M59 59L341 341M341 59L59 341"></path>
+    </svg>
+    <div class="busola-hero-inner">
+        <div class="busola-hero-welcome">
+            <h1 class="busola-hero-title">Ahoj, {{firstname}}!</h1>
+            {{#haslastcourse}}
+                <p class="busola-hero-subtitle">Ostatnio uczyłeś się kursu <strong>{{lastcourse.fullname}}</strong>. Wracasz dokładnie tam, gdzie skończyłeś.</p>
+            {{/haslastcourse}}
+            {{^haslastcourse}}
+                <p class="busola-hero-subtitle">Witaj w platformie e-learningowej Szkoły Żeglarstwa Busola. Wybierz kurs i zacznij naukę.</p>
+            {{/haslastcourse}}
+            <div class="busola-hero-badges">
+                {{#totalcourses}}
+                    <span class="busola-pill-badge">{{totalcourses_label}}</span>
+                {{/totalcourses}}
+                {{#completedcount}}
+                    <span class="busola-pill-badge">{{completed_label}}</span>
+                {{/completedcount}}
+                {{#inprogresscount}}
+                    <span class="busola-pill-badge">{{inprogress_label}}</span>
+                {{/inprogresscount}}
+            </div>
+        </div>
+
+        {{#haslastcourse}}
+        <a href="{{lastcourse.url}}" class="bcard busola-continue-card" style="text-decoration:none;">
+            <div class="busola-continue-img-wrap" style="background-color: {{lastcourse.bgcolor}};">
+                {{#lastcourse.hascustomicon}}
+                    <img src="{{lastcourse.iconurl}}" alt="{{lastcourse.fullname}}" class="busola-course-img" />
+                {{/lastcourse.hascustomicon}}
+                {{^lastcourse.hascustomicon}}
+                    <svg viewBox="0 0 160 100" width="140" height="88" aria-hidden="true">
+                        <rect x="24" y="48" width="12" height="22" rx="3" fill="#FF7A1A" stroke="#141B5E" stroke-width="2.5"></rect>
+                        <path d="M32 62 H132 L120 80 H48 Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                        <path d="M66 62 L80 42 H104 L112 62" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                        <path d="M14 93 q8 -7 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path>
+                    </svg>
+                {{/lastcourse.hascustomicon}}
+            </div>
+            <div class="busola-continue-content">
+                <span class="busola-continue-label">KONTYNUUJ</span>
+                <span class="busola-continue-title">{{lastcourse.fullname}}</span>
+                <span class="busola-continue-status">
+                    {{#lastcourse.iscompleted}}Kurs ukończony (100%){{/lastcourse.iscompleted}}
+                    {{#lastcourse.isinprogress}}Postęp: {{lastcourse.progress}}% ukończono{{/lastcourse.isinprogress}}
+                    {{#lastcourse.isnotstarted}}Kurs nie rozpoczęty{{/lastcourse.isnotstarted}}
+                </span>
+                <div class="busola-progress-container mt-2">
+                    <div class="busola-progress-track">
+                        <div class="busola-progress-fill" style="width: {{lastcourse.progress}}%; background-color: {{lastcourse.progress_color}};"></div>
+                    </div>
+                    <span class="busola-progress-val">{{lastcourse.progress}}%</span>
+                </div>
+                <span class="busola-btn-primary mt-3">
+                    Wróć do nauki
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                </span>
+            </div>
+        </a>
+        {{/haslastcourse}}
+    </div>
+
+    <!-- Falowana krzywa przejścia na dole sekcji hero -->
+    <svg class="busola-hero-wave" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 48V26C220 4 440 4 720 26S1200 50 1440 22V48Z" fill="#F5F6FB"></path>
+    </svg>
+</section>

@@ -1,0 +1,29 @@
+{{!
+    Dolna belka nawigacyjna na urządzeniach mobilnych (< 768px).
+}}
+<nav class="busola-bottom-nav d-flex d-md-none" aria-label="Nawigacja mobilna">
+    <a href="{{homeurl}}" class="busola-bottom-nav-item active">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span>Start</span>
+    </a>
+    <a href="{{allcoursesurl}}" class="busola-bottom-nav-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        <span>Kursy</span>
+    </a>
+    <a href="{{messagesurl}}" class="busola-bottom-nav-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>Wiadomości</span>
+    </a>
+    <a href="{{profileurl}}" class="busola-bottom-nav-item">
+        <span class="busola-avatar-pill">{{initials}}</span>
+        <span>Profil</span>
+    </a>
+</nav>

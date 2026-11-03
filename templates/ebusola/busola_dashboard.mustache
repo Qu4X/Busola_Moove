@@ -1,0 +1,18 @@
+{{!
+    Główny komponent Busola Dashboard (Hero + Moje Kursy + Egzaminy + Odkryj + Nawigacja mobilna).
+}}
+<div class="busola-hub-wrapper">
+    {{#busola_hub}}
+        {{> theme_ebusola/ebusola/busola_hero }}
+
+        <main class="busola-main-container">
+            {{> theme_ebusola/ebusola/busola_mycourses }}
+
+            {{> theme_ebusola/ebusola/busola_exams }}
+
+            {{> theme_ebusola/ebusola/busola_discover }}
+        </main>
+
+        {{> theme_ebusola/ebusola/busola_bottom_nav }}
+    {{/busola_hub}}
+</div>

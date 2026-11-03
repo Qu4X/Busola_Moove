@@ -104,6 +104,30 @@
     {{/hasblocks}}
     <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
 
+        {{#is_busola_dashboard}}
+            {{> theme_ebusola/ebusola/busola_dashboard }}
+            {{#hasblocks}}
+                <div class="drawer-toggles d-flex px-3 pt-2">
+                    <div class="drawer-toggler drawer-right-toggle ms-auto d-print-none">
+                        <button
+                            class="btn icon-no-margin"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_boost-drawers-blocks"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="{{#str}}opendrawerblocks, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
+                            <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, theme_ebusola {{/pix}}</span>
+                            <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, theme_ebusola {{/pix}}</span>
+                        </button>
+                    </div>
+                </div>
+            {{/hasblocks}}
+        {{/is_busola_dashboard}}
+
+        {{^is_busola_dashboard}}
         {{{ output.full_header }}}
 
         <div id="topofscroll" class="main-inner">
@@ -175,6 +199,7 @@
                 </div>
             </div>
         </div>
+        {{/is_busola_dashboard}}
     </div>
     {{> theme_ebusola/footer }}
     {{> theme_ebusola/whatsapp_button }}

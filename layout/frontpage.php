@@ -125,6 +125,12 @@ if (!isloggedin()) {
     $templatecontext = array_merge($templatecontext, $themesettings->frontpage());
 
     $template = 'theme_ebusola/frontpage';
+} else if (!isguestuser()) {
+    $busoladata = \theme_ebusola\util\busola::get_dashboard_context();
+    if ($busoladata) {
+        $templatecontext['is_busola_dashboard'] = true;
+        $templatecontext['busola_hub'] = $busoladata;
+    }
 }
 
 echo $OUTPUT->render_from_template($template, $templatecontext);
