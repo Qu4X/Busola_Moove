@@ -222,7 +222,13 @@ function theme_ebusola_serve_hvp_css($filename, $theme) {
     $themename = $theme->name;
 
     $settings = new \theme_ebusola\util\settings();
-    $content = $settings->hvpcss;
+    $content = $settings->hvpcss ?? '';
+
+    // Automatically prepend theme H5P styles from style/h5p.css.
+    $themeh5pfile = $CFG->dirroot . '/theme/ebusola/style/h5p.css';
+    if (file_exists($themeh5pfile)) {
+        $content = file_get_contents($themeh5pfile) . "\n" . $content;
+    }
 
     $md5content = md5($content);
     $md5stored = get_config('theme_ebusola', 'hvpccssmd5');

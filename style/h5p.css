@@ -272,8 +272,8 @@ html body .h5p-question:not(.question-container .h5p-question) {
     border: none !important;
     box-sizing: border-box !important;
     width: 100% !important;
-    margin-top: 24px !important;
-    margin-bottom: 24px !important;
+    max-width: 800px !important;
+    margin: 24px auto !important;
     position: relative !important;
 }
 
