@@ -125,9 +125,31 @@
                     </div>
                 </div>
             {{/hasblocks}}
-            <div class="{{^user_is_editing}}d-none{{/user_is_editing}}{{#user_is_editing}}container py-4{{/user_is_editing}}">
-                {{{ output.main_content }}}
-            </div>
+            {{#user_is_editing}}
+                <div class="busola-editing-zone container my-5 p-4" style="background:#FFFFFF;border:2px dashed #CBD1F3;border-radius:20px;box-shadow:0 8px 32px rgba(20,27,94,.08);">
+                    <div class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom">
+                        <div class="d-flex align-items-center gap-2">
+                            <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:#FFE8D4;color:#B93C00;">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </span>
+                            <div>
+                                <h3 style="margin:0;font-size:20px;font-weight:800;color:#141B5E;">Zarządzanie stroną główną</h3>
+                                <p style="margin:0;font-size:13px;color:#5B6280;">Sekcja widoczna dla administratorów w trybie edycji (dodawanie i konfiguracja modułów).</p>
+                            </div>
+                        </div>
+                        <span class="badge bg-primary text-white px-3 py-2" style="font-size:13px;border-radius:999px;">Tryb edycji aktywny</span>
+                    </div>
+
+                    <div class="busola-editing-content">
+                        {{{ output.main_content }}}
+                    </div>
+                </div>
+            {{/user_is_editing}}
+            {{^user_is_editing}}
+                <div class="d-none">
+                    {{{ output.main_content }}}
+                </div>
+            {{/user_is_editing}}
         {{/is_busola_dashboard}}
 
         {{^is_busola_dashboard}}
@@ -203,11 +225,10 @@
             </div>
         </div>
         {{/is_busola_dashboard}}
+        {{{ output.standard_after_main_region_html }}}
     </div>
     {{> theme_ebusola/footer }}
     {{> theme_ebusola/whatsapp_button }}
-
-    {{{ output.standard_after_main_region_html }}}
 </div>
 
 </body>

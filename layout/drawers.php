@@ -132,7 +132,8 @@ $themesettings = new \theme_ebusola\util\settings();
 
 $templatecontext = array_merge($templatecontext, $themesettings->footer());
 
-$isdashboard = ($PAGE->pagetype === 'my-index' || $PAGE->pagetype === 'site-index');
+$ismycoursespage = (strpos($PAGE->url->get_path(), '/my/courses.php') !== false || $PAGE->pagelayout === 'mycourses');
+$isdashboard = (($PAGE->pagetype === 'my-index' && !$ismycoursespage) || $PAGE->pagetype === 'site-index');
 if ($isdashboard && isloggedin() && !isguestuser()) {
     $busoladata = \theme_ebusola\util\busola::get_dashboard_context();
     if ($busoladata) {

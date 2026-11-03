@@ -780,3 +780,119 @@ body#page-login-signup .login-layout-right-content {
         gap: 36px;
     }
 }
+
+/* --------------------------------------------------------------------------
+   8. Przełącznik trybu edycji i tryb ciemny w navbarze
+   -------------------------------------------------------------------------- */
+.navbar {
+    .editmode-switch-form {
+        margin-right: 0.75rem;
+
+        .mds-switch-label,
+        label {
+            color: #FFFFFF !important;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .mds-switch-track {
+            background-color: rgba(255, 255, 255, 0.35) !important;
+        }
+
+        input:checked ~ label .mds-switch-track,
+        input:checked + .mds-switch-track {
+            background-color: #FF7A1A !important;
+        }
+    }
+
+    .theme-colour-mode {
+        .btn,
+        .btn:hover,
+        .btn:focus {
+            color: #FFFFFF !important;
+        }
+    }
+}
+
+/* Strefa edycyjna na stronie głównej w Hubie eBusola */
+.busola-editing-zone {
+    .busola-editing-content {
+        /* Ukrycie zdublowanych starych list kursów Moodle w trybie edycji,
+           ponieważ Hub eBusola renderuje nowoczesne kafelki kursów wyżej */
+        #frontpage-course-list,
+        #frontpage-available-course-list,
+        .frontpage-course-list-enrolled,
+        .frontpage-course-list-all,
+        .block_myoverview,
+        .courses.frontpage-course-list-all {
+            display: none !important;
+        }
+    }
+}
+
+/* --------------------------------------------------------------------------
+   9. Dark mode dla Huba eBusola
+   -------------------------------------------------------------------------- */
+[data-bs-theme="dark"] {
+    .busola-hub-wrapper {
+        background: #0B0E2A !important;
+        color: #E2E8F0 !important;
+    }
+
+    .busola-hero {
+        background: #080B21 !important;
+    }
+
+    .bcard {
+        background: #15193B !important;
+        color: #E2E8F0 !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+
+        div[style*="background:#FFFFFF"],
+        div[style*="background: #FFFFFF"] {
+            background: #15193B !important;
+        }
+
+        div[style*="color:#141B5E"],
+        div[style*="color: #141B5E"],
+        span[style*="color:#141B5E"],
+        span[style*="color: #141B5E"] {
+            color: #FFFFFF !important;
+        }
+
+        span[style*="color:#5B6280"],
+        div[style*="color:#5B6280"] {
+            color: #94A3B8 !important;
+        }
+    }
+
+    section[aria-labelledby="h-moje"] h2,
+    section[aria-labelledby="h-odkryj"] h2 {
+        color: #FFFFFF !important;
+    }
+
+    section[aria-labelledby="h-egz"] {
+        background: #241A18 !important;
+
+        h2 {
+            color: #FFB27A !important;
+        }
+        p {
+            color: #E2E8F0 !important;
+        }
+        a {
+            border-color: #FF7A1A !important;
+            color: #FF7A1A !important;
+        }
+    }
+
+    .busola-editing-zone {
+        background: #15193B !important;
+        border-color: #3B4268 !important;
+
+        h3 {
+            color: #FFFFFF !important;
+        }
+    }
+}

@@ -75,7 +75,11 @@ class colour_mode extends \theme_boost\colour_mode {
             return true;
         }
 
-        return (bool) get_config('theme_ebusola', 'enablecolourmodes');
+        $cfg = get_config('theme_ebusola', 'enablecolourmodes');
+        if ($cfg === false || $cfg === null) {
+            return true;
+        }
+        return (bool) $cfg;
     }
 
     /**
