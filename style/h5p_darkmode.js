@@ -2,6 +2,7 @@
  * Busola Theme - H5P Enhancements & Dark Mode Auto-Sync
  * 1. Synchronizes theme color mode (light/dark) between Moodle parent window and H5P iframe.
  * 2. Relocates H5P progress dots container above question card to match Busola Quiz mockup (Quiz.dc.html).
+ * 3. Injects and updates question counter "Pytanie X z Y" above progress bar.
  */
 (function() {
     'use strict';
@@ -51,7 +52,37 @@
         }
     }
 
-    // --- 2. PROGRESS BAR RELOCATION ---
+    // --- 2. QUESTION COUNTER UPDATE ---
+    function updateQuestionCounter(dots) {
+        if (!dots || !dots.parentNode) {
+            return;
+        }
+        var counter = document.querySelector('.busola-question-counter');
+        if (!counter) {
+            counter = document.createElement('div');
+            counter.className = 'busola-question-counter';
+            dots.parentNode.insertBefore(counter, dots);
+        }
+
+        var items = dots.querySelectorAll('li');
+        if (items.length === 0) {
+            return;
+        }
+        var currentIdx = 0;
+        for (var i = 0; i < items.length; i++) {
+            var a = items[i].querySelector('a');
+            if (items[i].classList.contains('current') || (a && a.classList.contains('current'))) {
+                currentIdx = i;
+                break;
+            }
+        }
+        var counterText = 'Pytanie ' + (currentIdx + 1) + ' z ' + items.length;
+        if (counter.textContent !== counterText) {
+            counter.textContent = counterText;
+        }
+    }
+
+    // --- 3. PROGRESS BAR RELOCATION ---
     function relocateProgressBar() {
         try {
             var dots = document.querySelector('.h5p-progress-dots-container');
@@ -62,6 +93,7 @@
                 if (question.previousElementSibling !== dots) {
                     question.parentNode.insertBefore(dots, question);
                 }
+                updateQuestionCounter(dots);
             }
         } catch (e) {
             // Silently catch any timing issues

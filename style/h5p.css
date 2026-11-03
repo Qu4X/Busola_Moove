@@ -74,11 +74,27 @@ div.questionset.started,
 }
 
 /* Wyśrodkowanie i szerokość desktopowa zgodna z makietą Quiz.dc.html (max-width: 800px) */
-.questionset,
-.h5p-question-set {
+html body .questionset,
+html body .h5p-question-set {
     max-width: 800px !important;
     margin: 0 auto !important;
+    padding: 0 !important;
     box-sizing: border-box !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Całkowite usunięcie szarego kontenera podkładowego wokół pytania */
+html body .questionset.started,
+html body div.questionset.started,
+html body div.questionset {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
 }
 
 /* Ukrycie domyślnych szarych ramek H5P */
@@ -118,21 +134,28 @@ div.questionset.started,
     margin: 0 !important;
 }
 
+/* Licznik pytań „Pytanie 1 z 15” z makiety */
+.busola-question-counter,
 .h5p-question-counter,
-.h5p-sc-question-counter {
+.h5p-sc-question-counter,
+.h5p-question-set-counter {
+    display: flex !important;
+    justify-content: flex-end !important;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
     font-size: 15px !important;
     font-weight: 700 !important;
     color: var(--busola-text-primary) !important;
-    margin: 0 !important;
+    margin: 8px 0 12px 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 /* ==========================================================================
    4. SEGMENTOWY PASEK POSTĘPU (ZGODNY Z MAKIETĄ QUIZ.DC.HTML)
    ========================================================================== */
 
-/* Kontener paska postępu (QuestionSet - lista kropek przekształcona w segmenty) */
-ul.h5p-progress-dots-container {
+/* Kontener paska postępu (QuestionSet - segmenty o pełnej szerokości karty) */
+html body ul.h5p-progress-dots-container {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
@@ -142,6 +165,7 @@ ul.h5p-progress-dots-container {
     padding: 0 !important;
     list-style: none !important;
     width: 100% !important;
+    max-width: 100% !important;
     box-sizing: border-box !important;
     background: transparent !important;
     border: none !important;
@@ -149,7 +173,7 @@ ul.h5p-progress-dots-container {
 }
 
 /* Pojedynczy segment (li) - szary pasek 8px z zaokrągleniem 4px */
-ul.h5p-progress-dots-container li {
+html body ul.h5p-progress-dots-container li {
     flex: 1 1 0% !important;
     height: 8px !important;
     border-radius: 4px !important;
@@ -166,19 +190,21 @@ ul.h5p-progress-dots-container li {
 }
 
 /* Aktywny / ukończony segment - pomarańczowy #FF7A1A */
-ul.h5p-progress-dots-container li.busola-active,
-ul.h5p-progress-dots-container li.current,
-ul.h5p-progress-dots-container li.answered,
-ul.h5p-progress-dots-container li:has(.current),
-ul.h5p-progress-dots-container li:has(.answered),
-ul.h5p-progress-dots-container li:has(a[aria-current="step"]) {
+html body ul.h5p-progress-dots-container li.busola-active,
+html body ul.h5p-progress-dots-container li.current,
+html body ul.h5p-progress-dots-container li.answered,
+html body ul.h5p-progress-dots-container li:has(.current),
+html body ul.h5p-progress-dots-container li:has(.answered),
+html body ul.h5p-progress-dots-container li:has(a.current),
+html body ul.h5p-progress-dots-container li:has(a.answered),
+html body ul.h5p-progress-dots-container li:has(a[aria-current="step"]) {
     background: var(--busola-accent-orange, #FF7A1A) !important;
     background-color: var(--busola-accent-orange, #FF7A1A) !important;
 }
 
 /* Neutralizacja wewnętrznego linku a.h5p-progress-dot (usunięcie okręgu, cienia i obramowania) */
-ul.h5p-progress-dots-container li a.h5p-progress-dot,
-ul.h5p-progress-dots-container li a {
+html body ul.h5p-progress-dots-container li a.h5p-progress-dot,
+html body ul.h5p-progress-dots-container li a {
     display: block !important;
     width: 100% !important;
     height: 100% !important;
@@ -196,10 +222,10 @@ ul.h5p-progress-dots-container li a {
     font-size: 0 !important;
 }
 
-ul.h5p-progress-dots-container li a::before,
-ul.h5p-progress-dots-container li a::after,
-ul.h5p-progress-dots-container li::before,
-ul.h5p-progress-dots-container li::after {
+html body ul.h5p-progress-dots-container li a::before,
+html body ul.h5p-progress-dots-container li a::after,
+html body ul.h5p-progress-dots-container li::before,
+html body ul.h5p-progress-dots-container li::after {
     display: none !important;
     content: none !important;
     border: none !important;
@@ -231,11 +257,11 @@ ul.h5p-progress-dots-container li::after {
    ========================================================================== */
 
 /* Karta pytania - TYLKO nadrzędny kontener pytania otrzymuje styl kafelka */
-.question-container,
-.question-container.h5p-question,
-.questionset > .question-container,
-.questionset.started > .question-container,
-.h5p-question:not(.question-container .h5p-question) {
+html body .question-container,
+html body .question-container.h5p-question,
+html body .questionset > .question-container,
+html body .questionset.started > .question-container,
+html body .h5p-question:not(.question-container .h5p-question) {
     background: var(--busola-surface-card) !important;
     background-color: var(--busola-surface-card) !important;
     background-image: none !important;
@@ -245,17 +271,18 @@ ul.h5p-progress-dots-container li::after {
     box-shadow: var(--busola-shadow-card) !important;
     border: none !important;
     box-sizing: border-box !important;
+    width: 100% !important;
     margin-top: 24px !important;
     margin-bottom: 24px !important;
     position: relative !important;
 }
 
 @media (max-width: 600px) {
-    .question-container,
-    .question-container.h5p-question,
-    .questionset > .question-container,
-    .questionset.started > .question-container,
-    .h5p-question:not(.question-container .h5p-question) {
+    html body .question-container,
+    html body .question-container.h5p-question,
+    html body .questionset > .question-container,
+    html body .questionset.started > .question-container,
+    html body .h5p-question:not(.question-container .h5p-question) {
         padding: 20px !important;
         border-radius: 16px !important;
     }
@@ -324,10 +351,10 @@ ul.h5p-answers,
 }
 
 /* Pojedynczy kafel odpowiedzi - stan domyślny */
-.h5p-answer,
-.h5p-sc-alternative,
-ul.h5p-answers li,
-.h5p-answers .h5p-answer-container {
+html body .h5p-answer,
+html body .h5p-sc-alternative,
+html body ul.h5p-answers li,
+html body .h5p-answers .h5p-answer-container {
     display: flex !important;
     align-items: center !important;
     min-height: 60px !important;
@@ -346,20 +373,54 @@ ul.h5p-answers li,
     transition: background 0.15s ease, box-shadow 0.15s ease !important;
 }
 
-/* Usunięcie wewnętrznego niebieskiego prostokąta, obramowań i paddingu H5P w środku kafla */
-.h5p-alternative-container,
-.h5p-selected .h5p-alternative-container,
-.h5p-answer .h5p-alternative-container,
-li.h5p-answer .h5p-alternative-container {
-    background-color: transparent !important;
+/* Kafel odpowiedzi - hover */
+html body .h5p-answer:hover,
+html body .h5p-sc-alternative:hover,
+html body ul.h5p-answers li:hover {
+    background: var(--busola-surface-hover) !important;
+    background-color: var(--busola-surface-hover) !important;
+}
+
+/* Kafel odpowiedzi - zaznaczony (selected): ciepłe tło #FFF4EA + obwódka 2px #FF7A1A */
+html body li.h5p-answer.h5p-selected,
+html body .h5p-answer.h5p-selected,
+html body .h5p-sc-selected,
+html body .h5p-sc-alternative[aria-checked="true"],
+html body ul.h5p-answers li[aria-checked="true"],
+html body .h5p-answer[aria-checked="true"],
+html body .h5p-answer:has(input:checked),
+html body li:has(input:checked),
+html body li.h5p-answer:has(input:checked) {
+    background: #FFF4EA !important;
+    background-color: #FFF4EA !important;
+    background-image: none !important;
+    box-shadow: inset 0 0 0 2px var(--busola-accent-orange, #FF7A1A) !important;
+}
+
+[data-bs-theme="dark"] html body li.h5p-answer.h5p-selected,
+[data-bs-theme="dark"] html body .h5p-answer.h5p-selected,
+[data-bs-theme="dark"] html body .h5p-sc-selected,
+[data-bs-theme="dark"] html body .h5p-answer:has(input:checked),
+[data-bs-theme="dark"] html body li:has(input:checked),
+body.moove-darkmode html body li.h5p-answer.h5p-selected,
+body.moove-darkmode html body .h5p-answer:has(input:checked) {
+    background: #2B233D !important;
+    background-color: #2B233D !important;
+}
+
+/* Wszelkie kontenery wewnętrzne wewnątrz kafla MUSZĄ być przezroczyste */
+html body .h5p-answer *,
+html body .h5p-answer.h5p-selected *,
+html body .h5p-answer:has(input:checked) *,
+html body .h5p-alternative-container,
+html body .h5p-answer-container,
+html body .h5p-alternative-input {
     background: transparent !important;
-    padding: 0 !important;
+    background-color: transparent !important;
+    background-image: none !important;
     border: none !important;
     outline: none !important;
     box-shadow: none !important;
-    display: flex !important;
-    align-items: center !important;
-    width: 100% !important;
 }
 
 /* Usunięcie wewnętrznej kreski podświetlenia H5P */
@@ -367,35 +428,18 @@ li.h5p-answer .h5p-alternative-container {
     display: none !important;
 }
 
-/* Kafel odpowiedzi - hover */
-.h5p-answer:hover,
-.h5p-sc-alternative:hover,
-ul.h5p-answers li:hover {
-    background: var(--busola-surface-hover) !important;
-    background-color: var(--busola-surface-hover) !important;
-}
-
-/* Kafel odpowiedzi - zaznaczony (selected): tokenizowany z makiety Busola (#FFF4EA + obwódka 2px #FF7A1A) */
-li.h5p-answer.h5p-selected,
-.h5p-answer.h5p-selected,
-.h5p-sc-selected,
-.h5p-sc-alternative[aria-checked="true"],
-ul.h5p-answers li[aria-checked="true"],
-.h5p-answer[aria-checked="true"],
-.h5p-answer:has(input:checked) {
-    background: var(--busola-surface-selected) !important;
-    background-color: var(--busola-surface-selected) !important;
-    box-shadow: inset 0 0 0 2px var(--busola-accent-orange) !important;
-}
-
-/* Radio button i checkbox */
-.h5p-answer input[type="radio"],
-.h5p-answer input[type="checkbox"],
-.h5p-sc-alternative input,
-.h5p-alternative-input {
-    accent-color: var(--busola-accent-orange) !important;
+/* Radio button i checkbox - akcent pomarańczowy #FF7A1A */
+html body .h5p-answer input[type="radio"],
+html body .h5p-sc-alternative input,
+html body input[type="radio"].h5p-alternative-input,
+html body input[type="radio"],
+html body .h5p-answer input[type="checkbox"] {
+    accent-color: #FF7A1A !important;
+    color: #FF7A1A !important;
     width: 22px !important;
     height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
     margin: 0 16px 0 0 !important;
     flex: 0 0 22px !important;
     cursor: pointer !important;
@@ -416,9 +460,11 @@ ul.h5p-answers li[aria-checked="true"],
 }
 
 .h5p-sc-selected::before,
-.h5p-sc-alternative[aria-checked="true"]::before {
-    border-color: var(--busola-accent-orange) !important;
-    background: radial-gradient(circle, var(--busola-accent-orange) 45%, var(--busola-surface-card) 46%) !important;
+.h5p-sc-alternative[aria-checked="true"]::before,
+html body .h5p-answer.h5p-selected .h5p-radio-circle,
+html body .h5p-answer:has(input:checked) .h5p-radio-circle {
+    border-color: #FF7A1A !important;
+    background: radial-gradient(circle, #FF7A1A 50%, transparent 51%) !important;
 }
 
 /* Styl tekstu wewnątrz odpowiedzi */
@@ -454,7 +500,7 @@ ul.h5p-answers li[aria-checked="true"],
 }
 
 /* ==========================================================================
-   7. PRZYCISKI AKCJI (JOUBEL UI & QUESTION FOOTER)
+   7. PRZYCISKI AKCJI (SPRAWDŹ & NAWIGACJA NEXT/PREV)
    ========================================================================== */
 
 .h5p-question-buttons,
@@ -471,16 +517,27 @@ ul.h5p-answers li[aria-checked="true"],
 }
 
 /* Główny przycisk „Sprawdź” (pomarańczowy #FF7A1A, tekst #141B5E z makiety) */
-.h5p-question-check-answer,
-.h5p-question-buttons .h5p-joubelui-button,
-.joubel-simple-rounded-button {
+html body button.h5p-question-check-answer,
+html body .h5p-question-buttons button,
+html body .h5p-question-buttons .joubel-simple-rounded-button,
+html body .joubel-simple-rounded-button,
+html body button.joubel-simple-rounded-button,
+html body .h5p-joubelui-button,
+html body button.h5p-joubelui-button,
+html body input.joubel-simple-rounded-button,
+html body .h5p-question-buttons input[type="button"],
+html body .h5p-question-buttons input[type="submit"],
+html body .h5p-question-buttons a.joubel-simple-rounded-button {
+    background: var(--busola-accent-orange, #FF7A1A) !important;
+    background-color: var(--busola-accent-orange, #FF7A1A) !important;
+    background-image: none !important;
+    color: #141B5E !important;
     height: 52px !important;
+    min-height: 52px !important;
     line-height: 52px !important;
     padding: 0 32px !important;
-    border: 0 !important;
+    border: none !important;
     border-radius: 14px !important;
-    background: var(--busola-accent-orange) !important;
-    color: #141B5E !important;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
     font-size: 16px !important;
     font-weight: 700 !important;
@@ -490,24 +547,51 @@ ul.h5p-answers li[aria-checked="true"],
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
+    text-decoration: none !important;
     transition: opacity 0.15s ease, transform 0.15s ease !important;
 }
 
-.h5p-question-check-answer:hover,
-.joubel-simple-rounded-button:hover {
+html body button.h5p-question-check-answer:hover,
+html body .h5p-question-buttons button:hover,
+html body .joubel-simple-rounded-button:hover,
+html body .h5p-joubelui-button:hover {
     opacity: 0.9 !important;
-    background: var(--busola-accent-orange) !important;
+    background: var(--busola-accent-orange, #FF7A1A) !important;
+    background-color: var(--busola-accent-orange, #FF7A1A) !important;
+    background-image: none !important;
+    color: #141B5E !important;
 }
 
-/* Przycisk przejścia do następnego pytania (Next / Dalej) */
-.h5p-question-next,
-.h5p-next-button {
+/* Pasek nawigacji QuestionSet oraz przycisk Next / Dalej */
+html body .h5p-question-set-footer,
+html body .h5p-question-set-navigation {
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-top: 16px !important;
+    margin-bottom: 24px !important;
+    width: 100% !important;
+    max-width: 800px !important;
+}
+
+html body .h5p-question-set-footer button,
+html body .h5p-question-set-footer a,
+html body .h5p-question-next,
+html body .h5p-question-set-next,
+html body .h5p-next-button {
     height: 52px !important;
+    min-height: 52px !important;
     line-height: 52px !important;
     padding: 0 32px !important;
-    border: 0 !important;
+    border: none !important;
     border-radius: 14px !important;
-    background: var(--busola-accent-navy) !important;
+    background: var(--busola-accent-navy, #141B5E) !important;
+    background-color: var(--busola-accent-navy, #141B5E) !important;
+    background-image: none !important;
     color: #FFFFFF !important;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
     font-size: 16px !important;
@@ -515,12 +599,21 @@ ul.h5p-answers li[aria-checked="true"],
     cursor: pointer !important;
     text-shadow: none !important;
     box-shadow: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    gap: 8px !important;
     transition: opacity 0.15s ease !important;
 }
 
-.h5p-question-next:hover,
-.h5p-next-button:hover {
+html body .h5p-question-set-footer button:hover,
+html body .h5p-question-next:hover,
+html body .h5p-question-set-next:hover {
     opacity: 0.9 !important;
+    background: var(--busola-accent-navy, #141B5E) !important;
+    background-color: var(--busola-accent-navy, #141B5E) !important;
+    color: #FFFFFF !important;
 }
 
 /* Przyciski drugorzędne (Ponów, Pokaż rozwiązanie, Pomiń) */
@@ -545,19 +638,6 @@ ul.h5p-answers li[aria-checked="true"],
 .h5p-question-show-solution:hover {
     color: var(--busola-text-primary) !important;
     background: var(--busola-surface-hover) !important;
-}
-
-/* Pasek nawigacji QuestionSet (dolny) */
-.h5p-question-set-footer,
-.h5p-question-set-navigation {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    margin-top: 16px !important;
 }
 
 /* ==========================================================================
