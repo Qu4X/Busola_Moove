@@ -75,8 +75,7 @@ div.questionset.started,
 
 /* Wyśrodkowanie i szerokość desktopowa zgodna z makietą Quiz.dc.html (max-width: 800px) */
 .questionset,
-.h5p-question-set,
-.h5p-content {
+.h5p-question-set {
     max-width: 800px !important;
     margin: 0 auto !important;
     box-sizing: border-box !important;

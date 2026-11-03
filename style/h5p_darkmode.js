@@ -2,7 +2,6 @@
  * Busola Theme - H5P Enhancements & Dark Mode Auto-Sync
  * 1. Synchronizes theme color mode (light/dark) between Moodle parent window and H5P iframe.
  * 2. Relocates H5P progress dots container above question card to match Busola Quiz mockup (Quiz.dc.html).
- * 3. Keeps progress segmented pill states synchronized.
  */
 (function() {
     'use strict';
@@ -52,76 +51,47 @@
         }
     }
 
-    // --- 2. PROGRESS BAR RELOCATION & STATE SYNC ---
-    function syncProgressBar() {
-        var dots = document.querySelector('.h5p-progress-dots-container');
-        var question = document.querySelector('.question-container.h5p-question') ||
-                       document.querySelector('.question-container') ||
-                       document.querySelector('.h5p-question');
+    // --- 2. PROGRESS BAR RELOCATION ---
+    function relocateProgressBar() {
+        try {
+            var dots = document.querySelector('.h5p-progress-dots-container');
+            var question = document.querySelector('.question-container.h5p-question') ||
+                           document.querySelector('.question-container');
 
-        if (dots && question) {
-            // Move dots above question container if not already positioned directly before it
-            if (question.previousElementSibling !== dots) {
-                question.parentNode.insertBefore(dots, question);
-            }
-
-            // Sync active state on list items
-            var items = dots.querySelectorAll('li');
-            for (var i = 0; i < items.length; i++) {
-                var li = items[i];
-                var link = li.querySelector('.h5p-progress-dot, a');
-                var isCurrentOrAnswered = li.classList.contains('current') ||
-                                         li.classList.contains('answered') ||
-                                         (link && (link.classList.contains('current') ||
-                                                   link.classList.contains('answered') ||
-                                                   link.getAttribute('aria-current') === 'step'));
-                if (isCurrentOrAnswered) {
-                    li.classList.add('busola-active');
-                } else {
-                    li.classList.remove('busola-active');
+            if (dots && question && question.parentNode) {
+                if (question.previousElementSibling !== dots) {
+                    question.parentNode.insertBefore(dots, question);
                 }
             }
+        } catch (e) {
+            // Silently catch any timing issues
         }
     }
 
-    function runAll() {
-        checkParentTheme();
-        syncProgressBar();
-    }
+    // Check theme immediately
+    checkParentTheme();
 
-    // Initial run
-    runAll();
-
-    // DOM Ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', runAll);
-    }
-
-    // Window load
-    window.addEventListener('load', runAll);
-
-    // Listen for direct messages from parent window
+    // Listen for messages from parent window
     window.addEventListener('message', function(event) {
         if (event.data && (event.data.type === 'busola-theme-change' || event.data.type === 'theme-change')) {
             applyDark(Boolean(event.data.isDark));
         }
     });
 
-    // Observer for DOM mutations (H5P renders and switches questions dynamically)
-    try {
-        var observer = new MutationObserver(function() {
-            syncProgressBar();
+    // Safely relocate progress bar once H5P is ready
+    if (window.H5P && window.H5P.externalDispatcher) {
+        window.H5P.externalDispatcher.on('initialized', function() {
+            setTimeout(relocateProgressBar, 50);
         });
-        observer.observe(document.documentElement || document.body, {
-            childList: true,
-            subtree: true,
-            attributes: true,
-            attributeFilter: ['class', 'aria-current']
-        });
-    } catch (e) {
-        // Fallback to interval if MutationObserver unavailable
     }
 
-    // Polling interval to guarantee sync across slide transitions & theme toggles
-    setInterval(runAll, 400);
+    window.addEventListener('load', function() {
+        setTimeout(relocateProgressBar, 200);
+    });
+
+    // Periodic check for dark mode and progress bar relocation across slide changes
+    setInterval(function() {
+        checkParentTheme();
+        relocateProgressBar();
+    }, 600);
 })();
