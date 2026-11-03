@@ -1,65 +1,64 @@
 {{!
     Sekcja Hero - powitanie kursanta, radar w tle, karta "Kontynuuj" i fala przejścia.
 }}
-<section class="busola-hero" aria-label="Sekcja powitalna">
-    <svg class="busola-hero-radar" viewBox="0 0 400 400" width="560" height="560" aria-hidden="true" fill="none" stroke="#FFFFFF" stroke-width="1.5">
+<section class="busola-hero" style="background:#141B5E;position:relative;overflow:hidden;color:#FFFFFF;" aria-label="Sekcja powitalna">
+    <svg viewBox="0 0 400 400" width="560" height="560" aria-hidden="true" style="position:absolute;right:-120px;top:-150px;opacity:.1;pointer-events:none;" fill="none" stroke="#FFFFFF" stroke-width="1.5">
         <circle cx="200" cy="200" r="190"></circle>
         <circle cx="200" cy="200" r="140"></circle>
         <circle cx="200" cy="200" r="90"></circle>
         <path d="M200 0V400M0 200H400M59 59L341 341M341 59L59 341"></path>
     </svg>
-    <div class="busola-hero-inner">
-        <div class="busola-hero-welcome">
-            <h1 class="busola-hero-title">Ahoj, {{firstname}}!</h1>
+    <div style="position:relative;max-width:1200px;margin:0 auto;padding:56px 32px 32px;display:flex;flex-wrap:wrap;align-items:center;gap:40px;">
+        <div style="flex:1 1 380px;min-width:0;">
+            <h1 style="margin:0;font-size:52px;line-height:1.08;font-weight:800;letter-spacing:-.025em;color:#FFFFFF;">Ahoj, {{firstname}}!</h1>
             {{#haslastcourse}}
-                <p class="busola-hero-subtitle">Ostatnio uczyłeś się kursu <strong>{{lastcourse.fullname}}</strong>. Wracasz dokładnie tam, gdzie skończyłeś.</p>
+                <p style="margin:16px 0 0;font-size:18px;line-height:1.5;color:#CBD1F3;max-width:440px;">Ostatnio uczyłeś się kursu <strong style="color:#FFFFFF;">{{lastcourse.fullname}}</strong>. Wracasz dokładnie tam, gdzie skończyłeś.</p>
             {{/haslastcourse}}
             {{^haslastcourse}}
-                <p class="busola-hero-subtitle">Witaj w platformie e-learningowej Szkoły Żeglarstwa Busola. Wybierz kurs i zacznij naukę.</p>
+                <p style="margin:16px 0 0;font-size:18px;line-height:1.5;color:#CBD1F3;max-width:440px;">Witaj w platformie e-learningowej Szkoły Żeglarstwa Busola. Wybierz kurs i zacznij naukę.</p>
             {{/haslastcourse}}
-            <div class="busola-hero-badges">
+            <div style="margin-top:24px;display:flex;flex-wrap:wrap;gap:10px;">
                 {{#has_totalcourses}}
-                    <span class="busola-pill-badge">{{totalcourses_label}}</span>
+                    <span style="padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.12);color:#FFFFFF;font-size:14px;font-weight:600;">{{totalcourses_label}}</span>
                 {{/has_totalcourses}}
                 {{#has_completed}}
-                    <span class="busola-pill-badge">{{completed_label}}</span>
+                    <span style="padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.12);color:#FFFFFF;font-size:14px;font-weight:600;">{{completed_label}}</span>
                 {{/has_completed}}
                 {{#has_inprogress}}
-                    <span class="busola-pill-badge">{{inprogress_label}}</span>
+                    <span style="padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.12);color:#FFFFFF;font-size:14px;font-weight:600;">{{inprogress_label}}</span>
                 {{/has_inprogress}}
             </div>
         </div>
 
         {{#haslastcourse}}
-        <a href="{{lastcourse.url}}" class="bcard busola-continue-card" style="text-decoration:none;">
-            <div class="busola-continue-img-wrap" style="background-color: {{lastcourse.bgcolor}};">
+        <a href="{{lastcourse.url}}" class="bcard" style="flex:1 1 460px;min-width:0;max-width:560px;display:flex;flex-wrap:wrap;background:#FFFFFF;border-radius:24px;overflow:hidden;text-decoration:none;color:#3A4163;box-shadow:0 2px 4px rgba(0,0,0,.12),0 24px 48px rgba(7,10,50,.35);">
+            <div style="flex:0 0 190px;min-height:190px;background:{{lastcourse.bgcolor}};display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;flex-grow:1;">
                 {{#lastcourse.hascustomicon}}
-                    <img src="{{lastcourse.iconurl}}" alt="{{lastcourse.fullname}}" class="busola-course-img" />
+                    <img src="{{lastcourse.iconurl}}" alt="{{lastcourse.fullname}}" style="max-width:130px;max-height:130px;object-fit:contain;" />
                 {{/lastcourse.hascustomicon}}
                 {{^lastcourse.hascustomicon}}
                     <svg viewBox="0 0 160 100" width="140" height="88" aria-hidden="true">
                         <rect x="24" y="48" width="12" height="22" rx="3" fill="#FF7A1A" stroke="#141B5E" stroke-width="2.5"></rect>
                         <path d="M32 62 H132 L120 80 H48 Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
                         <path d="M66 62 L80 42 H104 L112 62" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
-                        <path d="M14 93 q8 -7 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path>
                     </svg>
                 {{/lastcourse.hascustomicon}}
             </div>
-            <div class="busola-continue-content">
-                <span class="busola-continue-label">KONTYNUUJ</span>
-                <span class="busola-continue-title">{{lastcourse.fullname}}</span>
-                <span class="busola-continue-status">
+            <div style="flex:1 1 240px;min-width:0;padding:24px 28px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:6px;">
+                <span style="font-size:12px;font-weight:800;letter-spacing:.14em;color:#B93C00;">KONTYNUUJ</span>
+                <span style="font-size:24px;font-weight:800;line-height:1.2;color:#141B5E;letter-spacing:-.01em;">{{lastcourse.fullname}}</span>
+                <span style="font-size:14px;color:#5B6280;">
                     {{#lastcourse.iscompleted}}Kurs ukończony (100%){{/lastcourse.iscompleted}}
                     {{#lastcourse.isinprogress}}Postęp: {{lastcourse.progress}}% ukończono{{/lastcourse.isinprogress}}
                     {{#lastcourse.isnotstarted}}Kurs nie rozpoczęty{{/lastcourse.isnotstarted}}
                 </span>
-                <div class="busola-progress-container mt-2">
-                    <div class="busola-progress-track">
-                        <div class="busola-progress-fill" style="width: {{lastcourse.progress}}%; background-color: {{lastcourse.progress_color}};"></div>
+                <div style="margin-top:10px;display:flex;align-items:center;gap:12px;">
+                    <div style="flex:1;height:8px;border-radius:4px;background:#E3E7F4;overflow:hidden;">
+                        <div style="height:100%;width:{{lastcourse.progress}}%;border-radius:4px;background:{{lastcourse.progress_color}};"></div>
                     </div>
-                    <span class="busola-progress-val">{{lastcourse.progress}}%</span>
+                    <span style="font-size:14px;font-weight:700;color:#141B5E;white-space:nowrap;">{{lastcourse.progress}}%</span>
                 </div>
-                <span class="busola-btn-primary mt-3">
+                <span style="margin-top:14px;align-self:flex-start;display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:14px;background:#FF7A1A;color:#141B5E;font-size:15px;font-weight:700;">
                     Wróć do nauki
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
                 </span>
@@ -69,7 +68,7 @@
     </div>
 
     <!-- Falowana krzywa przejścia na dole sekcji hero -->
-    <svg class="busola-hero-wave" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true">
+    <svg viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true" style="display:block;width:100%;height:48px;position:relative;">
         <path d="M0 48V26C220 4 440 4 720 26S1200 50 1440 22V48Z" fill="#F5F6FB"></path>
     </svg>
 </section>

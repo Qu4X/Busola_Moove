@@ -66,6 +66,10 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $output .= str_replace("GOOGLE-ANALYTICS-CODE", trim($theme->settings->googleanalytics), $googleanalyticscode);
         }
 
+        $output .= '<link rel="preconnect" href="https://fonts.googleapis.com">
+                   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">';
+
         $sitefont = isset($theme->settings->fontsite) ? $theme->settings->fontsite : 'Moodle';
 
         if ($sitefont != 'Moodle') {

@@ -253,17 +253,17 @@ class busola {
             $cat = 'Kursy motorowodne';
             $bgcolor = '#DCF0F3';
             $type = 'motor';
-            $iconfile = str_contains($fullname, 'hol') ? 'Hol.png' : (str_contains($shortname, 'MSM') ? 'MSM.png' : 'SM.png');
+            $iconfile = str_contains($fullname, 'hol') ? 'Hol' : (str_contains($shortname, 'MSM') ? 'MSM' : 'SM');
         } else if (str_contains($shortname, 'SRC') || str_contains($fullname, 'radio') || str_contains($fullname, 'src')) {
             $cat = 'Kursy dodatkowe';
             $bgcolor = '#FFE8D4';
             $type = 'radio';
-            $iconfile = 'SRC.png';
+            $iconfile = 'SRC';
         } else {
             $cat = 'Kursy żeglarskie';
             $bgcolor = '#E3E8FB';
             $type = 'sail';
-            $iconfile = (str_contains($shortname, 'JSM') || str_contains($fullname, 'morski')) ? 'JSM.png' : 'ZJ.png';
+            $iconfile = (str_contains($shortname, 'JSM') || str_contains($fullname, 'morski')) ? 'JSM' : 'ZJ';
         }
 
         $iconurl = $OUTPUT->image_url('courses/' . $iconfile, 'theme_ebusola')->out(false);
