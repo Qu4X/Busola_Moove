@@ -17,18 +17,29 @@ along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 {{!
     @template theme_ebusola/footer
 
-    Stopka Szkoły Żeglarstwa Busola zgodna z mockupem projektu.
+    Stopka Szkoły Żeglarstwa Busola z oficjalnym logo platformy.
 }}
 
 <footer id="page-footer" style="background:#0F1547;color:#FFFFFF;margin-top:auto;border-top:none;">
     <div style="max-width:1200px;margin:0 auto;padding:56px 32px 28px;box-sizing:border-box;">
         <div style="display:flex;flex-wrap:wrap;gap:40px 56px;">
             <div style="flex:1 1 260px;min-width:0;">
-                <div style="display:flex;flex-direction:column;line-height:1;">
-                    <span style="font-size:26px;font-weight:700;letter-spacing:.2em;color:#FFFFFF;">BUSOLA</span>
-                    <span style="font-size:10px;font-weight:700;letter-spacing:.42em;color:#FFB27A;margin-top:4px;">E-LEARNING</span>
-                </div>
-                <p style="margin:16px 0 0;font-size:15px;color:#C9CFF2;max-width:280px;line-height:1.5;">Kursy żeglarskie i motorowodne online, w Twoim tempie.</p>
+                <a href="{{{homeurl}}}" style="text-decoration:none;display:inline-block;" aria-label="{{sitename}}">
+                    {{# output.should_display_logo }}
+                        {{#output.get_logo_dark}}
+                            <img src="{{output.get_logo_dark}}" class="footer-logo mb-2" alt="{{sitename}}" style="max-height:48px;width:auto;object-fit:contain;" />
+                        {{/output.get_logo_dark}}
+                        {{^output.get_logo_dark}}
+                            <img src="{{output.get_compact_logo_url}}" class="footer-logo mb-2" alt="{{sitename}}" style="max-height:48px;width:auto;object-fit:contain;" />
+                        {{/output.get_logo_dark}}
+                    {{/ output.should_display_logo }}
+                    {{^ output.should_display_logo }}
+                        <div style="display:flex;flex-direction:column;line-height:1;">
+                            <span style="font-size:24px;font-weight:700;letter-spacing:.15em;color:#FFFFFF;">{{sitename}}</span>
+                        </div>
+                    {{/ output.should_display_logo }}
+                </a>
+                <p style="margin:12px 0 0;font-size:15px;color:#C9CFF2;max-width:280px;line-height:1.5;">Kursy żeglarskie i motorowodne online, w Twoim tempie.</p>
             </div>
 
             <div style="flex:0 1 180px;min-width:0;">

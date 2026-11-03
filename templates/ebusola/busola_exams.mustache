@@ -1,5 +1,5 @@
 {{!
-    Baner Egzaminy dla dorosłych - tokenizowane tło, ikona certyfikatu, link do szczegółów.
+    Baner Egzaminy dla dorosłych - dynamiczne dane z aktywności Moodle.
 }}
 <section aria-labelledby="h-egz" class="busola-exam-banner">
     <div class="busola-exam-icon-wrap">
@@ -10,11 +10,11 @@
         </svg>
     </div>
     <div class="busola-exam-content">
-        <h2 id="h-egz" class="busola-exam-title">{{#str}}exam_title, theme_ebusola{{/str}}</h2>
-        <p class="busola-exam-desc">{{#str}}exam_desc, theme_ebusola{{/str}}</p>
+        <h2 id="h-egz" class="busola-exam-title">{{{exam_title}}}</h2>
+        <p class="busola-exam-desc">{{{exam_desc}}}</p>
     </div>
-    <a href="{{examurl}}" class="busola-exam-btn">
-        {{#str}}exam_btn, theme_ebusola{{/str}}
+    <a href="{{{examurl}}}" class="busola-exam-btn">
+        {{{exam_btn_text}}}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
     </a>
 </section>

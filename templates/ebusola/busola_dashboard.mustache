@@ -1,5 +1,5 @@
 {{!
-    Główny komponent Busola Dashboard (Hero + Moje Kursy + Egzaminy + Odkryj + Nawigacja mobilna).
+    Główny komponent Busola Dashboard (Hero + Moje Kursy + Egzaminy + Odkryj + Strefa edycji + Nawigacja mobilna).
 }}
 <div class="busola-hub-wrapper">
     {{#busola_hub}}
@@ -11,6 +11,27 @@
             {{> theme_ebusola/ebusola/busola_exams }}
 
             {{> theme_ebusola/ebusola/busola_discover }}
+
+            {{#user_is_editing}}
+                <section class="busola-editing-zone p-4">
+                    <div class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom busola-editing-header">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="busola-editing-icon">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </span>
+                            <div>
+                                <h3 class="busola-editing-title">{{#str}}edit_zone_title, theme_ebusola{{/str}}</h3>
+                                <p class="busola-editing-desc">{{#str}}edit_zone_desc, theme_ebusola{{/str}}</p>
+                            </div>
+                        </div>
+                        <span class="badge bg-primary text-white px-3 py-2 busola-editing-badge">{{#str}}edit_zone_badge, theme_ebusola{{/str}}</span>
+                    </div>
+
+                    <div class="busola-editing-content">
+                        {{{ output.main_content }}}
+                    </div>
+                </section>
+            {{/user_is_editing}}
         </main>
 
         {{> theme_ebusola/ebusola/busola_bottom_nav }}

@@ -67,19 +67,11 @@ class colour_mode extends \theme_boost\colour_mode {
             return false;
         }
 
-        if (
-            defined('BEHAT_SITE_RUNNING')
-            && function_exists('behat_get_colour_mode')
-            && self::is_valid_mode(behat_get_colour_mode())
-        ) {
-            return true;
-        }
-
         $cfg = get_config('theme_ebusola', 'enablecolourmodes');
-        if ($cfg === false || $cfg === null) {
-            return true;
+        if ($cfg === '0' || $cfg === 0) {
+            return false;
         }
-        return (bool) $cfg;
+        return true;
     }
 
     /**

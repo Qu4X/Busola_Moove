@@ -79,3 +79,5 @@ $string['edit_zone_badge'] = 'Tryb edycji aktywny';
 $string['course_cat_sail'] = 'Kursy żeglarskie';
 $string['course_cat_motor'] = 'Kursy motorowodne';
 $string['course_cat_extra'] = 'Kursy dodatkowe';
+$string['course_cat_default'] = 'Kurs';
+$string['all_category_courses_enrolled'] = 'Masz już wszystkie kursy z tej kategorii.';
