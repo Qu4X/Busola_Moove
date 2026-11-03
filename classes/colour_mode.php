@@ -16,6 +16,16 @@
 
 namespace theme_ebusola;
 
+// Backwards compatibility stub for Moodle < 5.3 where theme_boost\colour_mode does not exist.
+if (!class_exists('theme_boost\colour_mode')) {
+    class fallback_boost_colour_mode {
+        public const LIGHT = 'light';
+        public const DARK = 'dark';
+        public const AUTO = 'auto';
+    }
+    class_alias('theme_ebusola\fallback_boost_colour_mode', 'theme_boost\colour_mode');
+}
+
 /**
  * Helper for the Boost light and dark colour modes.
  *

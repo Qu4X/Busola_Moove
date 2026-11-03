@@ -15,26 +15,31 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Hook callbacks for Boost.
+ * Hook callbacks for theme_ebusola.
  *
- * @package    theme_boost
- * @copyright  Andrew Lyons <andrew@nicols.co.uk>
+ * @package    theme_ebusola
+ * @copyright  2026 Szkoła Żeglarstwa Busola
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$callbacks = [
-    [
-        'hook' => \core\hook\output\before_requirejs_config::class,
-        'callback' => [\theme_ebusola\hook_listener::class, 'before_requirejs_config_listener'],
-    ],
-    [
-        'hook' => \core\hook\output\before_html_attributes::class,
-        'callback' => [\theme_ebusola\hook_listener::class, 'before_html_attributes_listener'],
-    ],
-    [
-        'hook' => \core\hook\output\before_standard_head_html_generation::class,
-        'callback' => [\theme_ebusola\hook_listener::class, 'before_standard_head_html_generation_listener'],
-    ],
-];
+$callbacks = [];
+
+// Only register colour mode hooks if Moodle core Boost supports them (Moodle 5.3+).
+if (class_exists('\theme_boost\hook_listener')) {
+    $callbacks = [
+        [
+            'hook' => \core\hook\output\before_requirejs_config::class,
+            'callback' => [\theme_ebusola\hook_listener::class, 'before_requirejs_config_listener'],
+        ],
+        [
+            'hook' => \core\hook\output\before_html_attributes::class,
+            'callback' => [\theme_ebusola\hook_listener::class, 'before_html_attributes_listener'],
+        ],
+        [
+            'hook' => \core\hook\output\before_standard_head_html_generation::class,
+            'callback' => [\theme_ebusola\hook_listener::class, 'before_standard_head_html_generation_listener'],
+        ],
+    ];
+}

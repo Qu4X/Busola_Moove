@@ -39,9 +39,9 @@ $plugin->release = '1.0.0 (Moove 5.3.1 base)';
 $plugin->maturity = MATURITY_STABLE;
 
 // This is the version of Moodle this plugin requires.
-$plugin->requires = 2026100200;
+$plugin->requires = 2022112800;
 
 // This is a list of plugins, this plugin depends on (and their versions).
 $plugin->dependencies = [
-    'theme_boost' => 2026042000,
+    'theme_boost' => 2022112800,
 ];

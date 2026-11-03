@@ -22,20 +22,22 @@ use core\hook\output\before_standard_head_html_generation;
 use core\output\html_writer;
 use theme_ebusola\colour_mode;
 
+// Backwards compatibility stub for Moodle < 5.3 where theme_boost\hook_listener does not exist.
+if (!class_exists('theme_boost\hook_listener')) {
+    class fallback_boost_hook_listener {}
+    class_alias('theme_ebusola\fallback_boost_hook_listener', 'theme_boost\hook_listener');
+}
+
 /**
- * Hook listeners for theme_boost.
+ * Hook listeners for theme_ebusola.
  *
- * @package    theme_boost
- * @copyright  Andrew Lyons <andrew@nicols.co.uk>
+ * @package    theme_ebusola
+ * @copyright  2026 Szkoła Żeglarstwa Busola
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class hook_listener extends \theme_boost\hook_listener {
     /**
      * Set the Bootstrap colour mode on the html tag.
-     *
-     * The data-bs-theme attribute drives every Bootstrap colour mode override, so it has to be on the page from the
-     * very first byte. The chosen mode is repeated in data-colourmode because "auto" can only be resolved in the
-     * browser, and the switcher needs to know what the user actually picked.
      *
      * @param before_html_attributes $hook The hook object.
      */
@@ -46,22 +48,12 @@ class hook_listener extends \theme_boost\hook_listener {
 
         $mode = colour_mode::get_current_mode();
 
-        // Auto is resolved by the script added in before_standard_head_html_generation_listener(). Render light until
-        // then so that the page is still usable with JavaScript disabled.
         $hook->add_attribute('data-bs-theme', $mode === colour_mode::AUTO ? colour_mode::LIGHT : $mode);
         $hook->add_attribute('data-colourmode', $mode);
     }
 
     /**
      * Add the script which resolves the "auto" colour mode before the page is painted.
-     *
-     * Which mode "auto" means is known only to the browser, so the server renders the page light and this corrects
-     * it. That has to happen synchronously in the head, or the person gets a flash of the wrong colours on every
-     * page load, and it has to keep listening, so that a device which changes its colour scheme while the page is
-     * open is followed.
-     *
-     * The explicit modes need none of this: the server knows which one to render, from the user preference or from
-     * the cookie which stands in for it on a page nobody is logged in to.
      *
      * @param before_standard_head_html_generation $hook The hook object.
      */
@@ -72,8 +64,6 @@ class hook_listener extends \theme_boost\hook_listener {
             return;
         }
 
-        // Behat sites keep the colour mode the server decided on, as which mode "auto" resolves to depends on the
-        // machine running the browser, which would make colour assertions non-deterministic.
         if (defined('BEHAT_SITE_RUNNING')) {
             return;
         }
@@ -99,8 +89,25 @@ class hook_listener extends \theme_boost\hook_listener {
                 resolve();
                 query.addEventListener('change', resolve);
             })();
-            EOF;
+EOF;
 
-        $hook->add_html(html_writer::script($js));
+        $hook->add_html(html_writer::tag('script', $js));
+    }
+
+    /**
+     * Set the colour mode cookie domain to match the session cookie.
+     *
+     * @param before_requirejs_config $hook The hook object.
+     */
+    public static function before_requirejs_config_listener(before_requirejs_config $hook): void {
+        if (!colour_mode::is_ebusola_theme() || !colour_mode::is_enabled()) {
+            return;
+        }
+
+        $hook->add_config([
+            'colourmode' => [
+                'cookieattributes' => colour_mode::get_cookie_attributes(),
+            ],
+        ]);
     }
 }
