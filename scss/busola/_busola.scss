@@ -248,6 +248,15 @@ body.has-busola-dashboard #page.drawers {
     }
 }
 
+/* Ensure footer bleeds full width when nested inside a padded #page container */
+#page:not(.has-busola-dashboard) > #page-footer,
+.pagelayout-standard #page-footer,
+.pagelayout-incourse #page-footer {
+    margin-left: -15px !important;
+    margin-right: -15px !important;
+    width: calc(100% + 30px) !important;
+}
+
 /* 1. Universal Vertical Centering for Switches */
 .custom-switch {
     .custom-control-label::before,
