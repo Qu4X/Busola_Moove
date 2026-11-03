@@ -86,32 +86,41 @@
     // --- 3. ALIGN ACTION BUTTONS (PREV - CHECK - NEXT ON SAME ROW) ---
     function alignActionButtons() {
         try {
-            var question = document.querySelector('.question-container.h5p-question') ||
-                           document.querySelector('.question-container') ||
-                           document.querySelector('.h5p-question');
+            // QuestionSet keeps all questions in the DOM; use the visible one.
+            var question = null;
+            var all = document.querySelectorAll('.question-container');
+            for (var q = 0; q < all.length; q++) {
+                if (all[q].offsetParent !== null) {
+                    question = all[q];
+                    break;
+                }
+            }
             if (!question) {
                 return;
             }
 
             var buttonContainer = question.querySelector('.h5p-question-buttons');
-            var footer = document.querySelector('.h5p-question-set-footer') ||
-                         document.querySelector('.h5p-question-set-navigation');
 
             if (buttonContainer) {
-                if (footer) {
-                    var prevBtn = footer.querySelector('.h5p-question-prev, .h5p-question-set-prev, .h5p-prev-button');
-                    var nextBtn = footer.querySelector('.h5p-question-next, .h5p-question-set-next, .h5p-next-button');
-
-                    if (prevBtn && prevBtn.parentNode !== buttonContainer) {
-                        buttonContainer.insertBefore(prevBtn, buttonContainer.firstChild);
+                // Navigation buttons live outside the question card (QuestionSet footer).
+                var navSelector = 'button[class*="next"], button[class*="prev"], ' +
+                                  '.h5p-question-next, .h5p-question-prev, .h5p-question-set-next, .h5p-question-set-prev';
+                var navButtons = document.querySelectorAll(navSelector);
+                for (var n = 0; n < navButtons.length; n++) {
+                    var btn = navButtons[n];
+                    if (buttonContainer.contains(btn)) {
+                        continue;
                     }
-                    if (nextBtn && nextBtn.parentNode !== buttonContainer) {
-                        buttonContainer.appendChild(nextBtn);
+                    var isPrev = /prev/.test(btn.className);
+                    if (isPrev) {
+                        buttonContainer.insertBefore(btn, buttonContainer.firstChild);
+                    } else {
+                        buttonContainer.appendChild(btn);
                     }
                 }
 
                 // Remove redundant title attribute matching text to prevent dark popover badge
-                var checkBtn = buttonContainer.querySelector('.h5p-question-check-answer, .joubel-simple-rounded-button');
+                var checkBtn = buttonContainer.querySelector('.h5p-theme-check, .h5p-question-check-answer, .joubel-simple-rounded-button');
                 if (checkBtn && checkBtn.getAttribute('title') && checkBtn.getAttribute('title').trim() === checkBtn.textContent.trim()) {
                     checkBtn.removeAttribute('title');
                 }
@@ -125,8 +134,7 @@
     function relocateProgressBar() {
         try {
             var dots = document.querySelector('.h5p-progress-dots-container');
-            var question = document.querySelector('.question-container.h5p-question') ||
-                           document.querySelector('.question-container');
+            var question = document.querySelector('.question-container');
 
             if (dots && question && question.parentNode) {
                 if (question.previousElementSibling !== dots) {

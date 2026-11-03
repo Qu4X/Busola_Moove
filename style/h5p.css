@@ -740,3 +740,105 @@ html body .h5p-question-set-navigation {
 .h5p-question-set-solution-view .h5p-score-bar-fill {
     background: var(--busola-accent-orange) !important;
 }
+
+/* ==========================================================================
+   9. NOWY SYSTEM MOTYWÓW H5P (.h5p-theme, .h5p-theme-button)
+   Klasy potwierdzone w DOM: BUTTON.h5p-theme-button.h5p-theme-primary-cta.h5p-theme-check,
+   DIV.h5p-container.h5p-standalone.h5p-question-set.h5p-theme
+   ========================================================================== */
+
+/* Zmienne motywu H5P mapowane na tokeny Busoli (działa w trybie jasnym i ciemnym) */
+html body .h5p-theme,
+html body .h5p-content,
+html body .h5p-container {
+    --h5p-theme-main-cta-base: var(--busola-accent-orange);
+    --h5p-theme-main-cta-light: var(--busola-surface-selected);
+    --h5p-theme-main-cta-dark: var(--busola-accent-orange);
+    --h5p-theme-contrast-cta: var(--busola-text-primary);
+    --h5p-theme-text-primary: var(--busola-text-primary);
+    --h5p-theme-text-secondary: var(--busola-text-secondary);
+    --h5p-theme-ui-base: var(--busola-surface-card);
+    --h5p-theme-background: transparent;
+    --h5p-theme-focus: var(--busola-accent-orange);
+}
+
+/* Szerokość: kontener zestawu pytań 800px jak w makiecie */
+html body .h5p-container.h5p-question-set,
+html body .h5p-container.h5p-question-set.h5p-theme,
+html body .h5p-question-set.h5p-theme .questionset {
+    width: 100% !important;
+    max-width: 800px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    background: transparent !important;
+}
+
+html body .h5p-question-set.h5p-theme .question-container {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Przycisk „Sprawdź” (h5p-theme-check) */
+html body button.h5p-theme-button.h5p-theme-primary-cta,
+html body button.h5p-theme-button.h5p-theme-check {
+    grid-column: 2 !important;
+    justify-self: center !important;
+    width: auto !important;
+    min-width: 0 !important;
+    height: 52px !important;
+    padding: 0 32px !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    background: var(--busola-accent-orange) !important;
+    color: #141B5E !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+html body button.h5p-theme-button.h5p-theme-primary-cta:hover {
+    opacity: 0.9 !important;
+    background: var(--busola-accent-orange) !important;
+}
+
+/* Ikona wewnątrz przycisku nachodzi na tekst - ukrycie */
+html body button.h5p-theme-button::before,
+html body button.h5p-theme-button::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Przyciski nawigacji (Previous / Next) w nowym motywie */
+html body button.h5p-theme-button[class*="next"],
+html body button.h5p-theme-button[class*="previous"],
+html body button.h5p-theme-button[class*="prev"],
+html body button.h5p-theme-button.h5p-theme-secondary-cta {
+    height: 52px !important;
+    padding: 0 24px !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    background: transparent !important;
+    color: var(--busola-text-secondary) !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+}
+
+html body button.h5p-theme-button[class*="next"] {
+    grid-column: 3 !important;
+    justify-self: end !important;
+}
+
+html body button.h5p-theme-button[class*="prev"] {
+    grid-column: 1 !important;
+    justify-self: start !important;
+}
+
+html body button.h5p-theme-button[class*="next"]:hover,
+html body button.h5p-theme-button[class*="prev"]:hover {
+    color: var(--busola-text-primary) !important;
+    background: var(--busola-surface-hover) !important;
+}
