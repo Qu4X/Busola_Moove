@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Theme functions.
+ * Theme functions for eBusola.
  *
- * @package    theme_moove
- * @copyright 2017 Willian Mano - http://conecti.me
+ * @package    theme_ebusola
+ * @copyright  2026 Szkoła Żeglarstwa Busola
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,7 +28,7 @@
  * @param theme_config $theme The theme config object.
  * @return string
  */
-function theme_moove_get_main_scss_content($theme) {
+function theme_ebusola_get_main_scss_content($theme) {
     global $CFG;
 
     $scss = '';
@@ -45,18 +45,18 @@ function theme_moove_get_main_scss_content($theme) {
         $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/default.scss');
     }
 
-    // Moove scss.
-    $moovevariables = file_get_contents($CFG->dirroot . '/theme/moove/scss/moove/_variables.scss');
-    $moove = file_get_contents($CFG->dirroot . '/theme/moove/scss/default.scss');
-    $security = file_get_contents($CFG->dirroot . '/theme/moove/scss/moove/_security.scss');
+    // eBusola scss (based on Moove).
+    $moovevariables = file_get_contents($CFG->dirroot . '/theme/ebusola/scss/moove/_variables.scss');
+    $moove = file_get_contents($CFG->dirroot . '/theme/ebusola/scss/default.scss');
+    $security = file_get_contents($CFG->dirroot . '/theme/ebusola/scss/moove/_security.scss');
 
     $lastpreset = '';
-    if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_moove', 'preset', 0, '/', $filename))) {
+    if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_ebusola', 'preset', 0, '/', $filename))) {
         $lastpreset = $presetfile->get_content();
     }
 
     // Combine them together.
-    $allscss = $moovevariables . "\n" . $scss . "\n" . $moove . "\n" . $lastpreset .    "\n" . $security;
+    $allscss = $moovevariables . "\n" . $scss . "\n" . $moove . "\n" . $lastpreset . "\n" . $security;
 
     return $allscss;
 }
@@ -67,7 +67,7 @@ function theme_moove_get_main_scss_content($theme) {
  * @param theme_config $theme The theme config object.
  * @return string
  */
-function theme_moove_get_extra_scss($theme) {
+function theme_ebusola_get_extra_scss($theme) {
     $content = '';
 
     // Sets the login background image.
@@ -103,7 +103,7 @@ function theme_moove_get_extra_scss($theme) {
  * @param theme_config $theme The theme config object.
  * @return string
  */
-function theme_moove_get_pre_scss($theme) {
+function theme_ebusola_get_pre_scss($theme) {
     $scss = '';
     $configurable = [
         // Config key => [variableName, ...].
@@ -145,10 +145,10 @@ function theme_moove_get_pre_scss($theme) {
  *
  * @return string compiled css
  */
-function theme_moove_get_precompiled_css() {
+function theme_ebusola_get_precompiled_css() {
     global $CFG;
 
-    return file_get_contents($CFG->dirroot . '/theme/moove/style/moodle.css');
+    return file_get_contents($CFG->dirroot . '/theme/ebusola/style/moodle.css');
 }
 
 /**
@@ -163,14 +163,14 @@ function theme_moove_get_precompiled_css() {
  * @param array $options
  * @return mixed
  */
-function theme_moove_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
-    $theme = theme_config::load('moove');
+function theme_ebusola_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
+    $theme = theme_config::load('ebusola');
 
     if (
         $context->contextlevel == CONTEXT_SYSTEM &&
         ($filearea === 'logo' || $filearea === 'loginbgimg' || $filearea == 'favicon')
     ) {
-        $theme = theme_config::load('moove');
+        $theme = theme_config::load('ebusola');
         // By default, theme files must be cache-able by both browsers and proxies.
         if (!array_key_exists('cacheability', $options)) {
             $options['cacheability'] = 'public';
@@ -179,7 +179,7 @@ function theme_moove_pluginfile($course, $cm, $context, $filearea, $args, $force
     }
 
     if ($filearea === 'hvp') {
-        return theme_moove_serve_hvp_css($args[1], $theme);
+        return theme_ebusola_serve_hvp_css($args[1], $theme);
     }
 
     if ($context->contextlevel == CONTEXT_SYSTEM && preg_match("/^sliderimage[1-9][0-9]?$/", $filearea) !== false) {
@@ -213,7 +213,7 @@ function theme_moove_pluginfile($course, $cm, $context, $filearea, $args, $force
  *
  * @throws dml_exception
  */
-function theme_moove_serve_hvp_css($filename, $theme) {
+function theme_ebusola_serve_hvp_css($filename, $theme) {
     global $CFG, $PAGE;
 
     require_once($CFG->dirroot . '/lib/configonlylib.php'); // For minenable_zlib_compression function.
@@ -221,11 +221,11 @@ function theme_moove_serve_hvp_css($filename, $theme) {
     $PAGE->set_context(\core\context\system::instance());
     $themename = $theme->name;
 
-    $settings = new \theme_moove\util\settings();
+    $settings = new \theme_ebusola\util\settings();
     $content = $settings->hvpcss;
 
     $md5content = md5($content);
-    $md5stored = get_config('theme_moove', 'hvpccssmd5');
+    $md5stored = get_config('theme_ebusola', 'hvpccssmd5');
     if ((empty($md5stored)) || ($md5stored != $md5content)) {
         // Content changed, so the last modified time needs to change.
         set_config('hvpccssmd5', $md5content, $themename);

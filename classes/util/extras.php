@@ -17,19 +17,19 @@
 /**
  * Custom moove extras functions
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2022 Willian Mano - http://conecti.me
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_moove\util;
+namespace theme_ebusola\util;
 
 use moodle_url;
 
 /**
  * Class to get some extras info in Moodle.
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2022 Willian Mano - http://conecti.me
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -65,7 +65,7 @@ class extras {
                     'class' => 'btn-header btn btn-sm btn-success',
                 ],
                 [
-                    'title' => get_string($contacttitle, 'theme_moove'),
+                    'title' => get_string($contacttitle, 'theme_ebusola'),
                     'url' => new \moodle_url('/message/index.php', [
                         'user1' => $USER->id,
                         'user2' => $user->id,

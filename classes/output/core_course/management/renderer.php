@@ -17,12 +17,12 @@
 /**
  * Theme Boost Union - Course management renderer
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2023 Alexander Bias <bias@alexanderbias.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_moove\output\core_course\management;
+namespace theme_ebusola\output\core_course\management;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -37,7 +37,7 @@ use core\output\html_writer;
 /**
  * Extending the core_course_management_renderer.
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2023 Alexander Bias <bias@alexanderbias.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

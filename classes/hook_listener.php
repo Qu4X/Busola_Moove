@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_moove;
+namespace theme_ebusola;
 
 use core\hook\output\before_html_attributes;
 use core\hook\output\before_requirejs_config;
 use core\hook\output\before_standard_head_html_generation;
 use core\output\html_writer;
-use theme_moove\colour_mode;
+use theme_ebusola\colour_mode;
 
 /**
  * Hook listeners for theme_boost.
@@ -40,7 +40,7 @@ class hook_listener extends \theme_boost\hook_listener {
      * @param before_html_attributes $hook The hook object.
      */
     public static function before_html_attributes_listener(before_html_attributes $hook): void {
-        if (!colour_mode::is_moove_theme() || !colour_mode::is_enabled()) {
+        if (!colour_mode::is_ebusola_theme() || !colour_mode::is_enabled()) {
             return;
         }
 
@@ -68,7 +68,7 @@ class hook_listener extends \theme_boost\hook_listener {
     public static function before_standard_head_html_generation_listener(
         before_standard_head_html_generation $hook,
     ): void {
-        if (!colour_mode::is_moove_theme() || !colour_mode::is_enabled()) {
+        if (!colour_mode::is_ebusola_theme() || !colour_mode::is_enabled()) {
             return;
         }
 

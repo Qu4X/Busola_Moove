@@ -17,22 +17,22 @@
 /**
  * Overriden theme boost core renderer.
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2022 Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_moove\output;
+namespace theme_ebusola\output;
 
 use theme_config;
 use moodle_url;
 use html_writer;
-use theme_moove\colour_mode;
+use theme_ebusola\colour_mode;
 
 /**
  * Renderers to align Moodle's HTML with that expected by Bootstrap
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2022 Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -111,7 +111,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $additionalclasses[] = $fonttype;
         }
 
-        $enablewhatsappbutton = (bool) get_config('theme_moove', 'enablewhatsappbutton');
+        $enablewhatsappbutton = (bool) get_config('theme_ebusola', 'enablewhatsappbutton');
         if ($enablewhatsappbutton) {
             $additionalclasses[] = 'haswhatsappbutton';
         }
@@ -391,7 +391,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         $output .= $this->notification($message, $messagetype);
 
-        $output .= $this->render_from_template('theme_moove/loading-overlay', ['encodedurl' => $encodedurl]);
+        $output .= $this->render_from_template('theme_ebusola/loading-overlay', ['encodedurl' => $encodedurl]);
 
         if ($debugdisableredirect) {
             $output .= '<p><strong>' . get_string('erroroutput', 'error') . '</strong></p>';
@@ -408,7 +408,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string the HTML for the navbar.
      */
     public function navbar(): string {
-        $newnav = new \theme_moove\output\boostnavbar($this->page);
+        $newnav = new \theme_ebusola\output\boostnavbar($this->page);
         return $this->render_from_template('core/navbar', $newnav);
     }
 
@@ -422,7 +422,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
-        return $this->render_from_template('theme_moove/moove/mylearning', []);
+        return $this->render_from_template('theme_ebusola/ebusola/mylearning', []);
     }
 
     /**
@@ -431,7 +431,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string Slideshow html content, or an empty string if no slides are configured.
      */
     public function slideshow(): string {
-        $themesettings = new \theme_moove\util\settings();
+        $themesettings = new \theme_ebusola\util\settings();
 
         $templatecontext = $themesettings->frontpage_slideshow();
 
@@ -440,9 +440,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         $layouttemplates = [
-            'classic' => 'theme_moove/moove/slideshow/classic',
-            'centered' => 'theme_moove/moove/slideshow/centered',
-            'editorial' => 'theme_moove/moove/slideshow/editorial',
+            'classic' => 'theme_ebusola/ebusola/slideshow/classic',
+            'centered' => 'theme_ebusola/ebusola/slideshow/centered',
+            'editorial' => 'theme_ebusola/ebusola/slideshow/editorial',
         ];
 
         $template = $layouttemplates[$templatecontext['slideshowlayout']] ?? $layouttemplates['classic'];

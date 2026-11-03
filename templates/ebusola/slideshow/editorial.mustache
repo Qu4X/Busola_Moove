@@ -15,9 +15,10 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_moove/slideshow/centered
+    @template theme_ebusola/slideshow/editorial
 
-    Frontpage slideshow with the title and caption centered over the image, with a dark overlay.
+    Frontpage slideshow styled as an editorial listing card: photo and content side by
+    side on a warm background, with pill-style pagination below the card.
 
     Context variables required for this template:
     * slidersingleslide - true when there is only one slide
@@ -31,23 +32,17 @@
         ]
     }
 }}
-<div id="mooveslideshow" class="container-fluid slideshow-layout-centered">
+<div id="mooveslideshow" class="container-fluid slideshow-layout-editorial">
     <div id="moove-carousel" class="carousel slide">
-        {{^slidersingleslide}}
-            <div class="carousel-indicators">
-                {{#slides}}
-                    <button type="button" data-bs-target="#moove-carousel" data-bs-slide-to="{{{ key }}}" {{#active}}class="active" aria-current="true"{{/active}} aria-label="{{title}}"></button>
-                {{/slides}}
-            </div>
-        {{/slidersingleslide}}
         <div class="carousel-inner">
             {{#slides}}
                 <div class="carousel-item {{#active}}active{{/active}}">
-                    <div class="slide-centered-wrapper">
-                        <img src="{{image}}" alt="{{title}}" class="d-block w-100">
-                        <div class="slide-overlay"></div>
-                        {{#hascaption}}
-                            <div class="slide-centered-content">
+                    <div class="slide-card">
+                        <div class="slide-card-image">
+                            <img src="{{image}}" alt="{{title}}" class="d-block w-100">
+                        </div>
+                        <div class="slide-card-content">
+                            {{#hascaption}}
                                 {{#title}}
                                     <h5 class="title">{{.}}</h5>
                                 {{/title}}
@@ -56,21 +51,28 @@
                                         {{{.}}}
                                     </div>
                                 {{/caption}}
-                            </div>
-                        {{/hascaption}}
+                            {{/hascaption}}
+                        </div>
                     </div>
                 </div>
             {{/slides}}
         </div>
         {{^slidersingleslide}}
-            <button class="carousel-control-prev" type="button" data-bs-target="#moove-carousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">{{#str}}previous{{/str}}</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#moove-carousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">{{#str}}next{{/str}}</span>
-            </button>
+            <div class="slide-pagination">
+                <button class="carousel-control-prev" type="button" data-bs-target="#moove-carousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">{{#str}}previous{{/str}}</span>
+                </button>
+                <div class="carousel-indicators">
+                    {{#slides}}
+                        <button type="button" data-bs-target="#moove-carousel" data-bs-slide-to="{{{ key }}}" {{#active}}class="active" aria-current="true"{{/active}} aria-label="{{title}}"></button>
+                    {{/slides}}
+                </div>
+                <button class="carousel-control-next" type="button" data-bs-target="#moove-carousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">{{#str}}next{{/str}}</span>
+                </button>
+            </div>
         {{/slidersingleslide}}
     </div>
 </div>

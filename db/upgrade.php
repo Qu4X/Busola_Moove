@@ -17,7 +17,7 @@
 /**
  * Database upgrade.
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2022 Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
@@ -29,7 +29,7 @@
  * @param int   $oldversion Is this an old version
  * @return bool Success.
  */
-function xmldb_theme_moove_upgrade($oldversion = 0) {
+function xmldb_theme_ebusola_upgrade($oldversion = 0) {
     global $DB;
 
     if ($oldversion < 2022052800) {
@@ -40,7 +40,7 @@ function xmldb_theme_moove_upgrade($oldversion = 0) {
                 $configdata = json_decode($usertour->configdata);
 
                 if (in_array('boost', $configdata->filtervalues->theme)) {
-                    $configdata->filtervalues->theme[] = 'moove';
+                    $configdata->filtervalues->theme[] = 'ebusola';
                 }
 
                 $updatedata = new stdClass();

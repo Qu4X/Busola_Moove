@@ -1,0 +1,166 @@
+/* ==========================================================================
+   eBusola Custom Styles
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Stopka i układ ogólny
+   -------------------------------------------------------------------------- */
+footer#page-footer div.copyright {
+    display: none !important;
+}
+
+.column-center,
+.column-right {
+    display: none !important;
+}
+
+/* Ustawienie kontenera kolumny stopki jako elastycznego rzędu */
+.column-left {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 40px;
+
+    .contact,
+    .socialnetworks {
+        margin-bottom: 0 !important;
+    }
+
+    ul {
+        display: flex;
+        padding: 0;
+        list-style: none;
+        margin-top: 10px;
+    }
+}
+
+/* Ściągnięcie stopki na dół (Sticky Footer) */
+html,
+body {
+    height: 100%;
+}
+
+#page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#page {
+    flex: 1;
+}
+
+/* --------------------------------------------------------------------------
+   2. Strona główna i detale interfejsu
+   -------------------------------------------------------------------------- */
+
+/* Ukrycie dodatkowych domyślnych kafelków z frontpage */
+#feature .row > .col-sm-6.mt-4:not(:first-child) {
+    display: none;
+}
+
+/* Ukrycie info dla niezalogowanych na stronie głównej */
+body.notloggedin #page-content.main-inner {
+    display: none !important;
+}
+
+/* Przyciski do szuflad bocznych (Drawer toggles) */
+.drawer-toggles,
+.drawer-toggler {
+    border-radius: 8px !important;
+    margin: 0 -4px 0 -4px !important;
+    width: 55px !important;
+    height: 55px !important;
+}
+
+/* Ukrycie alertów z ReadSpeaker */
+div.alert.alert-info {
+    display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. Logowanie, rejestracja i reset hasła
+   -------------------------------------------------------------------------- */
+
+/* Ukrycie pól "Miasto" i "Kraj" przy rejestracji */
+#page-login-signup #fitem_id_city,
+#page-login-signup #fitem_id_country {
+    display: none !important;
+}
+
+/* Ukrycie tekstu w lewym panelu strony logowania */
+.login-layout-left-content {
+    display: none !important;
+}
+
+/* Zakotwiczenie tła na wszystkich stronach logowania */
+.pagelayout-login .login-layout-left {
+    display: block !important;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 1;
+}
+
+/* Formularz na wierzchu i wyśrodkowany */
+.pagelayout-login #region-main.login-layout-right {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent !important;
+}
+
+/* Białe, wyśrodkowane okienko logowania */
+.login-layout-right-content {
+    background: rgba(255, 255, 255, 0.95) !important;
+    padding: 2.5rem !important;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box !important;
+
+    * {
+        box-sizing: border-box !important;
+    }
+
+    form,
+    input,
+    select {
+        max-width: 100% !important;
+    }
+
+    /* Ukrycie niechcianych nagłówków w okienku */
+    .loginform h1.h2,
+    .loginform p.text-muted {
+        display: none !important;
+    }
+}
+
+/* Poszerzenie okienka dla strony rejestracji (Sign up) */
+body#page-login-signup .login-layout-right-content {
+    max-width: 700px !important;
+}
+
+/* Ukrycie stopki, aby zapobiec przewijaniu okna logowania */
+.pagelayout-login #page-footer {
+    display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. RWD / Urządzenia mobilne
+   -------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+    .courses.frontpage-course-list-all .card.dashboard-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+}

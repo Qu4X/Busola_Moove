@@ -17,7 +17,7 @@
 /**
  * Language file.
  *
- * @package   theme_moove
+ * @package   theme_ebusola
  * @copyright 2017 Willian Mano - http://conecti.me
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -39,13 +39,13 @@ $string['addcontact'] = 'Add contact';
 $string['advancedsettings'] = 'Advanced';
 $string['brandcolor'] = 'Brand colour';
 $string['brandcolor_desc'] = 'The accent colour.';
-$string['choosereadme'] = 'Moove is a modern highly-customisable theme. This theme is intended to be used directly, or as a parent theme when creating new themes utilising Bootstrap 4.';
+$string['choosereadme'] = 'eBusola to motyw dedykowany dla Szkoły Żeglarstwa Busola oparty na motywie Moove.';
 $string['colourmode:auto'] = 'System';
 $string['colourmode:dark'] = 'Dark';
 $string['colourmode:light'] = 'Light';
 $string['colourmodeselected'] = 'Colour mode: {$a}';
 $string['colourmodesettings'] = 'Colour mode';
-$string['configtitle'] = 'Moove';
+$string['configtitle'] = 'eBusola';
 $string['contactonwhatsapp'] = 'Contact us on WhatsApp';
 $string['contactus'] = 'Contact us';
 $string['cta:consulting'] = 'Consulting';
@@ -138,7 +138,7 @@ $string['personalinformation'] = 'Personal information';
 $string['pinterest'] = 'Pinterest URL';
 $string['pinterestdesc'] = 'Enter the URL of your Pinterest. (i.e http://www.pinterest.com/myinstitution)';
 $string['pleasuretohelp'] = 'It will be a pleasure to help you!';
-$string['pluginname'] = 'Moove';
+$string['pluginname'] = 'eBusola';
 $string['preset'] = 'Theme preset';
 $string['preset_desc'] = 'Pick a preset to broadly change the look of the theme.';
 $string['presetfiles'] = 'Additional theme preset files';

@@ -17,12 +17,12 @@
 /**
  * Overriden theme boost core renderer.
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2024 Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_moove\output\core;
+namespace theme_ebusola\output\core;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -150,6 +150,6 @@ class admin_renderer extends \core_admin_renderer {
      * @return string the campaign content raw html.
      */
     private function conectime_services_and_support_content(): string {
-        return $this->render_from_template('theme_moove/moove/conectime_services_and_support_content_banner', []);
+        return $this->render_from_template('theme_ebusola/ebusola/conectime_services_and_support_content_banner', []);
     }
 }

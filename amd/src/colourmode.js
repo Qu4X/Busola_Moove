@@ -28,7 +28,7 @@
 
 import {setUserPreference} from 'core_user/repository';
 
-const PREFERENCE = 'theme_moove_colourmode';
+const PREFERENCE = 'theme_ebusola_colourmode';
 
 const SELECTORS = {
     MENU: '[data-region="colourmode-menu"]',

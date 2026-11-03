@@ -3,16 +3,16 @@
     {{$attributes}}id="nav-mylearning-popover-container"{{/attributes}}
 
     {{$togglelabel}}{{!
-        }} {{#str}} mylearning, theme_moove {{/str}} {{!
+        }} {{#str}} mylearning, theme_ebusola {{/str}} {{!
     }}{{/togglelabel}}
 
     {{$togglecontent}}
-        <i class="fa fa-graduation-cap" title="{{#str}} mylearning, theme_moove {{/str}}" role="img" aria-label="{{#str}} mylearning, theme_moove {{/str}}"></i>
+        <i class="fa fa-graduation-cap" title="{{#str}} mylearning, theme_ebusola {{/str}}" role="img" aria-label="{{#str}} mylearning, theme_ebusola {{/str}}"></i>
     {{/togglecontent}}
 
-    {{$containerlabel}}{{#str}} mylearning, theme_moove {{/str}}{{/containerlabel}}
+    {{$containerlabel}}{{#str}} mylearning, theme_ebusola {{/str}}{{/containerlabel}}
 
-    {{$headertext}}{{#str}} mylearning, theme_moove {{/str}}{{/headertext}}
+    {{$headertext}}{{#str}} mylearning, theme_ebusola {{/str}}{{/headertext}}
 
     {{$content}}
         <div class="all-learning"
@@ -21,7 +21,7 @@
              aria-busy="false"
              aria-atomic="false"
              aria-relevant="additions"></div>
-        <div class="empty-message" tabindex="0" data-region="empty-message">{{#str}} nolearning, theme_moove {{/str}}</div>
+        <div class="empty-message" tabindex="0" data-region="empty-message">{{#str}} nolearning, theme_ebusola {{/str}}</div>
     {{/content}}
 
     {{$anchor}}
@@ -34,7 +34,7 @@
     {{/anchor}}
 {{/ core/popover_region }}
 {{#js}}
-    require(['jquery', 'theme_moove/mylearning'], function($, MyLearning) {
+    require(['jquery', 'theme_ebusola/mylearning'], function($, MyLearning) {
         var container = $('#nav-mylearning-popover-container');
 
         var myLearning = new MyLearning(container);

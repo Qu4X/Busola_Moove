@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_moove\util;
+namespace theme_ebusola\util;
 
 use core\exception\moodle_exception;
 use core_course_list_element;
@@ -22,7 +22,7 @@ use core_course_list_element;
 /**
  * My learning class.
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2023 Willian Mano <willianmano@conecti.me>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

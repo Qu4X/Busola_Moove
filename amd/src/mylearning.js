@@ -16,7 +16,7 @@
 /**
  * Controls the mylearning popover in the nav bar.
  *
- * See template: theme_moove/mylearning
+ * See template: theme_ebusola/mylearning
  *
  * @copyright   2023 Willian Mano {@link https://conecti.me}
  * @author      Willian Mano <willianmanoaraujo@gmail.com>
@@ -137,7 +137,7 @@ define(['jquery', 'core/ajax', 'core/templates', 'core/str', 'core/url',
             var container = this.getContent();
 
             var request = Ajax.call([{
-                methodname: 'theme_moove_get_my_learning',
+                methodname: 'theme_ebusola_get_my_learning',
                 args: {}
             }]);
 
@@ -165,7 +165,7 @@ define(['jquery', 'core/ajax', 'core/templates', 'core/str', 'core/url',
             var promises = [];
 
             $.each(courses, function(index, course) {
-                var promise = Templates.render('theme_moove/moove/mylearning_course', course)
+                var promise = Templates.render('theme_ebusola/ebusola/mylearning_course', course)
                     .then(function(html, js) {
                         return {html: html, js: js};
                     });

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_moove;
+namespace theme_ebusola;
 
 /**
  * Helper for the Boost light and dark colour modes.
@@ -26,7 +26,7 @@ namespace theme_moove;
  * The mode is stored as a user preference, and mirrored into a cookie of the same name so that a page which nobody
  * is logged in to can be rendered in it. The preference is authoritative whenever it can be read.
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2026 Willian Mano <willianmanoaraujo@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -63,7 +63,7 @@ class colour_mode extends \theme_boost\colour_mode {
             return true;
         }
 
-        return (bool) get_config('theme_moove', 'enablecolourmodes');
+        return (bool) get_config('theme_ebusola', 'enablecolourmodes');
     }
 
     /**
@@ -105,7 +105,7 @@ class colour_mode extends \theme_boost\colour_mode {
 
         // Falls back to the same mode the setting defaults to, so that a site which has never saved the setting and a
         // site which has saved something unusable are rendered the same way.
-        $default = get_config('theme_moove', 'defaultcolourmode');
+        $default = get_config('theme_ebusola', 'defaultcolourmode');
         return self::is_valid_mode($default) ? $default : self::LIGHT;
     }
 
@@ -117,11 +117,11 @@ class colour_mode extends \theme_boost\colour_mode {
      *
      * @return bool
      */
-    public static function is_moove_theme(): bool {
+    public static function is_ebusola_theme(): bool {
         global $PAGE;
 
         $theme = $PAGE->theme;
-        return $theme->name === 'moove' || in_array('moove', $theme->parents, true);
+        return $theme->name === 'ebusola' || in_array('ebusola', $theme->parents, true);
     }
 
     /**
@@ -141,23 +141,23 @@ class colour_mode extends \theme_boost\colour_mode {
         $current = self::get_current_mode();
         $modes = [];
         foreach (self::get_modes() as $mode) {
-            $label = get_string('colourmode:' . $mode, 'theme_moove');
+            $label = get_string('colourmode:' . $mode, 'theme_ebusola');
             $modes[] = [
                 'mode' => $mode,
                 'label' => $label,
                 'icon' => self::ICONS[$mode],
-                'togglelabel' => get_string('colourmodeselected', 'theme_moove', $label),
+                'togglelabel' => get_string('colourmodeselected', 'theme_ebusola', $label),
                 'isactive' => $mode === $current,
             ];
         }
 
-        return $output->render_from_template('theme_moove/colour_mode_menu', [
+        return $output->render_from_template('theme_ebusola/colour_mode_menu', [
             'cookieattributes' => self::get_cookie_attributes(),
             'currenticon' => self::ICONS[$current],
             'currenttogglelabel' => get_string(
                 'colourmodeselected',
-                'theme_moove',
-                get_string('colourmode:' . $current, 'theme_moove'),
+                'theme_ebusola',
+                get_string('colourmode:' . $current, 'theme_ebusola'),
             ),
             'modes' => $modes,
         ]);

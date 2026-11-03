@@ -17,12 +17,12 @@
 /**
  * Renderers for outputting parts of the question engine.
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_moove\output\core;
+namespace theme_ebusola\output\core;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -39,7 +39,7 @@ use moodle_url;
 /**
  * This renderer controls the overall output of questions.
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2009 The Open University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

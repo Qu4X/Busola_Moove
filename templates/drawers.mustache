@@ -15,7 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_moove/drawers
+    @template theme_ebusola/drawers
 
     Moove drawer template.
 
@@ -52,7 +52,7 @@
 {{> theme_boost/head }}
 
 <body {{{ bodyattributes }}}>
-{{> theme_moove/moove/accessibilitybar }}
+{{> theme_ebusola/ebusola/accessibilitybar }}
 
 {{> core/local/toast/wrapper}}
 
@@ -60,7 +60,7 @@
 
     {{{ output.standard_top_of_body_html }}}
 
-    {{> theme_moove/navbar }}
+    {{> theme_ebusola/navbar }}
     {{#courseindex}}
         {{< theme_boost/drawer }}
             {{$id}}theme_boost-drawers-courseindex{{/id}}
@@ -75,8 +75,8 @@
             {{$tooltipplacement}}right{{/tooltipplacement}}
             {{$closebuttontext}}{{#str}}closecourseindex, core{{/str}}{{/closebuttontext}}
             {{$closebuttonicon}}
-                <span class="dir-rtl-hide">{{#pix}} e/sidebar_left, theme_moove {{/pix}}</span>
-                <span class="dir-ltr-hide">{{#pix}} e/sidebar_right, theme_moove {{/pix}}</span>
+                <span class="dir-rtl-hide">{{#pix}} e/sidebar_left, theme_ebusola {{/pix}}</span>
+                <span class="dir-ltr-hide">{{#pix}} e/sidebar_right, theme_ebusola {{/pix}}</span>
             {{/closebuttonicon}}
         {{/ theme_boost/drawer}}
     {{/courseindex}}
@@ -97,8 +97,8 @@
             {{$drawercloseonresize}}1{{/drawercloseonresize}}
             {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
             {{$closebuttonicon}}
-                <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, theme_moove {{/pix}}</span>
-                <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, theme_moove {{/pix}}</span>
+                <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, theme_ebusola {{/pix}}</span>
+                <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, theme_ebusola {{/pix}}</span>
             {{/closebuttonicon}}
         {{/ theme_boost/drawer}}
     {{/hasblocks}}
@@ -120,8 +120,8 @@
                             title="{{#str}}opendrawerindex, core{{/str}}"
                         >
                             <span class="visually-hidden">{{#str}}opendrawerindex, core{{/str}}</span>
-                            <span class="dir-rtl-hide">{{#pix}} e/sidebar_left, theme_moove {{/pix}}</span>
-                            <span class="dir-ltr-hide">{{#pix}} e/sidebar_right, theme_moove {{/pix}}</span>
+                            <span class="dir-rtl-hide">{{#pix}} e/sidebar_left, theme_ebusola {{/pix}}</span>
+                            <span class="dir-ltr-hide">{{#pix}} e/sidebar_right, theme_ebusola {{/pix}}</span>
                         </button>
                     </div>
                 {{/courseindex}}
@@ -137,8 +137,8 @@
                             title="{{#str}}opendrawerblocks, core{{/str}}"
                         >
                             <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
-                            <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, theme_moove {{/pix}}</span>
-                            <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, theme_moove {{/pix}}</span>
+                            <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, theme_ebusola {{/pix}}</span>
+                            <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, theme_ebusola {{/pix}}</span>
                         </button>
                     </div>
                 {{/hasblocks}}
@@ -176,8 +176,8 @@
             </div>
         </div>
     </div>
-    {{> theme_moove/footer }}
-    {{> theme_moove/whatsapp_button }}
+    {{> theme_ebusola/footer }}
+    {{> theme_ebusola/whatsapp_button }}
 
     {{{ output.standard_after_main_region_html }}}
 </div>

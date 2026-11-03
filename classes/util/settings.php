@@ -17,19 +17,19 @@
 /**
  * Theme helper to load a theme configuration.
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2022 Willian Mano - http://conecti.me
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_moove\util;
+namespace theme_ebusola\util;
 
 use theme_config;
 
 /**
  * Helper to load a theme configuration.
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2017 Willian Mano - http://conecti.me
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -166,7 +166,7 @@ class settings {
         $templatecontext['slideshowcolorblockcolor1'] = $this->slideshowcolorblockcolor1 ?: '#0f47ad';
         $templatecontext['slideshowcolorblockcolor2'] = $this->slideshowcolorblockcolor2 ?: '#17a2b8';
 
-        $defaultimage = new \moodle_url('/theme/moove/pix/default_slide.jpg');
+        $defaultimage = new \moodle_url('/theme/ebusola/pix/default_slide.jpg');
         for ($i = 1, $j = 0; $i <= $templatecontext['slidercount']; $i++, $j++) {
             $sliderimage = "sliderimage{$i}";
             $slidertitle = "slidertitle{$i}";
@@ -202,7 +202,7 @@ class settings {
             $templatecontext['marketingheading'] = format_text($this->marketingheading, FORMAT_HTML);
             $templatecontext['marketingcontent'] = format_text($this->marketingcontent, FORMAT_HTML);
 
-            $defaultimage = new \moodle_url('/theme/moove/pix/default_markegingicon.svg');
+            $defaultimage = new \moodle_url('/theme/ebusola/pix/default_markegingicon.svg');
 
             for ($i = 1, $j = 0; $i < 5; $i++, $j++) {
                 $marketingicon = 'marketing' . $i . 'icon';

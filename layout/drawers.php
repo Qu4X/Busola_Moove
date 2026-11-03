@@ -17,7 +17,7 @@
 /**
  * A drawer based layout for the Eskada theme.
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2025 Willian Mano - willianmanoaraujo@gmail.com
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -54,7 +54,7 @@ if (!$hasblocks) {
     $blockdraweropen = false;
 }
 
-$themesettings = new \theme_moove\util\settings();
+$themesettings = new \theme_ebusola\util\settings();
 if (!$themesettings->enablecourseindex) {
     $courseindex = '';
 } else {
@@ -127,8 +127,8 @@ $templatecontext = [
     'addblockbutton' => $addblockbutton,
 ];
 
-$themesettings = new \theme_moove\util\settings();
+$themesettings = new \theme_ebusola\util\settings();
 
 $templatecontext = array_merge($templatecontext, $themesettings->footer());
 
-echo $OUTPUT->render_from_template('theme_moove/drawers', $templatecontext);
+echo $OUTPUT->render_from_template('theme_ebusola/drawers', $templatecontext);

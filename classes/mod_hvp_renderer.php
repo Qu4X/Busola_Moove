@@ -15,16 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Class theme_moove_mod_hvp_renderer.
+ * Class theme_ebusola_mod_hvp_renderer.
  *
  * See: https://tracker.moodle.org/browse/MDL-69087 and
  *      https://github.com/sarjona/h5pmods-moodle-plugin.
  *
- * @package     theme_moove
+ * @package     theme_ebusola
  * @copyright   2022 Willian Mano - http://conecti.me
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_moove_mod_hvp_renderer extends \mod_hvp_renderer {
+class theme_ebusola_mod_hvp_renderer extends \mod_hvp_renderer {
     /**
      * Add styles when an HVP is displayed.
      *
@@ -61,7 +61,7 @@ class theme_moove_mod_hvp_renderer extends \mod_hvp_renderer {
 
         return \moodle_url::make_file_url(
             "$CFG->wwwroot/pluginfile.php",
-            "/$syscontext->id/theme_moove/hvp/$itemid/themehvp.css"
+            "/$syscontext->id/theme_ebusola/hvp/$itemid/themehvp.css"
         );
     }
 }

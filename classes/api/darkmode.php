@@ -17,12 +17,12 @@
 /**
  * Accessibility API endpoints
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2020 Willian Mano - http://conecti.me
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_moove\api;
+namespace theme_ebusola\api;
 
 use core_external\external_api;
 use core_external\external_function_parameters;
@@ -32,7 +32,7 @@ use core_external\external_value;
 /**
  * Darkmode API endpoints class
  *
- * @package    theme_moove
+ * @package    theme_ebusola
  * @copyright  2020 Willian Mano - http://conecti.me
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
