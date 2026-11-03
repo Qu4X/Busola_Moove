@@ -3,7 +3,6 @@
  * 1. Synchronizes theme color mode (light/dark) between Moodle parent window and H5P iframe.
  * 2. Relocates H5P progress dots container above question card to match Busola Quiz mockup (Quiz.dc.html).
  * 3. Injects and updates question counter "Pytanie X z Y" above progress bar.
- * 4. Aligns action buttons: "Sprawdź" centered, Previous on the left, Next on the right on the same row.
  */
 (function() {
     'use strict';
@@ -83,54 +82,7 @@
         }
     }
 
-    // --- 3. ALIGN ACTION BUTTONS (PREV - CHECK - NEXT ON SAME ROW) ---
-    function alignActionButtons() {
-        try {
-            // QuestionSet keeps all questions in the DOM; use the visible one.
-            var question = null;
-            var all = document.querySelectorAll('.question-container');
-            for (var q = 0; q < all.length; q++) {
-                if (all[q].offsetParent !== null) {
-                    question = all[q];
-                    break;
-                }
-            }
-            if (!question) {
-                return;
-            }
-
-            var buttonContainer = question.querySelector('.h5p-question-buttons');
-
-            if (buttonContainer) {
-                // Navigation buttons live outside the question card (QuestionSet footer).
-                var navSelector = 'button[class*="next"], button[class*="prev"], ' +
-                                  '.h5p-question-next, .h5p-question-prev, .h5p-question-set-next, .h5p-question-set-prev';
-                var navButtons = document.querySelectorAll(navSelector);
-                for (var n = 0; n < navButtons.length; n++) {
-                    var btn = navButtons[n];
-                    if (buttonContainer.contains(btn)) {
-                        continue;
-                    }
-                    var isPrev = /prev/.test(btn.className);
-                    if (isPrev) {
-                        buttonContainer.insertBefore(btn, buttonContainer.firstChild);
-                    } else {
-                        buttonContainer.appendChild(btn);
-                    }
-                }
-
-                // Remove redundant title attribute matching text to prevent dark popover badge
-                var checkBtn = buttonContainer.querySelector('.h5p-theme-check, .h5p-question-check-answer, .joubel-simple-rounded-button');
-                if (checkBtn && checkBtn.getAttribute('title') && checkBtn.getAttribute('title').trim() === checkBtn.textContent.trim()) {
-                    checkBtn.removeAttribute('title');
-                }
-            }
-        } catch (e) {
-            // Silently catch timing issues
-        }
-    }
-
-    // --- 4. PROGRESS BAR RELOCATION ---
+    // --- 3. PROGRESS BAR RELOCATION ---
     function relocateProgressBar() {
         try {
             var dots = document.querySelector('.h5p-progress-dots-container');
@@ -143,7 +95,6 @@
                 updateQuestionCounter(dots);
             }
 
-            alignActionButtons();
         } catch (e) {
             // Silently catch any timing issues
         }

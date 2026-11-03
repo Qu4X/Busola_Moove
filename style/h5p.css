@@ -408,10 +408,7 @@ body.moove-darkmode html body .h5p-answer:has(input:checked) {
     background-color: #2B233D !important;
 }
 
-/* Wszelkie kontenery wewnętrzne wewnątrz kafla MUSZĄ być przezroczyste */
-html body .h5p-answer *,
-html body .h5p-answer.h5p-selected *,
-html body .h5p-answer:has(input:checked) *,
+/* Wewnętrzne kontenery kafla przezroczyste (bez ruszania ikon poprawna/błędna) */
 html body .h5p-alternative-container,
 html body .h5p-answer-container,
 html body .h5p-alternative-input {
@@ -423,8 +420,8 @@ html body .h5p-alternative-input {
     box-shadow: none !important;
 }
 
-/* Usunięcie wewnętrznej kreski podświetlenia H5P */
-.h5p-alternative-container::after {
+/* Usunięcie wewnętrznej kreski podświetlenia H5P (tylko przed sprawdzeniem) */
+.h5p-answer:not(.h5p-correct):not(.h5p-wrong):not(.h5p-should-check) .h5p-alternative-container::after {
     display: none !important;
 }
 
@@ -506,8 +503,9 @@ html body .h5p-answer:has(input:checked) .h5p-radio-circle {
 /* Kontener przycisków akcji - układ siatki z przyciskiem Sprawdź idealnie na środku */
 html body .h5p-question-buttons {
     margin-top: 32px !important;
-    display: grid !important;
-    grid-template-columns: 1fr auto 1fr !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
     align-items: center !important;
     width: 100% !important;
     box-sizing: border-box !important;
@@ -841,4 +839,47 @@ html body button.h5p-theme-button[class*="next"]:hover,
 html body button.h5p-theme-button[class*="prev"]:hover {
     color: var(--busola-text-primary) !important;
     background: var(--busola-surface-hover) !important;
+}
+
+/* Kolejność w rzędzie akcji: Previous | Sprawdź, Ponów | Next */
+html body .h5p-question-buttons > * {
+    order: 2;
+}
+
+html body .h5p-question-buttons button.h5p-theme-button[class*="prev"] {
+    order: 0 !important;
+    margin-right: auto !important;
+}
+
+html body .h5p-question-buttons button.h5p-theme-check {
+    order: 1 !important;
+}
+
+html body .h5p-question-buttons button.h5p-theme-button[class*="next"] {
+    order: 9 !important;
+    margin-left: auto !important;
+}
+
+/* Przycisk „Ponów” / „Pokaż rozwiązanie” jako drugorzędny */
+html body button.h5p-theme-button[class*="retry"],
+html body button.h5p-theme-button[class*="try-again"],
+html body button.h5p-theme-button[class*="show-solution"] {
+    height: 52px !important;
+    padding: 0 24px !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    background: var(--busola-surface-subtle) !important;
+    color: var(--busola-text-primary) !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+}
+
+/* Pasek wyniku po sprawdzeniu w osobnej linii nad przyciskami */
+html body .h5p-question-scorebar-container,
+html body .h5p-question-feedback {
+    background: transparent !important;
+    order: -1;
+    flex-basis: 100%;
 }
