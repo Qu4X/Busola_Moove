@@ -25,6 +25,8 @@ REPLACEMENTS = [
     ("'moove', $theme->parents", "'ebusola', $theme->parents"),
     ("filtervalues->theme[] = 'moove'", "filtervalues->theme[] = 'ebusola'"),
     ("themesettingmoove", "themesettingebusola"),
+    ("theme_config::load('moove')", "theme_config::load('ebusola')"),
+    ("\\theme_config::load('moove')", "\\theme_config::load('ebusola')"),
 ]
 
 def main():

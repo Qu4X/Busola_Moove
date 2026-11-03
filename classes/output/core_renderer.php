@@ -60,7 +60,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
                                     gtag('config', 'GOOGLE-ANALYTICS-CODE');
                                 </script>";
 
-        $theme = theme_config::load('moove');
+        $theme = theme_config::load('ebusola');
 
         if (!empty($theme->settings->googleanalytics)) {
             $output .= str_replace("GOOGLE-ANALYTICS-CODE", trim($theme->settings->googleanalytics), $googleanalyticscode);
@@ -198,7 +198,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     public function get_theme_logo_url() {
-        $theme = theme_config::load('moove');
+        $theme = theme_config::load('ebusola');
 
         return $theme->setting_file_url('logo', 'logo');
     }
@@ -209,7 +209,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string
      */
     public function get_theme_logo_dark_url() {
-        $theme = theme_config::load('moove');
+        $theme = theme_config::load('ebusola');
 
         return $theme->setting_file_url('logodark', 'logodark');
     }
@@ -267,7 +267,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function favicon() {
         global $CFG;
 
-        $theme = theme_config::load('moove');
+        $theme = theme_config::load('ebusola');
 
         $favicon = $theme->setting_file_url('favicon', 'favicon');
 

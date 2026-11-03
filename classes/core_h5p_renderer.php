@@ -33,7 +33,7 @@ class theme_ebusola_core_h5p_renderer extends \core_h5p\output\renderer {
      * @param string $embedtype How the H5P is displayed.
      */
     public function h5p_alter_styles(&$styles, array $libraries, string $embedtype) {
-        $theme = \theme_config::load('moove');
+        $theme = \theme_config::load('ebusola');
 
         $content = $theme->settings->hvpcss;
 

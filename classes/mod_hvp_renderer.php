@@ -33,7 +33,7 @@ class theme_ebusola_mod_hvp_renderer extends \mod_hvp_renderer {
      * @param string $embedtype Possible values: div, iframe, external, editor
      */
     public function hvp_alter_styles(&$styles, $libraries, $embedtype) {
-        $theme = \theme_config::load('moove');
+        $theme = \theme_config::load('ebusola');
 
         $content = $theme->settings->hvpcss;
 

@@ -52,7 +52,7 @@ class settings {
      * Class constructor
      */
     public function __construct() {
-        $this->theme = theme_config::load('moove');
+        $this->theme = theme_config::load('ebusola');
     }
 
     /**
