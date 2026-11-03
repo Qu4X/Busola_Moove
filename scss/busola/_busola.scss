@@ -17,10 +17,25 @@ $busola-peach-light: #FFEBDB;
 $busola-gray-track: #E3E7F4;
 
 /* --------------------------------------------------------------------------
-   0. Podstawowa typografia i tło
+   0. Podstawowa typografia, tło i logotypy
    -------------------------------------------------------------------------- */
 body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+}
+
+/* Ukrycie ciemnego logo w trybie jasnym (zapobiega wyświetlaniu dwóch obok siebie) */
+.navbar-brand .logo.dark {
+    display: none !important;
+}
+[data-bs-theme="dark"] .navbar-brand .logo.dark,
+[data-color-mode="dark"] .navbar-brand .logo.dark,
+body.darkmode .navbar-brand .logo.dark {
+    display: inline-block !important;
+}
+[data-bs-theme="dark"] .navbar-brand .logo.light,
+[data-color-mode="dark"] .navbar-brand .logo.light,
+body.darkmode .navbar-brand .logo.light {
+    display: none !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -80,9 +95,18 @@ body {
     display: none;
 }
 
-/* Ukrycie info dla niezalogowanych na stronie głównej */
-body.notloggedin #page-content.main-inner {
-    display: none !important;
+/* Poprawka szerokości kafelków kursów na stronie głównej */
+.courses.frontpage-course-list-all,
+.courses {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 24px !important;
+
+    .card.dashboard-card {
+        flex: 1 1 260px !important;
+        min-width: 240px !important;
+        max-width: 340px !important;
+    }
 }
 
 /* Przyciski do szuflad bocznych (Drawer toggles) */
@@ -109,32 +133,23 @@ div.alert.alert-info {
     display: none !important;
 }
 
-/* Ukrycie tekstu w lewym panelu strony logowania */
-.login-layout-left-content {
+/* Ukrycie tekstu w lewym panelu strony logowania i centrowanie formularza */
+.pagelayout-login aside.login-layout-left,
+#page-login-index aside.login-layout-left {
     display: none !important;
 }
 
-/* Zakotwiczenie tła na wszystkich stronach logowania */
-.pagelayout-login .login-layout-left {
-    display: block !important;
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    width: 100vw !important;
-    height: 100vh !important;
-    z-index: 1;
-}
-
-/* Formularz na wierzchu i wyśrodkowany */
-.pagelayout-login #region-main.login-layout-right {
+/* Formularz logowania wyśrodkowany na pełną szerokość */
+.pagelayout-login #region-main.login-layout-right,
+#page-login-index #region-main.login-layout-right {
     position: relative;
     z-index: 2;
     flex: 0 0 100% !important;
     max-width: 100% !important;
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     background: transparent !important;
 }
 
