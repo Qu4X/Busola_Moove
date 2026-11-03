@@ -45,7 +45,7 @@ class busola {
         $userinitials = mb_substr($USER->firstname ?? 'J', 0, 1) . mb_substr($USER->lastname ?? 'K', 0, 1);
 
         // Fetch enrolled courses.
-        $mycourses = enrol_get_my_courses(['id', 'fullname', 'shortname', 'category', 'summary', 'summaryformat']);
+        $mycourses = enrol_get_my_courses('id, fullname, shortname, category, summary, summaryformat');
 
         $totalcourses = 0;
         $inprogresscount = 0;
@@ -142,10 +142,13 @@ class busola {
             'firstname' => $firstname,
             'initials' => mb_strtoupper($userinitials),
             'totalcourses' => $totalcourses,
+            'has_totalcourses' => ($totalcourses > 0),
             'totalcourses_label' => $totalcourseslabel,
             'inprogresscount' => $inprogresscount,
+            'has_inprogress' => ($inprogresscount > 0),
             'inprogress_label' => $inprogresslabel,
             'completedcount' => $completedcount,
+            'has_completed' => ($completedcount > 0),
             'completed_label' => $completedlabel,
             'notstartedcount' => $notstartedcount,
             'hascourses' => !empty($coursesdata),

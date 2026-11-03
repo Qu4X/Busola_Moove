@@ -200,7 +200,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function get_theme_logo_url() {
         $theme = theme_config::load('ebusola');
 
-        return $theme->setting_file_url('logo', 'logo');
+        $logo = $theme->setting_file_url('logo', 'logo');
+        return $logo ? (is_object($logo) ? $logo->out(false) : (string) $logo) : '';
     }
 
     /**
@@ -211,7 +212,8 @@ class core_renderer extends \theme_boost\output\core_renderer {
     public function get_theme_logo_dark_url() {
         $theme = theme_config::load('ebusola');
 
-        return $theme->setting_file_url('logodark', 'logodark');
+        $logo = $theme->setting_file_url('logodark', 'logodark');
+        return $logo ? (is_object($logo) ? $logo->out(false) : (string) $logo) : '';
     }
 
     /**

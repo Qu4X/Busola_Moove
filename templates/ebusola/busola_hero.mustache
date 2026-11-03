@@ -18,15 +18,15 @@
                 <p class="busola-hero-subtitle">Witaj w platformie e-learningowej Szkoły Żeglarstwa Busola. Wybierz kurs i zacznij naukę.</p>
             {{/haslastcourse}}
             <div class="busola-hero-badges">
-                {{#totalcourses}}
+                {{#has_totalcourses}}
                     <span class="busola-pill-badge">{{totalcourses_label}}</span>
-                {{/totalcourses}}
-                {{#completedcount}}
+                {{/has_totalcourses}}
+                {{#has_completed}}
                     <span class="busola-pill-badge">{{completed_label}}</span>
-                {{/completedcount}}
-                {{#inprogresscount}}
+                {{/has_completed}}
+                {{#has_inprogress}}
                     <span class="busola-pill-badge">{{inprogress_label}}</span>
-                {{/inprogresscount}}
+                {{/has_inprogress}}
             </div>
         </div>
 

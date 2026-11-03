@@ -64,14 +64,20 @@ class settings {
      */
     public function __get(string $name) {
         if (in_array($name, $this->files)) {
-            return $this->theme->setting_file_url($name, $name);
+            $fileurl = $this->theme->setting_file_url($name, $name);
+            return $fileurl ? (is_object($fileurl) ? $fileurl->out(false) : (string) $fileurl) : false;
         }
 
         if (empty($this->theme->settings->$name)) {
             return false;
         }
 
-        return $this->theme->settings->$name;
+        $val = $this->theme->settings->$name;
+        if (is_array($val)) {
+            return implode(', ', $val);
+        }
+
+        return $val;
     }
 
     /**

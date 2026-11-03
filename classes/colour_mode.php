@@ -35,8 +35,8 @@ if (!class_exists('theme_boost\colour_mode')) {
             return self::LIGHT;
         }
 
-        public static function get_cookie_attributes(): array {
-            return [];
+        public static function get_cookie_attributes(): string {
+            return '; Max-Age=31536000; Path=/; SameSite=Lax';
         }
     }
     class_alias('theme_ebusola\fallback_boost_colour_mode', 'theme_boost\colour_mode');
