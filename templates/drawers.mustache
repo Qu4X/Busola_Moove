@@ -106,38 +106,38 @@
 
         {{#is_busola_dashboard}}
             {{> theme_ebusola/ebusola/busola_dashboard }}
-            {{#hasblocks}}
-                <div class="drawer-toggles d-flex px-3 pt-2">
-                    <div class="drawer-toggler drawer-right-toggle ms-auto d-print-none">
-                        <button
-                            class="btn icon-no-margin"
-                            data-toggler="drawers"
-                            data-action="toggle"
-                            data-target="theme_boost-drawers-blocks"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="right"
-                            title="{{#str}}opendrawerblocks, core{{/str}}"
-                        >
-                            <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
-                            <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, theme_ebusola {{/pix}}</span>
-                            <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, theme_ebusola {{/pix}}</span>
-                        </button>
-                    </div>
-                </div>
-            {{/hasblocks}}
             {{#user_is_editing}}
-                <div class="busola-editing-zone container my-5 p-4" style="background:#FFFFFF;border:2px dashed #CBD1F3;border-radius:20px;box-shadow:0 8px 32px rgba(20,27,94,.08);">
-                    <div class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom">
+                {{#hasblocks}}
+                    <div class="drawer-toggles d-flex px-3 pt-2">
+                        <div class="drawer-toggler drawer-right-toggle ms-auto d-print-none">
+                            <button
+                                class="btn icon-no-margin"
+                                data-toggler="drawers"
+                                data-action="toggle"
+                                data-target="theme_boost-drawers-blocks"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="right"
+                                title="{{#str}}opendrawerblocks, core{{/str}}"
+                            >
+                                <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
+                                <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, theme_ebusola {{/pix}}</span>
+                                <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, theme_ebusola {{/pix}}</span>
+                            </button>
+                        </div>
+                    </div>
+                {{/hasblocks}}
+                <div class="busola-editing-zone container my-5 p-4">
+                    <div class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom busola-editing-header">
                         <div class="d-flex align-items-center gap-2">
-                            <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:#FFE8D4;color:#B93C00;">
+                            <span class="busola-editing-icon">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                             </span>
                             <div>
-                                <h3 style="margin:0;font-size:20px;font-weight:800;color:#141B5E;">Zarządzanie stroną główną</h3>
-                                <p style="margin:0;font-size:13px;color:#5B6280;">Sekcja widoczna dla administratorów w trybie edycji (dodawanie i konfiguracja modułów).</p>
+                                <h3 class="busola-editing-title">{{#str}}edit_zone_title, theme_ebusola{{/str}}</h3>
+                                <p class="busola-editing-desc">{{#str}}edit_zone_desc, theme_ebusola{{/str}}</p>
                             </div>
                         </div>
-                        <span class="badge bg-primary text-white px-3 py-2" style="font-size:13px;border-radius:999px;">Tryb edycji aktywny</span>
+                        <span class="badge bg-primary text-white px-3 py-2 busola-editing-badge">{{#str}}edit_zone_badge, theme_ebusola{{/str}}</span>
                     </div>
 
                     <div class="busola-editing-content">

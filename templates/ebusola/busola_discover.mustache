@@ -1,24 +1,24 @@
 {{!
-    Sekcja Odkryj kolejne kursy - 3 kafelki kategorii z listą nieodkrytych kursów.
+    Sekcja Odkryj kolejne kursy - tokenizowane kafelki kategorii z listą nieodkrytych kursów.
 }}
-<section aria-labelledby="h-odkryj">
-    <h2 id="h-odkryj" style="margin:0 0 24px;font-size:30px;font-weight:800;letter-spacing:-.015em;color:#141B5E;">Odkryj kolejne kursy</h2>
-    <div style="display:flex;flex-wrap:wrap;gap:24px;">
+<section aria-labelledby="h-odkryj" class="busola-section-discover">
+    <h2 id="h-odkryj" class="busola-section-title">{{#str}}discover_heading, theme_ebusola{{/str}}</h2>
+    <div class="busola-discover-grid">
         {{#discover}}
-        <div style="flex:1 1 300px;min-width:0;background:{{bgcolor}};border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:6px;">
-            <div style="margin-bottom:12px;">
-                <svg viewBox="0 0 160 100" width="80" height="50" aria-hidden="true" style="display:block;">
+        <div class="busola-discover-card cat-{{icon}}">
+            <div class="busola-discover-icon">
+                <svg viewBox="0 0 160 100" width="80" height="50" aria-hidden="true" class="busola-discover-svg">
                     <rect x="24" y="48" width="12" height="22" rx="3" fill="#FF7A1A" stroke="#141B5E" stroke-width="2.5"></rect>
                     <path d="M32 62 H132 L120 80 H48 Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
                     <path d="M66 62 L80 42 H104 L112 62" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
                 </svg>
             </div>
-            <h3 style="margin:0;font-size:22px;font-weight:800;color:#141B5E;">{{title}}</h3>
-            <p style="margin:0 0 12px;font-size:14px;color:#3A4163;">{{status_label}}</p>
+            <h3 class="busola-discover-title">{{title}}</h3>
+            <p class="busola-discover-status">{{status_label}}</p>
             {{#has_courses}}
-                <div style="display:flex;flex-direction:column;gap:8px;">
+                <div class="busola-discover-links">
                     {{#courses}}
-                        <a href="{{url}}" style="display:inline-flex;align-items:center;gap:8px;font-weight:700;color:#141B5E;text-decoration:none;padding:4px 0;font-size:15px;">
+                        <a href="{{url}}" class="busola-discover-link">
                             {{fullname}}
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
                         </a>

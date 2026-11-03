@@ -92,7 +92,7 @@ class settings {
 
         $settings = [
             'facebook', 'twitter', 'linkedin', 'youtube', 'instagram', 'whatsapp', 'telegram', 'tiktok', 'pinterest',
-            'website', 'mobile', 'mail',
+            'website', 'mobile', 'mail', 'termsurl', 'privacyurl', 'rodourl',
         ];
 
         $templatecontext['hasfootercontact'] = false;

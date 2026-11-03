@@ -137,6 +137,42 @@ class core_renderer extends \theme_boost\output\core_renderer {
     }
 
     /**
+     * Renders the site-wide Edit mode switch.
+     *
+     * Ensures administrators and managers always see the edit toggle switch in the navbar
+     * on the front page and custom dashboard.
+     *
+     * @return string
+     */
+    public function edit_switch(): string {
+        if (!isloggedin() || isguestuser()) {
+            return '';
+        }
+
+        if ($this->page->user_allowed_editing()) {
+            return parent::edit_switch();
+        }
+
+        // On frontpage or custom dashboard layouts, check site-level editing capability.
+        $sitecontext = \context_course::instance(SITEID);
+        if (has_capability('moodle/course:update', $sitecontext) || has_capability('moodle/site:manageblocks', $sitecontext)) {
+            $url = new \moodle_url('/editmode.php');
+            $context = [
+                'legacyseturl' => $url->out(false),
+                'pageurl' => $this->page->url->out_as_local_url(),
+                'pagecontextid' => $sitecontext->id,
+                'sesskey' => sesskey(),
+                'checked' => $this->page->user_is_editing(),
+                'elementid' => 'editingswitch-' . uniqid(),
+            ];
+
+            return $this->render_from_template('core/editswitch', $context);
+        }
+
+        return '';
+    }
+
+    /**
      * Whether we should display the main theme or site logo in the navbar.
      *
      * @return bool

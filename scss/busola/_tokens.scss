@@ -1,0 +1,145 @@
+// ==========================================================================
+// eBusola Design Tokens (CSS Custom Properties)
+// ==========================================================================
+
+:root,
+[data-bs-theme="light"] {
+    // 1. Podstawowe powierzchnie (Surfaces)
+    --busola-bg-canvas: #F5F6FB;
+    --busola-surface-card: #FFFFFF;
+    --busola-surface-subtle: #F1F4FA;
+    --busola-surface-border: #E2E8F0;
+
+    // 2. Sekcja Hero
+    --busola-hero-bg: #141B5E;
+    --busola-hero-title: #FFFFFF;
+    --busola-hero-subtitle: #CBD1F3;
+    --busola-hero-pill-bg: rgba(255, 255, 255, 0.12);
+    --busola-hero-pill-text: #FFFFFF;
+
+    // 3. Typografia i teksty
+    --busola-text-primary: #141B5E;
+    --busola-text-secondary: #5B6280;
+    --busola-text-muted: #8890B5;
+    --busola-text-inverse: #FFFFFF;
+
+    // 4. Akcenty marki Busola
+    --busola-accent-orange: #FF7A1A;
+    --busola-accent-orange-hover: #E0650D;
+    --busola-accent-navy: #141B5E;
+    --busola-accent-navy-hover: #0F1547;
+    --busola-accent-red: #B93C00;
+
+    // 5. Pastelowe tokeny kategorii kursów
+    --busola-cat-sail-bg: #E3E8FB;
+    --busola-cat-sail-text: #141B5E;
+    --busola-cat-motor-bg: #DCF0F3;
+    --busola-cat-motor-text: #141B5E;
+    --busola-cat-extra-bg: #FFE8D4;
+    --busola-cat-extra-text: #141B5E;
+
+    // 6. Baner Egzaminy
+    --busola-exam-bg: #FFEBDB;
+    --busola-exam-icon-bg: #FFFFFF;
+    --busola-exam-icon-color: #B93C00;
+    --busola-exam-title: #141B5E;
+    --busola-exam-text: #3A4163;
+    --busola-exam-btn-border: #141B5E;
+    --busola-exam-btn-text: #141B5E;
+    --busola-exam-btn-hover-bg: rgba(20, 27, 94, 0.06);
+
+    // 7. Pigułki kategorii na kartach
+    --busola-badge-bg: #FFFFFF;
+    --busola-badge-text: #141B5E;
+    --busola-badge-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+    // 8. Cienie (Elevations)
+    --busola-shadow-card: 0 1px 2px rgba(20, 27, 94, 0.06), 0 8px 24px rgba(20, 27, 94, 0.06);
+    --busola-shadow-hero-card: 0 2px 4px rgba(0, 0, 0, 0.12), 0 24px 48px rgba(7, 10, 50, 0.35);
+
+    // 9. Paski postępu
+    --busola-progress-track: #E3E7F4;
+    --busola-progress-bar-done: #141B5E;
+    --busola-progress-bar-active: #FF7A1A;
+
+    // 10. Strefa edycyjna
+    --busola-edit-zone-bg: #FFFFFF;
+    --busola-edit-zone-border: #CBD1F3;
+    --busola-edit-zone-title: #141B5E;
+    --busola-edit-zone-sub: #5B6280;
+}
+
+[data-bs-theme="dark"] {
+    // 1. Podstawowe powierzchnie (Surfaces)
+    --busola-bg-canvas: #0B0E2A;
+    --busola-surface-card: #15193B;
+    --busola-surface-subtle: #1C224B;
+    --busola-surface-border: #2D3768;
+
+    // 2. Sekcja Hero
+    --busola-hero-bg: #07091C;
+    --busola-hero-title: #FFFFFF;
+    --busola-hero-subtitle: #CBD1F3;
+    --busola-hero-pill-bg: rgba(255, 255, 255, 0.12);
+    --busola-hero-pill-text: #FFFFFF;
+
+    // 3. Typografia i teksty
+    --busola-text-primary: #FFFFFF;
+    --busola-text-secondary: #94A3B8;
+    --busola-text-muted: #64748B;
+    --busola-text-inverse: #0B0E2A;
+
+    // 4. Akcenty marki Busola
+    --busola-accent-orange: #FF7A1A;
+    --busola-accent-orange-hover: #FF8F3D;
+    --busola-accent-navy: #7A8AFF;
+    --busola-accent-navy-hover: #98A5FF;
+    --busola-accent-red: #FF7A1A;
+
+    // 5. Stonowane ciemne tokeny kategorii kursów
+    --busola-cat-sail-bg: #1B224E;
+    --busola-cat-sail-text: #CBD1F3;
+    --busola-cat-motor-bg: #122B38;
+    --busola-cat-motor-text: #A6DCE5;
+    --busola-cat-extra-bg: #30221A;
+    --busola-cat-extra-text: #FFD4BA;
+
+    // 6. Baner Egzaminy
+    --busola-exam-bg: #261914;
+    --busola-exam-icon-bg: #38241C;
+    --busola-exam-icon-color: #FFB27A;
+    --busola-exam-title: #FFB27A;
+    --busola-exam-text: #E2E8F0;
+    --busola-exam-btn-border: #FF7A1A;
+    --busola-exam-btn-text: #FF7A1A;
+    --busola-exam-btn-hover-bg: rgba(255, 122, 26, 0.15);
+
+    // 7. Pigułki kategorii na kartach
+    --busola-badge-bg: rgba(255, 255, 255, 0.15);
+    --busola-badge-text: #FFFFFF;
+    --busola-badge-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+
+    // 8. Cienie (Elevations)
+    --busola-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --busola-shadow-hero-card: 0 12px 32px rgba(0, 0, 0, 0.5);
+
+    // 9. Paski postępu
+    --busola-progress-track: #232B5E;
+    --busola-progress-bar-done: #7A8AFF;
+    --busola-progress-bar-active: #FF7A1A;
+
+    // 10. Strefa edycyjna
+    --busola-edit-zone-bg: #15193B;
+    --busola-edit-zone-border: #2D3768;
+    --busola-edit-zone-title: #FFFFFF;
+    --busola-edit-zone-sub: #94A3B8;
+}
+
+// Stałe tokeny promieni zaokrągleń
+:root {
+    --busola-radius-sm: 8px;
+    --busola-radius-md: 14px;
+    --busola-radius-lg: 20px;
+    --busola-radius-xl: 24px;
+    --busola-radius-full: 999px;
+}

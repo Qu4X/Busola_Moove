@@ -166,6 +166,25 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtext($name, $title, $description, '', PARAM_RAW_TRIMMED);
     $page->add($setting);
 
+    // Legal links settings.
+    $name = 'theme_ebusola/termsurl';
+    $title = get_string('termsurl', 'theme_ebusola');
+    $description = get_string('termsurl_desc', 'theme_ebusola');
+    $setting = new admin_setting_configtext($name, $title, $description, 'https://kursybusola.pl', PARAM_RAW_TRIMMED);
+    $page->add($setting);
+
+    $name = 'theme_ebusola/privacyurl';
+    $title = get_string('privacyurl', 'theme_ebusola');
+    $description = get_string('privacyurl_desc', 'theme_ebusola');
+    $setting = new admin_setting_configtext($name, $title, $description, 'https://kursybusola.pl', PARAM_RAW_TRIMMED);
+    $page->add($setting);
+
+    $name = 'theme_ebusola/rodourl';
+    $title = get_string('rodourl', 'theme_ebusola');
+    $description = get_string('rodourl_desc', 'theme_ebusola');
+    $setting = new admin_setting_configtext($name, $title, $description, 'https://kursybusola.pl', PARAM_RAW_TRIMMED);
+    $page->add($setting);
+
     // Must add the page after definiting all the settings!
     $settings->add($page);
 

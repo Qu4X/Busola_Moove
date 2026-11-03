@@ -1,11 +1,11 @@
 {{!
     Główny komponent Busola Dashboard (Hero + Moje Kursy + Egzaminy + Odkryj + Nawigacja mobilna).
 }}
-<div class="busola-hub-wrapper" style="background:#F5F6FB;min-height:100%;color:#3A4163;font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.5;">
+<div class="busola-hub-wrapper">
     {{#busola_hub}}
         {{> theme_ebusola/ebusola/busola_hero }}
 
-        <main style="max-width:1200px;margin:0 auto;padding:16px 32px 72px;display:flex;flex-direction:column;gap:64px;">
+        <main class="busola-main-container">
             {{> theme_ebusola/ebusola/busola_mycourses }}
 
             {{> theme_ebusola/ebusola/busola_exams }}

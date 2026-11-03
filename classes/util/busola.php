@@ -250,23 +250,48 @@ class busola {
         // Dodatkowe / SRC: peach #FFE8D4
 
         if (str_contains($shortname, 'SM') || str_contains($fullname, 'motorowod') || str_contains($fullname, 'hol')) {
-            $cat = 'Kursy motorowodne';
+            $cat = get_string('course_cat_motor', 'theme_ebusola');
             $bgcolor = '#DCF0F3';
             $type = 'motor';
             $iconfile = str_contains($fullname, 'hol') ? 'Hol' : (str_contains($shortname, 'MSM') ? 'MSM' : 'SM');
         } else if (str_contains($shortname, 'SRC') || str_contains($fullname, 'radio') || str_contains($fullname, 'src')) {
-            $cat = 'Kursy dodatkowe';
+            $cat = get_string('course_cat_extra', 'theme_ebusola');
             $bgcolor = '#FFE8D4';
-            $type = 'radio';
+            $type = 'extra';
             $iconfile = 'SRC';
         } else {
-            $cat = 'Kursy żeglarskie';
+            $cat = get_string('course_cat_sail', 'theme_ebusola');
             $bgcolor = '#E3E8FB';
             $type = 'sail';
             $iconfile = (str_contains($shortname, 'JSM') || str_contains($fullname, 'morski')) ? 'JSM' : 'ZJ';
         }
 
-        $iconurl = $OUTPUT->image_url('courses/' . $iconfile, 'theme_ebusola')->out(false);
+        if (empty($cat) || $cat === '[[course_cat_extra]]' || $cat === '[[course_cat_sail]]') {
+            $cat = ($type === 'motor') ? 'Kursy motorowodne' : (($type === 'extra') ? 'Kursy dodatkowe' : 'Kursy żeglarskie');
+        }
+
+        // Check if course has an overview image uploaded in Moodle course settings.
+        $iconurl = null;
+        try {
+            $coursecontext = \context_course::instance($course->id);
+            $fs = get_file_storage();
+            $files = $fs->get_area_files($coursecontext->id, 'course', 'overviewfiles', 0, 'itemid, filepath, filename', false);
+            foreach ($files as $file) {
+                if ($file->is_valid_image()) {
+                    $iconurl = \moodle_url::make_file_url(
+                        '/pluginfile.php',
+                        '/' . $file->get_contextid() . '/' . $file->get_component() . '/' . $file->get_filearea() . $file->get_filepath() . $file->get_filename()
+                    )->out(false);
+                    break;
+                }
+            }
+        } catch (\Exception $e) {
+            // Fall back to theme icons.
+        }
+
+        if (empty($iconurl)) {
+            $iconurl = $OUTPUT->image_url('courses/' . $iconfile, 'theme_ebusola')->out(false);
+        }
 
         return [
             'categoryname' => $cat,
