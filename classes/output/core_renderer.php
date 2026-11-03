@@ -120,11 +120,33 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $additionalclasses[] = 'haswhatsappbutton';
         }
 
+        $darkmode = get_user_preferences('dark-mode-on', '');
+        if ($darkmode) {
+            $additionalclasses[] = 'moove-darkmode';
+        }
+
         if (!is_array($additionalclasses)) {
             $additionalclasses = explode(' ', $additionalclasses);
         }
 
         return " id='{$this->body_id()}' class='{$this->body_css_classes($additionalclasses)}' ";
+    }
+
+    /**
+     * Render native Moove darkmode controls.
+     *
+     * @return string Dark mode controls html content.
+     */
+    public function render_darkmode_controls(): string {
+        if (!isloggedin() || isguestuser()) {
+            return '';
+        }
+
+        $darkmode = get_user_preferences('dark-mode-on', false);
+
+        return $this->render_from_template('theme_ebusola/moove/darkmode', [
+            'darkmode' => (bool) $darkmode,
+        ]);
     }
 
     /**

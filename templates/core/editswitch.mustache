@@ -17,29 +17,21 @@
 {{!
     @template core/editswitch
 
-    Site-wide Edit mode toggle switch for navbar with exact hitbox and zero offset.
+    Native Moodle Boost/Moove edit mode toggle switch.
 }}
-<form action="{{{legacyseturl}}}" method="post" class="d-flex align-items-center editmode-switch-form m-0 p-0">
-    <input type="hidden" name="setmode" value="{{#checked}}0{{/checked}}{{^checked}}1{{/checked}}">
-    <label class="busola-editmode-toggle d-inline-flex align-items-center m-0 px-2 py-1" for="{{elementid}}" style="cursor: pointer; user-select: none;">
-        <input type="checkbox"
-            id="{{elementid}}"
-            name="setmode_box"
-            value="1"
-            {{#checked}}checked{{/checked}}
-            data-context="{{{pagecontextid}}}"
-            data-pageurl="{{{pageurl}}}"
-            onchange="this.form.setmode.value = this.checked ? '1' : '0'; this.form.submit();"
-            class="busola-toggle-input visually-hidden"
-        >
-        <span class="busola-toggle-track" aria-hidden="true">
-            <span class="busola-toggle-thumb"></span>
-        </span>
-        <span class="busola-toggle-label ms-2 font-weight-bold d-none d-sm-inline" style="font-size: 13px; font-weight: 600;">{{#str}} editmode, core {{/str}}</span>
-    </label>
+<form action="{{{legacyseturl}}}" method="post" class="d-flex align-items-center editmode-switch-form m-0">
+    <div class="custom-control custom-switch d-flex align-items-center m-0">
+        <input type="checkbox" name="setmode" class="custom-control-input" id="{{elementid}}" {{#checked}}checked{{/checked}} data-context="{{{pagecontextid}}}" data-pageurl="{{{pageurl}}}">
+        <label class="custom-control-label mb-0 ms-1 cursor-pointer font-weight-bold" for="{{elementid}}">
+            <span class="d-none d-md-inline">{{#str}} editmode, core {{/str}}</span>
+        </label>
+    </div>
     <input type="hidden" name="sesskey" value="{{{sesskey}}}">
     <input type="hidden" name="pageurl" value="{{{pageurl}}}">
     <input type="hidden" name="context" value="{{{pagecontextid}}}">
+    <noscript>
+        <input type="submit" value="{{#str}}setmode, core{{/str}}">
+    </noscript>
 </form>
 {{#js}}
 require(['core/edit_switch'], function(editSwitch) {

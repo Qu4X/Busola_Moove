@@ -46,7 +46,12 @@ class hook_listener extends \theme_boost\hook_listener {
             return;
         }
 
-        $mode = colour_mode::get_current_mode();
+        $darkpref = get_user_preferences('dark-mode-on', false);
+        if ($darkpref) {
+            $mode = 'dark';
+        } else {
+            $mode = colour_mode::get_current_mode();
+        }
 
         $hook->add_attribute('data-bs-theme', $mode === colour_mode::AUTO ? colour_mode::LIGHT : $mode);
         $hook->add_attribute('data-colourmode', $mode);
