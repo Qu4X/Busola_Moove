@@ -248,7 +248,81 @@ body.has-busola-dashboard #page.drawers {
     }
 }
 
-/* Przełączniki na górnym pasku (tryb edycji i darkmode) */
+/* 1. Universal Vertical Centering for Switches */
+.custom-switch {
+    .custom-control-label::before,
+    .custom-control-label::after {
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+    }
+
+    .custom-control-input:checked ~ .custom-control-label::after {
+        transform: translateX(0.75rem) translateY(-50%) !important;
+    }
+}
+
+/* 2. Przełączniki na górnym pasku (tryb edycji i darkmode) */
+.editmode-switch-container {
+    margin-left: 0 !important;
+}
+
+.editmode-switch-form {
+    padding-right: 1.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+#toggle-darkmode {
+    padding: 0 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    white-space: nowrap;
+
+    .darkmode-icon-holder {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        margin-right: 4px;
+    }
+
+    .darkmode-icon {
+        width: 18px;
+        height: 18px;
+        transition: transform 0.35s ease, opacity 0.2s ease, color 0.2s ease;
+    }
+
+    .icon-sun {
+        display: inline-block;
+        color: #F59E0B;
+    }
+
+    .icon-moon {
+        display: none;
+        color: #CBD1F3;
+    }
+
+    .icon-moon:last-child {
+        display: none;
+    }
+}
+
+/* Dynamiczna zamiana i animacja obrotu ikony w trybie ciemnym */
+body.moove-darkmode,
+body[data-bs-theme="dark"] {
+    #toggle-darkmode {
+        .icon-sun {
+            display: none !important;
+        }
+
+        .icon-moon {
+            display: inline-block !important;
+            transform: rotate(360deg);
+        }
+    }
+}
+
 .editmode-switch-form,
 #toggle-darkmode {
     .custom-switch {
@@ -256,35 +330,50 @@ body.has-busola-dashboard #page.drawers {
         user-select: none;
         padding-left: 2.25rem;
         position: relative;
+        display: inline-flex;
+        align-items: center;
 
         .custom-control-input {
             cursor: pointer;
             position: absolute;
             left: 0;
-            top: 0;
+            top: 50%;
+            transform: translateY(-50%);
             width: 2.25rem;
             height: 1.5rem;
             z-index: 2;
             opacity: 0;
+            margin: 0;
         }
 
         .custom-control-label {
             cursor: pointer;
             user-select: none;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 0;
 
             &::before {
                 cursor: pointer;
                 border-color: #CBD1F3;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
             }
 
             &::after {
                 cursor: pointer;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
             }
         }
 
         .custom-control-input:checked ~ .custom-control-label::before {
             background-color: var(--busola-accent-orange, #FF7A1A) !important;
             border-color: var(--busola-accent-orange, #FF7A1A) !important;
+        }
+
+        .custom-control-input:checked ~ .custom-control-label::after {
+            transform: translateX(0.75rem) translateY(-50%) !important;
         }
 
         .edit-switch-pencil {
@@ -1555,27 +1644,6 @@ section.busola-section-discover {
    9. Navbar: Przełącznik trybu edycji, menu motywu i ikony
    -------------------------------------------------------------------------- */
 .navbar {
-    .editmode-switch-form {
-        margin-right: 0.75rem;
-
-        .mds-switch-label,
-        label {
-            color: #FFFFFF !important;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .mds-switch-track {
-            background-color: rgba(255, 255, 255, 0.35) !important;
-        }
-
-        input:checked ~ label .mds-switch-track,
-        input:checked + .mds-switch-track {
-            background-color: var(--busola-accent-orange) !important;
-        }
-    }
-
     .colourmodemenu {
         margin: 0 0.4rem;
 
