@@ -150,7 +150,7 @@ ul.h5p-answers li,
     padding: 12px 20px !important;
     border-radius: 16px !important;
     background: #F5F6FB !important;
-    box-shadow: inset 0 0 0 2px transparent !important;
+    box-shadow: none !important;
     font-size: 18px !important;
     font-weight: 600 !important;
     color: #141B5E !important;
@@ -160,6 +160,31 @@ ul.h5p-answers li,
     transition: background 0.15s ease, box-shadow 0.15s ease !important;
 }
 
+/* Usunięcie wewnętrznego niebieskiego prostokąta, obramowań i wskaźników H5P */
+.h5p-alternative-container,
+.h5p-selected .h5p-alternative-container,
+.h5p-answer .h5p-alternative-container,
+li.h5p-answer .h5p-alternative-container {
+    background-color: transparent !important;
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+/* Ukrycie kresek i wskaźników H5P ::before / ::after */
+.h5p-alternative-container::after,
+.h5p-alternative-container::before,
+.h5p-answer::after,
+.h5p-answer::before {
+    display: none !important;
+    content: none !important;
+}
+
 /* Kafel odpowiedzi - hover */
 .h5p-answer:hover,
 .h5p-sc-alternative:hover,
@@ -167,14 +192,16 @@ ul.h5p-answers li:hover {
     background: #F0F2FC !important;
 }
 
-/* Kafel odpowiedzi - zaznaczony (selected) */
+/* Kafel odpowiedzi - zaznaczony (selected): usunięcie pomarańczowej ramki i tła zgodnie z audytem DevTools */
+li.h5p-answer.h5p-selected,
 .h5p-answer.h5p-selected,
 .h5p-sc-selected,
 .h5p-sc-alternative[aria-checked="true"],
 ul.h5p-answers li[aria-checked="true"],
 .h5p-answer[aria-checked="true"] {
-    background: #FFF4EA !important;
-    box-shadow: inset 0 0 0 2px #FF7A1A !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
 }
 
 /* Radio button i checkbox */
