@@ -274,64 +274,55 @@ body.has-busola-dashboard #page.drawers {
 
 #toggle-darkmode {
     padding: 0 4px !important;
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
     white-space: nowrap;
+    user-select: none;
 
     .darkmode-icon-holder {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 20px;
-        height: 20px;
-        margin-right: 4px;
+        width: 24px;
+        height: 24px;
+        margin-right: 6px;
+        cursor: pointer;
     }
 
     .darkmode-icon {
-        width: 18px;
-        height: 18px;
+        width: 22px;
+        height: 22px;
         transition: transform 0.35s ease, opacity 0.2s ease, color 0.2s ease;
     }
 
     .icon-sun {
         display: inline-block;
         color: #F59E0B;
+        width: 22px;
+        height: 22px;
     }
 
     .icon-moon {
         display: none;
-        color: #CBD1F3;
+        color: #A5B4FC;
+        width: 20px;
+        height: 20px;
     }
 
     .icon-moon:last-child {
         display: none;
     }
-}
 
-/* Dynamiczna zamiana i animacja obrotu ikony w trybie ciemnym */
-body.moove-darkmode,
-body[data-bs-theme="dark"] {
-    #toggle-darkmode {
-        .icon-sun {
-            display: none !important;
-        }
-
-        .icon-moon {
-            display: inline-block !important;
-            transform: rotate(360deg);
-        }
-    }
-}
-
-.editmode-switch-form,
-#toggle-darkmode {
     .custom-switch {
         cursor: pointer;
         user-select: none;
         padding-left: 2.25rem;
         position: relative;
-        display: inline-flex;
-        align-items: center;
+        display: inline-flex !important;
+        align-items: center !important;
+        height: 24px;
+        min-height: 24px;
+        margin-bottom: 0;
 
         .custom-control-input {
             cursor: pointer;
@@ -351,6 +342,106 @@ body[data-bs-theme="dark"] {
             user-select: none;
             display: inline-flex;
             align-items: center;
+            height: 24px;
+            min-height: 24px;
+            margin-bottom: 0;
+
+            &::before {
+                cursor: pointer;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+                left: -2.25rem;
+                width: 2rem;
+                height: 1.25rem;
+                border-radius: 1rem;
+                background-color: #E2E8F0;
+                border: 1.5px solid #CBD5E1;
+                transition: background-color 0.25s ease, border-color 0.25s ease;
+            }
+
+            &::after {
+                cursor: pointer;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+                left: calc(-2.25rem + 2px);
+                width: calc(1.25rem - 4px);
+                height: calc(1.25rem - 4px);
+                border-radius: 50%;
+                background-color: #FFFFFF;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                transition: transform 0.25s ease, background-color 0.25s ease;
+            }
+        }
+
+        .custom-control-input:checked ~ .custom-control-label::before {
+            background-color: #312E81 !important;
+            border-color: #4338CA !important;
+        }
+
+        .custom-control-input:checked ~ .custom-control-label::after {
+            transform: translateX(0.75rem) translateY(-50%) !important;
+            background-color: #E0E7FF !important;
+        }
+    }
+}
+
+/* Dynamiczna zamiana i animacja obrotu ikony w trybie ciemnym */
+body.moove-darkmode,
+body[data-bs-theme="dark"] {
+    #toggle-darkmode {
+        .icon-sun {
+            display: none !important;
+        }
+
+        .icon-moon {
+            display: inline-block !important;
+            transform: rotate(360deg);
+        }
+
+        .custom-switch {
+            .custom-control-label::before {
+                background-color: #312E81 !important;
+                border-color: #4338CA !important;
+            }
+
+            .custom-control-label::after {
+                background-color: #E0E7FF !important;
+            }
+        }
+    }
+}
+
+.editmode-switch-form {
+    .custom-switch {
+        cursor: pointer;
+        user-select: none;
+        padding-left: 2.25rem;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        height: 24px;
+        min-height: 24px;
+
+        .custom-control-input {
+            cursor: pointer;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2.25rem;
+            height: 1.5rem;
+            z-index: 2;
+            opacity: 0;
+            margin: 0;
+        }
+
+        .custom-control-label {
+            cursor: pointer;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            height: 24px;
+            min-height: 24px;
             margin-bottom: 0;
 
             &::before {
