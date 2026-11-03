@@ -147,6 +147,10 @@ body {
 
 /* Obsługa logo w navbarze - tryb jasny */
 .navbar-brand {
+    .logo {
+        padding: 7px 21px;
+    }
+
     .logo.dark {
         display: none !important;
     }
