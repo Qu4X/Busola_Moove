@@ -84,18 +84,13 @@
         {{{ output.page_heading_menu }}}
     </ul>
 
-    <div id="usernavigation" class="navbar-nav ms-auto h-100">
+    <div id="usernavigation" class="navbar-nav ms-auto h-100 align-items-center">
         {{# output.search_box }}
             {{{ output.search_box }}}
             <div class="divider border-start h-75 align-self-center mx-1"></div>
         {{/output.search_box}}
 
-        {{# output.colour_mode_menu }}
-            {{{ . }}}
-            <div class="divider border-start h-75 align-self-center mx-1"></div>
-        {{/ output.colour_mode_menu }}
-
-        {{{ output.edit_switch }}}
+        {{{ output.colour_mode_menu }}}
 
         {{{ output.render_mylearning_controls }}}
 
@@ -108,6 +103,10 @@
             {{#usermenu}}
                 {{> core/user_menu }}
             {{/usermenu}}
+        </div>
+
+        <div class="editmode-switch-container ms-2 d-flex align-items-center">
+            {{{ output.edit_switch }}}
         </div>
     </div>
 </nav>

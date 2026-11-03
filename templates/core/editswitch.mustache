@@ -17,23 +17,26 @@
 {{!
     @template core/editswitch
 
-    Site-wide Edit mode toggle switch for navbar.
-    Ensures a reliable, accessible toggle switch is rendered across all Moodle versions.
+    Site-wide Edit mode toggle switch for navbar with exact hitbox and zero offset.
 }}
-<form action="{{{legacyseturl}}}" method="post" class="d-flex align-items-center editmode-switch-form mx-2 my-auto">
-    <div class="form-check form-switch custom-control custom-switch d-flex align-items-center mb-0">
+<form action="{{{legacyseturl}}}" method="post" class="d-flex align-items-center editmode-switch-form m-0 p-0">
+    <input type="hidden" name="setmode" value="{{#checked}}0{{/checked}}{{^checked}}1{{/checked}}">
+    <label class="busola-editmode-toggle d-inline-flex align-items-center m-0 px-2 py-1" for="{{elementid}}" style="cursor: pointer; user-select: none;">
         <input type="checkbox"
-            name="setmode"
-            class="form-check-input custom-control-input me-2 cursor-pointer"
             id="{{elementid}}"
+            name="setmode_box"
+            value="1"
             {{#checked}}checked{{/checked}}
             data-context="{{{pagecontextid}}}"
             data-pageurl="{{{pageurl}}}"
-            onchange="this.form.submit()">
-        <label class="form-check-label custom-control-label font-weight-bold text-nowrap cursor-pointer mb-0" for="{{elementid}}">
-            {{#str}} editmode, core {{/str}}
-        </label>
-    </div>
+            onchange="this.form.setmode.value = this.checked ? '1' : '0'; this.form.submit();"
+            class="busola-toggle-input visually-hidden"
+        >
+        <span class="busola-toggle-track" aria-hidden="true">
+            <span class="busola-toggle-thumb"></span>
+        </span>
+        <span class="busola-toggle-label ms-2 font-weight-bold d-none d-sm-inline" style="font-size: 13px; font-weight: 600;">{{#str}} editmode, core {{/str}}</span>
+    </label>
     <input type="hidden" name="sesskey" value="{{{sesskey}}}">
     <input type="hidden" name="pageurl" value="{{{pageurl}}}">
     <input type="hidden" name="context" value="{{{pagecontextid}}}">

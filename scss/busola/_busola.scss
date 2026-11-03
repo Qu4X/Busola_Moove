@@ -213,7 +213,7 @@ body {
 }
 
 #page {
-    flex: 1;
+    flex: 1 0 auto;
 
     &.has-busola-dashboard,
     &.drawers.has-busola-dashboard {
@@ -224,7 +224,8 @@ body {
         max-width: 100% !important;
         height: auto !important;
         min-height: calc(100vh - 70px) !important;
-        overflow-y: visible !important;
+        display: flex !important;
+        flex-direction: column !important;
     }
 }
 
@@ -238,10 +239,71 @@ body.has-busola-dashboard #page.drawers {
     background-color: #0F1547 !important;
     color: #FFFFFF !important;
     border-top: none !important;
+    margin-top: auto !important;
+    width: 100% !important;
+    flex-shrink: 0 !important;
 
     .copyright {
         display: none !important;
     }
+}
+
+/* Przełącznik trybu edycji na górnym pasku */
+.busola-editmode-toggle {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+
+    .busola-toggle-input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    .busola-toggle-track {
+        display: inline-flex;
+        align-items: center;
+        width: 44px;
+        height: 24px;
+        border-radius: 12px;
+        background-color: #CBD1F3;
+        padding: 2px;
+        transition: background-color 0.2s ease;
+        position: relative;
+    }
+
+    .busola-toggle-thumb {
+        display: block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #FFFFFF;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+        transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .busola-toggle-input:checked + .busola-toggle-track {
+        background-color: var(--busola-accent-orange, #FF7A1A);
+    }
+
+    .busola-toggle-input:checked + .busola-toggle-track .busola-toggle-thumb {
+        transform: translateX(20px);
+    }
+
+    .busola-toggle-label {
+        font-size: 13px;
+        color: inherit;
+    }
+}
+
+[data-bs-theme="dark"] .busola-editmode-toggle .busola-toggle-track {
+    background-color: #2D3768;
 }
 
 /* --------------------------------------------------------------------------
