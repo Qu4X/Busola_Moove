@@ -989,19 +989,19 @@ body#page-login-signup .login-layout-right-content {
 .busola-main-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 16px 32px 0;
-    padding-bottom: 0 !important;
+    padding: 16px 32px 64px;
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
     gap: 64px;
 }
 
-.busola-section-discover {
-    margin-bottom: 64px !important;
+section.busola-section-discover {
+    margin-bottom: 0 !important;
 }
 
-.footer-content-debugging:empty {
+.footer-content-debugging:empty,
+.footer-content-debugging:has(> .container-fluid:empty) {
     display: none !important;
 }
 
