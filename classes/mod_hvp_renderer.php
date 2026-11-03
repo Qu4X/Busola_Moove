@@ -24,76 +24,79 @@
  * @copyright   2022 Willian Mano - http://conecti.me
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_ebusola_mod_hvp_renderer extends \mod_hvp_renderer {
-    /**
-     * Add styles when an HVP is displayed.
-     *
-     * @param object $styles List of stylesheets that will be loaded
-     * @param array $libraries Array of libraries indexed by the library's machineName
-     * @param string $embedtype Possible values: div, iframe, external, editor
-     */
-    public function hvp_alter_styles(&$styles, $libraries, $embedtype) {
-        global $CFG;
 
-        $theme = \theme_config::load('ebusola');
+if (class_exists('mod_hvp_renderer')) {
+    class theme_ebusola_mod_hvp_renderer extends \mod_hvp_renderer {
+        /**
+         * Add styles when an HVP is displayed.
+         *
+         * @param object $styles List of stylesheets that will be loaded
+         * @param array $libraries Array of libraries indexed by the library's machineName
+         * @param string $embedtype Possible values: div, iframe, external, editor
+         */
+        public function hvp_alter_styles(&$styles, $libraries, $embedtype) {
+            global $CFG;
 
-        // Built-in theme H5P styles.
-        $themeh5pfile = $CFG->dirroot . '/theme/ebusola/style/h5p.css';
-        if (file_exists($themeh5pfile)) {
-            $version = filemtime($themeh5pfile);
-            $styles[] = (object) [
-                'path' => (new \moodle_url('/theme/ebusola/style/h5p.css', ['v' => $version]))->out(false),
-                'version' => '',
-            ];
+            $theme = \theme_config::load('ebusola');
+
+            // Built-in theme H5P styles.
+            $themeh5pfile = $CFG->dirroot . '/theme/ebusola/style/h5p.css';
+            if (file_exists($themeh5pfile)) {
+                $version = filemtime($themeh5pfile);
+                $styles[] = (object) [
+                    'path' => (new \moodle_url('/theme/ebusola/style/h5p.css', ['v' => $version]))->out(false),
+                    'version' => '',
+                ];
+            }
+
+            $content = $theme->settings->hvpcss ?? '';
+
+            if (!empty($content)) {
+                $styles[] = (object) [
+                    'path' => $this->get_style_url($content),
+                    'version' => '',
+                ];
+            }
         }
 
-        $content = $theme->settings->hvpcss ?? '';
+        /**
+         * Add scripts when an HVP is displayed.
+         *
+         * @param object $scripts List of scripts that will be loaded
+         * @param array $libraries Array of libraries indexed by the library's machineName
+         * @param string $embedtype Possible values: div, iframe, external, editor
+         */
+        public function hvp_alter_scripts(&$scripts, $libraries, $embedtype) {
+            global $CFG;
 
-        if (!empty($content)) {
-            $styles[] = (object) [
-                'path' => $this->get_style_url($content),
-                'version' => '',
-            ];
+            $themeh5pjs = $CFG->dirroot . '/theme/ebusola/style/h5p_darkmode.js';
+            if (file_exists($themeh5pjs)) {
+                $version = filemtime($themeh5pjs);
+                $scripts[] = (object) [
+                    'path' => (new \moodle_url('/theme/ebusola/style/h5p_darkmode.js', ['v' => $version]))->out(false),
+                    'version' => '',
+                ];
+            }
         }
-    }
 
-    /**
-     * Add scripts when an HVP is displayed.
-     *
-     * @param array $scripts List of scripts that will be loaded
-     * @param array $libraries Array of libraries indexed by the library's machineName
-     * @param string $embedtype Possible values: div, iframe, external, editor
-     */
-    public function hvp_alter_scripts(&$scripts, $libraries, $embedtype) {
-        global $CFG;
+        /**
+         * Get style URL when an H5P is displayed.
+         *
+         * @param string $content Content.
+         *
+         * @return moodle_url the URL.
+         */
+        protected function get_style_url($content) {
+            global $CFG;
 
-        $themeh5pjs = $CFG->dirroot . '/theme/ebusola/style/h5p_darkmode.js';
-        if (file_exists($themeh5pjs)) {
-            $version = filemtime($themeh5pjs);
-            $scripts[] = (object) [
-                'path' => (new \moodle_url('/theme/ebusola/style/h5p_darkmode.js', ['v' => $version]))->out(false),
-                'version' => '',
-            ];
+            $syscontext = \core\context\system::instance();
+
+            $itemid = md5($content);
+
+            return \moodle_url::make_file_url(
+                "$CFG->wwwroot/pluginfile.php",
+                "/$syscontext->id/theme_ebusola/hvp/$itemid/themehvp.css"
+            );
         }
-    }
-
-    /**
-     * Get style URL when an H5P is displayed.
-     *
-     * @param string $content Content.
-     *
-     * @return moodle_url the URL.
-     */
-    protected function get_style_url($content) {
-        global $CFG;
-
-        $syscontext = \core\context\system::instance();
-
-        $itemid = md5($content);
-
-        return \moodle_url::make_file_url(
-            "$CFG->wwwroot/pluginfile.php",
-            "/$syscontext->id/theme_ebusola/hvp/$itemid/themehvp.css"
-        );
     }
 }

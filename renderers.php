@@ -19,8 +19,15 @@
  *
  * @package    theme_ebusola
  * @copyright  2026 Busola
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once($CFG->dirroot . '/theme/ebusola/classes/core_h5p_renderer.php');
-require_once($CFG->dirroot . '/theme/ebusola/classes/mod_hvp_renderer.php');
+defined('MOODLE_INTERNAL') || die();
+
+if (class_exists('\core_h5p\output\renderer')) {
+    require_once($CFG->dirroot . '/theme/ebusola/classes/core_h5p_renderer.php');
+}
+
+if (class_exists('mod_hvp_renderer')) {
+    require_once($CFG->dirroot . '/theme/ebusola/classes/mod_hvp_renderer.php');
+}
