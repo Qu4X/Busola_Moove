@@ -500,34 +500,87 @@ html body .h5p-answer:has(input:checked) .h5p-radio-circle {
 }
 
 /* ==========================================================================
-   7. PRZYCISKI AKCJI (SPRAWDŹ & NAWIGACJA NEXT/PREV)
+   7. PRZYCISKI AKCJI (POPRZEDNIE - SPRAWDŹ NA ŚRODKU - NASTĘPNE PO PRAWEJ)
    ========================================================================== */
 
-.h5p-question-buttons,
-.h5p-sc-question-buttons {
-    margin-top: 28px !important;
-    display: flex !important;
-    flex-wrap: wrap !important;
+/* Kontener przycisków akcji - układ siatki z przyciskiem Sprawdź idealnie na środku */
+html body .h5p-question-buttons {
+    margin-top: 32px !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr !important;
     align-items: center !important;
-    justify-content: space-between !important;
-    gap: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    gap: 16px !important;
     padding: 0 !important;
     border: none !important;
     background: transparent !important;
+    min-height: 52px !important;
 }
 
-/* Główny przycisk „Sprawdź” (pomarańczowy #FF7A1A, tekst #141B5E z makiety) */
-html body button.h5p-question-check-answer,
-html body .h5p-question-buttons button,
-html body .h5p-question-buttons .joubel-simple-rounded-button,
-html body .joubel-simple-rounded-button,
-html body button.joubel-simple-rounded-button,
-html body .h5p-joubelui-button,
-html body button.h5p-joubelui-button,
-html body input.joubel-simple-rounded-button,
-html body .h5p-question-buttons input[type="button"],
-html body .h5p-question-buttons input[type="submit"],
-html body .h5p-question-buttons a.joubel-simple-rounded-button {
+@media (max-width: 600px) {
+    html body .h5p-question-buttons {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        align-items: stretch !important;
+    }
+
+    html body .h5p-question-buttons button,
+    html body .h5p-question-buttons a {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+
+/* Przycisk „Poprzednie” (wyrównany do lewej krawędzi, kolumna 1) */
+html body .h5p-question-buttons .h5p-question-prev,
+html body .h5p-question-buttons .h5p-question-set-prev,
+html body .h5p-question-buttons .h5p-prev-button {
+    grid-column: 1 !important;
+    justify-self: start !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    line-height: 52px !important;
+    padding: 0 24px !important;
+    border: 1px solid var(--busola-surface-border, #E2E8F0) !important;
+    border-radius: 14px !important;
+    background: var(--busola-surface-card, #FFFFFF) !important;
+    color: var(--busola-text-secondary, #5B6280) !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    transition: background 0.15s ease, color 0.15s ease !important;
+}
+
+html body .h5p-question-buttons .h5p-question-prev:hover,
+html body .h5p-question-buttons .h5p-question-set-prev:hover {
+    color: var(--busola-text-primary, #141B5E) !important;
+    background: var(--busola-surface-hover, #F0F2FC) !important;
+}
+
+[data-bs-theme="dark"] html body .h5p-question-buttons .h5p-question-prev,
+[data-bs-theme="dark"] html body .h5p-question-buttons .h5p-question-set-prev,
+body.moove-darkmode html body .h5p-question-buttons .h5p-question-prev {
+    background: var(--busola-surface-card, #15193B) !important;
+    border-color: var(--busola-surface-border, #2D3768) !important;
+    color: var(--busola-text-primary, #FFFFFF) !important;
+}
+
+/* Główny przycisk „Sprawdź” (WYŚRODKOWANY w kolumnie 2) */
+html body .h5p-question-buttons button.h5p-question-check-answer,
+html body .h5p-question-buttons .h5p-question-check-answer,
+html body .h5p-question-buttons .joubel-simple-rounded-button:not(.h5p-question-prev):not(.h5p-question-next):not(.h5p-question-set-prev):not(.h5p-question-set-next) {
+    grid-column: 2 !important;
+    justify-self: center !important;
+    margin: 0 auto !important;
     background: var(--busola-accent-orange, #FF7A1A) !important;
     background-color: var(--busola-accent-orange, #FF7A1A) !important;
     background-image: none !important;
@@ -535,7 +588,7 @@ html body .h5p-question-buttons a.joubel-simple-rounded-button {
     height: 52px !important;
     min-height: 52px !important;
     line-height: 52px !important;
-    padding: 0 32px !important;
+    padding: 0 36px !important;
     border: none !important;
     border-radius: 14px !important;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
@@ -548,45 +601,59 @@ html body .h5p-question-buttons a.joubel-simple-rounded-button {
     align-items: center !important;
     justify-content: center !important;
     text-decoration: none !important;
+    position: relative !important;
     transition: opacity 0.15s ease, transform 0.15s ease !important;
 }
 
-html body button.h5p-question-check-answer:hover,
-html body .h5p-question-buttons button:hover,
-html body .joubel-simple-rounded-button:hover,
-html body .h5p-joubelui-button:hover {
+html body .h5p-question-buttons button.h5p-question-check-answer:hover,
+html body .h5p-question-buttons .joubel-simple-rounded-button:hover {
     opacity: 0.9 !important;
     background: var(--busola-accent-orange, #FF7A1A) !important;
     background-color: var(--busola-accent-orange, #FF7A1A) !important;
-    background-image: none !important;
     color: #141B5E !important;
 }
 
-/* Pasek nawigacji QuestionSet oraz przycisk Next / Dalej */
-html body .h5p-question-set-footer,
-html body .h5p-question-set-navigation {
-    display: flex !important;
-    justify-content: flex-end !important;
-    align-items: center !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    margin-top: 16px !important;
-    margin-bottom: 24px !important;
-    width: 100% !important;
-    max-width: 800px !important;
+/* Całkowite usunięcie nachodzącej na tekst ikony wewnątrz przycisku Sprawdź */
+html body button.h5p-question-check-answer::before,
+html body button.h5p-question-check-answer::after,
+html body .joubel-simple-rounded-button::before,
+html body .joubel-simple-rounded-button::after,
+html body .h5p-joubelui-button::before,
+html body .h5p-joubelui-button::after,
+html body button[class*="check-answer"]::before,
+html body button[class*="check-answer"]::after {
+    display: none !important;
+    content: none !important;
+    width: 0 !important;
+    height: 0 !important;
 }
 
-html body .h5p-question-set-footer button,
-html body .h5p-question-set-footer a,
+html body button.h5p-question-check-answer span[class*="icon"],
+html body .joubel-simple-rounded-button span[class*="icon"],
+html body button.h5p-question-check-answer i,
+html body .joubel-simple-rounded-button i {
+    display: none !important;
+}
+
+/* Ukrycie niechcianych dymków / tooltipów nad przyciskami akcji */
+html body .h5p-question-buttons .joubel-tip-container,
+html body .h5p-question-buttons .h5p-tooltip,
+html body .h5p-question-buttons [class*="tooltip"] {
+    display: none !important;
+}
+
+/* Przycisk „Następne” (wyrównany do prawej krawędzi, kolumna 3) */
+html body .h5p-question-buttons .h5p-question-next,
+html body .h5p-question-buttons .h5p-question-set-next,
+html body .h5p-question-buttons .h5p-next-button,
 html body .h5p-question-next,
-html body .h5p-question-set-next,
-html body .h5p-next-button {
+html body .h5p-question-set-next {
+    grid-column: 3 !important;
+    justify-self: end !important;
     height: 52px !important;
     min-height: 52px !important;
     line-height: 52px !important;
-    padding: 0 32px !important;
+    padding: 0 28px !important;
     border: none !important;
     border-radius: 14px !important;
     background: var(--busola-accent-navy, #141B5E) !important;
@@ -594,7 +661,7 @@ html body .h5p-next-button {
     background-image: none !important;
     color: #FFFFFF !important;
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
-    font-size: 16px !important;
+    font-size: 15px !important;
     font-weight: 700 !important;
     cursor: pointer !important;
     text-shadow: none !important;
@@ -607,13 +674,24 @@ html body .h5p-next-button {
     transition: opacity 0.15s ease !important;
 }
 
-html body .h5p-question-set-footer button:hover,
+html body .h5p-question-buttons .h5p-question-next:hover,
+html body .h5p-question-buttons .h5p-question-set-next:hover,
 html body .h5p-question-next:hover,
 html body .h5p-question-set-next:hover {
     opacity: 0.9 !important;
     background: var(--busola-accent-navy, #141B5E) !important;
     background-color: var(--busola-accent-navy, #141B5E) !important;
     color: #FFFFFF !important;
+}
+
+/* Ukrycie pustego footera QuestionSet po przeniesieniu przycisków */
+html body .h5p-question-set-footer,
+html body .h5p-question-set-navigation {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
 }
 
 /* Przyciski drugorzędne (Ponów, Pokaż rozwiązanie, Pomiń) */
