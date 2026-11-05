@@ -1,6 +1,6 @@
 # Architecture & Maintenance Guide - theme_ebusola
 
-> Dedicated Moodle theme for **Szkoła Żeglarstwa Busola** ([kursybusola.pl](https://kursybusola.pl)), built on **Moove 5.3.1** base and optimized for **Moodle 5.2 / 5.3+**.
+> Dedicated Moodle theme for **Szkoła Żeglarstwa Busola** ([kursybusola.pl](https://kursybusola.pl)), built on **Moove 5.3.1** base and running on **Moodle 5.2 (Build: 20260420)**.
 
 ---
 

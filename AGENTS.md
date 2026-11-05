@@ -1,5 +1,11 @@
 # AGENTS.md
 
+## Target environment
+
+- **Moodle version**: Moodle 5.2 (Build: 20260420)
+- **Theme base**: `theme_moove` 5.3.1 / `theme_boost`
+- **Performance rules & budget**: When modifying PHP data providers (`classes/`), layouts, Mustache templates, SCSS, or AMD scripts, read `docs/adr/0001-theme-performance-architecture.md`.
+
 ## Core architectural rules
 
 ### Dynamic Moodle-driven data over hardcoding
@@ -23,6 +29,9 @@ Canonical triage roles mapped to standard labels (`needs-triage`, `needs-info`, 
 ### Domain docs
 
 Single-context repo layout (`CONTEXT.md` and `docs/adr/` at repo root). See `docs/agents/domain.md`.
+
+### Page implementation & layout guidelines
+When creating or modifying subpages (Kokpit / Dashboard, Moje kursy / My Courses, Profil / User Profile), strictly follow `PAGES_GUIDELINES.md` to prevent layout regressions (footer margins, sticky footer, flex gap double counts, switch hitboxes).
 
 ### Live CSS diagnosis
 
