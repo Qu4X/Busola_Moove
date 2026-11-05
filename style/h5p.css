@@ -25,6 +25,10 @@ body,
     --busola-accent-orange: #FF7A1A;
     --busola-accent-navy: #141B5E;
     --busola-progress-track: #DDE1F2;
+    --busola-success: #2E7D32;
+    --busola-success-bg: #E8F5E9;
+    --busola-danger: #C62828;
+    --busola-danger-bg: #FFEBEE;
     --busola-shadow-card: 0 1px 2px rgba(20, 27, 94, 0.06), 0 12px 32px rgba(20, 27, 94, 0.07);
 }
 
@@ -46,6 +50,10 @@ html.moove-darkmode {
     --busola-accent-orange: #FF7A1A;
     --busola-accent-navy: #7A8AFF;
     --busola-progress-track: #2D3768;
+    --busola-success: #4CAF50;
+    --busola-success-bg: #16321F;
+    --busola-danger: #EF5350;
+    --busola-danger-bg: #3A1820;
     --busola-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
@@ -391,21 +399,10 @@ html body .h5p-answer[aria-checked="true"],
 html body .h5p-answer:has(input:checked),
 html body li:has(input:checked),
 html body li.h5p-answer:has(input:checked) {
-    background: #FFF4EA !important;
-    background-color: #FFF4EA !important;
+    background: var(--busola-surface-selected) !important;
+    background-color: var(--busola-surface-selected) !important;
     background-image: none !important;
     box-shadow: inset 0 0 0 2px var(--busola-accent-orange, #FF7A1A) !important;
-}
-
-[data-bs-theme="dark"] html body li.h5p-answer.h5p-selected,
-[data-bs-theme="dark"] html body .h5p-answer.h5p-selected,
-[data-bs-theme="dark"] html body .h5p-sc-selected,
-[data-bs-theme="dark"] html body .h5p-answer:has(input:checked),
-[data-bs-theme="dark"] html body li:has(input:checked),
-body.moove-darkmode html body li.h5p-answer.h5p-selected,
-body.moove-darkmode html body .h5p-answer:has(input:checked) {
-    background: #2B233D !important;
-    background-color: #2B233D !important;
 }
 
 /* Wewnętrzne kontenery kafla przezroczyste (bez ruszania ikon poprawna/błędna) */
@@ -478,22 +475,24 @@ html body .h5p-answer:has(input:checked) .h5p-radio-circle {
     line-height: 1.4 !important;
 }
 
-/* Poprawna odpowiedź (po sprawdzeniu) */
-.h5p-answer.h5p-correct,
-.h5p-answer.h5p-is-correct,
-.h5p-sc-is-correct {
-    background: #E8F5E9 !important;
-    box-shadow: inset 0 0 0 2px #2E7D32 !important;
-    color: #1B5E20 !important;
+/* Poprawna odpowiedź (po sprawdzeniu) - wyższa specyficzność niż stan zaznaczony */
+html body ul.h5p-answers li.h5p-answer.h5p-correct,
+html body ul.h5p-answers li.h5p-answer.h5p-is-correct,
+html body .h5p-sc-alternative.h5p-sc-is-correct {
+    background: var(--busola-success-bg) !important;
+    background-color: var(--busola-success-bg) !important;
+    box-shadow: inset 0 0 0 2px var(--busola-success) !important;
+    color: var(--busola-text-primary) !important;
 }
 
 /* Błędna odpowiedź (po sprawdzeniu) */
-.h5p-answer.h5p-wrong,
-.h5p-answer.h5p-is-wrong,
-.h5p-sc-is-wrong {
-    background: #FFEBEE !important;
-    box-shadow: inset 0 0 0 2px #C62828 !important;
-    color: #B71C1C !important;
+html body ul.h5p-answers li.h5p-answer.h5p-wrong,
+html body ul.h5p-answers li.h5p-answer.h5p-is-wrong,
+html body .h5p-sc-alternative.h5p-sc-is-wrong {
+    background: var(--busola-danger-bg) !important;
+    background-color: var(--busola-danger-bg) !important;
+    box-shadow: inset 0 0 0 2px var(--busola-danger) !important;
+    color: var(--busola-text-primary) !important;
 }
 
 /* ==========================================================================
