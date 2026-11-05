@@ -913,3 +913,64 @@ html body .h5p-question-buttons button.h5p-theme-button:not(.h5p-theme-check)::b
 html body .h5p-question-buttons button.h5p-theme-button:not(.h5p-theme-check):hover {
     background: var(--busola-surface-hover) !important;
 }
+
+/* ==========================================================================
+   10. ELEMENTY POTWIERDZONE W DOM (pasek wyniku, nawigacja QuestionSet)
+   ========================================================================== */
+
+/* Pas oceny pod odpowiedziami: bez własnego tła */
+html body .h5p-question-evaluation-container,
+html body .h5p-question-evaluation-container.evaluation-mode {
+    background: transparent !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+    margin-top: 24px !important;
+}
+
+/* Pasek wyniku: tokeny Busoli zamiast niebieskiego H5P */
+html body .h5p-joubelui-score-bar {
+    background: var(--busola-surface-subtle) !important;
+    background-color: var(--busola-surface-subtle) !important;
+    box-shadow: none !important;
+    color: var(--busola-text-primary) !important;
+}
+
+html body .h5p-joubelui-score-bar-progress-wrapper {
+    background: var(--busola-progress-track) !important;
+    background-color: var(--busola-progress-track) !important;
+}
+
+html body .h5p-joubelui-score-bar-progress {
+    background: var(--busola-accent-orange) !important;
+    background-color: var(--busola-accent-orange) !important;
+}
+
+html body .h5p-joubelui-score-bar-star,
+html body .h5p-joubelui-score-bar-star * {
+    color: var(--busola-accent-orange) !important;
+    fill: var(--busola-accent-orange) !important;
+}
+
+/* Nawigacja QuestionSet (Previous / Next): bez tła i paddingu, pod kartą jak w makiecie */
+html body nav.h5p-navigation.qs-footer {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 0 24px 0 !important;
+    width: 100% !important;
+}
+
+html body nav.h5p-navigation.qs-footer button {
+    color: var(--busola-text-secondary) !important;
+    background: transparent !important;
+}
+
+html body nav.h5p-navigation.qs-footer button:hover {
+    color: var(--busola-text-primary) !important;
+    background: var(--busola-surface-hover) !important;
+}
