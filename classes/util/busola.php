@@ -188,6 +188,7 @@ class busola {
             'lastcourse' => $lastaccessedcourse,
             'allcoursesurl' => (new moodle_url('/my/courses.php'))->out(false),
             'homeurl' => (new moodle_url('/'))->out(false),
+            'dashboardurl' => (new moodle_url('/my/'))->out(false),
             'messagesurl' => (new moodle_url('/message/index.php'))->out(false),
             'profileurl' => (new moodle_url('/user/profile.php', ['id' => $USER->id]))->out(false),
             'examurl' => $examinfo['examurl'],
@@ -216,10 +217,24 @@ class busola {
 
         $i = 0;
         foreach ($catmap as $catid => $catname) {
+            $catnamelower = mb_strtolower($catname);
+            if (str_contains($catnamelower, 'motor')) {
+                $icon = 'motor';
+            } else if (str_contains($catnamelower, 'dodatk') || str_contains($catnamelower, 'radio') || str_contains($catnamelower, 'src')) {
+                $icon = 'extra';
+            } else {
+                $icon = $icons[$i % count($icons)];
+            }
+
             $categories[$catid] = [
+                'id' => $catid,
                 'title' => $catname,
+                'categoryurl' => (new moodle_url('/course/index.php', ['categoryid' => $catid]))->out(false),
                 'bgcolor' => $pastelcolors[$catid % count($pastelcolors)],
-                'icon' => $icons[$i % count($icons)],
+                'icon' => $icon,
+                'is_sail' => ($icon === 'sail'),
+                'is_motor' => ($icon === 'motor'),
+                'is_extra' => ($icon === 'extra'),
                 'courses' => [],
             ];
             $i++;
@@ -235,10 +250,16 @@ class busola {
                 $catid = (int) $course->category;
                 if (!isset($categories[$catid])) {
                     $catname = $catmap[$catid] ?? format_string($course->fullname);
+                    $icon = 'sail';
                     $categories[$catid] = [
+                        'id' => $catid,
                         'title' => $catname,
+                        'categoryurl' => (new moodle_url('/course/index.php', ['categoryid' => $catid]))->out(false),
                         'bgcolor' => $pastelcolors[$catid % count($pastelcolors)],
-                        'icon' => 'sail',
+                        'icon' => $icon,
+                        'is_sail' => true,
+                        'is_motor' => false,
+                        'is_extra' => false,
                         'courses' => [],
                     ];
                 }
@@ -256,6 +277,7 @@ class busola {
         foreach ($categories as $key => &$cat) {
             $cnt = count($cat['courses']);
             $cat['has_courses'] = ($cnt > 0);
+            $cat['targeturl'] = !empty($cat['courses']) ? $cat['courses'][0]['url'] : $cat['categoryurl'];
             if ($cnt === 0) {
                 $cat['status_label'] = get_string('all_category_courses_enrolled', 'theme_ebusola');
                 if (empty($cat['status_label']) || $cat['status_label'] === '[[all_category_courses_enrolled]]') {

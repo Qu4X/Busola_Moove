@@ -1687,6 +1687,16 @@ section.busola-section-discover {
         flex-direction: column;
         gap: 6px;
 
+        .busola-discover-card-main {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .busola-discover-chevron {
+            display: none;
+        }
+
         &.cat-sail {
             background: var(--busola-cat-sail-bg);
             .busola-discover-title { color: var(--busola-cat-sail-text); }
@@ -1850,4 +1860,523 @@ section.busola-section-discover {
         }
     }
 }
+
+/* --------------------------------------------------------------------------
+   11. Dedykowany widok mobilny (< 768px) wg makiet UI
+   -------------------------------------------------------------------------- */
+@media (max-width: 767.98px) {
+    /* 1. Odstęp dolny dla przyklejonej nawigacji mobilnej */
+    body,
+    #page-wrapper {
+        padding-bottom: 76px !important;
+    }
+
+    /* 2. Nagłówek mobilny (Navbar) */
+    .navbar.fixed-top {
+        height: 60px !important;
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+
+        .navbar-toggler {
+            display: none !important;
+        }
+
+        .navbar-brand {
+            margin: 0 !important;
+            padding: 0 !important;
+
+            .logo {
+                max-height: 34px !important;
+                padding: 0 !important;
+                width: auto;
+                object-fit: contain;
+            }
+        }
+
+        #usernavigation {
+            gap: 6px;
+
+            .divider {
+                display: none !important;
+            }
+
+            .popover-region-mylearning {
+                display: none !important;
+            }
+
+            .usermenu {
+                .usertext {
+                    display: none !important;
+                }
+                .btn.dropdown-toggle {
+                    padding: 0 !important;
+                    border: none !important;
+                    background: transparent !important;
+                    &::after {
+                        display: none !important;
+                    }
+                }
+                .avatars .avatar,
+                .userinitials {
+                    width: 34px !important;
+                    height: 34px !important;
+                    line-height: 34px !important;
+                    font-size: 13px !important;
+                    border-radius: 50% !important;
+                    background: #141B5E !important;
+                    color: #FFFFFF !important;
+                    font-weight: 700 !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                }
+            }
+
+            .colourmodemenu #colourmode-menu-toggle {
+                width: 32px !important;
+                height: 32px !important;
+            }
+
+            .editmode-switch-container {
+                transform: scale(0.85);
+                transform-origin: right center;
+                margin: 0;
+            }
+        }
+    }
+
+    /* 3. Dolna belka nawigacji (Bottom Tab Bar) */
+    .busola-bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 62px;
+        background: #FFFFFF;
+        box-shadow: 0 -2px 12px rgba(20, 27, 94, .08);
+        border-top: 1px solid rgba(20, 27, 94, .06);
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        z-index: 1040;
+        padding: 0 4px;
+
+        .busola-bottom-nav-item {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            color: #5B6280;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 6px 2px;
+            height: 100%;
+            transition: color .18s ease;
+
+            svg {
+                stroke: currentColor;
+                transition: stroke .18s ease;
+            }
+
+            &.active {
+                color: #FF7A1A;
+                svg {
+                    stroke: #FF7A1A;
+                }
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 20%;
+                    right: 20%;
+                    height: 3px;
+                    background: #FF7A1A;
+                    border-radius: 0 0 3px 3px;
+                }
+            }
+
+            &:hover {
+                color: #FF7A1A;
+                svg {
+                    stroke: #FF7A1A;
+                }
+            }
+        }
+    }
+
+    [data-bs-theme="dark"] .busola-bottom-nav,
+    [data-colourmode="dark"] .busola-bottom-nav,
+    body.darkmode .busola-bottom-nav {
+        background: var(--busola-surface-card);
+        border-top: 1px solid var(--busola-surface-border);
+        box-shadow: 0 -2px 14px rgba(0, 0, 0, .35);
+
+        .busola-bottom-nav-item {
+            color: var(--busola-text-secondary);
+
+            &.active,
+            &:hover {
+                color: var(--busola-accent-orange);
+                svg {
+                    stroke: var(--busola-accent-orange);
+                }
+                &::before {
+                    background: var(--busola-accent-orange);
+                }
+            }
+        }
+    }
+
+    /* 4. Sekcja Hero i Karta "Kontynuuj" */
+    .busola-hero {
+        .busola-hero-container {
+            padding: 24px 16px 20px !important;
+            gap: 16px !important;
+        }
+
+        .busola-hero-welcome {
+            flex: 1 1 100% !important;
+
+            .busola-hero-title {
+                font-size: 32px !important;
+                line-height: 1.12 !important;
+                letter-spacing: -.02em !important;
+            }
+
+            .busola-hero-subtitle {
+                font-size: 15px !important;
+                margin-top: 8px !important;
+            }
+
+            .busola-hero-badges {
+                display: none !important;
+            }
+        }
+
+        .busola-hero-card {
+            display: grid !important;
+            grid-template-columns: 64px 1fr !important;
+            grid-template-areas:
+                "icon info"
+                "prog prog"
+                "btn  btn" !important;
+            gap: 14px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 18px !important;
+            border-radius: 22px !important;
+            box-sizing: border-box !important;
+
+            .busola-hero-card-body {
+                display: contents !important;
+            }
+
+            .busola-hero-card-icon {
+                grid-area: icon;
+                width: 64px !important;
+                height: 64px !important;
+                min-height: 64px !important;
+                flex: 0 0 64px !important;
+                border-radius: 16px !important;
+                padding: 8px !important;
+                box-sizing: border-box !important;
+
+                .busola-course-img,
+                svg {
+                    max-width: 46px !important;
+                    max-height: 46px !important;
+                }
+            }
+
+            .busola-hero-card-info {
+                grid-area: info;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                min-width: 0;
+                gap: 2px;
+                padding: 0 !important;
+
+                .busola-hero-card-tag {
+                    font-size: 11px !important;
+                    font-weight: 800 !important;
+                    letter-spacing: .08em !important;
+                    color: var(--busola-accent-orange) !important;
+                    text-transform: uppercase !important;
+                }
+
+                .busola-hero-card-title {
+                    font-size: 18px !important;
+                    font-weight: 800 !important;
+                    color: var(--busola-text-primary) !important;
+                    line-height: 1.2 !important;
+                    margin: 0 !important;
+                }
+
+                .busola-hero-card-desc {
+                    font-size: 13px !important;
+                    color: var(--busola-text-secondary) !important;
+                }
+            }
+
+            .busola-hero-card-progress {
+                grid-area: prog;
+                margin: 0 !important;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+
+                .busola-progress-val {
+                    font-size: 14px !important;
+                    font-weight: 700 !important;
+                    color: var(--busola-text-primary) !important;
+                }
+            }
+
+            .busola-hero-card-btn {
+                grid-area: btn;
+                width: 100% !important;
+                justify-content: center !important;
+                padding: 13px 18px !important;
+                font-size: 15px !important;
+                font-weight: 700 !important;
+                border-radius: 14px !important;
+                margin: 0 !important;
+                box-sizing: border-box !important;
+            }
+        }
+    }
+
+    /* 5. Główny kontener strony */
+    .busola-main-container {
+        padding: 20px 16px 40px !important;
+        gap: 40px !important;
+    }
+
+    /* 6. Sekcja Moje kursy - Pozioma lista wierszy */
+    .busola-section-mycourses {
+        .busola-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+
+            .busola-section-title {
+                font-size: 22px !important;
+                font-weight: 800;
+            }
+
+            .busola-link-all {
+                font-size: 14px !important;
+                font-weight: 700;
+                color: var(--busola-accent-navy);
+                border-bottom: 2px solid var(--busola-accent-orange);
+                padding-bottom: 1px;
+                text-decoration: none;
+
+                svg {
+                    display: none !important;
+                }
+            }
+        }
+
+        .busola-courses-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+        }
+
+        .busola-course-card {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            padding: 12px 14px !important;
+            border-radius: 18px !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            gap: 12px !important;
+
+            .busola-card-banner {
+                width: 60px !important;
+                height: 60px !important;
+                min-height: 60px !important;
+                flex: 0 0 60px !important;
+                border-radius: 14px !important;
+                margin: 0 !important;
+                padding: 6px !important;
+
+                .busola-card-badge {
+                    display: none !important;
+                }
+
+                .busola-card-img,
+                .busola-card-svg {
+                    max-width: 44px !important;
+                    max-height: 44px !important;
+                    margin: 0 !important;
+                }
+            }
+
+            .busola-card-body {
+                padding: 0 !important;
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
+
+                .busola-card-title {
+                    font-size: 16px !important;
+                    font-weight: 700 !important;
+                    margin: 0 0 4px !important;
+                    white-space: nowrap !important;
+                    overflow: hidden !important;
+                    text-overflow: ellipsis !important;
+                }
+
+                .busola-card-subtitle {
+                    font-size: 13px !important;
+                    margin: 0 !important;
+                }
+
+                .busola-card-footer {
+                    padding: 0 !important;
+                    margin-top: 4px !important;
+
+                    .busola-card-action {
+                        display: none !important;
+                    }
+
+                    .busola-status-completed {
+                        font-size: 13px !important;
+                        font-weight: 700 !important;
+                        color: var(--busola-accent-navy) !important;
+                    }
+
+                    .busola-card-progress-wrap {
+                        margin-bottom: 0 !important;
+                        gap: 8px !important;
+
+                        .busola-progress-track {
+                            height: 6px !important;
+                        }
+
+                        .busola-progress-percent {
+                            font-size: 13px !important;
+                            font-weight: 700 !important;
+                            color: var(--busola-accent-navy) !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /* 7. Baner egzaminacyjny */
+    .busola-exam-banner {
+        padding: 24px 20px !important;
+        border-radius: 22px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+        gap: 16px !important;
+
+        .busola-exam-icon-wrap {
+            width: 48px !important;
+            height: 48px !important;
+            border-radius: 14px !important;
+        }
+
+        .busola-exam-content {
+            .busola-exam-title {
+                font-size: 20px !important;
+            }
+            .busola-exam-desc {
+                font-size: 14px !important;
+            }
+        }
+
+        .busola-exam-btn {
+            width: 100% !important;
+            justify-content: center !important;
+            padding: 12px 20px !important;
+            border-radius: var(--busola-radius-full) !important;
+            font-size: 15px !important;
+        }
+    }
+
+    /* 8. Sekcja Odkryj kolejne kursy - Pasy kategorii */
+    .busola-section-discover {
+        .busola-section-title {
+            font-size: 22px !important;
+            margin-bottom: 16px !important;
+        }
+
+        .busola-discover-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+        }
+
+        .busola-discover-card {
+            padding: 14px 18px !important;
+            border-radius: 18px !important;
+
+            .busola-discover-card-main {
+                display: flex !important;
+                align-items: center !important;
+                gap: 14px !important;
+                width: 100% !important;
+                text-decoration: none !important;
+                color: inherit !important;
+            }
+
+            .busola-discover-icon {
+                margin: 0 !important;
+                flex: 0 0 54px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            .busola-discover-text {
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
+
+                .busola-discover-title {
+                    font-size: 16px !important;
+                    font-weight: 700 !important;
+                    margin: 0 !important;
+                }
+
+                .busola-discover-status {
+                    font-size: 13px !important;
+                    margin: 2px 0 0 !important;
+                    color: var(--busola-text-secondary) !important;
+                }
+            }
+
+            .busola-discover-chevron {
+                display: block !important;
+                flex: 0 0 20px !important;
+                color: var(--busola-accent-navy) !important;
+            }
+
+            .busola-discover-links {
+                display: none !important;
+            }
+        }
+    }
+
+    /* 9. Stopka - Skalowanie logotypu platformy */
+    footer#page-footer {
+        padding-bottom: 24px !important;
+
+        .footer-logo {
+            max-height: 38px !important;
+        }
+    }
+}
+
 

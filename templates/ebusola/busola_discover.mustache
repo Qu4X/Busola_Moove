@@ -6,15 +6,42 @@
     <div class="busola-discover-grid">
         {{#discover}}
         <div class="busola-discover-card cat-{{icon}}">
-            <div class="busola-discover-icon">
-                <svg viewBox="0 0 160 100" width="80" height="50" aria-hidden="true" class="busola-discover-svg">
-                    <rect x="24" y="48" width="12" height="22" rx="3" fill="#FF7A1A" stroke="#141B5E" stroke-width="2.5"></rect>
-                    <path d="M32 62 H132 L120 80 H48 Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
-                    <path d="M66 62 L80 42 H104 L112 62" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+            <a href="{{targeturl}}" class="busola-discover-card-main">
+                <div class="busola-discover-icon">
+                    {{#is_sail}}
+                        <svg viewBox="0 0 160 100" width="68" height="42" aria-hidden="true" class="busola-discover-svg">
+                            <path d="M40 70 L120 70 L110 84 L50 84 Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                            <path d="M50 78 L110 78" stroke="#FF7A1A" stroke-width="2.5"></path>
+                            <path d="M78 68 L78 20 L44 68 Z" fill="#24308A" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                            <path d="M82 68 L82 28 L114 68 Z" fill="#3D4EB8" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                        </svg>
+                    {{/is_sail}}
+                    {{#is_motor}}
+                        <svg viewBox="0 0 160 100" width="68" height="42" aria-hidden="true" class="busola-discover-svg">
+                            <rect x="24" y="48" width="12" height="22" rx="3" fill="#FF7A1A" stroke="#141B5E" stroke-width="2.5"></rect>
+                            <path d="M32 62 H132 L120 80 H48 Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                            <path d="M66 62 L80 42 H104 L112 62" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                        </svg>
+                    {{/is_motor}}
+                    {{#is_extra}}
+                        <svg viewBox="0 0 160 100" width="68" height="42" aria-hidden="true" class="busola-discover-svg">
+                            <path d="M68 28 L68 44" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path>
+                            <circle cx="68" cy="26" r="3" fill="#FF7A1A"></circle>
+                            <rect x="44" y="44" width="72" height="42" rx="6" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5"></rect>
+                            <rect x="52" y="52" width="22" height="12" rx="2" fill="#FFE8D4" stroke="#141B5E" stroke-width="1.5"></rect>
+                            <circle cx="96" cy="58" r="4" fill="#FF7A1A"></circle>
+                            <line x1="52" y1="74" x2="108" y2="74" stroke="#141B5E" stroke-width="2" stroke-linecap="round"></line>
+                        </svg>
+                    {{/is_extra}}
+                </div>
+                <div class="busola-discover-text">
+                    <h3 class="busola-discover-title">{{title}}</h3>
+                    <p class="busola-discover-status">{{status_label}}</p>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="busola-discover-chevron" aria-hidden="true">
+                    <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
-            </div>
-            <h3 class="busola-discover-title">{{title}}</h3>
-            <p class="busola-discover-status">{{status_label}}</p>
+            </a>
             {{#has_courses}}
                 <div class="busola-discover-links">
                     {{#courses}}

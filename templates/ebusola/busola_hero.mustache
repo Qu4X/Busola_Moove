@@ -34,7 +34,7 @@
         <a href="{{lastcourse.url}}" class="busola-hero-card">
             <div class="busola-hero-card-icon cat-{{lastcourse.type}}">
                 {{#lastcourse.hascustomicon}}
-                    <img src="{{lastcourse.iconurl}}" alt="{{lastcourse.fullname}}" class="busola-course-img" style="max-width:130px;max-height:130px;object-fit:contain;" />
+                    <img src="{{lastcourse.iconurl}}" alt="{{lastcourse.fullname}}" class="busola-course-img" />
                 {{/lastcourse.hascustomicon}}
                 {{^lastcourse.hascustomicon}}
                     <svg viewBox="0 0 160 100" width="140" height="88" aria-hidden="true">
@@ -45,13 +45,15 @@
                 {{/lastcourse.hascustomicon}}
             </div>
             <div class="busola-hero-card-body">
-                <span class="busola-hero-card-tag">{{#str}}hero_continue, theme_ebusola{{/str}}</span>
-                <span class="busola-hero-card-title">{{lastcourse.fullname}}</span>
-                <span class="busola-hero-card-desc">
-                    {{#lastcourse.iscompleted}}{{#str}}course_status_completed, theme_ebusola{{/str}}{{/lastcourse.iscompleted}}
-                    {{#lastcourse.isinprogress}}{{#str}}course_status_progress, theme_ebusola, {{lastcourse.progress}}{{/str}}{{/lastcourse.isinprogress}}
-                    {{#lastcourse.isnotstarted}}{{#str}}course_status_not_started, theme_ebusola{{/str}}{{/lastcourse.isnotstarted}}
-                </span>
+                <div class="busola-hero-card-info">
+                    <span class="busola-hero-card-tag">{{#str}}hero_continue, theme_ebusola{{/str}}</span>
+                    <span class="busola-hero-card-title">{{lastcourse.fullname}}</span>
+                    <span class="busola-hero-card-desc">
+                        {{#lastcourse.iscompleted}}{{#str}}course_status_completed, theme_ebusola{{/str}}{{/lastcourse.iscompleted}}
+                        {{#lastcourse.isinprogress}}{{#str}}course_status_progress, theme_ebusola, {{lastcourse.progress}}{{/str}}{{/lastcourse.isinprogress}}
+                        {{#lastcourse.isnotstarted}}{{#str}}course_status_not_started, theme_ebusola{{/str}}{{/lastcourse.isnotstarted}}
+                    </span>
+                </div>
                 <div class="busola-hero-card-progress">
                     <div class="busola-progress-track">
                         <div class="busola-progress-bar" style="width:{{lastcourse.progress}}%;"></div>
