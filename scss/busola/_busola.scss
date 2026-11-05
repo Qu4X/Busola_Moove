@@ -383,8 +383,33 @@ body.has-busola-dashboard #page.drawers {
     width: calc(100% + 30px) !important;
 }
 
-/* 1. Universal Vertical Centering for Switches */
+/* 1. Universal Switch Reset & Vertical Centering */
 .custom-switch {
+    position: relative;
+    display: inline-flex !important;
+    align-items: center !important;
+
+    /* Prevent clipping when Bootstrap or Moodle attaches .sr-only / .visually-hidden to the label */
+    .custom-control-label,
+    .custom-control-label.sr-only,
+    .custom-control-label.visually-hidden {
+        position: relative !important;
+        width: auto !important;
+        min-width: 32px !important;
+        height: 24px !important;
+        min-height: 24px !important;
+        overflow: visible !important;
+        clip: auto !important;
+        clip-path: none !important;
+        white-space: normal !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        cursor: pointer !important;
+        opacity: 1 !important;
+    }
+
     .custom-control-label::before,
     .custom-control-label::after {
         top: 50% !important;
@@ -546,7 +571,8 @@ body[data-bs-theme="dark"] {
     }
 }
 
-.editmode-switch-form {
+.editmode-switch-form,
+.editmode-switch-container {
     .custom-switch {
         cursor: pointer;
         user-select: none;
@@ -570,14 +596,25 @@ body[data-bs-theme="dark"] {
             margin: 0;
         }
 
-        .custom-control-label {
-            cursor: pointer;
-            user-select: none;
-            display: inline-flex;
-            align-items: center;
-            height: 24px;
-            min-height: 24px;
-            margin-bottom: 0;
+        .custom-control-label,
+        .custom-control-label.sr-only,
+        .custom-control-label.visually-hidden {
+            cursor: pointer !important;
+            user-select: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            position: relative !important;
+            width: auto !important;
+            min-width: 32px !important;
+            height: 24px !important;
+            min-height: 24px !important;
+            overflow: visible !important;
+            clip: auto !important;
+            clip-path: none !important;
+            white-space: normal !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            opacity: 1 !important;
 
             &::before {
                 cursor: pointer;
@@ -805,10 +842,12 @@ body#page-login-signup .login-layout-right-content {
     }
 
     .busola-hero-wave {
-        display: block;
-        width: 100%;
-        height: 48px;
-        position: relative;
+        display: block !important;
+        vertical-align: bottom !important;
+        width: 100% !important;
+        height: 48px !important;
+        position: relative !important;
+        margin-bottom: -1px !important;
     }
 }
 
@@ -1507,10 +1546,12 @@ section.busola-section-discover {
     }
 
     .busola-hero-wave {
-        display: block;
-        width: 100%;
-        height: 48px;
-        position: relative;
+        display: block !important;
+        vertical-align: bottom !important;
+        width: 100% !important;
+        height: 48px !important;
+        position: relative !important;
+        margin-bottom: -1px !important;
 
         path {
             fill: var(--busola-bg-canvas);
@@ -2106,6 +2147,33 @@ section.busola-section-discover {
                 margin: 0 !important;
                 transform: scale(0.82);
                 transform-origin: center;
+
+                .editmode-switch-form {
+                    padding-right: 0 !important;
+                    margin: 0 !important;
+                    display: inline-flex !important;
+                    align-items: center !important;
+                }
+
+                .custom-switch {
+                    display: inline-flex !important;
+                    align-items: center !important;
+
+                    .custom-control-label,
+                    .custom-control-label.sr-only,
+                    .custom-control-label.visually-hidden {
+                        display: inline-flex !important;
+                        align-items: center !important;
+                        position: relative !important;
+                        width: auto !important;
+                        min-width: 32px !important;
+                        height: 24px !important;
+                        overflow: visible !important;
+                        clip: auto !important;
+                        clip-path: none !important;
+                        opacity: 1 !important;
+                    }
+                }
             }
         }
     }
@@ -2351,10 +2419,11 @@ section.busola-section-discover {
 
         .busola-hero-wave {
             display: block !important;
+            vertical-align: bottom !important;
             width: 100% !important;
-            height: 32px !important;
+            height: 33px !important;
             margin-top: 14px !important;
-            margin-bottom: 0 !important;
+            margin-bottom: -1px !important;
             position: relative !important;
 
             path {
