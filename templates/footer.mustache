@@ -20,67 +20,71 @@ along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
     Stopka Szkoły Żeglarstwa Busola z oficjalnym logo platformy.
 }}
 
-<footer id="page-footer" style="background:#0F1547;color:#FFFFFF;margin-top:auto;border-top:none;">
-    <div style="max-width:1200px;margin:0 auto;padding:56px 32px 28px;box-sizing:border-box;">
-        <div style="display:flex;flex-wrap:wrap;gap:40px 56px;">
-            <div style="flex:1 1 260px;min-width:0;">
-                <a href="{{{homeurl}}}" style="text-decoration:none;display:inline-block;" aria-label="{{sitename}}">
+<footer id="page-footer" class="busola-page-footer">
+    <div class="busola-footer-inner">
+        <div class="busola-footer-cols">
+            <!-- Wiersz 1 / Kolumna 1: Logo i opis -->
+            <div class="busola-footer-brand">
+                <a href="{{{homeurl}}}" class="busola-footer-logo-link" aria-label="{{sitename}}">
                     {{# output.should_display_logo }}
                         {{#output.get_logo_dark}}
-                            <img src="{{output.get_logo_dark}}" class="footer-logo mb-2" alt="{{sitename}}" style="max-height:48px;width:auto;object-fit:contain;" />
+                            <img src="{{output.get_logo_dark}}" class="footer-logo mb-2" alt="{{sitename}}" />
                         {{/output.get_logo_dark}}
                         {{^output.get_logo_dark}}
-                            <img src="{{output.get_logo}}" class="footer-logo mb-2" alt="{{sitename}}" style="max-height:48px;width:auto;object-fit:contain;" />
+                            <img src="{{output.get_logo}}" class="footer-logo mb-2" alt="{{sitename}}" />
                         {{/output.get_logo_dark}}
                     {{/ output.should_display_logo }}
                     {{^ output.should_display_logo }}
-                        <div style="display:flex;flex-direction:column;line-height:1;">
-                            <span style="font-size:24px;font-weight:700;letter-spacing:.15em;color:#FFFFFF;">{{sitename}}</span>
+                        <div class="busola-footer-logo-text">
+                            <span class="busola-footer-sitename">{{sitename}}</span>
                         </div>
                     {{/ output.should_display_logo }}
                 </a>
-                <p style="margin:12px 0 0;font-size:15px;color:#C9CFF2;max-width:280px;line-height:1.5;">Kursy żeglarskie i motorowodne online, w Twoim tempie.</p>
+                <p class="busola-footer-desc">Kursy żeglarskie i motorowodne online, w Twoim tempie.</p>
             </div>
 
-            <div style="flex:0 1 180px;min-width:0;">
-                <div style="font-size:13px;font-weight:700;letter-spacing:.12em;color:#FFB27A;margin-bottom:12px;">DOKUMENTY</div>
-                <div style="display:flex;flex-direction:column;gap:8px;">
-                    <a href="{{#termsurl}}{{{termsurl}}}{{/termsurl}}{{^termsurl}}https://kursybusola.pl{{/termsurl}}" target="_blank" rel="noopener noreferrer" style="color:#FFFFFF;text-decoration:none;font-size:15px;">Regulamin</a>
-                    <a href="{{#privacyurl}}{{{privacyurl}}}{{/privacyurl}}{{^privacyurl}}https://kursybusola.pl{{/privacyurl}}" target="_blank" rel="noopener noreferrer" style="color:#FFFFFF;text-decoration:none;font-size:15px;">Polityka prywatności</a>
-                    <a href="{{#rodourl}}{{{rodourl}}}{{/rodourl}}{{^rodourl}}https://kursybusola.pl{{/rodourl}}" target="_blank" rel="noopener noreferrer" style="color:#FFFFFF;text-decoration:none;font-size:15px;">RODO</a>
+            <!-- Kolumna 2: Dokumenty -->
+            <div class="busola-footer-col busola-footer-docs">
+                <div class="busola-footer-heading">DOKUMENTY</div>
+                <div class="busola-footer-links">
+                    <a href="{{#termsurl}}{{{termsurl}}}{{/termsurl}}{{^termsurl}}https://kursybusola.pl{{/termsurl}}" target="_blank" rel="noopener noreferrer">Regulamin</a>
+                    <a href="{{#privacyurl}}{{{privacyurl}}}{{/privacyurl}}{{^privacyurl}}https://kursybusola.pl{{/privacyurl}}" target="_blank" rel="noopener noreferrer">Polityka prywatności</a>
+                    <a href="{{#rodourl}}{{{rodourl}}}{{/rodourl}}{{^rodourl}}https://kursybusola.pl{{/rodourl}}" target="_blank" rel="noopener noreferrer">RODO</a>
                 </div>
             </div>
 
-            <div style="flex:0 1 180px;min-width:0;">
-                <div style="font-size:13px;font-weight:700;letter-spacing:.12em;color:#FFB27A;margin-bottom:12px;">KONTAKT</div>
-                <div style="display:flex;flex-direction:column;gap:8px;">
-                    <a href="{{#website}}{{{website}}}{{/website}}{{^website}}https://kursybusola.pl{{/website}}" target="_blank" rel="noopener noreferrer" style="color:#FFFFFF;text-decoration:none;font-size:15px;">Strona internetowa</a>
-                    <a href="mailto:{{#mail}}{{{mail}}}{{/mail}}{{^mail}}kontakt@kursybusola.pl{{/mail}}" style="color:#FFFFFF;text-decoration:none;font-size:15px;">Napisz do nas</a>
+            <!-- Kolumna 3: Kontakt -->
+            <div class="busola-footer-col busola-footer-contact">
+                <div class="busola-footer-heading">KONTAKT</div>
+                <div class="busola-footer-links">
+                    <a href="{{#website}}{{{website}}}{{/website}}{{^website}}https://kursybusola.pl{{/website}}" target="_blank" rel="noopener noreferrer">Strona internetowa</a>
+                    <a href="mailto:{{#mail}}{{{mail}}}{{/mail}}{{^mail}}kontakt@kursybusola.pl{{/mail}}">Napisz do nas</a>
                     {{#mobile}}
-                        <a href="tel:{{{mobile}}}" style="color:#FFFFFF;text-decoration:none;font-size:15px;">{{{mobile}}}</a>
+                        <a href="tel:{{{mobile}}}">{{{mobile}}}</a>
                     {{/mobile}}
                 </div>
             </div>
 
-            <div style="flex:0 1 200px;min-width:0;">
-                <div style="font-size:13px;font-weight:700;letter-spacing:.12em;color:#FFB27A;margin-bottom:12px;">OBSERWUJ NAS</div>
-                <div style="display:flex;gap:10px;align-items:center;">
-                    <a href="{{#tiktok}}{{{tiktok}}}{{/tiktok}}{{^tiktok}}https://www.tiktok.com/@kursybusola{{/tiktok}}" target="_blank" rel="noopener noreferrer" aria-label="TikTok" style="width:44px;height:44px;border-radius:22px;border:1.5px solid rgba(255,255,255,.4);display:inline-flex;align-items:center;justify-content:center;color:#FFFFFF;text-decoration:none;">
+            <!-- Kolumna 4: Obserwuj nas -->
+            <div class="busola-footer-col busola-footer-socials">
+                <div class="busola-footer-heading">OBSERWUJ NAS</div>
+                <div class="busola-footer-social-icons">
+                    <a href="{{#tiktok}}{{{tiktok}}}{{/tiktok}}{{^tiktok}}https://www.tiktok.com/@kursybusola{{/tiktok}}" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="busola-social-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v11.5a3.5 3.5 0 1 1-3.5-3.5"></path><path d="M12 3c.4 2.6 2.2 4.2 4.8 4.4"></path></svg>
                     </a>
-                    <a href="{{#facebook}}{{{facebook}}}{{/facebook}}{{^facebook}}https://www.facebook.com/kursybusola{{/facebook}}" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style="width:44px;height:44px;border-radius:22px;border:1.5px solid rgba(255,255,255,.4);display:inline-flex;align-items:center;justify-content:center;color:#FFFFFF;text-decoration:none;">
+                    <a href="{{#facebook}}{{{facebook}}}{{/facebook}}{{^facebook}}https://www.facebook.com/kursybusola{{/facebook}}" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="busola-social-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h2.5V4.5H14A4 4 0 0 0 10 8.5V11H7.5v3.5H10V21h3.5v-6.5h2.6l.6-3.5h-3.2V9c0-.6.4-1 1-1z"></path></svg>
                     </a>
-                    <a href="{{#instagram}}{{{instagram}}}{{/instagram}}{{^instagram}}https://www.instagram.com/kursybusola{{/instagram}}" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="width:44px;height:44px;border-radius:22px;border:1.5px solid rgba(255,255,255,.4);display:inline-flex;align-items:center;justify-content:center;color:#FFFFFF;text-decoration:none;">
+                    <a href="{{#instagram}}{{{instagram}}}{{/instagram}}{{^instagram}}https://www.instagram.com/kursybusola{{/instagram}}" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="busola-social-icon">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"></rect><circle cx="12" cy="12" r="3.6"></circle><path d="M16.8 7.2h.01"></path></svg>
                     </a>
                 </div>
             </div>
         </div>
 
-        <div style="margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,.16);font-size:13px;color:#B7BEE6;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-            <div>Wspierane przez <a href="https://moodle.org" target="_blank" rel="noopener noreferrer" style="color:#FFFFFF;text-decoration:underline;">Moodle</a></div>
-            <div style="color:#B7BEE6;font-size:12px;">Szkoła Żeglarstwa Busola &copy; 2026</div>
+        <div class="busola-footer-bottom">
+            <div>Wspierane przez <a href="https://moodle.org" target="_blank" rel="noopener noreferrer">Moodle</a></div>
+            <div>Szkoła Żeglarstwa Busola &copy; 2026</div>
         </div>
     </div>
 

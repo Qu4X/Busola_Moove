@@ -250,6 +250,128 @@ body.has-busola-dashboard #page.drawers {
     .copyright {
         display: none !important;
     }
+
+    &.busola-page-footer {
+        .busola-footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 56px 32px 28px;
+            box-sizing: border-box;
+        }
+
+        .busola-footer-cols {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px 56px;
+        }
+
+        .busola-footer-brand {
+            flex: 1 1 260px;
+            min-width: 0;
+
+            .busola-footer-logo-link {
+                text-decoration: none;
+                display: inline-block;
+            }
+
+            .footer-logo {
+                max-height: 48px;
+                width: auto;
+                object-fit: contain;
+            }
+
+            .busola-footer-sitename {
+                font-size: 24px;
+                font-weight: 700;
+                letter-spacing: .15em;
+                color: #FFFFFF;
+            }
+
+            .busola-footer-desc {
+                margin: 12px 0 0;
+                font-size: 15px;
+                color: #C9CFF2;
+                max-width: 280px;
+                line-height: 1.5;
+            }
+        }
+
+        .busola-footer-col {
+            flex: 0 1 180px;
+            min-width: 0;
+
+            &.busola-footer-socials {
+                flex: 0 1 200px;
+            }
+
+            .busola-footer-heading {
+                font-size: 13px;
+                font-weight: 700;
+                letter-spacing: .12em;
+                color: #FFB27A;
+                margin-bottom: 12px;
+            }
+
+            .busola-footer-links {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+
+                a {
+                    color: #FFFFFF;
+                    text-decoration: none;
+                    font-size: 15px;
+                    transition: color 0.18s ease;
+
+                    &:hover {
+                        color: #FFB27A;
+                    }
+                }
+            }
+
+            .busola-footer-social-icons {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+
+                .busola-social-icon {
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 50%;
+                    border: 1.5px solid rgba(255, 255, 255, .4);
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #FFFFFF;
+                    text-decoration: none;
+                    transition: border-color 0.18s ease, color 0.18s ease;
+
+                    &:hover {
+                        border-color: #FFB27A;
+                        color: #FFB27A;
+                    }
+                }
+            }
+        }
+
+        .busola-footer-bottom {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, .16);
+            font-size: 13px;
+            color: #B7BEE6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+
+            a {
+                color: #FFFFFF;
+                text-decoration: underline;
+            }
+        }
+    }
 }
 
 /* Ensure footer bleeds full width when nested inside a padded #page container */
@@ -1875,13 +1997,13 @@ section.busola-section-discover {
         overflow-x: hidden !important;
     }
 
-    /* 1. Odstęp dolny dla przyklejonej nawigacji mobilnej */
+    /* 1. Reset dolnego odstępu na kontenerach (przeniesiony precyzyjnie do wnętrza stopki) */
     body,
     #page-wrapper {
-        padding-bottom: 76px !important;
+        padding-bottom: 0 !important;
     }
 
-    /* 2. Nagłówek mobilny (Navbar) - wyrównanie 5 ikon w jednym rzędzie */
+    /* 2. Nagłówek mobilny (Navbar) - wyrównanie 5 ikon w jednym rzędzie i likwidacja 10px przerwy pod headerem */
     .navbar.fixed-top {
         height: 60px !important;
         padding-left: 10px !important;
@@ -1986,6 +2108,17 @@ section.busola-section-discover {
                 transform-origin: center;
             }
         }
+    }
+
+    /* Likwidacja luki między nagłówkiem (60px) a stroną */
+    #page,
+    #page.drawers {
+        margin-top: 60px !important;
+        padding-top: 0 !important;
+    }
+
+    .secondary-navigation {
+        top: 60px !important;
     }
 
     /* 3. Dolna belka nawigacji (Bottom Tab Bar) */
@@ -2094,7 +2227,7 @@ section.busola-section-discover {
         }
 
         .busola-hero-container {
-            padding: 24px 16px 0 !important;
+            padding: 20px 16px 0 !important;
             gap: 16px !important;
         }
 
@@ -2160,11 +2293,11 @@ section.busola-section-discover {
 
             .busola-hero-card-info {
                 grid-area: info;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                min-width: 0;
-                gap: 2px;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                min-width: 0 !important;
+                gap: 2px !important;
                 padding: 0 !important;
 
                 .busola-hero-card-tag {
@@ -2192,9 +2325,9 @@ section.busola-section-discover {
             .busola-hero-card-progress {
                 grid-area: prog;
                 margin: 0 !important;
-                display: flex;
-                align-items: center;
-                gap: 12px;
+                display: flex !important;
+                align-items: center !important;
+                gap: 12px !important;
 
                 .busola-progress-val {
                     font-size: 14px !important;
@@ -2230,13 +2363,24 @@ section.busola-section-discover {
         }
     }
 
-    /* 5. Główny kontener strony */
+    /* 5. Główny kontener strony - pełna szerokość i zabezpieczenie paddingów */
     .busola-main-container {
-        padding: 20px 16px 40px !important;
-        gap: 36px !important;
+        padding: 20px 16px 32px !important;
+        gap: 32px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
     }
 
-    /* 6. Sekcja Moje kursy - Pozioma lista wierszy */
+    .busola-section-mycourses,
+    .busola-section-discover {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 6. Sekcja Moje kursy - Pozioma lista wierszy o pełnej szerokości */
     .busola-section-mycourses {
         .busola-section-header {
             display: flex;
@@ -2267,6 +2411,9 @@ section.busola-section-discover {
             display: flex !important;
             flex-direction: column !important;
             gap: 12px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
         }
 
         .busola-course-card {
@@ -2276,7 +2423,8 @@ section.busola-section-discover {
             padding: 12px 14px !important;
             border-radius: 18px !important;
             width: 100% !important;
-            min-width: 0 !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
             gap: 12px !important;
 
             .busola-card-banner {
@@ -2369,6 +2517,9 @@ section.busola-section-discover {
         height: auto !important;
         min-height: 0 !important;
         flex: 0 0 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
 
         .busola-exam-icon-wrap {
             flex: 0 0 48px !important;
@@ -2398,6 +2549,7 @@ section.busola-section-discover {
             border-radius: var(--busola-radius-full) !important;
             font-size: 15px !important;
             margin: 0 !important;
+            box-sizing: border-box !important;
         }
     }
 
@@ -2412,11 +2564,17 @@ section.busola-section-discover {
             display: flex !important;
             flex-direction: column !important;
             gap: 12px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
         }
 
         .busola-discover-card {
             padding: 14px 18px !important;
             border-radius: 18px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
 
             .busola-discover-card-main {
                 display: flex !important;
@@ -2464,14 +2622,126 @@ section.busola-section-discover {
         }
     }
 
-    /* 9. Stopka - Pełna szerokość i margines dolny chroniący przed przykryciem przez dolny pasek */
-    footer#page-footer {
+    /* 9. Zoptymalizowana, 2-kolumnowa stopka mobilna bez pustej przestrzeni */
+    footer#page-footer.busola-page-footer {
         width: 100% !important;
         max-width: 100vw !important;
-        padding-bottom: 86px !important;
+        padding: 0 !important;
+        margin: 0 !important;
 
-        .footer-logo {
-            max-height: 38px !important;
+        .busola-footer-inner {
+            padding: 24px 16px 74px !important;
+            box-sizing: border-box !important;
+            width: 100% !important;
+        }
+
+        .busola-footer-cols {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            grid-template-areas:
+                "brand   brand"
+                "docs    contact"
+                "socials socials" !important;
+            gap: 16px 16px !important;
+        }
+
+        .busola-footer-brand {
+            grid-area: brand;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 14px !important;
+            width: 100% !important;
+
+            .busola-footer-logo-link {
+                flex: 0 0 auto !important;
+                margin-bottom: 0 !important;
+            }
+
+            .footer-logo {
+                max-height: 34px !important;
+                margin-bottom: 0 !important;
+            }
+
+            .busola-footer-desc {
+                flex: 1 1 auto !important;
+                margin: 0 !important;
+                font-size: 13px !important;
+                line-height: 1.35 !important;
+                max-width: none !important;
+                color: #C9CFF2 !important;
+            }
+        }
+
+        .busola-footer-docs {
+            grid-area: docs;
+            width: 100% !important;
+            min-width: 0 !important;
+
+            .busola-footer-heading {
+                font-size: 12px !important;
+                margin-bottom: 8px !important;
+            }
+
+            .busola-footer-links {
+                gap: 6px !important;
+                a {
+                    font-size: 14px !important;
+                }
+            }
+        }
+
+        .busola-footer-contact {
+            grid-area: contact;
+            width: 100% !important;
+            min-width: 0 !important;
+
+            .busola-footer-heading {
+                font-size: 12px !important;
+                margin-bottom: 8px !important;
+            }
+
+            .busola-footer-links {
+                gap: 6px !important;
+                a {
+                    font-size: 14px !important;
+                }
+            }
+        }
+
+        .busola-footer-socials {
+            grid-area: socials;
+            width: 100% !important;
+            margin-top: 4px !important;
+
+            .busola-footer-heading {
+                font-size: 12px !important;
+                margin-bottom: 8px !important;
+            }
+
+            .busola-footer-social-icons {
+                gap: 10px !important;
+
+                .busola-social-icon {
+                    width: 38px !important;
+                    height: 38px !important;
+
+                    svg {
+                        width: 18px !important;
+                        height: 18px !important;
+                    }
+                }
+            }
+        }
+
+        .busola-footer-bottom {
+            margin-top: 18px !important;
+            padding-top: 14px !important;
+            font-size: 11px !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            gap: 8px !important;
         }
     }
 }
