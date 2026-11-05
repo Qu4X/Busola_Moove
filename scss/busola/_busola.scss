@@ -1865,17 +1865,27 @@ section.busola-section-discover {
    11. Dedykowany widok mobilny (< 768px) wg makiet UI
    -------------------------------------------------------------------------- */
 @media (max-width: 767.98px) {
+    /* 0. Blokada poziomego overflow na całym dokumencie */
+    html,
+    body,
+    #page-wrapper,
+    #page,
+    .busola-hub-wrapper {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+    }
+
     /* 1. Odstęp dolny dla przyklejonej nawigacji mobilnej */
     body,
     #page-wrapper {
         padding-bottom: 76px !important;
     }
 
-    /* 2. Nagłówek mobilny (Navbar) */
+    /* 2. Nagłówek mobilny (Navbar) - wyrównanie 5 ikon w jednym rzędzie */
     .navbar.fixed-top {
         height: 60px !important;
-        padding-left: 14px !important;
-        padding-right: 14px !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
 
         .navbar-toggler {
             display: none !important;
@@ -1886,7 +1896,7 @@ section.busola-section-discover {
             padding: 0 !important;
 
             .logo {
-                max-height: 34px !important;
+                max-height: 32px !important;
                 padding: 0 !important;
                 width: auto;
                 object-fit: contain;
@@ -1894,53 +1904,86 @@ section.busola-section-discover {
         }
 
         #usernavigation {
-            gap: 6px;
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            align-items: center !important;
+            gap: 4px !important;
+            margin-left: auto !important;
 
             .divider {
                 display: none !important;
             }
 
-            .popover-region-mylearning {
-                display: none !important;
+            /* Dark mode switch (słońce + toggle) */
+            .colourmodemenu,
+            #toggle-darkmode {
+                display: inline-flex !important;
+                align-items: center !important;
+                margin: 0 !important;
+                transform: scale(0.82);
+                transform-origin: center;
             }
 
+            /* My learning (czapka) */
+            .popover-region-mylearning {
+                display: inline-flex !important;
+                align-items: center !important;
+                margin: 0 !important;
+
+                .nav-link {
+                    padding: 4px 5px !important;
+                    display: inline-flex !important;
+                    align-items: center !important;
+                }
+            }
+
+            /* Powiadomienia (dzwonek) */
+            .popover-region-notifications {
+                display: inline-flex !important;
+                align-items: center !important;
+                margin: 0 !important;
+
+                .nav-link {
+                    padding: 4px 5px !important;
+                    display: inline-flex !important;
+                    align-items: center !important;
+                }
+            }
+
+            /* Awatar użytkownika (kompas / user menu) */
             .usermenu {
+                margin: 0 !important;
+                display: inline-flex !important;
+                align-items: center !important;
+
                 .usertext {
                     display: none !important;
                 }
+
                 .btn.dropdown-toggle {
-                    padding: 0 !important;
+                    padding: 2px 4px !important;
                     border: none !important;
                     background: transparent !important;
-                    &::after {
-                        display: none !important;
-                    }
-                }
-                .avatars .avatar,
-                .userinitials {
-                    width: 34px !important;
-                    height: 34px !important;
-                    line-height: 34px !important;
-                    font-size: 13px !important;
-                    border-radius: 50% !important;
-                    background: #141B5E !important;
-                    color: #FFFFFF !important;
-                    font-weight: 700 !important;
-                    display: flex !important;
+                    display: inline-flex !important;
                     align-items: center !important;
-                    justify-content: center !important;
+                    gap: 2px !important;
+                }
+
+                .avatars .avatar {
+                    width: 32px !important;
+                    height: 32px !important;
+                    border-radius: 50% !important;
                 }
             }
 
-            .colourmodemenu #colourmode-menu-toggle {
-                width: 32px !important;
-                height: 32px !important;
-            }
-
+            /* Tryb edycji (toggle + ołówek) */
             .editmode-switch-container {
-                transform: scale(0.85);
-                transform-origin: right center;
-                margin: 0;
+                display: inline-flex !important;
+                align-items: center !important;
+                margin: 0 !important;
+                transform: scale(0.82);
+                transform-origin: center;
             }
         }
     }
@@ -2033,8 +2076,25 @@ section.busola-section-discover {
 
     /* 4. Sekcja Hero i Karta "Kontynuuj" */
     .busola-hero {
+        position: relative !important;
+        overflow: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+
+        .busola-hero-radar {
+            position: absolute !important;
+            max-width: 240px !important;
+            max-height: 240px !important;
+            width: 240px !important;
+            height: 240px !important;
+            right: -30px !important;
+            top: -40px !important;
+            pointer-events: none !important;
+            overflow: hidden !important;
+        }
+
         .busola-hero-container {
-            padding: 24px 16px 20px !important;
+            padding: 24px 16px 0 !important;
             gap: 16px !important;
         }
 
@@ -2059,7 +2119,7 @@ section.busola-section-discover {
 
         .busola-hero-card {
             display: grid !important;
-            grid-template-columns: 64px 1fr !important;
+            grid-template-columns: 60px 1fr !important;
             grid-template-areas:
                 "icon info"
                 "prog prog"
@@ -2077,18 +2137,24 @@ section.busola-section-discover {
 
             .busola-hero-card-icon {
                 grid-area: icon;
-                width: 64px !important;
-                height: 64px !important;
-                min-height: 64px !important;
-                flex: 0 0 64px !important;
-                border-radius: 16px !important;
-                padding: 8px !important;
+                width: 60px !important;
+                height: 60px !important;
+                min-height: 60px !important;
+                flex: 0 0 60px !important;
+                border-radius: 14px !important;
+                padding: 6px !important;
                 box-sizing: border-box !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
 
                 .busola-course-img,
                 svg {
-                    max-width: 46px !important;
-                    max-height: 46px !important;
+                    width: 48px !important;
+                    height: 48px !important;
+                    max-width: 48px !important;
+                    max-height: 48px !important;
+                    object-fit: contain !important;
                 }
             }
 
@@ -2149,12 +2215,25 @@ section.busola-section-discover {
                 box-sizing: border-box !important;
             }
         }
+
+        .busola-hero-wave {
+            display: block !important;
+            width: 100% !important;
+            height: 32px !important;
+            margin-top: 14px !important;
+            margin-bottom: 0 !important;
+            position: relative !important;
+
+            path {
+                fill: var(--busola-bg-canvas) !important;
+            }
+        }
     }
 
     /* 5. Główny kontener strony */
     .busola-main-container {
         padding: 20px 16px 40px !important;
-        gap: 40px !important;
+        gap: 36px !important;
     }
 
     /* 6. Sekcja Moje kursy - Pozioma lista wierszy */
@@ -2201,13 +2280,16 @@ section.busola-section-discover {
             gap: 12px !important;
 
             .busola-card-banner {
-                width: 60px !important;
-                height: 60px !important;
-                min-height: 60px !important;
-                flex: 0 0 60px !important;
-                border-radius: 14px !important;
+                width: 56px !important;
+                height: 56px !important;
+                min-height: 56px !important;
+                flex: 0 0 56px !important;
+                border-radius: 12px !important;
                 margin: 0 !important;
-                padding: 6px !important;
+                padding: 4px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
 
                 .busola-card-badge {
                     display: none !important;
@@ -2215,8 +2297,11 @@ section.busola-section-discover {
 
                 .busola-card-img,
                 .busola-card-svg {
+                    width: 44px !important;
+                    height: 44px !important;
                     max-width: 44px !important;
                     max-height: 44px !important;
+                    object-fit: contain !important;
                     margin: 0 !important;
                 }
             }
@@ -2281,28 +2366,38 @@ section.busola-section-discover {
         align-items: flex-start !important;
         text-align: left !important;
         gap: 16px !important;
+        height: auto !important;
+        min-height: 0 !important;
+        flex: 0 0 auto !important;
 
         .busola-exam-icon-wrap {
+            flex: 0 0 48px !important;
             width: 48px !important;
             height: 48px !important;
             border-radius: 14px !important;
         }
 
         .busola-exam-content {
+            flex: 0 0 auto !important;
+            width: 100% !important;
+
             .busola-exam-title {
                 font-size: 20px !important;
             }
             .busola-exam-desc {
                 font-size: 14px !important;
+                margin-top: 6px !important;
             }
         }
 
         .busola-exam-btn {
+            flex: 0 0 auto !important;
             width: 100% !important;
             justify-content: center !important;
             padding: 12px 20px !important;
             border-radius: var(--busola-radius-full) !important;
             font-size: 15px !important;
+            margin: 0 !important;
         }
     }
 
@@ -2369,9 +2464,11 @@ section.busola-section-discover {
         }
     }
 
-    /* 9. Stopka - Skalowanie logotypu platformy */
+    /* 9. Stopka - Pełna szerokość i margines dolny chroniący przed przykryciem przez dolny pasek */
     footer#page-footer {
-        padding-bottom: 24px !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        padding-bottom: 86px !important;
 
         .footer-logo {
             max-height: 38px !important;
