@@ -24,3 +24,7 @@ Canonical triage roles mapped to standard labels (`needs-triage`, `needs-info`, 
 
 Single-context repo layout (`CONTEXT.md` and `docs/adr/` at repo root). See `docs/agents/domain.md`.
 
+### Live CSS diagnosis
+
+Evidence before selectors: when a style fix does not show on the live site, or you would style markup you have not seen (H5P iframes, Moodle core output), send the user a DevTools console snippet and edit from its output. Read `docs/agents/css-debugging.md` first.
+
