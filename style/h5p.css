@@ -974,3 +974,16 @@ html body nav.h5p-navigation.qs-footer button:hover {
     color: var(--busola-text-primary) !important;
     background: var(--busola-surface-hover) !important;
 }
+
+/* Bez animacji przesunięcia na przyciskach i pasku wyniku */
+html body button.h5p-theme-button,
+html body button.h5p-theme-button:hover,
+html body button.h5p-theme-button:focus,
+html body button.h5p-theme-button:active,
+html body .h5p-question-scorebar,
+html body .h5p-question-scorebar.h5p-question-visible,
+html body .h5p-question-evaluation-container {
+    transition: background-color 0.15s ease, color 0.15s ease !important;
+    transform: none !important;
+    animation: none !important;
+}
