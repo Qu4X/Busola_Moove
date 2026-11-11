@@ -296,6 +296,195 @@
     color: #FF7A1A;
     text-decoration: none;
 }
+@media (max-width: 767.98px) {
+    .busola-profile-wrapper {
+        padding: 16px 16px calc(76px + env(safe-area-inset-bottom, 0px)) !important;
+        gap: 14px !important;
+    }
+    .busola-profile-hero {
+        border-radius: 22px !important;
+        padding: 18px 20px !important;
+        gap: 16px !important;
+        align-items: center !important;
+    }
+    .busola-profile-radar-bg {
+        width: 220px !important;
+        height: 220px !important;
+        right: -50px !important;
+        top: -70px !important;
+    }
+    .busola-profile-avatar-wrap {
+        flex: 0 0 64px !important;
+        width: 64px !important;
+        height: 64px !important;
+    }
+    .busola-profile-avatar-img,
+    .busola-profile-avatar-svg {
+        width: 64px !important;
+        height: 64px !important;
+        flex: 0 0 64px !important;
+    }
+    .busola-profile-hero-meta {
+        flex: 1 1 auto !important;
+    }
+    .busola-profile-name {
+        font-size: 26px !important;
+        line-height: 1.15 !important;
+    }
+    .busola-profile-summary {
+        font-size: 13px !important;
+        margin-top: 2px !important;
+    }
+    .busola-profile-edit-btn {
+        width: 100% !important;
+        min-height: 48px !important;
+        justify-content: center !important;
+        margin-top: 4px !important;
+    }
+    .busola-profile-grid {
+        gap: 14px !important;
+    }
+    .busola-profile-col {
+        flex: 1 1 100% !important;
+        gap: 14px !important;
+    }
+    .busola-profile-card {
+        border-radius: 18px !important;
+        padding: 16px 16px 8px !important;
+    }
+    .busola-profile-card-title {
+        font-size: 18px !important;
+        margin-bottom: 10px !important;
+    }
+    .busola-profile-fields-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0 !important;
+    }
+    .busola-profile-field {
+        padding: 10px 0 !important;
+        border-top: 1px solid #E8EBF6 !important;
+    }
+    .busola-profile-field:first-child {
+        border-top: none !important;
+        padding-top: 0 !important;
+    }
+    .busola-profile-field-label {
+        font-size: 12px !important;
+    }
+    .busola-profile-field-val {
+        font-size: 15px !important;
+    }
+    .busola-profile-courses-list {
+        margin-top: -6px !important;
+    }
+    .busola-profile-course-item {
+        gap: 12px !important;
+        padding: 10px 0 !important;
+    }
+    .busola-profile-course-thumb {
+        flex: 0 0 60px !important;
+        width: 60px !important;
+        height: 48px !important;
+        border-radius: 10px !important;
+    }
+    .busola-profile-course-thumb svg {
+        width: 48px !important;
+        height: 30px !important;
+    }
+    .busola-profile-course-title {
+        font-size: 15px !important;
+    }
+    .busola-profile-course-meta {
+        margin-top: 4px !important;
+        gap: 8px !important;
+    }
+    .busola-profile-mini-bar {
+        max-width: 100px !important;
+    }
+    .busola-profile-progress-label,
+    .busola-profile-completed-label,
+    .busola-profile-notstarted-label {
+        font-size: 13px !important;
+    }
+}
+[data-bs-theme="dark"] .has-busola-profile,
+body.darkmode.has-busola-profile,
+.theme-dark.has-busola-profile,
+[data-bs-theme="dark"] .busola-profile-wrapper,
+body.darkmode .busola-profile-wrapper,
+.theme-dark .busola-profile-wrapper {
+    background-color: #0B0F32 !important;
+    color: #CBD1F3;
+}
+[data-bs-theme="dark"] .busola-profile-card,
+body.darkmode .busola-profile-card,
+.theme-dark .busola-profile-card {
+    background: #141B5E !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+[data-bs-theme="dark"] .busola-profile-card-title,
+body.darkmode .busola-profile-card-title,
+.theme-dark .busola-profile-card-title {
+    color: #FFFFFF !important;
+}
+[data-bs-theme="dark"] .busola-profile-field-label,
+body.darkmode .busola-profile-field-label,
+.theme-dark .busola-profile-field-label {
+    color: #A3ABD0 !important;
+}
+[data-bs-theme="dark"] .busola-profile-field-val,
+body.darkmode .busola-profile-field-val,
+.theme-dark .busola-profile-field-val {
+    color: #FFFFFF !important;
+}
+[data-bs-theme="dark"] .busola-profile-field,
+body.darkmode .busola-profile-field,
+.theme-dark .busola-profile-field,
+[data-bs-theme="dark"] .busola-profile-link-row,
+body.darkmode .busola-profile-link-row,
+.theme-dark .busola-profile-link-row,
+[data-bs-theme="dark"] .busola-profile-course-item,
+body.darkmode .busola-profile-course-item,
+.theme-dark .busola-profile-course-item {
+    border-top-color: rgba(255, 255, 255, 0.1) !important;
+    color: #FFFFFF !important;
+}
+[data-bs-theme="dark"] .busola-profile-link-row:hover,
+body.darkmode .busola-profile-link-row:hover,
+.theme-dark .busola-profile-link-row:hover,
+[data-bs-theme="dark"] .busola-profile-course-item:hover .busola-profile-course-title,
+body.darkmode .busola-profile-course-item:hover .busola-profile-course-title,
+.theme-dark .busola-profile-course-item:hover .busola-profile-course-title {
+    color: #FFB27A !important;
+}
+[data-bs-theme="dark"] .busola-profile-mini-segment,
+body.darkmode .busola-profile-mini-segment,
+.theme-dark .busola-profile-mini-segment {
+    background: rgba(255, 255, 255, 0.18) !important;
+}
+[data-bs-theme="dark"] .busola-profile-mini-segment.is-done,
+body.darkmode .busola-profile-mini-segment.is-done,
+.theme-dark .busola-profile-mini-segment.is-done {
+    background: #FF7A1A !important;
+}
+[data-bs-theme="dark"] .busola-profile-mini-segment.is-done.is-completed,
+body.darkmode .busola-profile-mini-segment.is-done.is-completed,
+.theme-dark .busola-profile-mini-segment.is-done.is-completed {
+    background: #4E60B8 !important;
+}
+[data-bs-theme="dark"] .busola-profile-test-highlight,
+body.darkmode .busola-profile-test-highlight,
+.theme-dark .busola-profile-test-highlight {
+    color: #FFB27A !important;
+}
+[data-bs-theme="dark"] .busola-profile-all-grades-link,
+body.darkmode .busola-profile-all-grades-link,
+.theme-dark .busola-profile-all-grades-link {
+    color: #FFFFFF !important;
+    border-bottom-color: #FF7A1A !important;
+}
 </style>
 <main class="busola-profile-wrapper">
     <!-- HERO SECTION -->
