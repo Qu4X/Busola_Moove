@@ -102,6 +102,12 @@ body.has-busola-change-password #topofscroll {
     color: #141B5E;
 }
 
+/* Hide redundant user heading (mockup has only the large page title) */
+#page-user-edit [role="main"] > h2:first-of-type,
+#page-user-editadvanced [role="main"] > h2:first-of-type {
+    display: none !important;
+}
+
 /* Cards: fieldsets & injected sections */
 #page-user-edit form.mform fieldset,
 #page-user-editadvanced form.mform fieldset,
@@ -428,6 +434,14 @@ body.moove-darkmode .busola-account-header .busola-account-title,
     color: #FFFFFF !important;
 }
 
+body.moove-darkmode#page-user-edit form.mform fieldset,
+body.moove-darkmode#page-user-editadvanced form.mform fieldset,
+body.moove-darkmode#page-login-change_password form.mform fieldset,
+#page-user-edit.moove-darkmode form.mform fieldset,
+#page-user-editadvanced.moove-darkmode form.mform fieldset,
+#page-login-change_password.moove-darkmode form.mform fieldset,
+body.moove-darkmode .busola-password-prompt-card,
+.moove-darkmode .busola-password-prompt-card,
 [data-bs-theme="dark"] #page-user-edit form.mform fieldset,
 [data-bs-theme="dark"] #page-user-editadvanced form.mform fieldset,
 [data-bs-theme="dark"] #page-login-change_password form.mform fieldset,
@@ -436,14 +450,6 @@ body.darkmode #page-user-edit form.mform fieldset,
 body.darkmode #page-user-editadvanced form.mform fieldset,
 body.darkmode #page-login-change_password form.mform fieldset,
 body.darkmode .busola-password-prompt-card,
-body.moove-darkmode #page-user-edit form.mform fieldset,
-body.moove-darkmode #page-user-editadvanced form.mform fieldset,
-body.moove-darkmode #page-login-change_password form.mform fieldset,
-body.moove-darkmode .busola-password-prompt-card,
-.moove-darkmode #page-user-edit form.mform fieldset,
-.moove-darkmode #page-user-editadvanced form.mform fieldset,
-.moove-darkmode #page-login-change_password form.mform fieldset,
-.moove-darkmode .busola-password-prompt-card,
 .theme-dark #page-user-edit form.mform fieldset,
 .theme-dark #page-user-editadvanced form.mform fieldset,
 .theme-dark #page-login-change_password form.mform fieldset,
@@ -453,6 +459,26 @@ body.moove-darkmode .busola-password-prompt-card,
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25) !important;
 }
 
+body.moove-darkmode#page-user-edit form.mform fieldset legend,
+body.moove-darkmode#page-user-editadvanced form.mform fieldset legend,
+body.moove-darkmode#page-login-change_password form.mform fieldset legend,
+#page-user-edit.moove-darkmode form.mform fieldset legend,
+#page-user-editadvanced.moove-darkmode form.mform fieldset legend,
+#page-login-change_password.moove-darkmode form.mform fieldset legend,
+body.moove-darkmode#page-user-edit form.mform fieldset .ftoggler a,
+body.moove-darkmode#page-user-editadvanced form.mform fieldset .ftoggler a,
+body.moove-darkmode#page-login-change_password form.mform fieldset .ftoggler a,
+#page-user-edit.moove-darkmode form.mform fieldset .ftoggler a,
+#page-user-editadvanced.moove-darkmode form.mform fieldset .ftoggler a,
+#page-login-change_password.moove-darkmode form.mform fieldset .ftoggler a,
+body.moove-darkmode#page-user-edit .ftoggler a,
+body.moove-darkmode#page-user-editadvanced .ftoggler a,
+body.moove-darkmode#page-login-change_password .ftoggler a,
+#page-user-edit.moove-darkmode .ftoggler a,
+#page-user-editadvanced.moove-darkmode .ftoggler a,
+#page-login-change_password.moove-darkmode .ftoggler a,
+body.moove-darkmode .busola-password-prompt-card h2,
+.moove-darkmode .busola-password-prompt-card h2,
 [data-bs-theme="dark"] #page-user-edit form.mform fieldset legend,
 [data-bs-theme="dark"] #page-user-editadvanced form.mform fieldset legend,
 [data-bs-theme="dark"] #page-login-change_password form.mform fieldset legend,
@@ -465,12 +491,27 @@ body.moove-darkmode .ftoggler a,
     color: #FFFFFF !important;
 }
 
+body.moove-darkmode#page-user-edit .collapsible-actions a,
+body.moove-darkmode#page-user-editadvanced .collapsible-actions a,
+#page-user-edit.moove-darkmode .collapsible-actions a,
+#page-user-editadvanced.moove-darkmode .collapsible-actions a,
+body.moove-darkmode .collapsible-actions a,
+.moove-darkmode .collapsible-actions a {
+    color: #CBD1F3 !important;
+}
+
 #page-user-edit.moove-darkmode .fitem .col-form-label label,
 #page-user-editadvanced.moove-darkmode .fitem .col-form-label label,
 #page-login-change_password.moove-darkmode .fitem .col-form-label label,
 body.moove-darkmode#page-user-edit .fitem .col-form-label label,
 body.moove-darkmode#page-user-editadvanced .fitem .col-form-label label,
 body.moove-darkmode#page-login-change_password .fitem .col-form-label label,
+#page-user-edit.moove-darkmode .fitem label,
+#page-user-editadvanced.moove-darkmode .fitem label,
+#page-login-change_password.moove-darkmode .fitem label,
+body.moove-darkmode#page-user-edit .fitem label,
+body.moove-darkmode#page-user-editadvanced .fitem label,
+body.moove-darkmode#page-login-change_password .fitem label,
 [data-bs-theme="dark"]#page-user-edit .fitem .col-form-label label,
 [data-bs-theme="dark"]#page-user-editadvanced .fitem .col-form-label label,
 [data-bs-theme="dark"]#page-login-change_password .fitem .col-form-label label,
@@ -536,12 +577,16 @@ body.moove-darkmode #page-login-change_password #fitem_id_username .felement,
     color: #FFFFFF !important;
 }
 
-#page-user-edit #sticky-footer,
-#page-user-editadvanced #sticky-footer,
-#page-login-change_password #sticky-footer,
-[data-bs-theme="dark"] #page-user-edit #sticky-footer,
-[data-bs-theme="dark"] #page-user-editadvanced #sticky-footer,
-[data-bs-theme="dark"] #page-login-change_password #sticky-footer,
+/* Sticky footer in dark mode */
+body.moove-darkmode#page-user-edit #sticky-footer,
+body.moove-darkmode#page-user-editadvanced #sticky-footer,
+body.moove-darkmode#page-login-change_password #sticky-footer,
+#page-user-edit.moove-darkmode #sticky-footer,
+#page-user-editadvanced.moove-darkmode #sticky-footer,
+#page-login-change_password.moove-darkmode #sticky-footer,
+[data-bs-theme="dark"]#page-user-edit #sticky-footer,
+[data-bs-theme="dark"]#page-user-editadvanced #sticky-footer,
+[data-bs-theme="dark"]#page-login-change_password #sticky-footer,
 body.moove-darkmode #sticky-footer,
 .moove-darkmode #sticky-footer,
 [data-bs-theme="dark"] #sticky-footer,
@@ -557,12 +602,28 @@ body.moove-darkmode #fgroup_id_buttonar,
     box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.08), 0 -8px 24px rgba(0, 0, 0, 0.3) !important;
 }
 
+/* Cancel button in dark mode */
+body.moove-darkmode#page-user-edit #id_cancel,
+body.moove-darkmode#page-user-editadvanced #id_cancel,
+body.moove-darkmode#page-login-change_password #id_cancel,
+#page-user-edit.moove-darkmode #id_cancel,
+#page-user-editadvanced.moove-darkmode #id_cancel,
+#page-login-change_password.moove-darkmode #id_cancel,
+[data-bs-theme="dark"]#page-user-edit #id_cancel,
+[data-bs-theme="dark"]#page-user-editadvanced #id_cancel,
+[data-bs-theme="dark"]#page-login-change_password #id_cancel,
 [data-bs-theme="dark"] #id_cancel,
 body.darkmode #id_cancel,
 body.moove-darkmode #id_cancel,
 .moove-darkmode #id_cancel,
 .theme-dark #id_cancel {
-    border-color: #2C3675 !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+    background: transparent !important;
+    color: #FFFFFF !important;
+}
+
+body.moove-darkmode .busola-password-prompt-card p,
+.moove-darkmode .busola-password-prompt-card p {
     color: #CBD1F3 !important;
 }
 
@@ -571,6 +632,36 @@ body.moove-darkmode .busola-password-prompt-card .btn-change-password-link,
 .moove-darkmode .busola-password-prompt-card .btn-change-password-link {
     border-color: #CBD1F3 !important;
     color: #FFFFFF !important;
+}
+
+/* TinyMCE & Filemanager Dark Mode */
+body.moove-darkmode .tox.tox-tinymce {
+    border-color: #2C3675 !important;
+}
+body.moove-darkmode .tox .tox-menubar,
+body.moove-darkmode .tox .tox-toolbar,
+body.moove-darkmode .tox .tox-toolbar__primary,
+body.moove-darkmode .tox .tox-toolbar__overflow,
+body.moove-darkmode .tox .tox-statusbar {
+    background-color: #141B5E !important;
+    border-color: #2C3675 !important;
+}
+body.moove-darkmode .tox .tox-tbtn svg,
+body.moove-darkmode .tox .tox-mbtn__select-label,
+body.moove-darkmode .tox .tox-statusbar {
+    fill: #CBD1F3 !important;
+    color: #CBD1F3 !important;
+}
+body.moove-darkmode .filemanager .fp-navbar {
+    background-color: #141B5E !important;
+    border-color: #2C3675 !important;
+}
+body.moove-darkmode .filemanager-container,
+body.moove-darkmode .filepicker-filelist,
+body.moove-darkmode .dndupload-target {
+    background-color: #0F1547 !important;
+    border-color: #2C3675 !important;
+    color: #CBD1F3 !important;
 }
 
 /* -------------------------------------------------------------------------
