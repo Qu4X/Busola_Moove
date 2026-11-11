@@ -291,7 +291,10 @@ body.has-busola-change-password #topofscroll {
     text-align: center !important;
 }
 
-/* Sticky Bottom Action Bar */
+/* Sticky Bottom Action Bar (#sticky-footer & #fgroup_id_buttonar) */
+#page-user-edit #sticky-footer,
+#page-user-editadvanced #sticky-footer,
+#page-login-change_password #sticky-footer,
 #page-user-edit #fgroup_id_buttonar,
 #page-user-editadvanced #fgroup_id_buttonar,
 #page-login-change_password #fgroup_id_buttonar {
@@ -302,17 +305,15 @@ body.has-busola-change-password #topofscroll {
     z-index: 1040 !important;
     background: #FFFFFF !important;
     box-shadow: 0 -1px 0 rgba(20, 27, 94, 0.1), 0 -8px 24px rgba(20, 27, 94, 0.06) !important;
-    padding: 14px 24px !important;
+    padding: 12px 24px !important;
     margin: 0 !important;
     border: none !important;
+    border-top: 1px solid #E8EBF6 !important;
 }
 
-#page-user-edit #fgroup_id_buttonar .col-form-label,
-#page-user-editadvanced #fgroup_id_buttonar .col-form-label,
-#page-login-change_password #fgroup_id_buttonar .col-form-label {
-    display: none !important;
-}
-
+#page-user-edit #sticky-footer .sticky-footer-content,
+#page-user-editadvanced #sticky-footer .sticky-footer-content,
+#page-login-change_password #sticky-footer .sticky-footer-content,
 #page-user-edit #fgroup_id_buttonar .felement,
 #page-user-editadvanced #fgroup_id_buttonar .felement,
 #page-login-change_password #fgroup_id_buttonar .felement {
@@ -320,12 +321,21 @@ body.has-busola-change-password #topofscroll {
     margin: 0 auto !important;
     display: flex !important;
     align-items: center !important;
+    justify-content: flex-start !important;
     gap: 14px !important;
     flex-wrap: wrap !important;
 }
 
+#page-login-change_password #sticky-footer .sticky-footer-content,
 #page-login-change_password #fgroup_id_buttonar .felement {
     max-width: 560px !important;
+}
+
+#page-user-edit #sticky-footer .sticky-footer-content > .d-flex,
+#page-user-editadvanced #sticky-footer .sticky-footer-content > .d-flex,
+#page-login-change_password #sticky-footer .sticky-footer-content > .d-flex {
+    gap: 12px !important;
+    align-items: center !important;
 }
 
 /* Submit and Cancel buttons */
@@ -463,6 +473,27 @@ body.moove-darkmode .fitem .col-form-label label,
     color: #FFFFFF !important;
 }
 
+#page-user-edit.moove-darkmode .fitem input,
+#page-user-edit.moove-darkmode .fitem select,
+#page-user-edit.moove-darkmode textarea,
+#page-user-editadvanced.moove-darkmode .fitem input,
+#page-user-editadvanced.moove-darkmode .fitem select,
+#page-login-change_password.moove-darkmode .fitem input,
+#page-login-change_password.moove-darkmode .fitem select,
+body.moove-darkmode#page-user-edit .fitem input,
+body.moove-darkmode#page-user-edit .fitem select,
+body.moove-darkmode#page-user-edit textarea,
+body.moove-darkmode#page-user-editadvanced .fitem input,
+body.moove-darkmode#page-user-editadvanced .fitem select,
+body.moove-darkmode#page-login-change_password .fitem input,
+body.moove-darkmode#page-login-change_password .fitem select,
+[data-bs-theme="dark"] #page-user-edit .fitem input,
+[data-bs-theme="dark"] #page-user-edit .fitem select,
+[data-bs-theme="dark"] #page-user-edit textarea,
+[data-bs-theme="dark"] #page-user-editadvanced .fitem input,
+[data-bs-theme="dark"] #page-user-editadvanced .fitem select,
+[data-bs-theme="dark"] #page-login-change_password .fitem input,
+[data-bs-theme="dark"] #page-login-change_password .fitem select,
 [data-bs-theme="dark"] .fitem input[type="text"],
 [data-bs-theme="dark"] .fitem input[type="email"],
 [data-bs-theme="dark"] .fitem input[type="password"],
@@ -496,6 +527,15 @@ body.moove-darkmode #page-login-change_password #fitem_id_username .felement,
     color: #FFFFFF !important;
 }
 
+#page-user-edit #sticky-footer,
+#page-user-editadvanced #sticky-footer,
+#page-login-change_password #sticky-footer,
+[data-bs-theme="dark"] #page-user-edit #sticky-footer,
+[data-bs-theme="dark"] #page-user-editadvanced #sticky-footer,
+[data-bs-theme="dark"] #page-login-change_password #sticky-footer,
+body.moove-darkmode #sticky-footer,
+.moove-darkmode #sticky-footer,
+[data-bs-theme="dark"] #sticky-footer,
 [data-bs-theme="dark"] #page-user-edit #fgroup_id_buttonar,
 [data-bs-theme="dark"] #page-user-editadvanced #fgroup_id_buttonar,
 [data-bs-theme="dark"] #page-login-change_password #fgroup_id_buttonar,
@@ -503,7 +543,8 @@ body.darkmode #fgroup_id_buttonar,
 body.moove-darkmode #fgroup_id_buttonar,
 .moove-darkmode #fgroup_id_buttonar,
 .theme-dark #fgroup_id_buttonar {
-    background: #141B5E !important;
+    background-color: #141B5E !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
     box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.08), 0 -8px 24px rgba(0, 0, 0, 0.3) !important;
 }
 
