@@ -98,15 +98,15 @@ class busola {
                 $fullname = mb_strtolower($course->fullname ?? '');
                 $catnamelower = mb_strtolower($categoryname);
 
-                if (str_contains($shortname, 'SM') || str_contains($fullname, 'motorowod') || str_contains($catnamelower, 'motor')) {
+                if (str_contains($catnamelower, 'motor') || (!str_contains($catnamelower, 'żegl') && !str_contains($catnamelower, 'zegl') && ($shortname === 'SM' || $shortname === 'MSM' || str_contains($fullname, 'motorowod')))) {
                     $illustration = 'motor';
-                    $bgcolor = '#DCF0F3';
-                } else if (str_contains($shortname, 'SRC') || str_contains($fullname, 'radio') || str_contains($catnamelower, 'dodatk') || str_contains($catnamelower, 'radio')) {
+                    $bgcolor = 'var(--busola-cat-motor-bg)';
+                } else if (str_contains($catnamelower, 'dodatk') || str_contains($catnamelower, 'radio') || str_contains($shortname, 'SRC') || str_contains($fullname, 'radio')) {
                     $illustration = 'extra';
-                    $bgcolor = '#FFE8D4';
+                    $bgcolor = 'var(--busola-cat-extra-bg)';
                 } else {
                     $illustration = 'sail';
-                    $bgcolor = '#E3E8FB';
+                    $bgcolor = 'var(--busola-cat-sail-bg)';
                 }
 
                 // Check overview files for uploaded image.
@@ -458,12 +458,12 @@ class busola {
         if (empty($iconurl)) {
             $shortname = strtoupper(trim($course->shortname ?? ''));
             $fullname = mb_strtolower($course->fullname ?? '');
-            if (str_contains($shortname, 'SM') || str_contains($fullname, 'motorowod')) {
+            if (str_contains($shortname, 'JSM') || (str_contains($fullname, 'jachtowy') && str_contains($fullname, 'morski'))) {
+                $iconfile = 'JSM';
+            } else if (str_contains($shortname, 'SM') || str_contains($fullname, 'motorowod')) {
                 $iconfile = str_contains($fullname, 'hol') ? 'Hol' : (str_contains($shortname, 'MSM') ? 'MSM' : 'SM');
             } else if (str_contains($shortname, 'SRC') || str_contains($fullname, 'radio') || str_contains($fullname, 'src')) {
                 $iconfile = 'SRC';
-            } else if (str_contains($shortname, 'JSM') || str_contains($fullname, 'morski')) {
-                $iconfile = 'JSM';
             } else {
                 $iconfile = 'ZJ';
             }
