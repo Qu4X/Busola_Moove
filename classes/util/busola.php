@@ -2018,7 +2018,6 @@ class busola {
         }
 
         $allgradesurl = (new \moodle_url('/grade/report/overview/index.php', ['id' => $user->id]))->out(false);
-        $mobileurl = (new \moodle_url('/admin/tool/mobile/index.php'))->out(false);
 
         return [
             'userid' => $user->id,
@@ -2045,7 +2044,6 @@ class busola {
             'last_test' => $lastattemptinfo,
             'has_last_test' => !empty($lastattemptinfo),
             'all_grades_url' => $allgradesurl,
-            'mobile_url' => $mobileurl,
         ];
     }
 
