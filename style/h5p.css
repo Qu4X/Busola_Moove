@@ -1026,3 +1026,16 @@ html body .h5p-question-evaluation-container {
         float: none !important;
     }
 }
+
+/* Bez animacji wejścia dla pasków wyniku, feedbacku i przycisków (klasy H5P Question: -visible / -hidden) */
+html body .h5p-question-visible,
+html body .h5p-question-hidden,
+html body .h5p-question-scorebar,
+html body .h5p-question-scorebar *,
+html body .h5p-question-feedback,
+html body .h5p-question-buttons,
+html body .h5p-question-buttons * {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+}

@@ -6525,3 +6525,26 @@ body.darkmode,
 @import 'course_mobile';
 @import 'profile';
 
+
+// ==========================================================================
+// Strona aktywności H5P: tło za kartą quizu z tokenów (bez białego/szarego pasa)
+// ==========================================================================
+body#page-mod-h5pactivity-view {
+    background-color: var(--busola-bg-canvas) !important;
+
+    #page,
+    #page-wrapper,
+    #topofscroll,
+    .main-inner,
+    #page-content,
+    #region-main-box,
+    #region-main {
+        background-color: var(--busola-bg-canvas) !important;
+        box-shadow: none !important;
+        border: 0 !important;
+    }
+
+    #region-main {
+        overflow: visible;
+    }
+}
