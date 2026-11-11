@@ -1039,3 +1039,8 @@ html body .h5p-question-buttons * {
     animation: none !important;
     transform: none !important;
 }
+
+/* Biały prostokąt za kartą: ramka H5P maluje nieprzezroczyste tło, gdy color-scheme dokumentu
+   różni się od rodzica. Dopasowanie do trybu Moodle usuwa to tło. */
+html[data-bs-theme="dark"] { color-scheme: dark; }
+html[data-bs-theme="light"] { color-scheme: light; }
