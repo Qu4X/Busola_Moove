@@ -24,6 +24,7 @@
     background-color: #F5F6FB !important;
 }
 .busola-profile-wrapper {
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 40px 32px 72px;
@@ -308,16 +309,60 @@
     padding: 0 20px;
     border-radius: 14px;
     border: 2px solid #141B5E;
+    background: transparent;
     color: #141B5E;
+    font-family: inherit;
     font-weight: 700;
     font-size: 15px;
     text-decoration: none;
+    cursor: pointer;
     transition: background-color 0.15s ease, color 0.15s ease;
 }
 .busola-profile-qr-btn:hover {
     background: #141B5E;
     color: #FFFFFF;
     text-decoration: none;
+}
+.busola-profile-qrcode-box {
+    margin-top: 16px;
+    animation: busolaFadeIn 0.2s ease;
+}
+.busola-profile-qrcode-inner {
+    background: #F5F6FB;
+    border: 1.5px solid #E8EBF6;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+}
+.busola-profile-qr-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 10px;
+    background: #FFFFFF;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(20, 27, 94, 0.08);
+    object-fit: contain;
+}
+.busola-profile-qr-caption {
+    margin: 0;
+    font-size: 13px;
+    color: #5B6280;
+    line-height: 1.4;
+    max-width: 260px;
+}
+@keyframes busolaFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 </style>
 <main class="busola-profile-wrapper">
@@ -522,16 +567,66 @@
             <section class="busola-profile-card">
                 <h2 class="busola-profile-card-title">{{#str}}profile_mobile_app, theme_ebusola{{/str}}</h2>
                 <p class="busola-profile-mobile-desc">{{#str}}profile_mobile_app_desc, theme_ebusola{{/str}}</p>
-                <a href="{{busola_profile.mobile_url}}" class="busola-profile-qr-btn">
+                <button type="button" class="busola-profile-qr-btn" id="busola-qr-toggle-btn" aria-expanded="false" aria-controls="busola-profile-qrcode">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <rect x="3" y="3" width="7" height="7" rx="1"></rect>
                         <rect x="14" y="3" width="7" height="7" rx="1"></rect>
                         <rect x="3" y="14" width="7" height="7" rx="1"></rect>
                         <path d="M14 14h3v3h-3zM20 14v0M17 20h4M20 17v3"></path>
                     </svg>
-                    <span>{{#str}}profile_show_qr, theme_ebusola{{/str}}</span>
-                </a>
+                    <span id="busola-qr-btn-text">{{#str}}profile_show_qr, theme_ebusola{{/str}}</span>
+                </button>
+                <div id="busola-profile-qrcode" class="busola-profile-qrcode-box" style="display:none;">
+                    <div class="busola-profile-qrcode-inner">
+                        <img id="busola-profile-qr-image" src="" alt="Kod QR do logowania w aplikacji mobilnej" class="busola-profile-qr-img">
+                        <p class="busola-profile-qr-caption">Zeskanuj kod QR aplikacją mobilną, aby zalogować się automatycznie. Kod wygasa po 10 minutach.</p>
+                    </div>
+                </div>
             </section>
         </div>
     </div>
 </main>
+<script>
+(function() {
+    function initBusolaQr() {
+        var btn = document.getElementById('busola-qr-toggle-btn');
+        var box = document.getElementById('busola-profile-qrcode');
+        var img = document.getElementById('busola-profile-qr-image');
+        var textSpan = document.getElementById('busola-qr-btn-text');
+
+        function syncQrImage() {
+            if (!img) return;
+            var hiddenImg = document.querySelector('.d-none #qrcode img, #qrcode img');
+            if (hiddenImg && hiddenImg.src) {
+                img.src = hiddenImg.src;
+            }
+        }
+
+        syncQrImage();
+
+        if (btn && box && !btn.dataset.busolaBound) {
+            btn.dataset.busolaBound = 'true';
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                syncQrImage();
+                var isHidden = (box.style.display === 'none' || box.style.display === '');
+                if (isHidden) {
+                    box.style.display = 'block';
+                    btn.setAttribute('aria-expanded', 'true');
+                    if (textSpan) textSpan.textContent = 'Ukryj kod QR';
+                } else {
+                    box.style.display = 'none';
+                    btn.setAttribute('aria-expanded', 'false');
+                    if (textSpan) textSpan.textContent = 'Pokaż kod QR';
+                }
+            });
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBusolaQr);
+    } else {
+        initBusolaQr();
+    }
+})();
+</script>
