@@ -30,7 +30,12 @@
                                 <div class="busola-course-hero-seg {{#is_done}}is-done{{/is_done}}"></div>
                             {{/segments}}
                         </div>
-                        <div class="busola-course-hero-prog-label">{{progress_label}}</div>
+                        <div class="busola-course-hero-prog-row">
+                            <div class="busola-course-hero-prog-label">{{progress_label}}</div>
+                            {{#last_score_mobile_label}}
+                            <div class="busola-course-hero-mobile-score">{{last_score_mobile_label}}</div>
+                            {{/last_score_mobile_label}}
+                        </div>
                     </div>
                 </div>
 
@@ -103,6 +108,9 @@
                     <div class="busola-section-body">
                         <div class="busola-section-name">{{name}}</div>
                         <div class="busola-section-sub">{{subtitle}}</div>
+                        {{#mobile_status_text}}
+                        <div class="busola-section-mobile-status">{{mobile_status_text}}</div>
+                        {{/mobile_status_text}}
                     </div>
 
                     <div class="busola-section-status">
@@ -125,6 +133,18 @@
                             </span>
                         {{/is_todo}}
                     </div>
+
+                    <span class="busola-section-mobile-ind" aria-hidden="true">
+                        <svg class="busola-ind-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"></path></svg>
+                        <span class="busola-ind-closed">
+                            {{#is_completed}}
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+                            {{/is_completed}}
+                            {{^is_completed}}
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+                            {{/is_completed}}
+                        </span>
+                    </span>
 
                     <span class="busola-section-pointer" aria-hidden="true"></span>
                 </button>

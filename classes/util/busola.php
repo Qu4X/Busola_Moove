@@ -1621,11 +1621,14 @@ class busola {
             if ($iscompleted) {
                 if ($secquizbest) {
                     $statustext = get_string('course_section_status_best', 'theme_ebusola', $secquizbest['score']);
+                    $mobilestatustext = 'Zaliczony · ' . $secquizbest['score'];
                 } else {
                     $statustext = get_string('course_section_status_done', 'theme_ebusola');
+                    $mobilestatustext = 'Zaliczony';
                 }
             } else {
                 $statustext = null;
+                $mobilestatustext = null;
             }
 
             $sections[] = [
@@ -1644,6 +1647,7 @@ class busola {
                 'has_activities' => !empty($activities),
                 'is_completed' => $iscompleted,
                 'status_text' => $statustext,
+                'mobile_status_text' => $mobilestatustext,
                 'close_label' => get_string('course_close_section', 'theme_ebusola', $secname),
             ];
 
@@ -1657,11 +1661,13 @@ class busola {
             if (!$secitem['is_completed'] && !$foundnext) {
                 $secitem['is_next'] = true;
                 $secitem['is_todo'] = false;
+                $secitem['mobile_status_text'] = 'Następny';
                 $foundnext = true;
                 $nextsection = $secitem;
             } else if (!$secitem['is_completed']) {
                 $secitem['is_next'] = false;
                 $secitem['is_todo'] = true;
+                $secitem['mobile_status_text'] = 'Do zrobienia';
             } else {
                 $secitem['is_next'] = false;
                 $secitem['is_todo'] = false;
@@ -1705,6 +1711,7 @@ class busola {
             'segments' => $segments,
             'has_scores' => $hasattempts,
             'last_score' => $lastscoretext,
+            'last_score_mobile_label' => $hasattempts ? ('Ostatni wynik: ' . $lastscoretext) : '',
             'best_score' => $bestscoretext,
             'next_section_name' => $nextsectionname,
             'next_section_num' => $nextsectionnum,
