@@ -40,7 +40,7 @@ In Moodle, anonymous users receive cached pages, while logged-in users run PHP l
 
 9. Load ES6+ JavaScript modules on demand via `$PAGE->requires->js_call_amd()`. Do not register global scripts in `config.php` when a script runs on one page type only.
 10. Guard every Mustache partial that contains a `{{#js}}` block with a PHP boolean flag. Never include JS-bearing partials unconditionally.
-11. Never hide unused Moodle core regions (`{{{ output.main_content }}}`, drawers, or popovers) inside `<div class="d-none">`. Conditionalize them in PHP and Mustache so Moodle does not enqueue their AMD and React bundles.
+11. Always keep `{{{ output.main_content }}}` in every layout template (wrapped in `<div class="d-none">` when replaced by a custom view) because Moodle core throws a `coding_exception` if the main content token is missing. Skip optional side-block and course-index drawer calls (`core_course_drawer()`, `$OUTPUT->blocks()`) in PHP when a custom view replaces them.
 12. Initialize modals and popovers lazily inside click handlers. Never run `Ajax.call()` or fetch modal templates (`core/modal`, `core/loading`) during page load.
 
 ### Images, static assets, and accessibility
