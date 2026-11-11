@@ -589,25 +589,48 @@
 <script>
 (function() {
     function initBusolaQr() {
-        var btn = document.getElementById('busola-qr-toggle-btn');
+        var btn = document.getElementById('busola-qr-toggle-btn') || document.querySelector('.busola-profile-qr-btn');
+        if (!btn) return;
+
+        btn.removeAttribute('href');
+        btn.setAttribute('type', 'button');
+        btn.style.cursor = 'pointer';
+
+        var card = btn.closest('.busola-profile-card');
+        if (!card) return;
+
         var box = document.getElementById('busola-profile-qrcode');
+        if (!box) {
+            box = document.createElement('div');
+            box.id = 'busola-profile-qrcode';
+            box.className = 'busola-profile-qrcode-box';
+            box.style.display = 'none';
+            box.innerHTML = `
+                <div class="busola-profile-qrcode-inner">
+                    <img id="busola-profile-qr-image" src="" alt="Kod QR do logowania w aplikacji mobilnej" class="busola-profile-qr-img">
+                    <p class="busola-profile-qr-caption">Zeskanuj kod QR aplikacją mobilną, aby zalogować się automatycznie. Kod wygasa po 10 minutach.</p>
+                </div>
+            `;
+            card.appendChild(box);
+        }
+
         var img = document.getElementById('busola-profile-qr-image');
-        var textSpan = document.getElementById('busola-qr-btn-text');
+        var textSpan = document.getElementById('busola-qr-btn-text') || btn.querySelector('span');
 
         function syncQrImage() {
-            if (!img) return;
             var hiddenImg = document.querySelector('.d-none #qrcode img, #qrcode img');
-            if (hiddenImg && hiddenImg.src) {
+            if (hiddenImg && hiddenImg.src && img) {
                 img.src = hiddenImg.src;
             }
         }
 
         syncQrImage();
 
-        if (btn && box && !btn.dataset.busolaBound) {
+        if (!btn.dataset.busolaBound) {
             btn.dataset.busolaBound = 'true';
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
+                e.stopPropagation();
                 syncQrImage();
                 var isHidden = (box.style.display === 'none' || box.style.display === '');
                 if (isHidden) {
@@ -628,5 +651,7 @@
     } else {
         initBusolaQr();
     }
+    setTimeout(initBusolaQr, 300);
+    setTimeout(initBusolaQr, 1000);
 })();
 </script>
