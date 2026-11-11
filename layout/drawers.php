@@ -122,18 +122,13 @@ $busolaprofile = null;
 if ($isuseredit) {
     $extraclasses[] = 'has-busola-form';
     $extraclasses[] = 'has-busola-user-edit';
-    $templatecontext['is_busola_user_edit'] = true;
-    $templatecontext['busola_user_profile_url'] = (new \core\url('/user/profile.php'))->out(false);
 }
 if ($isuserchangepassword) {
     $extraclasses[] = 'has-busola-form';
     $extraclasses[] = 'has-busola-change-password';
-    $templatecontext['is_busola_change_password'] = true;
-    $templatecontext['busola_user_profile_url'] = (new \core\url('/user/profile.php'))->out(false);
 }
 if ($iscalendar) {
     $extraclasses[] = 'has-busola-calendar';
-    $templatecontext['is_busola_calendar'] = true;
 }
 
 if (isloggedin() && !isguestuser()) {
@@ -225,6 +220,20 @@ if ($isbusolamycourses) {
 if ($isbusolaprofile) {
     $templatecontext['is_busola_profile'] = true;
     $templatecontext['busola_profile'] = $busolaprofile;
+}
+
+if ($isuseredit) {
+    $templatecontext['is_busola_user_edit'] = true;
+    $templatecontext['busola_user_profile_url'] = (new \core\url('/user/profile.php'))->out(false);
+}
+
+if ($isuserchangepassword) {
+    $templatecontext['is_busola_change_password'] = true;
+    $templatecontext['busola_user_profile_url'] = (new \core\url('/user/profile.php'))->out(false);
+}
+
+if ($iscalendar) {
+    $templatecontext['is_busola_calendar'] = true;
 }
 
 echo $OUTPUT->render_from_template('theme_ebusola/drawers', $templatecontext);
