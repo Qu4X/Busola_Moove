@@ -3996,7 +3996,7 @@ body.darkmode {
             height: 44px;
             border: 0;
             border-radius: 22px;
-            background: var(--busola-surface-muted, #F5F6FB);
+            background: var(--busola-surface-subtle, #F5F6FB);
             color: var(--busola-text-primary);
             display: flex;
             align-items: center;
@@ -4005,7 +4005,7 @@ body.darkmode {
             transition: background-color .18s ease;
 
             &:hover {
-                background-color: var(--busola-border-card);
+                background-color: var(--busola-surface-hover);
             }
         }
 
@@ -4117,7 +4117,7 @@ body.darkmode {
         font-size: 13px;
         font-weight: 800;
         letter-spacing: .1em;
-        color: var(--busola-exam-accent, #8A2F00);
+        color: var(--busola-exam-icon-color, #8A2F00);
     }
 
     .busola-kokpit-event-row {
@@ -4130,7 +4130,7 @@ body.darkmode {
             flex: 0 0 56px;
             width: 56px;
             border-radius: 14px;
-            background: #FFFFFF;
+            background: var(--busola-exam-icon-bg, #FFFFFF);
             text-align: center;
             padding: 6px 0;
             line-height: 1.1;
@@ -4139,14 +4139,14 @@ body.darkmode {
                 display: block;
                 font-size: 12px;
                 font-weight: 700;
-                color: var(--busola-exam-accent, #8A2F00);
+                color: var(--busola-exam-icon-color, #8A2F00);
             }
 
             .busola-kokpit-event-day {
                 display: block;
                 font-size: 24px;
                 font-weight: 800;
-                color: #141B5E;
+                color: var(--busola-text-primary, #141B5E);
             }
         }
 
@@ -4159,7 +4159,7 @@ body.darkmode {
 
             .busola-kokpit-event-rel {
                 font-size: 14px;
-                color: var(--busola-text-secondary);
+                color: var(--busola-exam-text, #3A4163);
             }
         }
 
@@ -4188,7 +4188,10 @@ body.darkmode {
 
 /* Warianty Dark Mode dla Kokpitu */
 body.moove-darkmode,
-[data-bs-theme="dark"] {
+[data-bs-theme="dark"],
+html[data-bs-theme="dark"],
+body.darkmode,
+[data-colourmode="dark"] {
     .busola-kokpit-results-card {
         .busola-kokpit-badge-passed {
             background: #2E3A75;
@@ -4205,6 +4208,16 @@ body.moove-darkmode,
     }
 
     .busola-kokpit-calendar-card {
+        .busola-kokpit-cal-header .busola-kokpit-cal-nav {
+            background: var(--busola-surface-subtle, #1B2256) !important;
+            border: 1px solid rgba(255, 255, 255, 0.14) !important;
+            color: #FFFFFF !important;
+
+            &:hover {
+                background: var(--busola-surface-hover, #242D70) !important;
+            }
+        }
+
         .busola-kokpit-cal-grid .busola-kokpit-cal-cell .busola-kokpit-day-today {
             background: #FF7A1A;
             color: #141B5E;
@@ -4212,11 +4225,45 @@ body.moove-darkmode,
     }
 
     .busola-kokpit-event-card {
-        .busola-kokpit-event-row .busola-kokpit-event-datebox {
-            background: #242C44;
-            .busola-kokpit-event-day {
-                color: #FFFFFF;
+        background: #261914 !important;
+        border: 1px solid rgba(255, 178, 122, 0.25) !important;
+
+        .busola-kokpit-event-tag {
+            color: #FFB27A !important;
+        }
+
+        .busola-kokpit-event-row {
+            .busola-kokpit-event-datebox {
+                background: #38241C !important;
+                border: 1px solid rgba(255, 178, 122, 0.2) !important;
+
+                .busola-kokpit-event-mon {
+                    color: #FFB27A !important;
+                }
+
+                .busola-kokpit-event-day {
+                    color: #FFFFFF !important;
+                }
             }
+
+            .busola-kokpit-event-details {
+                .busola-kokpit-event-name {
+                    color: #FFFFFF !important;
+                }
+
+                .busola-kokpit-event-rel {
+                    color: #E2E8F0 !important;
+                }
+            }
+
+            .busola-kokpit-event-mobile-chevron {
+                color: #FFB27A !important;
+            }
+        }
+
+        .busola-kokpit-event-link {
+            color: #FFB27A !important;
+            border-bottom-color: #FF7A1A !important;
         }
     }
 }
@@ -4713,7 +4760,7 @@ body.moove-darkmode,
                     flex: 0 0 56px !important;
                     width: 56px !important;
                     border-radius: 14px !important;
-                    background: #FFFFFF !important;
+                    background: var(--busola-exam-icon-bg, #FFFFFF) !important;
                     text-align: center !important;
                     padding: 6px 0 !important;
                     line-height: 1.1 !important;
@@ -4721,11 +4768,13 @@ body.moove-darkmode,
                     .busola-kokpit-event-mon {
                         font-size: 12px !important;
                         font-weight: 700 !important;
+                        color: var(--busola-exam-icon-color, #8A2F00) !important;
                     }
 
                     .busola-kokpit-event-day {
                         font-size: 24px !important;
                         font-weight: 800 !important;
+                        color: var(--busola-text-primary, #141B5E) !important;
                     }
                 }
 
