@@ -153,3 +153,24 @@ $string['mycourses_no_results'] = 'Brak kursów spełniających wybrane kryteria
 $string['mycourses_edit_zone_title'] = 'Zarządzanie stroną Moje kursy';
 $string['mycourses_edit_zone_desc'] = 'Sekcja widoczna dla administratorów w trybie edycji (dodawanie i konfiguracja bloków).';
 
+// Napisy widoku kursu (/course/view.php).
+$string['course_nav_breadcrumb'] = 'Moje kursy';
+$string['course_progress_fmt'] = '{$a->completed} z {$a->total} działów zaliczonych';
+$string['course_score_last'] = 'Ostatni wynik';
+$string['course_score_best'] = 'Najlepszy wynik';
+$string['course_btn_continue'] = 'Kontynuuj: {$a}';
+$string['course_sections_title'] = 'Działy';
+$string['course_sections_subtitle'] = 'Każdy dział: prezentacja, wykład i test';
+$string['course_section_badge_next'] = 'NASTĘPNY';
+$string['course_section_action_start'] = 'Zacznij dział';
+$string['course_section_status_done'] = 'Zaliczony';
+$string['course_section_status_best'] = 'Zaliczony · najlepszy {$a}';
+$string['course_section_status_todo'] = 'Do zrobienia';
+$string['course_activity_btn_test'] = 'Rozwiąż test';
+$string['course_glossary_title'] = 'Słowniczek żeglarski';
+$string['course_glossary_desc'] = 'Terminy z całego kursu w jednym miejscu.';
+$string['course_close_section'] = 'Zamknij dział {$a}';
+$string['course_edit_zone_title'] = 'Zarządzanie stroną kursu';
+$string['course_edit_zone_desc'] = 'Sekcja widoczna dla administratorów w trybie edycji (dodawanie i edycja sekcji oraz aktywności).';
+
+

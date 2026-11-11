@@ -1372,4 +1372,353 @@ class busola {
         ];
     }
 
+    /**
+     * Build the context for the Course view page (/course/view.php).
+     *
+     * All sections, activities, completion status, quiz attempts, scores, and glossary
+     * are dynamically fetched from Moodle APIs and database (AGENTS.md, ADR 0001).
+     *
+     * @param object $course
+     * @return array|null
+     */
+    public static function get_course_view_context(object $course): ?array {
+        global $USER, $DB;
+
+        if (!$course || $course->id == SITEID) {
+            return null;
+        }
+
+        // 1. Course category.
+        $catmap = self::get_all_categories_map();
+        $catid = (int) ($course->category ?? 0);
+        $categoryname = $catmap[$catid] ?? '';
+        if (empty($categoryname) && !empty($catid)) {
+            $catrec = $DB->get_record('course_categories', ['id' => $catid], 'name');
+            if ($catrec) {
+                $categoryname = format_string($catrec->name);
+            }
+        }
+        if (empty($categoryname)) {
+            $categoryname = get_string('course_cat_default', 'theme_ebusola');
+            if (empty($categoryname) || $categoryname === '[[course_cat_default]]') {
+                $categoryname = 'Kurs';
+            }
+        }
+
+        // 2. Modinfo and completion info.
+        $modinfo = get_fast_modinfo($course);
+        $completion = new \completion_info($course);
+        $completionenabled = $completion->is_enabled();
+
+        // 3. User's quiz attempts in this course.
+        $quizbestscores = [];
+        $lastattempt = null;
+        $bestattempt = null;
+        $bestpercentage = -1;
+
+        if (isloggedin() && !isguestuser()) {
+            try {
+                $sql = "
+                    SELECT qa.id, qa.quiz, qa.attempt, qa.sumgrades, qa.timefinish,
+                           q.name AS quizname, q.sumgrades AS quizsumgrades,
+                           cm.id AS cmid, cm.section AS cmsection
+                    FROM {quiz_attempts} qa
+                    JOIN {quiz} q ON q.id = qa.quiz
+                    JOIN {modules} m ON m.name = 'quiz'
+                    JOIN {course_modules} cm ON cm.module = m.id AND cm.instance = q.id AND cm.course = q.course
+                    WHERE qa.userid = :userid AND q.course = :courseid AND qa.state = 'finished'
+                    ORDER BY qa.timefinish DESC
+                ";
+                $attempts = $DB->get_records_sql($sql, ['userid' => $USER->id, 'courseid' => $course->id]);
+                if (!empty($attempts)) {
+                    $lastattempt = reset($attempts);
+                    foreach ($attempts as $att) {
+                        $max = (float) ($att->quizsumgrades ?? 0);
+                        $usergrade = (float) ($att->sumgrades ?? 0);
+                        $pct = ($max > 0) ? ($usergrade / $max) * 100 : 0;
+                        if ($pct > $bestpercentage) {
+                            $bestpercentage = $pct;
+                            $bestattempt = $att;
+                        }
+
+                        $qid = (int) $att->quiz;
+                        if (!isset($quizbestscores[$qid]) || $pct > $quizbestscores[$qid]['percent']) {
+                            $quizbestscores[$qid] = [
+                                'percent' => $pct,
+                                'usergrade' => $usergrade,
+                                'maxgrade' => $max,
+                                'score' => round($usergrade) . '/' . round($max),
+                                'passed' => ($pct >= 75),
+                            ];
+                        }
+                    }
+                }
+            } catch (\Exception $e) {
+                // Silently fall back.
+            }
+        }
+
+        // Last score & best score labels.
+        $hasattempts = ($lastattempt !== null);
+        $lastscoretext = $hasattempts ? round((float) $lastattempt->sumgrades) . '/' . round((float) $lastattempt->quizsumgrades) : '-';
+        $bestscoretext = ($bestattempt !== null) ? round((float) $bestattempt->sumgrades) . '/' . round((float) $bestattempt->quizsumgrades) : '-';
+
+        // 4. Iterate course modules in section 0 for Glossary or search whole course.
+        $glossarycm = null;
+        foreach ($modinfo->get_cms() as $cm) {
+            if (!$cm->uservisible) {
+                continue;
+            }
+            $modname = $cm->modname;
+            $cmname = mb_strtolower(format_string($cm->name));
+            if ($modname === 'glossary' || str_contains($cmname, 'słownicz') || str_contains($cmname, 'slownicz') || str_contains($cmname, 'glossary')) {
+                $glossarycm = $cm;
+                break;
+            }
+        }
+
+        $glossarycard = null;
+        if ($glossarycm) {
+            $glossarycard = [
+                'has_glossary' => true,
+                'title' => format_string($glossarycm->name),
+                'desc' => !empty(trim($glossarycm->content ?? '')) ? strip_tags($glossarycm->content) : get_string('course_glossary_desc', 'theme_ebusola'),
+                'url' => $glossarycm->url->out(false),
+            ];
+        }
+
+        // 5. Build section cards and activity items for section >= 1.
+        $rawsections = $modinfo->get_section_info_all();
+        $sections = [];
+        $secindex = 0;
+
+        foreach ($rawsections as $sec) {
+            $secnum = (int) $sec->section;
+            if ($secnum < 1) {
+                continue;
+            }
+            if (!$sec->uservisible && !$sec->visible) {
+                continue;
+            }
+
+            $secname = get_section_name($course, $sec);
+            $lowsecname = mb_strtolower($secname);
+
+            // Nautical SVG icon assignment.
+            $icontype = 'helm';
+            if (str_contains($lowsecname, 'ratow') || str_contains($lowsecname, 'bezpiecz')) {
+                $icontype = 'rescue';
+            } else if (str_contains($lowsecname, 'teor') || str_contains($lowsecname, 'zeglow') || str_contains($lowsecname, 'żeglow')) {
+                $icontype = 'theory';
+            } else if (str_contains($lowsecname, 'locj') || str_contains($lowsecname, 'nawig')) {
+                $icontype = 'pilot';
+            } else if (str_contains($lowsecname, 'przepis') || str_contains($lowsecname, 'praw')) {
+                $icontype = 'rules';
+            } else if (str_contains($lowsecname, 'meteor') || str_contains($lowsecname, 'pogod') || str_contains($lowsecname, 'wiatr')) {
+                $icontype = 'weather';
+            } else {
+                $iconorder = ['helm', 'rescue', 'theory', 'pilot', 'rules', 'weather'];
+                $icontype = $iconorder[$secindex % count($iconorder)];
+            }
+
+            // Modules in section.
+            $activities = [];
+            $haspdf = false;
+            $hasvideo = false;
+            $hasquiz = false;
+            $secquizbest = null;
+            $sectrackablecount = 0;
+            $seccompletedtrackable = 0;
+
+            $modids = $modinfo->sections[$secnum] ?? [];
+            foreach ($modids as $cmid) {
+                $cm = $modinfo->cms[$cmid] ?? null;
+                if (!$cm || !$cm->uservisible) {
+                    continue;
+                }
+
+                $modname = $cm->modname;
+                $cmname = format_string($cm->name);
+                $lowname = mb_strtolower($cmname);
+
+                if ($modname === 'quiz') {
+                    $hasquiz = true;
+                    $acttype = 'quiz';
+                    $qbest = $quizbestscores[$cm->instance] ?? null;
+                    if ($qbest) {
+                        $subtitle = '15 losowych pytań · najlepszy wynik ' . $qbest['score'];
+                        if ($secquizbest === null || $qbest['percent'] > $secquizbest['percent']) {
+                            $secquizbest = $qbest;
+                        }
+                    } else {
+                        $subtitle = '15 losowych pytań · sprawdź wiedzę z działu';
+                    }
+                    $btntext = get_string('course_activity_btn_test', 'theme_ebusola');
+                } else if ($modname === 'resource' || $modname === 'folder' || str_contains($lowname, 'pdf') || str_contains($lowname, 'prezentac') || str_contains($lowname, 'materiał') || str_contains($lowname, 'material')) {
+                    $haspdf = true;
+                    $acttype = 'pdf';
+                    $subtitle = 'Prezentacja do pobrania lub przeglądania';
+                    $btntext = null;
+                } else if ($modname === 'page' || $modname === 'url' || $modname === 'h5pactivity' || $modname === 'hvp' || $modname === 'lesson' || str_contains($lowname, 'wykład') || str_contains($lowname, 'wyklad') || str_contains($lowname, 'wideo') || str_contains($lowname, 'film')) {
+                    $hasvideo = true;
+                    $acttype = 'video';
+                    $subtitle = 'Wykład wideo';
+                    $btntext = null;
+                } else {
+                    $acttype = 'other';
+                    $subtitle = 'Materiał dydaktyczny';
+                    $btntext = null;
+                }
+
+                // Completion status.
+                if ($completionenabled && $completion->is_enabled($cm)) {
+                    $sectrackablecount++;
+                    $cdata = $completion->get_data($cm, false, $USER->id);
+                    if ($cdata->completionstate == COMPLETION_COMPLETE || $cdata->completionstate == COMPLETION_COMPLETE_PASS) {
+                        $seccompletedtrackable++;
+                    }
+                }
+
+                $activities[] = [
+                    'cmid' => $cm->id,
+                    'name' => $cmname,
+                    'url' => (new \moodle_url('/mod/' . $modname . '/view.php', ['id' => $cm->id]))->out(false),
+                    'act_type' => $acttype,
+                    'is_quiz' => ($acttype === 'quiz'),
+                    'is_pdf' => ($acttype === 'pdf'),
+                    'is_video' => ($acttype === 'video'),
+                    'is_other' => ($acttype === 'other'),
+                    'subtitle' => $subtitle,
+                    'btn_text' => $btntext,
+                ];
+            }
+
+            // Section subtitle.
+            $typespresent = [];
+            if ($haspdf) {
+                $typespresent[] = 'Prezentacja';
+            }
+            if ($hasvideo) {
+                $typespresent[] = 'Wykład';
+            }
+            if ($hasquiz) {
+                $typespresent[] = 'Test';
+            }
+            if (empty($typespresent)) {
+                $secsubtitle = 'Materiały i test';
+            } else {
+                $secsubtitle = implode(' · ', $typespresent);
+            }
+
+            // Section completion check.
+            $iscompleted = false;
+            if ($secquizbest && $secquizbest['passed']) {
+                $iscompleted = true;
+            } else if ($sectrackablecount > 0 && $seccompletedtrackable >= $sectrackablecount) {
+                $iscompleted = true;
+            }
+
+            if ($iscompleted) {
+                if ($secquizbest) {
+                    $statustext = get_string('course_section_status_best', 'theme_ebusola', $secquizbest['score']);
+                } else {
+                    $statustext = get_string('course_section_status_done', 'theme_ebusola');
+                }
+            } else {
+                $statustext = null;
+            }
+
+            $sections[] = [
+                'section_num' => $secnum,
+                'section_id' => $sec->id,
+                'name' => $secname,
+                'subtitle' => $secsubtitle,
+                'icon_type' => $icontype,
+                'is_icon_helm' => ($icontype === 'helm'),
+                'is_icon_rescue' => ($icontype === 'rescue'),
+                'is_icon_theory' => ($icontype === 'theory'),
+                'is_icon_pilot' => ($icontype === 'pilot'),
+                'is_icon_rules' => ($icontype === 'rules'),
+                'is_icon_weather' => ($icontype === 'weather'),
+                'activities' => $activities,
+                'has_activities' => !empty($activities),
+                'is_completed' => $iscompleted,
+                'status_text' => $statustext,
+                'close_label' => get_string('course_close_section', 'theme_ebusola', $secname),
+            ];
+
+            $secindex++;
+        }
+
+        // 6. Next section & todo flags.
+        $nextsection = null;
+        $foundnext = false;
+        foreach ($sections as &$secitem) {
+            if (!$secitem['is_completed'] && !$foundnext) {
+                $secitem['is_next'] = true;
+                $secitem['is_todo'] = false;
+                $foundnext = true;
+                $nextsection = $secitem;
+            } else if (!$secitem['is_completed']) {
+                $secitem['is_next'] = false;
+                $secitem['is_todo'] = true;
+            } else {
+                $secitem['is_next'] = false;
+                $secitem['is_todo'] = false;
+            }
+        }
+        unset($secitem);
+
+        if (!$nextsection && !empty($sections)) {
+            $nextsection = reset($sections);
+        }
+
+        $nextsectionname = $nextsection ? $nextsection['name'] : $course->fullname;
+        $nextsectionnum = $nextsection ? $nextsection['section_num'] : 1;
+        $continuelabel = get_string('course_btn_continue', 'theme_ebusola', $nextsectionname);
+
+        // 7. Segments in Hero.
+        $totalsections = count($sections);
+        $completedsections = count(array_filter($sections, fn($s) => !empty($s['is_completed'])));
+
+        $segments = [];
+        for ($i = 1; $i <= $totalsections; $i++) {
+            $segments[] = [
+                'is_done' => ($i <= $completedsections),
+            ];
+        }
+
+        $progressfmt = new \stdClass();
+        $progressfmt->completed = $completedsections;
+        $progressfmt->total = $totalsections;
+        $progresslabel = get_string('course_progress_fmt', 'theme_ebusola', $progressfmt);
+
+        return [
+            'course_id' => $course->id,
+            'fullname' => format_string($course->fullname),
+            'shortname' => $course->shortname,
+            'category_name' => $categoryname,
+            'mycourses_url' => (new \moodle_url('/my/courses.php'))->out(false),
+            'total_sections' => $totalsections,
+            'completed_sections' => $completedsections,
+            'progress_label' => $progresslabel,
+            'segments' => $segments,
+            'has_scores' => $hasattempts,
+            'last_score' => $lastscoretext,
+            'best_score' => $bestscoretext,
+            'next_section_name' => $nextsectionname,
+            'next_section_num' => $nextsectionnum,
+            'continue_label' => $continuelabel,
+            'sections' => $sections,
+            'has_sections' => !empty($sections),
+            'glossary' => $glossarycard,
+            'homeurl' => (new \moodle_url('/'))->out(false),
+            'dashboardurl' => (new \moodle_url('/my/'))->out(false),
+            'allcoursesurl' => (new \moodle_url('/my/courses.php'))->out(false),
+            'profileurl' => (new \moodle_url('/user/profile.php', ['id' => $USER->id]))->out(false),
+            'is_courses_active' => true,
+        ];
+    }
+
+
 }

@@ -1,0 +1,366 @@
+{{!
+    Szablon widoku kursu (/course/view.php) motywu eBusola.
+    Wszystkie sekcje, aktywności, postęp, podejścia do quizów i słowniczek pobierane dynamicznie z Moodle API/DB (AGENTS.md).
+}}
+<div class="busola-course-wrapper">
+    {{#busola_course}}
+    <!-- 1. NAGŁÓWEK KURSU (HERO) -->
+    <section class="busola-course-hero">
+        <svg viewBox="0 0 400 400" width="520" height="520" aria-hidden="true" class="busola-course-hero-radar" fill="none" stroke="#FFFFFF" stroke-width="1.5">
+            <circle cx="200" cy="200" r="190"></circle>
+            <circle cx="200" cy="200" r="140"></circle>
+            <circle cx="200" cy="200" r="90"></circle>
+            <path d="M200 0V400M0 200H400M59 59L341 341M341 59L59 341"></path>
+        </svg>
+
+        <div class="busola-course-hero-container">
+            <nav aria-label="Ścieżka" class="busola-course-breadcrumb">
+                <a href="{{mycourses_url}}">{{#str}}course_nav_breadcrumb, theme_ebusola{{/str}}</a>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+                <span aria-current="page">{{fullname}}</span>
+            </nav>
+
+            <div class="busola-course-hero-content">
+                <div class="busola-course-hero-left">
+                    <span class="busola-course-hero-badge">{{category_name}}</span>
+                    <h1 class="busola-course-hero-title">{{fullname}}</h1>
+                    <div class="busola-course-hero-progress">
+                        <div class="busola-course-hero-segments">
+                            {{#segments}}
+                                <div class="busola-course-hero-seg {{#is_done}}is-done{{/is_done}}"></div>
+                            {{/segments}}
+                        </div>
+                        <div class="busola-course-hero-prog-label">{{progress_label}}</div>
+                    </div>
+                </div>
+
+                <div class="busola-course-hero-right">
+                    <div class="busola-course-stat-tile">
+                        <div class="busola-course-stat-label">{{#str}}course_score_last, theme_ebusola{{/str}}</div>
+                        <div class="busola-course-stat-val">{{last_score}}</div>
+                    </div>
+                    <div class="busola-course-stat-tile">
+                        <div class="busola-course-stat-label">{{#str}}course_score_best, theme_ebusola{{/str}}</div>
+                        <div class="busola-course-stat-val">{{best_score}}</div>
+                    </div>
+                    <a href="#section-{{next_section_num}}" class="busola-course-continue-btn" id="busola-course-hero-continue" data-target-section="{{next_section_num}}">
+                        <span>{{continue_label}}</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <svg viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true" class="busola-course-wave">
+            <path d="M0 40V22C220 4 440 4 720 22S1200 42 1440 18V40Z"></path>
+        </svg>
+    </section>
+
+    <!-- 2. GŁÓWNA ZAWARTOŚĆ STRONY KURSU -->
+    <main class="busola-course-container">
+        <!-- SEKCJA DZIAŁÓW -->
+        <section aria-labelledby="h-dzialy" class="busola-course-sections-wrap">
+            <div class="busola-course-sections-header">
+                <h2 id="h-dzialy" class="busola-course-sections-title">{{#str}}course_sections_title, theme_ebusola{{/str}}</h2>
+                <span class="busola-course-sections-sub">{{#str}}course_sections_subtitle, theme_ebusola{{/str}}</span>
+            </div>
+
+            <div class="busola-course-sections-grid" id="busola-course-grid">
+                {{#sections}}
+                <!-- KAFELEK DZIAŁU -->
+                <button type="button"
+                        class="bcard busola-section-card {{#is_completed}}is-completed{{/is_completed}} {{#is_next}}is-next{{/is_next}} {{#is_todo}}is-todo{{/is_todo}}"
+                        data-section-num="{{section_num}}"
+                        id="section-card-{{section_num}}"
+                        aria-expanded="false"
+                        aria-controls="section-panel-{{section_num}}">
+                    <div class="busola-section-card-top">
+                        <div class="busola-section-icon">
+                            {{#is_icon_helm}}
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3.5"></circle><path d="M5.6 5.6l3.9 3.9M14.5 14.5l3.9 3.9M18.4 5.6l-3.9 3.9M9.5 14.5l-3.9 3.9"></path></svg>
+                            {{/is_icon_helm}}
+                            {{#is_icon_rescue}}
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11z"></path><path d="M6.5 12h3l1.5-3 3 6 1.5-3h2"></path></svg>
+                            {{/is_icon_rescue}}
+                            {{#is_icon_theory}}
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"></path><path d="M7.5 15l4-5 3 3 5-6"></path></svg>
+                            {{/is_icon_theory}}
+                            {{#is_icon_pilot}}
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"></path><path d="M5 6h11l3 2.5-3 2.5H5z"></path><path d="M19 14H9l-3 2.5L9 19h10z"></path></svg>
+                            {{/is_icon_pilot}}
+                            {{#is_icon_rules}}
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 4l7 7-3 3-7-7z"></path><path d="M10.5 9.5L4 16l4 4 6.5-6.5"></path></svg>
+                            {{/is_icon_rules}}
+                            {{#is_icon_weather}}
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3L5 14h6l-1 7 8-11h-6z"></path></svg>
+                            {{/is_icon_weather}}
+                        </div>
+                        {{#is_next}}
+                            <span class="busola-section-badge-next">{{#str}}course_section_badge_next, theme_ebusola{{/str}}</span>
+                        {{/is_next}}
+                    </div>
+
+                    <div class="busola-section-body">
+                        <div class="busola-section-name">{{name}}</div>
+                        <div class="busola-section-sub">{{subtitle}}</div>
+                    </div>
+
+                    <div class="busola-section-status">
+                        {{#is_completed}}
+                            <span class="busola-status-done-row">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+                                <span>{{status_text}}</span>
+                            </span>
+                        {{/is_completed}}
+                        {{#is_next}}
+                            <span class="busola-status-next-row">
+                                <span>{{#str}}course_section_action_start, theme_ebusola{{/str}}</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                            </span>
+                        {{/is_next}}
+                        {{#is_todo}}
+                            <span class="busola-status-todo-row">
+                                <span class="busola-status-todo-dot" aria-hidden="true"></span>
+                                <span>{{#str}}course_section_status_todo, theme_ebusola{{/str}}</span>
+                            </span>
+                        {{/is_todo}}
+                    </div>
+
+                    <span class="busola-section-pointer" aria-hidden="true"></span>
+                </button>
+                {{/sections}}
+
+                {{#sections}}
+                <!-- OTWARTY PANEL DZIAŁU -->
+                <section class="busola-course-open-panel d-none" id="section-panel-{{section_num}}" data-panel-for="{{section_num}}" aria-labelledby="co-panel-{{section_num}}">
+                    <div class="busola-panel-header">
+                        <div class="busola-panel-header-left">
+                            <h3 id="co-panel-{{section_num}}" class="busola-panel-title">{{name}}</h3>
+                            {{#is_completed}}
+                                <span class="busola-panel-badge done">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+                                    <span>{{#str}}course_section_status_done, theme_ebusola{{/str}}</span>
+                                </span>
+                            {{/is_completed}}
+                        </div>
+                        <button type="button" class="busola-panel-close-btn" data-action="close-panel" aria-label="{{close_label}}">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+                        </button>
+                    </div>
+
+                    <ul class="busola-activity-list">
+                        {{#activities}}
+                        <li class="busola-activity-item">
+                            {{#is_quiz}}
+                                <div class="busola-quiz-row">
+                                    <span class="busola-act-icon quiz" aria-hidden="true">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14v16H5z"></path><path d="M9 9.5l1.5 1.5L13.5 8M9 15.5l1.5 1.5 3-3"></path></svg>
+                                    </span>
+                                    <div class="busola-act-info">
+                                        <div class="busola-act-title">{{name}}</div>
+                                        <div class="busola-act-sub">{{subtitle}}</div>
+                                    </div>
+                                    <a href="{{url}}" class="busola-quiz-btn">
+                                        <span>{{btn_text}}</span>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                                    </a>
+                                </div>
+                            {{/is_quiz}}
+                            {{^is_quiz}}
+                                <a href="{{url}}" class="arow busola-act-link">
+                                    {{#is_pdf}}
+                                        <span class="busola-act-icon pdf" aria-hidden="true">PDF</span>
+                                    {{/is_pdf}}
+                                    {{#is_video}}
+                                        <span class="busola-act-icon video" aria-hidden="true">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M10.5 9.5l4 2.5-4 2.5z"></path></svg>
+                                        </span>
+                                    {{/is_video}}
+                                    {{#is_other}}
+                                        <span class="busola-act-icon other" aria-hidden="true">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                        </span>
+                                    {{/is_other}}
+                                    <div class="busola-act-info">
+                                        <div class="busola-act-title">{{name}}</div>
+                                        <div class="busola-act-sub">{{subtitle}}</div>
+                                    </div>
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="busola-act-chevron"><path d="M9 6l6 6-6 6"></path></svg>
+                                </a>
+                            {{/is_quiz}}
+                        </li>
+                        {{/activities}}
+                    </ul>
+                </section>
+                {{/sections}}
+            </div>
+        </section>
+
+        <!-- SŁOWNICZEK -->
+        {{#glossary}}
+        {{#has_glossary}}
+        <a href="{{url}}" class="bcard busola-course-glossary-card">
+            <div class="busola-glossary-icon" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"></path><path d="M5 17a3 3 0 0 1 3-3h10"></path><path d="M9 8h5"></path></svg>
+            </div>
+            <div class="busola-glossary-info">
+                <div class="busola-glossary-title">{{title}}</div>
+                <div class="busola-glossary-desc">{{desc}}</div>
+            </div>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="busola-glossary-arrow"><path d="M9 6l6 6-6 6"></path></svg>
+        </a>
+        {{/has_glossary}}
+        {{/glossary}}
+
+        <!-- STREFA EDYCJI DLA ADMINISTRATORÓW -->
+        {{#user_is_editing}}
+        <section class="busola-editing-zone p-4 mt-4 w-100">
+            <div class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom busola-editing-header">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="busola-editing-icon">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </span>
+                    <div>
+                        <h3 class="busola-editing-title">{{#str}}course_edit_zone_title, theme_ebusola{{/str}}</h3>
+                        <p class="busola-editing-desc">{{#str}}course_edit_zone_desc, theme_ebusola{{/str}}</p>
+                    </div>
+                </div>
+                <span class="badge bg-primary text-white px-3 py-2 busola-editing-badge">{{#str}}edit_zone_badge, theme_ebusola{{/str}}</span>
+            </div>
+
+            <div class="busola-editing-content">
+                {{{ output.main_content }}}
+            </div>
+        </section>
+        {{/user_is_editing}}
+    </main>
+
+    {{> theme_ebusola/ebusola/busola_bottom_nav }}
+    {{/busola_course}}
+</div>
+
+{{#js}}
+require([], function() {
+    var grid = document.getElementById('busola-course-grid');
+    if (!grid) return;
+
+    var cards = Array.from(grid.querySelectorAll('.busola-section-card'));
+    var panels = Array.from(grid.querySelectorAll('.busola-course-open-panel'));
+    var activeSecNum = null;
+
+    function getColumnsCount() {
+        var w = window.innerWidth;
+        if (w < 768) return 1;
+        if (w < 992) return 2;
+        return 3;
+    }
+
+    function closeAllPanels() {
+        cards.forEach(function(c) {
+            c.classList.remove('is-open');
+            c.setAttribute('aria-expanded', 'false');
+        });
+        panels.forEach(function(p) {
+            p.classList.add('d-none');
+        });
+        activeSecNum = null;
+    }
+
+    function openSection(secNum, shouldScroll) {
+        var card = document.getElementById('section-card-' + secNum);
+        var panel = document.getElementById('section-panel-' + secNum);
+        if (!card || !panel) return;
+
+        // Jeśli kliknięto w już otwarty dział, zamknij go.
+        if (activeSecNum === secNum) {
+            closeAllPanels();
+            return;
+        }
+
+        closeAllPanels();
+
+        // Wyznaczenie pozycji w siatce (wiersza) i przesunięcie panelu pod ostatni kafelek wiersza.
+        var cardIndex = cards.indexOf(card);
+        var cols = getColumnsCount();
+        var rowIndex = Math.floor(cardIndex / cols);
+        var lastIndexInRow = Math.min((rowIndex + 1) * cols - 1, cards.length - 1);
+        var anchorCard = cards[lastIndexInRow];
+
+        anchorCard.after(panel);
+
+        card.classList.add('is-open');
+        card.setAttribute('aria-expanded', 'true');
+        panel.classList.remove('d-none');
+        activeSecNum = secNum;
+
+        if (shouldScroll) {
+            setTimeout(function() {
+                panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 50);
+        }
+    }
+
+    // Obsługa kliknięć w kafelki działów.
+    cards.forEach(function(card) {
+        card.addEventListener('click', function(e) {
+            e.preventDefault();
+            var secNum = parseInt(card.getAttribute('data-section-num'), 10);
+            openSection(secNum, false);
+        });
+    });
+
+    // Obsługa przycisków zamknięcia X w panelu.
+    panels.forEach(function(panel) {
+        var closeBtn = panel.querySelector('[data-action="close-panel"]');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var secNum = activeSecNum;
+                closeAllPanels();
+                if (secNum) {
+                    var card = document.getElementById('section-card-' + secNum);
+                    if (card) card.focus();
+                }
+            });
+        }
+    });
+
+    // Przycisk "Kontynuuj: <Dział>" w nagłówku kursu.
+    var continueBtn = document.getElementById('busola-course-hero-continue');
+    if (continueBtn) {
+        continueBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            var targetSec = parseInt(continueBtn.getAttribute('data-target-section'), 10);
+            if (targetSec) {
+                openSection(targetSec, true);
+            }
+        });
+    }
+
+    // Automatyczne otwarcie działu z parametru URL ?section=N lub kotwicy #section-N.
+    var urlParams = new URLSearchParams(window.location.search);
+    var initialSec = urlParams.get('section');
+    if (!initialSec && window.location.hash && window.location.hash.indexOf('#section-') === 0) {
+        initialSec = window.location.hash.replace('#section-', '');
+    }
+    if (initialSec) {
+        var num = parseInt(initialSec, 10);
+        if (num) {
+            openSection(num, true);
+        }
+    }
+
+    // Przeliczenie położenia panelu przy zmianie rozmiaru okna.
+    var resizeTimer = null;
+    window.addEventListener('resize', function() {
+        if (!activeSecNum) return;
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            var cur = activeSecNum;
+            activeSecNum = null;
+            openSection(cur, false);
+        }, 120);
+    });
+});
+{{/js}}

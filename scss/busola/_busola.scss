@@ -3683,7 +3683,8 @@ body.darkmode {
 }
 
 .has-busola-kokpit,
-.has-busola-mycourses {
+.has-busola-mycourses,
+.has-busola-course {
     #page {
         padding: 0 !important;
         max-width: 100% !important;
@@ -4847,6 +4848,790 @@ body.darkmode,
                 color: #A6B0D5 !important;
             }
         }
+    }
+}
+
+/* ==========================================================================
+   WIDOK 5: STRONA KURSU (/course/view.php) I OTWARTY DZIAŁ
+   ========================================================================== */
+.busola-course-wrapper {
+    background-color: var(--busola-bg-canvas, #F5F6FB);
+    min-height: calc(100vh - 72px);
+    width: 100%;
+    color: var(--busola-text-body, #3A4163);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.busola-course-hero {
+    background: var(--busola-primary-dark, #141B5E);
+    position: relative;
+    overflow: hidden;
+
+    .busola-course-hero-radar {
+        position: absolute;
+        right: -100px;
+        top: -170px;
+        opacity: .1;
+        pointer-events: none;
+    }
+
+    .busola-course-hero-container {
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 28px 32px 24px;
+        box-sizing: border-box;
+    }
+
+    .busola-course-breadcrumb {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: #CBD1F3;
+
+        a {
+            color: #CBD1F3;
+            text-decoration: none;
+            transition: color .18s ease;
+
+            &:hover {
+                color: #FFFFFF;
+                text-decoration: underline;
+            }
+        }
+
+        svg {
+            opacity: .7;
+        }
+
+        span[aria-current="page"] {
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+    }
+
+    .busola-course-hero-content {
+        margin-top: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px 48px;
+
+        .busola-course-hero-left {
+            flex: 1 1 420px;
+            min-width: 0;
+
+            .busola-course-hero-badge {
+                display: inline-block;
+                padding: 5px 12px;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, .14);
+                color: #FFFFFF;
+                font-size: 12px;
+                font-weight: 700;
+            }
+
+            .busola-course-hero-title {
+                margin: 12px 0 0;
+                font-size: 40px;
+                line-height: 1.08;
+                font-weight: 800;
+                letter-spacing: -.025em;
+                color: #FFFFFF;
+            }
+
+            .busola-course-hero-progress {
+                margin-top: 20px;
+                max-width: 460px;
+
+                .busola-course-hero-segments {
+                    display: flex;
+                    gap: 5px;
+
+                    .busola-course-hero-seg {
+                        flex: 1;
+                        height: 8px;
+                        border-radius: 4px;
+                        background: rgba(255, 255, 255, .22);
+                        transition: background-color .18s ease;
+
+                        &.is-done {
+                            background: var(--busola-primary-brand, #FF7A1A);
+                        }
+                    }
+                }
+
+                .busola-course-hero-prog-label {
+                    margin-top: 8px;
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #E3E7F8;
+                }
+            }
+        }
+
+        .busola-course-hero-right {
+            flex: 0 1 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            gap: 12px;
+
+            .busola-course-stat-tile {
+                padding: 14px 20px;
+                border-radius: 16px;
+                background: rgba(255, 255, 255, .12);
+                min-width: 110px;
+                box-sizing: border-box;
+
+                .busola-course-stat-label {
+                    font-size: 13px;
+                    color: #CBD1F3;
+                }
+
+                .busola-course-stat-val {
+                    font-size: 26px;
+                    font-weight: 800;
+                    color: #FFFFFF;
+                    line-height: 1.2;
+                    margin-top: 2px;
+                }
+            }
+
+            .busola-course-continue-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 0 24px;
+                border-radius: 16px;
+                background: var(--busola-primary-brand, #FF7A1A);
+                color: var(--busola-primary-dark, #141B5E);
+                font-size: 16px;
+                font-weight: 700;
+                text-decoration: none;
+                min-height: 56px;
+                cursor: pointer;
+                transition: transform .18s ease, filter .18s ease;
+
+                &:hover {
+                    transform: translateY(-2px);
+                    filter: brightness(1.05);
+                    text-decoration: none;
+                    color: var(--busola-primary-dark, #141B5E);
+                }
+            }
+        }
+    }
+
+    .busola-course-wave {
+        display: block;
+        width: 100%;
+        height: 40px;
+        position: relative;
+
+        path {
+            fill: var(--busola-bg-canvas, #F5F6FB);
+        }
+    }
+}
+
+.busola-course-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 32px 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.busola-course-sections-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 24px;
+
+    .busola-course-sections-title {
+        margin: 0;
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: -.015em;
+        color: var(--busola-text-primary, #141B5E);
+    }
+
+    .busola-course-sections-sub {
+        font-size: 14px;
+        color: var(--busola-text-secondary, #5B6280);
+    }
+}
+
+.busola-course-sections-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.busola-section-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: left;
+    border: 0;
+    font-family: inherit;
+    background: var(--busola-card-bg, #FFFFFF);
+    border-radius: 20px;
+    padding: 24px;
+    color: var(--busola-text-body, #3A4163);
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(20,27,94,.06), 0 8px 24px rgba(20,27,94,.06);
+    transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, color .18s ease;
+
+    &:hover:not(.is-open) {
+        transform: translateY(-3px);
+        box-shadow: 0 2px 4px rgba(20,27,94,.08), 0 16px 36px rgba(20,27,94,.12);
+    }
+
+    .busola-section-card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .busola-section-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 26px;
+            background: var(--busola-primary-dark, #141B5E);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color .18s ease, color .18s ease;
+        }
+
+        .busola-section-badge-next {
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: #FFE3CC;
+            color: #8A2F00;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .06em;
+        }
+    }
+
+    .busola-section-body {
+        .busola-section-name {
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--busola-text-primary, #141B5E);
+            line-height: 1.2;
+            transition: color .18s ease;
+        }
+
+        .busola-section-sub {
+            margin-top: 4px;
+            font-size: 14px;
+            color: var(--busola-text-secondary, #5B6280);
+            transition: color .18s ease;
+        }
+    }
+
+    .busola-section-status {
+        margin-top: auto;
+
+        .busola-status-done-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--busola-text-primary, #141B5E);
+            transition: color .18s ease;
+
+            svg {
+                color: var(--busola-text-primary, #141B5E);
+            }
+        }
+
+        .busola-status-next-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--busola-text-primary, #141B5E);
+            transition: color .18s ease;
+        }
+
+        .busola-status-todo-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--busola-text-secondary, #5B6280);
+            transition: color .18s ease;
+
+            .busola-status-todo-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 4px;
+                background: var(--busola-primary-brand, #FF7A1A);
+                flex-shrink: 0;
+            }
+        }
+    }
+
+    .busola-section-pointer {
+        display: none;
+        position: absolute;
+        left: 50%;
+        bottom: -10px;
+        margin-left: -10px;
+        width: 20px;
+        height: 20px;
+        background: var(--busola-primary-dark, #141B5E);
+        transform: rotate(45deg);
+        border-radius: 3px;
+        z-index: 2;
+    }
+
+    // Niezaliczony/następny/do zrobienia
+    &.is-next,
+    &.is-todo {
+        .busola-section-card-top .busola-section-icon {
+            background: var(--busola-cat-sail-bg, #E3E8FB);
+            color: var(--busola-primary-dark, #141B5E);
+        }
+    }
+
+    &.is-next {
+        box-shadow: 0 0 0 2px var(--busola-primary-brand, #FF7A1A), 0 8px 24px rgba(20,27,94,.08);
+    }
+
+    // Aktywny, otwarty kafelek działu (CourseOpen.dc.html)
+    &.is-open {
+        background: var(--busola-primary-dark, #141B5E) !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 12px 28px rgba(20,27,94,.28) !important;
+        transform: none !important;
+
+        .busola-section-card-top .busola-section-icon {
+            background: #FFFFFF !important;
+            color: var(--busola-primary-dark, #141B5E) !important;
+        }
+
+        .busola-section-body {
+            .busola-section-name {
+                color: #FFFFFF !important;
+            }
+            .busola-section-sub {
+                color: #CBD1F3 !important;
+            }
+        }
+
+        .busola-section-status {
+            .busola-status-done-row {
+                color: #FFFFFF !important;
+                svg {
+                    color: #FFFFFF !important;
+                }
+            }
+            .busola-status-next-row {
+                color: #FFFFFF !important;
+            }
+            .busola-status-todo-row {
+                color: #CBD1F3 !important;
+            }
+        }
+
+        .busola-section-pointer {
+            display: block;
+        }
+    }
+}
+
+/* Otwarty panel działu */
+.busola-course-open-panel {
+    grid-column: 1 / -1;
+    background: var(--busola-card-bg, #FFFFFF);
+    border-radius: 24px;
+    padding: 28px 32px 16px;
+    box-shadow: 0 1px 2px rgba(20,27,94,.06), 0 16px 40px rgba(20,27,94,.1);
+    box-sizing: border-box;
+    width: 100%;
+
+    .busola-panel-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+
+        .busola-panel-header-left {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 16px;
+
+            .busola-panel-title {
+                margin: 0;
+                font-size: 26px;
+                font-weight: 800;
+                letter-spacing: -.01em;
+                color: var(--busola-text-primary, #141B5E);
+            }
+
+            .busola-panel-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 6px 12px;
+                border-radius: 999px;
+                background: var(--busola-cat-sail-bg, #E3E8FB);
+                color: var(--busola-text-primary, #141B5E);
+                font-size: 13px;
+                font-weight: 700;
+            }
+        }
+
+        .busola-panel-close-btn {
+            width: 44px;
+            height: 44px;
+            border: 0;
+            border-radius: 22px;
+            background: var(--busola-surface-subtle, #F5F6FB);
+            color: var(--busola-text-primary, #141B5E);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color .18s ease, transform .18s ease;
+
+            &:hover {
+                background: var(--busola-surface-hover, #E3E7F4);
+                transform: scale(1.05);
+            }
+        }
+    }
+
+    .busola-activity-list {
+        list-style: none;
+        margin: 20px 0 0;
+        padding: 0;
+
+        .busola-activity-item {
+            border-top: 1px solid var(--busola-border-subtle, #E8EBF6);
+
+            .busola-act-link {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                min-height: 76px;
+                padding: 12px 8px;
+                border-radius: 12px;
+                text-decoration: none;
+                transition: background-color .15s ease;
+
+                &:hover {
+                    background: var(--busola-surface-subtle, #F5F6FB);
+                    text-decoration: none;
+                }
+            }
+
+            .busola-quiz-row {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 12px 16px;
+                min-height: 76px;
+                padding: 14px 8px;
+            }
+
+            .busola-act-icon {
+                flex: 0 0 48px;
+                width: 48px;
+                height: 48px;
+                border-radius: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &.pdf {
+                    background: var(--busola-cat-extra-bg, #FFE8D4);
+                    color: #8A2F00;
+                    font-size: 12px;
+                    font-weight: 800;
+                }
+
+                &.video {
+                    background: var(--busola-cat-sail-bg, #E3E8FB);
+                    color: var(--busola-primary-dark, #141B5E);
+                }
+
+                &.quiz {
+                    background: var(--busola-primary-dark, #141B5E);
+                    color: #FFFFFF;
+                }
+
+                &.other {
+                    background: var(--busola-cat-sail-bg, #E3E8FB);
+                    color: var(--busola-primary-dark, #141B5E);
+                }
+            }
+
+            .busola-act-info {
+                flex: 1 1 240px;
+                min-width: 0;
+
+                .busola-act-title {
+                    font-size: 18px;
+                    font-weight: 700;
+                    color: var(--busola-text-primary, #141B5E);
+                }
+
+                .busola-act-sub {
+                    font-size: 14px;
+                    color: var(--busola-text-secondary, #5B6280);
+                    margin-top: 2px;
+                }
+            }
+
+            .busola-act-chevron {
+                color: var(--busola-text-primary, #141B5E);
+                flex-shrink: 0;
+            }
+
+            .busola-quiz-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 0 24px;
+                height: 48px;
+                border-radius: 14px;
+                background: var(--busola-primary-brand, #FF7A1A);
+                color: var(--busola-primary-dark, #141B5E);
+                font-size: 16px;
+                font-weight: 700;
+                text-decoration: none;
+                cursor: pointer;
+                transition: transform .18s ease, filter .18s ease;
+
+                &:hover {
+                    transform: translateY(-2px);
+                    filter: brightness(1.05);
+                    text-decoration: none;
+                    color: var(--busola-primary-dark, #141B5E);
+                }
+            }
+        }
+    }
+}
+
+/* Karta słowniczka */
+.busola-course-glossary-card {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 20px;
+    background: var(--busola-cat-sail-bg, #E3E8FB);
+    border-radius: 20px;
+    padding: 20px 24px;
+    text-decoration: none;
+    color: var(--busola-text-body, #3A4163);
+    transition: transform .18s ease, box-shadow .18s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 2px 4px rgba(20,27,94,.08), 0 16px 36px rgba(20,27,94,.12);
+        text-decoration: none;
+        color: var(--busola-text-body, #3A4163);
+    }
+
+    .busola-glossary-icon {
+        flex: 0 0 52px;
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        background: #FFFFFF;
+        color: var(--busola-primary-dark, #141B5E);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .busola-glossary-info {
+        flex: 1 1 280px;
+        min-width: 0;
+
+        .busola-glossary-title {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--busola-text-primary, #141B5E);
+        }
+
+        .busola-glossary-desc {
+            font-size: 15px;
+            color: var(--busola-text-body, #3A4163);
+            margin-top: 2px;
+        }
+    }
+
+    .busola-glossary-arrow {
+        color: var(--busola-text-primary, #141B5E);
+        flex-shrink: 0;
+    }
+}
+
+/* Dark mode dla widoku kursu */
+body.moove-darkmode,
+[data-bs-theme="dark"],
+html[data-bs-theme="dark"],
+body.darkmode,
+[data-colourmode="dark"] {
+    .busola-course-wrapper {
+        background-color: var(--busola-bg, #0F1333);
+    }
+
+    .busola-course-hero {
+        .busola-course-wave path {
+            fill: var(--busola-bg, #0F1333) !important;
+        }
+    }
+
+    .busola-course-sections-header {
+        .busola-course-sections-title {
+            color: #FFFFFF !important;
+        }
+        .busola-course-sections-sub {
+            color: #A6B0D5 !important;
+        }
+    }
+
+    .busola-section-card {
+        background: #1A1F4D !important;
+        color: #E2E8F0 !important;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        .busola-section-card-top .busola-section-icon {
+            background: #242D70 !important;
+            color: #FFFFFF !important;
+        }
+
+        .busola-section-body {
+            .busola-section-name {
+                color: #FFFFFF !important;
+            }
+            .busola-section-sub {
+                color: #A6B0D5 !important;
+            }
+        }
+
+        .busola-section-status {
+            .busola-status-done-row {
+                color: #FFFFFF !important;
+                svg {
+                    color: #FF7A1A !important;
+                }
+            }
+            .busola-status-next-row {
+                color: #FFB27A !important;
+            }
+            .busola-status-todo-row {
+                color: #A6B0D5 !important;
+            }
+        }
+
+        &.is-next {
+            box-shadow: 0 0 0 2px #FF7A1A, 0 8px 24px rgba(0,0,0,0.3) !important;
+        }
+
+        &.is-open {
+            background: #0B0E28 !important;
+            border-color: #FF7A1A !important;
+
+            .busola-section-pointer {
+                background: #0B0E28 !important;
+            }
+        }
+    }
+
+    .busola-course-open-panel {
+        background: #1A1F4D !important;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        .busola-panel-header {
+            .busola-panel-title {
+                color: #FFFFFF !important;
+            }
+            .busola-panel-badge {
+                background: rgba(255, 255, 255, 0.12) !important;
+                color: #FFFFFF !important;
+            }
+            .busola-panel-close-btn {
+                background: rgba(255, 255, 255, 0.08) !important;
+                color: #FFFFFF !important;
+            }
+        }
+
+        .busola-activity-list .busola-activity-item {
+            border-top-color: rgba(255, 255, 255, 0.08) !important;
+
+            .busola-act-link:hover {
+                background: rgba(255, 255, 255, 0.05) !important;
+            }
+
+            .busola-act-info {
+                .busola-act-title {
+                    color: #FFFFFF !important;
+                }
+                .busola-act-sub {
+                    color: #A6B0D5 !important;
+                }
+            }
+
+            .busola-act-chevron {
+                color: #A6B0D5 !important;
+            }
+        }
+    }
+
+    .busola-course-glossary-card {
+        background: #1A1F4D !important;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        .busola-glossary-icon {
+            background: #242D70 !important;
+            color: #FFFFFF !important;
+        }
+
+        .busola-glossary-info {
+            .busola-glossary-title {
+                color: #FFFFFF !important;
+            }
+            .busola-glossary-desc {
+                color: #A6B0D5 !important;
+            }
+        }
+
+        .busola-glossary-arrow {
+            color: #FFB27A !important;
+        }
+    }
+}
+
+@media (max-width: 991.98px) {
+    .busola-course-sections-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     }
 }
 

@@ -178,6 +178,27 @@ $string['mycourses_no_results'] = 'No courses match the selected criteria.';
 $string['mycourses_edit_zone_title'] = 'My courses page management';
 $string['mycourses_edit_zone_desc'] = 'Section visible to administrators in edit mode (add and configure blocks).';
 
+// Course page (/course/view.php) strings.
+$string['course_nav_breadcrumb'] = 'My courses';
+$string['course_progress_fmt'] = '{$a->completed} of {$a->total} sections completed';
+$string['course_score_last'] = 'Last score';
+$string['course_score_best'] = 'Best score';
+$string['course_btn_continue'] = 'Continue: {$a}';
+$string['course_sections_title'] = 'Sections';
+$string['course_sections_subtitle'] = 'Each section: presentation, lecture, and quiz';
+$string['course_section_badge_next'] = 'NEXT';
+$string['course_section_action_start'] = 'Start section';
+$string['course_section_status_done'] = 'Completed';
+$string['course_section_status_best'] = 'Completed · best {$a}';
+$string['course_section_status_todo'] = 'To do';
+$string['course_activity_btn_test'] = 'Take test';
+$string['course_glossary_title'] = 'Sailing glossary';
+$string['course_glossary_desc'] = 'Terms from the entire course in one place.';
+$string['course_close_section'] = 'Close section {$a}';
+$string['course_edit_zone_title'] = 'Course page management';
+$string['course_edit_zone_desc'] = 'Section visible to administrators in edit mode (manage sections and activities).';
+
+
 $string['enablewhatsappbutton'] = 'Enable WhatsApp floating button';
 $string['enablewhatsappbutton_desc'] = 'Show a floating WhatsApp contact button on every page, using the WhatsApp number configured above.';
 $string['facebook'] = 'Facebook URL';

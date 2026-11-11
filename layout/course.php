@@ -105,6 +105,25 @@ $coursefullname = ($PAGE->course?->fullname) ? format_string(
 ) : '';
 $courseurl = $PAGE->course ? new \core\url('/course/view.php', ['id' => $PAGE->course->id]) : null;
 
+$isbusolacourse = false;
+$busolacourse = null;
+
+if ($PAGE->course && $PAGE->course->id != SITEID && isloggedin() && !isguestuser()) {
+    $busolacourse = \theme_ebusola\util\busola::get_course_view_context($PAGE->course);
+    if ($busolacourse) {
+        $isbusolacourse = true;
+        $extraclasses[] = 'has-busola-dashboard';
+        $extraclasses[] = 'has-busola-course';
+        if (!$PAGE->user_is_editing()) {
+            $courseindex = '';
+            $courseindexopen = false;
+            $hasblocks = false;
+            $blockdraweropen = false;
+            $extraclasses = array_values(array_diff($extraclasses, ['drawer-open-index']));
+        }
+    }
+}
+
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => \core\context\course::instance(SITEID), "escape" => false]),
@@ -130,6 +149,9 @@ $templatecontext = [
     'addblockbutton' => $addblockbutton,
     'addcontentblockbutton' => $addcontentblockbutton,
     'contentblocks' => $contentblocks,
+    'is_busola_course' => $isbusolacourse,
+    'busola_course' => $busolacourse,
+    'user_is_editing' => $PAGE->user_is_editing(),
 ];
 
 $themesettings = new \theme_ebusola\util\settings();

@@ -102,8 +102,18 @@
             {{/closebuttonicon}}
         {{/ theme_boost/drawer}}
     {{/hasblocks}}
-    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#is_busola_course}}has-busola-dashboard has-busola-course p-0{{/is_busola_course}} {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container" {{#is_busola_course}}style="padding-left:0 !important; padding-right:0 !important; max-width:100% !important;"{{/is_busola_course}}>
 
+        {{#is_busola_course}}
+            {{> theme_ebusola/ebusola/busola_course }}
+            {{^user_is_editing}}
+                <div class="d-none">
+                    {{{ output.main_content }}}
+                </div>
+            {{/user_is_editing}}
+        {{/is_busola_course}}
+
+        {{^is_busola_course}}
         {{{ output.full_header }}}
 
         <div id="topofscroll" class="main-inner">
@@ -181,6 +191,7 @@
                 </div>
             </div>
         </div>
+        {{/is_busola_course}}
     </div>
     {{> theme_ebusola/footer }}
     {{> theme_ebusola/whatsapp_button }}
