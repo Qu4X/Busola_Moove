@@ -1044,3 +1044,9 @@ html body .h5p-question-buttons * {
    różni się od rodzica. Dopasowanie do trybu Moodle usuwa to tło. */
 html[data-bs-theme="dark"] { color-scheme: dark; }
 html[data-bs-theme="light"] { color-scheme: light; }
+
+/* Pasek wyniku (gwiazdka + 0/1) usunięty: wynik widać po kolorach odpowiedzi */
+html body .h5p-question-scorebar-container,
+html body .h5p-question-scorebar {
+    display: none !important;
+}
