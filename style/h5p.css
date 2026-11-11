@@ -1050,3 +1050,17 @@ html body .h5p-question-scorebar-container,
 html body .h5p-question-scorebar {
     display: none !important;
 }
+
+/* Sprawdź: H5P na :hover przesuwa tekst (text-indent) i zmienia padding. Zerujemy to. */
+html body button.h5p-theme-button.h5p-theme-primary-cta,
+html body button.h5p-theme-button.h5p-theme-primary-cta:hover:not(:disabled),
+html body button.h5p-theme-button.h5p-theme-primary-cta:active:not(:disabled) {
+    text-indent: 0 !important;
+    --padding-inline: 32px;
+    --icon-opacity: 0;
+    --icon-transform-x: 0;
+    --icon-transform-y: 0;
+    padding-inline: 32px !important;
+    background-color: var(--busola-accent-orange) !important;
+    border-color: transparent !important;
+}
