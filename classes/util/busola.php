@@ -150,6 +150,7 @@ class busola {
         $examinfo = self::resolve_exam_info();
 
         return [
+            'homeurl' => (new moodle_url('/'))->out(false),
             'loginurl' => (new moodle_url('/login/index.php'))->out(false),
             'courses' => $courses,
             'has_courses' => !empty($courses),

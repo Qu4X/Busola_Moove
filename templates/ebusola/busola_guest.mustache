@@ -126,6 +126,7 @@
                             {{/hascustomicon}}
                         </div>
                         <div class="busola-guest-card-body">
+                            <span class="busola-guest-card-cat-label">{{categoryname}}</span>
                             <div class="busola-guest-card-title">{{fullname}}</div>
                             <div class="busola-guest-card-footer">
                                 <span class="busola-guest-card-auth">
@@ -138,6 +139,7 @@
                                 </span>
                             </div>
                         </div>
+                        <svg class="busola-guest-card-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
                     </a>
                 {{/courses}}
             </div>
@@ -146,4 +148,35 @@
         <!-- Baner informacyjny: Egzaminy dla dorosłych -->
         {{> theme_ebusola/ebusola/busola_exams }}
     </main>
+
+    <!-- 3. Dolna belka nawigacji dla gościa na mobile (< 768px) -->
+    <nav class="busola-bottom-nav d-flex d-md-none" aria-label="{{#str}}guest_nav_aria, theme_ebusola{{/str}}">
+        <a href="{{homeurl}}" class="busola-bottom-nav-item active">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"></path>
+            </svg>
+            <span>{{#str}}guest_nav_home, theme_ebusola{{/str}}</span>
+        </a>
+        <a href="#busola-guest-courses" class="busola-bottom-nav-item">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"></path>
+                <path d="M5 17a3 3 0 0 1 3-3h10"></path>
+            </svg>
+            <span>{{#str}}guest_nav_courses, theme_ebusola{{/str}}</span>
+        </a>
+        <a href="{{{examurl}}}" class="busola-bottom-nav-item">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 3h8l4 4v14H7z"></path>
+                <path d="M10 14.5l2 2 3.5-4"></path>
+            </svg>
+            <span>{{#str}}guest_nav_exams, theme_ebusola{{/str}}</span>
+        </a>
+        <a href="{{{loginurl}}}" class="busola-bottom-nav-item">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="8" r="4"></circle>
+                <path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path>
+            </svg>
+            <span>{{#str}}guest_nav_login, theme_ebusola{{/str}}</span>
+        </a>
+    </nav>
 </div>
