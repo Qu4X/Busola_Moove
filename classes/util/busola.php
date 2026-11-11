@@ -716,8 +716,10 @@ class busola {
                 if ($quizsum > 0) {
                     $scoredisplay = round($usersum) . '/' . round($quizsum);
                     $subtitle = 'Ostatnio: ' . $quizname . ' · wynik ' . $scoredisplay;
+                    $subtitleshort = 'Ostatnio: ' . $scoredisplay;
                 } else {
                     $subtitle = 'Ostatnio: ' . $quizname;
+                    $subtitleshort = 'Ostatnio: test';
                 }
                 $btntext = get_string('kokpit_btn_retry', 'theme_ebusola');
                 if (empty($btntext) || $btntext === '[[kokpit_btn_retry]]') {
@@ -733,6 +735,7 @@ class busola {
                 }
                 $progressval = !is_null($progress) ? (int) floor($progress) : 0;
                 $subtitle = ($progressval > 0) ? 'Postęp kursu: ' . $progressval . '%' : 'Rozpocznij naukę w tym kursie';
+                $subtitleshort = ($progressval > 0) ? 'Postęp: ' . $progressval . '%' : 'Rozpocznij naukę';
                 $btntext = get_string('kokpit_btn_continue', 'theme_ebusola');
                 if (empty($btntext) || $btntext === '[[kokpit_btn_continue]]') {
                     $btntext = 'Kontynuuj naukę';
@@ -748,6 +751,7 @@ class busola {
                 'btn_url' => $btnurl,
                 'btn_text' => $btntext,
                 'subtitle' => $subtitle,
+                'subtitle_short' => $subtitleshort,
                 'bgcolor' => $bgcolor,
                 'iconurl' => $iconurl,
                 'hascustomicon' => !empty($iconurl),
@@ -793,6 +797,7 @@ class busola {
 
                 $dateformatted = self::format_polish_relative_date((int) $ar->timefinish);
                 $subtext = format_string($ar->coursename) . ' · ' . $dateformatted;
+                $subtextmobile = mb_convert_case(mb_substr($dateformatted, 0, 1), MB_CASE_UPPER, 'UTF-8') . mb_substr($dateformatted, 1);
 
                 $url = $ar->cmid
                     ? (new moodle_url('/mod/quiz/review.php', ['attempt' => $ar->id]))->out(false)
@@ -817,6 +822,7 @@ class busola {
                     'is_failed' => !$passed,
                     'status_label' => $passed ? $passedstr : $failedstr,
                     'subtext' => $subtext,
+                    'subtext_mobile' => $subtextmobile,
                     'url' => $url,
                 ];
             }

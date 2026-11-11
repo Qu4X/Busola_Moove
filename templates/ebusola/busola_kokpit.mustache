@@ -35,12 +35,16 @@
                     <div class="busola-kokpit-continue-body">
                         <span class="busola-kokpit-continue-tag">{{#str}}kokpit_continue_tag, theme_ebusola{{/str}}</span>
                         <span class="busola-kokpit-continue-title">{{course_name}}</span>
-                        <span class="busola-kokpit-continue-sub">{{subtitle}}</span>
+                        <span class="busola-kokpit-continue-sub d-none d-md-block">{{subtitle}}</span>
+                        <span class="busola-kokpit-continue-sub d-block d-md-none">{{subtitle_short}}</span>
                         <span class="busola-kokpit-continue-btn">
                             {{btn_text}}
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
                         </span>
                     </div>
+                    <span class="busola-kokpit-continue-mobile-arrow" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                    </span>
                 </a>
                 {{/has_course}}
                 {{/continue_card}}
@@ -48,7 +52,8 @@
                 <section class="busola-kokpit-results-card" aria-labelledby="k-wyniki">
                     <div class="busola-kokpit-results-head">
                         <h2 id="k-wyniki" class="busola-kokpit-results-title">{{#str}}kokpit_results_title, theme_ebusola{{/str}}</h2>
-                        <span class="busola-kokpit-results-threshold">{{#str}}kokpit_results_threshold, theme_ebusola{{/str}}</span>
+                        <span class="busola-kokpit-results-threshold d-none d-md-inline">{{#str}}kokpit_results_threshold, theme_ebusola{{/str}}</span>
+                        <span class="busola-kokpit-results-threshold d-inline d-md-none">{{#str}}kokpit_results_threshold_mobile, theme_ebusola{{/str}}</span>
                     </div>
 
                     {{#has_results}}
@@ -64,19 +69,20 @@
 
                             <div class="busola-kokpit-result-info">
                                 <a href="{{url}}" class="busola-kokpit-result-name">{{quiz_name}}</a>
-                                <div class="busola-kokpit-result-meta">{{subtext}}</div>
+                                <div class="busola-kokpit-result-meta d-none d-md-block">{{subtext}}</div>
+                                <div class="busola-kokpit-result-meta d-block d-md-none">{{subtext_mobile}}</div>
                             </div>
 
                             {{#is_passed}}
-                            <span class="busola-kokpit-status-passed">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
-                                {{status_label}}
+                            <span class="busola-kokpit-status-passed" aria-label="{{status_label}}">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+                                <span class="busola-kokpit-status-text">{{status_label}}</span>
                             </span>
                             {{/is_passed}}
                             {{#is_failed}}
-                            <span class="busola-kokpit-status-failed">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
-                                {{status_label}}
+                            <span class="busola-kokpit-status-failed" aria-label="{{status_label}}">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+                                <span class="busola-kokpit-status-text">{{status_label}}</span>
                             </span>
                             {{/is_failed}}
                         </li>
@@ -143,26 +149,32 @@
                 {{/calendar}}
 
                 {{#upcoming_event}}
-                <section class="busola-kokpit-event-card" aria-labelledby="k-wyd">
-                    <h2 id="k-wyd" class="busola-kokpit-event-tag">{{#str}}kokpit_event_title, theme_ebusola{{/str}}</h2>
-                    <div class="busola-kokpit-event-row">
-                        <div class="busola-kokpit-event-datebox">
-                            <span class="busola-kokpit-event-mon">{{month_short}}</span>
-                            <span class="busola-kokpit-event-day">{{day_num}}</span>
+                <section class="busola-kokpit-event-section" aria-labelledby="km-kal">
+                    <h2 id="km-kal" class="busola-kokpit-event-section-title">{{#str}}kokpit_event_section_title, theme_ebusola{{/str}}</h2>
+                    <a href="{{event_url}}" class="busola-kokpit-event-card">
+                        <span class="busola-kokpit-event-tag">{{#str}}kokpit_event_title, theme_ebusola{{/str}}</span>
+                        <div class="busola-kokpit-event-row">
+                            <div class="busola-kokpit-event-datebox">
+                                <span class="busola-kokpit-event-mon">{{month_short}}</span>
+                                <span class="busola-kokpit-event-day">{{day_num}}</span>
+                            </div>
+                            <div class="busola-kokpit-event-details">
+                                <div class="busola-kokpit-event-name">{{title}}</div>
+                                <div class="busola-kokpit-event-rel">{{relative_text}}</div>
+                            </div>
+                            <span class="busola-kokpit-event-mobile-chevron" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+                            </span>
                         </div>
-                        <div class="busola-kokpit-event-details">
-                            <div class="busola-kokpit-event-name">{{title}}</div>
-                            <div class="busola-kokpit-event-rel">{{relative_text}}</div>
-                        </div>
-                    </div>
-                    <a href="{{event_url}}" class="busola-kokpit-event-link">
-                        {{#is_exam_fallback}}
-                            {{#str}}kokpit_event_info_link, theme_ebusola{{/str}}
-                        {{/is_exam_fallback}}
-                        {{^is_exam_fallback}}
-                            {{link_text}}
-                        {{/is_exam_fallback}}
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                        <span class="busola-kokpit-event-link">
+                            {{#is_exam_fallback}}
+                                {{#str}}kokpit_event_info_link, theme_ebusola{{/str}}
+                            {{/is_exam_fallback}}
+                            {{^is_exam_fallback}}
+                                {{link_text}}
+                            {{/is_exam_fallback}}
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                        </span>
                     </a>
                 </section>
                 {{/upcoming_event}}

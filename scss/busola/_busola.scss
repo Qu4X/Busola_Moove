@@ -3829,6 +3829,10 @@ body.darkmode {
             }
         }
     }
+
+    .busola-kokpit-continue-mobile-arrow {
+        display: none;
+    }
 }
 
 /* Karta "Ostatnie wyniki" */
@@ -3938,6 +3942,9 @@ body.darkmode {
         font-size: 14px;
         font-weight: 700;
         color: var(--busola-text-primary);
+        .busola-kokpit-status-text {
+            display: inline;
+        }
     }
 
     .busola-kokpit-status-failed {
@@ -3947,6 +3954,10 @@ body.darkmode {
         font-size: 14px;
         font-weight: 700;
         color: #9A3412;
+
+        .busola-kokpit-status-text {
+            display: inline;
+        }
     }
 
     .busola-kokpit-results-empty {
@@ -4081,11 +4092,25 @@ body.darkmode {
 }
 
 /* Karta "NAJBLIŻSZE WYDARZENIE" */
+.busola-kokpit-event-section-title {
+    display: none;
+}
+
 .busola-kokpit-event-card {
     background: var(--busola-exam-bg, #FFEBDB);
     border-radius: 24px;
     padding: 24px;
     border: 1px solid var(--busola-surface-border);
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: transform .18s ease, box-shadow .18s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(20, 27, 94, .08);
+        color: inherit;
+    }
 
     .busola-kokpit-event-tag {
         margin: 0;
@@ -4136,6 +4161,10 @@ body.darkmode {
                 font-size: 14px;
                 color: var(--busola-text-secondary);
             }
+        }
+
+        .busola-kokpit-event-mobile-chevron {
+            display: none;
         }
     }
 
@@ -4377,6 +4406,367 @@ body.moove-darkmode,
                 flex: 0 0 20px !important;
                 color: var(--busola-text-primary) !important;
                 margin-left: auto !important;
+            }
+        }
+    }
+
+    /* 5. Widok Kokpit na mobile (< 768px) */
+    .busola-kokpit-wrapper {
+        min-height: calc(100vh - 60px) !important;
+        overflow-x: hidden !important;
+    }
+
+    .busola-kokpit-container {
+        padding: 16px 16px 88px !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .busola-kokpit-header {
+        margin-bottom: 14px !important;
+
+        .busola-kokpit-title {
+            font-size: 30px !important;
+            line-height: 1.1 !important;
+            font-weight: 800 !important;
+            letter-spacing: -0.02em !important;
+            margin: 0 !important;
+        }
+
+        .busola-kokpit-subtitle {
+            display: none !important;
+        }
+    }
+
+    .busola-kokpit-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px !important;
+        width: 100% !important;
+    }
+
+    .busola-kokpit-main {
+        width: 100% !important;
+        flex: 1 1 auto !important;
+        gap: 20px !important;
+    }
+
+    .busola-kokpit-sidebar {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 1 1 auto !important;
+        gap: 20px !important;
+        margin: 0 !important;
+    }
+
+    /* Karta "KONTYNUUJ" na mobile */
+    .busola-kokpit-continue-card {
+        margin-top: 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 14px !important;
+        padding: 14px !important;
+        border-radius: 20px !important;
+        background: var(--busola-hero-bg, #141B5E) !important;
+        box-shadow: 0 12px 28px rgba(20, 27, 94, .22) !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+
+        .busola-kokpit-continue-thumb {
+            flex: 0 0 64px !important;
+            width: 64px !important;
+            height: 64px !important;
+            min-height: 64px !important;
+            max-width: 64px !important;
+            border-radius: 14px !important;
+            padding: 6px !important;
+            box-sizing: border-box !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+
+            .busola-kokpit-thumb-svg,
+            .busola-kokpit-continue-img {
+                width: 54px !important;
+                height: 34px !important;
+                max-width: 54px !important;
+                max-height: 34px !important;
+                object-fit: contain !important;
+                margin: 0 !important;
+            }
+        }
+
+        .busola-kokpit-continue-body {
+            flex: 1 1 auto !important;
+            min-width: 0 !important;
+            padding: 0 !important;
+            gap: 2px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+
+            .busola-kokpit-continue-tag {
+                font-size: 11px !important;
+                font-weight: 800 !important;
+                letter-spacing: .14em !important;
+                color: #FFB27A !important;
+                line-height: 1.2 !important;
+            }
+
+            .busola-kokpit-continue-title {
+                font-size: 18px !important;
+                font-weight: 800 !important;
+                line-height: 1.15 !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
+
+            .busola-kokpit-continue-sub {
+                font-size: 13px !important;
+                color: #CBD1F3 !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                line-height: 1.3 !important;
+            }
+
+            .busola-kokpit-continue-btn {
+                display: none !important;
+            }
+        }
+
+        .busola-kokpit-continue-mobile-arrow {
+            flex: 0 0 44px !important;
+            width: 44px !important;
+            height: 44px !important;
+            border-radius: 22px !important;
+            background: var(--busola-accent-orange, #FF7A1A) !important;
+            color: #141B5E !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin-left: auto !important;
+
+            svg {
+                stroke: #141B5E !important;
+            }
+        }
+    }
+
+    /* Karta "Ostatnie wyniki" na mobile */
+    .busola-kokpit-results-card {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin-top: 0 !important;
+
+        .busola-kokpit-results-head {
+            display: flex !important;
+            align-items: baseline !important;
+            justify-content: space-between !important;
+            margin-bottom: 8px !important;
+            gap: 8px !important;
+
+            .busola-kokpit-results-title {
+                font-size: 20px !important;
+                font-weight: 800 !important;
+                color: var(--busola-text-primary, #141B5E) !important;
+                margin: 0 !important;
+            }
+
+            .busola-kokpit-results-threshold {
+                font-size: 12px !important;
+                color: var(--busola-text-secondary, #5B6280) !important;
+            }
+        }
+
+        .busola-kokpit-results-list {
+            margin: 0 !important;
+            padding: 0 !important;
+            list-style: none !important;
+            background: var(--busola-surface-card, #FFFFFF) !important;
+            border-radius: 18px !important;
+            border: 1px solid var(--busola-surface-border, rgba(20, 27, 94, 0.08)) !important;
+            box-shadow: 0 1px 2px rgba(20, 27, 94, .06), 0 6px 16px rgba(20, 27, 94, .05) !important;
+            overflow: hidden !important;
+
+            .busola-kokpit-result-item {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                align-items: center !important;
+                gap: 12px !important;
+                padding: 12px 14px !important;
+                border-top: 1px solid var(--busola-surface-border, #E8EBF6) !important;
+
+                &:first-child {
+                    border-top: none !important;
+                }
+            }
+        }
+
+        .busola-kokpit-badge-passed {
+            flex: 0 0 56px !important;
+            width: 56px !important;
+            height: 40px !important;
+            border-radius: 12px !important;
+            font-size: 15px !important;
+            font-weight: 800 !important;
+        }
+
+        .busola-kokpit-badge-failed {
+            flex: 0 0 56px !important;
+            width: 56px !important;
+            height: 40px !important;
+            box-sizing: border-box !important;
+            border-radius: 12px !important;
+            font-size: 15px !important;
+            font-weight: 800 !important;
+        }
+
+        .busola-kokpit-result-info {
+            flex: 1 1 auto !important;
+            min-width: 0 !important;
+
+            .busola-kokpit-result-name {
+                font-size: 15px !important;
+                font-weight: 700 !important;
+                line-height: 1.25 !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
+
+            .busola-kokpit-result-meta {
+                font-size: 12px !important;
+                line-height: 1.3 !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
+        }
+
+        .busola-kokpit-status-passed,
+        .busola-kokpit-status-failed {
+            flex: 0 0 20px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+
+            svg {
+                width: 20px !important;
+                height: 20px !important;
+            }
+
+            .busola-kokpit-status-text {
+                display: none !important;
+            }
+        }
+    }
+
+    /* Ukrycie pełnego kalendarza na mobile */
+    .busola-kokpit-calendar-card {
+        display: none !important;
+    }
+
+    /* Sekcja "Najbliższe wydarzenie" na mobile */
+    .busola-kokpit-event-section {
+        margin-top: 0 !important;
+
+        .busola-kokpit-event-section-title {
+            display: block !important;
+            margin: 0 0 8px !important;
+            font-size: 20px !important;
+            font-weight: 800 !important;
+            color: var(--busola-text-primary, #141B5E) !important;
+            line-height: 1.2 !important;
+        }
+
+        .busola-kokpit-event-card {
+            display: flex !important;
+            align-items: center !important;
+            gap: 14px !important;
+            padding: 14px !important;
+            border-radius: 18px !important;
+            background: var(--busola-exam-bg, #FFEBDB) !important;
+            text-decoration: none !important;
+            border: 1px solid var(--busola-surface-border, rgba(20, 27, 94, 0.08)) !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+
+            .busola-kokpit-event-tag {
+                display: none !important;
+            }
+
+            .busola-kokpit-event-row {
+                margin: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 14px !important;
+                width: 100% !important;
+
+                .busola-kokpit-event-datebox {
+                    flex: 0 0 56px !important;
+                    width: 56px !important;
+                    border-radius: 14px !important;
+                    background: #FFFFFF !important;
+                    text-align: center !important;
+                    padding: 6px 0 !important;
+                    line-height: 1.1 !important;
+
+                    .busola-kokpit-event-mon {
+                        font-size: 12px !important;
+                        font-weight: 700 !important;
+                    }
+
+                    .busola-kokpit-event-day {
+                        font-size: 24px !important;
+                        font-weight: 800 !important;
+                    }
+                }
+
+                .busola-kokpit-event-details {
+                    flex: 1 1 auto !important;
+                    min-width: 0 !important;
+
+                    .busola-kokpit-event-name {
+                        font-size: 16px !important;
+                        font-weight: 800 !important;
+                        line-height: 1.2 !important;
+                        white-space: nowrap !important;
+                        overflow: hidden !important;
+                        text-overflow: ellipsis !important;
+                    }
+
+                    .busola-kokpit-event-rel {
+                        font-size: 13px !important;
+                        line-height: 1.3 !important;
+                        white-space: nowrap !important;
+                        overflow: hidden !important;
+                        text-overflow: ellipsis !important;
+                    }
+                }
+
+                .busola-kokpit-event-mobile-chevron {
+                    display: flex !important;
+                    flex: 0 0 20px !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    margin-left: auto !important;
+                    color: var(--busola-text-primary, #141B5E) !important;
+
+                    svg {
+                        stroke: currentColor !important;
+                    }
+                }
+            }
+
+            .busola-kokpit-event-link {
+                display: none !important;
             }
         }
     }
