@@ -496,11 +496,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string My learning controls html content.
      */
     public function render_mylearning_controls() {
-        if (!isloggedin() || isguestuser()) {
-            return '';
-        }
-
-        return $this->render_from_template('theme_ebusola/ebusola/mylearning', []);
+        return '';
     }
 
     /**
