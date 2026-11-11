@@ -132,7 +132,7 @@
 
                 {{#sections}}
                 <!-- OTWARTY PANEL DZIAŁU -->
-                <section class="busola-course-open-panel d-none" id="section-panel-{{section_num}}" data-panel-for="{{section_num}}" aria-labelledby="co-panel-{{section_num}}">
+                <section class="busola-course-open-panel" hidden id="section-panel-{{section_num}}" data-panel-for="{{section_num}}" aria-labelledby="co-panel-{{section_num}}">
                     <div class="busola-panel-header">
                         <div class="busola-panel-header-left">
                             <h3 id="co-panel-{{section_num}}" class="busola-panel-title">{{name}}</h3>
@@ -248,6 +248,58 @@ require([], function() {
     var panels = Array.from(grid.querySelectorAll('.busola-course-open-panel'));
     var activeSecNum = null;
 
+    var supportsDisplayTransition;
+    function canTransitionDisplay() {
+        if (supportsDisplayTransition !== undefined) return supportsDisplayTransition;
+        if (!window.CSS || !window.CSS.supports || !window.CSS.supports('transition-behavior', 'allow-discrete') || !document.body) {
+            supportsDisplayTransition = false;
+            return false;
+        }
+        var probe = document.createElement('div');
+        probe.style.cssText = 'transition: display 1s allow-discrete !important; display: block;';
+        document.body.appendChild(probe);
+        getComputedStyle(probe).display;
+        probe.style.display = 'none';
+        supportsDisplayTransition = getComputedStyle(probe).display === 'block';
+        probe.remove();
+        return supportsDisplayTransition;
+    }
+
+    function hidePanel(el, immediate) {
+        if (immediate) {
+            el.removeAttribute('data-closing');
+            el.hidden = true;
+            return Promise.resolve();
+        }
+        if (canTransitionDisplay()) {
+            el.hidden = true;
+        } else {
+            el.setAttribute('data-closing', '');
+        }
+        var animations = el.getAnimations ? el.getAnimations() : [];
+        if (animations.length > 0) {
+            return Promise.race([
+                Promise.allSettled(animations.map(function(a) { return a.finished; })),
+                new Promise(function(r) { setTimeout(r, 400); })
+            ]).then(function() {
+                if (el.hasAttribute('data-closing')) {
+                    el.removeAttribute('data-closing');
+                    el.hidden = true;
+                }
+            });
+        }
+        if (el.hasAttribute('data-closing')) {
+            el.removeAttribute('data-closing');
+            el.hidden = true;
+        }
+        return Promise.resolve();
+    }
+
+    function showPanel(el) {
+        el.removeAttribute('data-closing');
+        el.hidden = false;
+    }
+
     function getColumnsCount() {
         var w = window.innerWidth;
         if (w < 768) return 1;
@@ -255,13 +307,15 @@ require([], function() {
         return 3;
     }
 
-    function closeAllPanels() {
+    function closeAllPanels(immediate) {
         cards.forEach(function(c) {
             c.classList.remove('is-open');
             c.setAttribute('aria-expanded', 'false');
         });
         panels.forEach(function(p) {
-            p.classList.add('d-none');
+            if (!p.hidden) {
+                hidePanel(p, immediate);
+            }
         });
         activeSecNum = null;
     }
@@ -271,13 +325,14 @@ require([], function() {
         var panel = document.getElementById('section-panel-' + secNum);
         if (!card || !panel) return;
 
-        // Jeśli kliknięto w już otwarty dział, zamknij go.
+        // Jeśli kliknięto w już otwarty dział, zamknij go z płynną animacją wyjścia.
         if (activeSecNum === secNum) {
-            closeAllPanels();
+            closeAllPanels(false);
             return;
         }
 
-        closeAllPanels();
+        // Zamknij natychmiast poprzedni panel przed otwarciem nowego w siatce.
+        closeAllPanels(true);
 
         // Wyznaczenie pozycji w siatce (wiersza) i przesunięcie panelu pod ostatni kafelek wiersza.
         var cardIndex = cards.indexOf(card);
@@ -290,13 +345,13 @@ require([], function() {
 
         card.classList.add('is-open');
         card.setAttribute('aria-expanded', 'true');
-        panel.classList.remove('d-none');
+        showPanel(panel);
         activeSecNum = secNum;
 
         if (shouldScroll) {
             setTimeout(function() {
                 panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 50);
+            }, 60);
         }
     }
 
@@ -317,7 +372,7 @@ require([], function() {
                 e.preventDefault();
                 e.stopPropagation();
                 var secNum = activeSecNum;
-                closeAllPanels();
+                closeAllPanels(false);
                 if (secNum) {
                     var card = document.getElementById('section-card-' + secNum);
                     if (card) card.focus();

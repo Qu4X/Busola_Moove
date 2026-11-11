@@ -5191,7 +5191,7 @@ body.darkmode,
     }
 
     .busola-section-pointer {
-        display: none;
+        display: block;
         position: absolute;
         left: 50%;
         bottom: -10px;
@@ -5199,9 +5199,12 @@ body.darkmode,
         width: 20px;
         height: 20px;
         background: var(--busola-primary-dark, #141B5E);
-        transform: rotate(45deg);
+        transform: rotate(45deg) scale(0.4);
+        opacity: 0;
+        pointer-events: none;
         border-radius: 3px;
         z-index: 2;
+        transition: opacity .22s ease, transform .22s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     // Niezaliczony/następny/do zrobienia
@@ -5254,7 +5257,8 @@ body.darkmode,
         }
 
         .busola-section-pointer {
-            display: block;
+            opacity: 1;
+            transform: rotate(45deg) scale(1);
         }
     }
 }
@@ -5262,12 +5266,20 @@ body.darkmode,
 /* Otwarty panel działu */
 .busola-course-open-panel {
     grid-column: 1 / -1;
+    display: block;
     background: var(--busola-card-bg, #FFFFFF);
     border-radius: 24px;
     padding: 28px 32px 16px;
     box-shadow: 0 1px 2px rgba(20,27,94,.06), 0 16px 40px rgba(20,27,94,.1);
     box-sizing: border-box;
     width: 100%;
+    opacity: 1;
+    translate: 0 0;
+    transition:
+        display .26s,
+        opacity .26s cubic-bezier(0.22, 1, 0.36, 1),
+        translate .26s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-behavior: allow-discrete;
 
     .busola-panel-header {
         display: flex;
@@ -5433,6 +5445,40 @@ body.darkmode,
                 }
             }
         }
+    }
+}
+
+@starting-style {
+    .busola-course-open-panel {
+        opacity: 0;
+        translate: 0 -14px;
+    }
+}
+
+.busola-course-open-panel:where([hidden], [data-closing]) {
+    opacity: 0;
+    translate: 0 -14px;
+}
+
+.busola-course-open-panel[hidden] {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .busola-course-open-panel,
+    .busola-section-card .busola-section-pointer {
+        translate: none;
+        transition-duration: 0.08s;
+    }
+
+    @starting-style {
+        .busola-course-open-panel {
+            translate: none;
+        }
+    }
+
+    .busola-course-open-panel:where([hidden], [data-closing]) {
+        translate: none;
     }
 }
 
