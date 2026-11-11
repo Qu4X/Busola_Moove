@@ -3673,6 +3673,525 @@ body.darkmode {
     }
 }
 
+/* ==========================================================================
+   WIDOK 2: KOKPIT (/my/) - Desktop i komponenty
+   ========================================================================== */
+.busola-kokpit-wrapper {
+    background-color: var(--busola-bg-canvas);
+    min-height: calc(100vh - 72px);
+    width: 100%;
+}
+
+.has-busola-kokpit {
+    #page {
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+}
+
+.busola-kokpit-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 32px 72px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.busola-kokpit-header {
+    margin-bottom: 32px;
+
+    .busola-kokpit-title {
+        margin: 0;
+        font-size: 44px;
+        line-height: 1.08;
+        font-weight: 800;
+        letter-spacing: -.025em;
+        color: var(--busola-text-primary);
+    }
+
+    .busola-kokpit-subtitle {
+        margin: 8px 0 0;
+        font-size: 18px;
+        color: var(--busola-text-secondary);
+    }
+}
+
+.busola-kokpit-grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+.busola-kokpit-main {
+    flex: 1 1 560px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.busola-kokpit-sidebar {
+    flex: 1 1 320px;
+    max-width: 380px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Karta "KONTYNUUJ" */
+.busola-kokpit-continue-card {
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--busola-hero-bg);
+    border-radius: 24px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #FFFFFF !important;
+    box-shadow: 0 12px 32px rgba(20, 27, 94, .22);
+    transition: transform .18s ease, box-shadow .18s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 36px rgba(20, 27, 94, .28);
+        color: #FFFFFF !important;
+    }
+
+    .busola-kokpit-continue-thumb {
+        flex: 0 0 180px;
+        min-height: 180px;
+        flex-grow: 1;
+        max-width: 240px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        box-sizing: border-box;
+
+        .busola-kokpit-continue-img {
+            width: 100%;
+            height: 100%;
+            max-height: 160px;
+            object-fit: contain;
+        }
+
+        .busola-kokpit-thumb-svg {
+            display: block;
+        }
+    }
+
+    .busola-kokpit-continue-body {
+        flex: 1 1 280px;
+        min-width: 0;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 6px;
+
+        .busola-kokpit-continue-tag {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .14em;
+            color: #FFB27A;
+        }
+
+        .busola-kokpit-continue-title {
+            font-size: 26px;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -.01em;
+            color: #FFFFFF;
+        }
+
+        .busola-kokpit-continue-sub {
+            font-size: 14px;
+            color: #CBD1F3;
+        }
+
+        .busola-kokpit-continue-btn {
+            margin-top: 12px;
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 22px;
+            border-radius: 14px;
+            background: var(--busola-accent-orange, #FF7A1A);
+            color: #141B5E;
+            font-size: 16px;
+            font-weight: 700;
+            transition: background-color .18s ease, transform .18s ease;
+
+            &:hover {
+                background-color: var(--busola-accent-orange-hover, #E66608);
+            }
+        }
+    }
+}
+
+/* Karta "Ostatnie wyniki" */
+.busola-kokpit-results-card {
+    background: var(--busola-surface-card);
+    border-radius: 24px;
+    padding: 28px 28px 20px;
+    box-shadow: 0 1px 2px rgba(20, 27, 94, .06), 0 8px 24px rgba(20, 27, 94, .06);
+    border: 1px solid var(--busola-surface-border);
+
+    .busola-kokpit-results-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 8px;
+
+        .busola-kokpit-results-title {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -.01em;
+            color: var(--busola-text-primary);
+        }
+
+        .busola-kokpit-results-threshold {
+            font-size: 14px;
+            color: var(--busola-text-secondary);
+        }
+    }
+
+    .busola-kokpit-results-list {
+        list-style: none;
+        margin: 16px 0 0;
+        padding: 0;
+
+        .busola-kokpit-result-item {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 16px;
+            padding: 16px 0;
+            border-top: 1px solid var(--busola-surface-border);
+
+            &:first-child {
+                border-top: 1px solid var(--busola-surface-border);
+            }
+        }
+    }
+
+    .busola-kokpit-badge-passed {
+        flex: 0 0 64px;
+        width: 64px;
+        height: 44px;
+        border-radius: 12px;
+        background: #141B5E;
+        color: #FFFFFF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+        font-weight: 800;
+    }
+
+    .busola-kokpit-badge-failed {
+        flex: 0 0 64px;
+        width: 64px;
+        height: 44px;
+        box-sizing: border-box;
+        border-radius: 12px;
+        background: var(--busola-surface-card);
+        border: 2.5px solid #C2410C;
+        color: #9A3412;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+        font-weight: 800;
+    }
+
+    .busola-kokpit-result-info {
+        flex: 1 1 220px;
+        min-width: 0;
+
+        .busola-kokpit-result-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--busola-text-primary);
+            text-decoration: none;
+            display: block;
+
+            &:hover {
+                color: var(--busola-accent-red);
+            }
+        }
+
+        .busola-kokpit-result-meta {
+            font-size: 14px;
+            color: var(--busola-text-secondary);
+        }
+    }
+
+    .busola-kokpit-status-passed {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--busola-text-primary);
+    }
+
+    .busola-kokpit-status-failed {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #9A3412;
+    }
+
+    .busola-kokpit-results-empty {
+        padding: 32px 16px;
+        text-align: center;
+        color: var(--busola-text-secondary);
+
+        .busola-kokpit-btn-empty {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 18px;
+            border-radius: var(--busola-radius-sm);
+            background: var(--busola-accent-orange);
+            color: #141B5E;
+            font-weight: 700;
+            text-decoration: none;
+        }
+    }
+}
+
+/* Karta "Kalendarz" */
+.busola-kokpit-calendar-card {
+    background: var(--busola-surface-card);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(20, 27, 94, .06), 0 8px 24px rgba(20, 27, 94, .06);
+    border: 1px solid var(--busola-surface-border);
+
+    .busola-kokpit-cal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .busola-kokpit-cal-nav {
+            width: 44px;
+            height: 44px;
+            border: 0;
+            border-radius: 22px;
+            background: var(--busola-surface-muted, #F5F6FB);
+            color: var(--busola-text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: background-color .18s ease;
+
+            &:hover {
+                background-color: var(--busola-border-card);
+            }
+        }
+
+        .busola-kokpit-cal-title {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--busola-text-primary);
+        }
+    }
+
+    .busola-kokpit-cal-grid {
+        margin-top: 12px;
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        row-gap: 4px;
+        text-align: center;
+        font-size: 15px;
+
+        .busola-kokpit-cal-dow {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--busola-text-secondary);
+            padding-bottom: 6px;
+        }
+
+        .busola-kokpit-cal-cell {
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.is-empty {
+                pointer-events: none;
+            }
+
+            .busola-kokpit-day-today {
+                width: 36px;
+                height: 36px;
+                border-radius: 18px;
+                background: #141B5E;
+                color: #FFFFFF;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .busola-kokpit-day-event {
+                width: 36px;
+                height: 36px;
+                box-sizing: border-box;
+                border-radius: 18px;
+                border: 2.5px solid var(--busola-accent-orange, #FF7A1A);
+                color: var(--busola-text-primary);
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .busola-kokpit-day-normal {
+                color: var(--busola-text-primary);
+            }
+        }
+    }
+
+    .busola-kokpit-cal-link {
+        margin-top: 16px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        border-bottom: 2px solid var(--busola-accent-orange, #FF7A1A);
+        color: var(--busola-text-primary);
+        transition: color .18s ease;
+
+        &:hover {
+            color: var(--busola-accent-red);
+        }
+    }
+}
+
+/* Karta "NAJBLIŻSZE WYDARZENIE" */
+.busola-kokpit-event-card {
+    background: var(--busola-exam-bg, #FFEBDB);
+    border-radius: 24px;
+    padding: 24px;
+    border: 1px solid var(--busola-surface-border);
+
+    .busola-kokpit-event-tag {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: .1em;
+        color: var(--busola-exam-accent, #8A2F00);
+    }
+
+    .busola-kokpit-event-row {
+        margin-top: 12px;
+        display: flex;
+        gap: 14px;
+        align-items: center;
+
+        .busola-kokpit-event-datebox {
+            flex: 0 0 56px;
+            width: 56px;
+            border-radius: 14px;
+            background: #FFFFFF;
+            text-align: center;
+            padding: 6px 0;
+            line-height: 1.1;
+
+            .busola-kokpit-event-mon {
+                display: block;
+                font-size: 12px;
+                font-weight: 700;
+                color: var(--busola-exam-accent, #8A2F00);
+            }
+
+            .busola-kokpit-event-day {
+                display: block;
+                font-size: 24px;
+                font-weight: 800;
+                color: #141B5E;
+            }
+        }
+
+        .busola-kokpit-event-details {
+            .busola-kokpit-event-name {
+                font-size: 17px;
+                font-weight: 800;
+                color: var(--busola-text-primary);
+            }
+
+            .busola-kokpit-event-rel {
+                font-size: 14px;
+                color: var(--busola-text-secondary);
+            }
+        }
+    }
+
+    .busola-kokpit-event-link {
+        margin-top: 16px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        border-bottom: 2px solid var(--busola-text-primary);
+        color: var(--busola-text-primary);
+        transition: opacity .18s ease;
+
+        &:hover {
+            opacity: .8;
+        }
+    }
+}
+
+/* Warianty Dark Mode dla Kokpitu */
+body.moove-darkmode,
+[data-bs-theme="dark"] {
+    .busola-kokpit-results-card {
+        .busola-kokpit-badge-passed {
+            background: #2E3A75;
+            color: #FFFFFF;
+        }
+        .busola-kokpit-badge-failed {
+            background: #2E1B15;
+            border-color: #EA580C;
+            color: #FFB27A;
+        }
+        .busola-kokpit-status-failed {
+            color: #FFB27A;
+        }
+    }
+
+    .busola-kokpit-calendar-card {
+        .busola-kokpit-cal-grid .busola-kokpit-cal-cell .busola-kokpit-day-today {
+            background: #FF7A1A;
+            color: #141B5E;
+        }
+    }
+
+    .busola-kokpit-event-card {
+        .busola-kokpit-event-row .busola-kokpit-event-datebox {
+            background: #242C44;
+            .busola-kokpit-event-day {
+                color: #FFFFFF;
+            }
+        }
+    }
+}
+
 /* 4. Responsywny widok mobilny dla niezalogowanych (< 768px) */
 @media (max-width: 767.98px) {
     .busola-guest-hero {

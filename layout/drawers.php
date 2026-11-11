@@ -102,6 +102,32 @@ $coursefullname = ($PAGE->course?->fullname) ? format_string(
 ) : '';
 $courseurl = $PAGE->course ? new \core\url('/course/view.php', ['id' => $PAGE->course->id]) : null;
 
+$ismycoursespage = (strpos($PAGE->url->get_path(), '/my/courses.php') !== false || $PAGE->pagelayout === 'mycourses');
+$issiteindex = ($PAGE->pagetype === 'site-index');
+$ismyindex = ($PAGE->pagetype === 'my-index' && !$ismycoursespage);
+
+$isbusoladashboard = false;
+$isbusolakokpit = false;
+$busolahub = null;
+$busolakokpit = null;
+
+if (isloggedin() && !isguestuser()) {
+    if ($issiteindex) {
+        $busolahub = \theme_ebusola\util\busola::get_dashboard_context();
+        if ($busolahub) {
+            $isbusoladashboard = true;
+            $extraclasses[] = 'has-busola-dashboard';
+        }
+    } else if ($ismyindex) {
+        $busolakokpit = \theme_ebusola\util\busola::get_kokpit_context();
+        if ($busolakokpit) {
+            $isbusolakokpit = true;
+            $extraclasses[] = 'has-busola-dashboard';
+            $extraclasses[] = 'has-busola-kokpit';
+        }
+    }
+}
+
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => \core\context\course::instance(SITEID), "escape" => false]),
@@ -132,14 +158,14 @@ $themesettings = new \theme_ebusola\util\settings();
 
 $templatecontext = array_merge($templatecontext, $themesettings->footer());
 
-$ismycoursespage = (strpos($PAGE->url->get_path(), '/my/courses.php') !== false || $PAGE->pagelayout === 'mycourses');
-$isdashboard = (($PAGE->pagetype === 'my-index' && !$ismycoursespage) || $PAGE->pagetype === 'site-index');
-if ($isdashboard && isloggedin() && !isguestuser()) {
-    $busoladata = \theme_ebusola\util\busola::get_dashboard_context();
-    if ($busoladata) {
-        $templatecontext['is_busola_dashboard'] = true;
-        $templatecontext['busola_hub'] = $busoladata;
-    }
+if ($isbusoladashboard) {
+    $templatecontext['is_busola_dashboard'] = true;
+    $templatecontext['busola_hub'] = $busolahub;
+}
+
+if ($isbusolakokpit) {
+    $templatecontext['is_busola_kokpit'] = true;
+    $templatecontext['busola_kokpit'] = $busolakokpit;
 }
 
 echo $OUTPUT->render_from_template('theme_ebusola/drawers', $templatecontext);

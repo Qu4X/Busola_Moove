@@ -295,6 +295,7 @@ class busola {
             'dashboardurl' => (new moodle_url('/my/'))->out(false),
             'messagesurl' => (new moodle_url('/message/index.php'))->out(false),
             'profileurl' => (new moodle_url('/user/profile.php', ['id' => $USER->id]))->out(false),
+            'is_home_active' => true,
             'examurl' => $examinfo['examurl'],
             'exam_title' => $examinfo['exam_title'],
             'exam_desc' => $examinfo['exam_desc'],
@@ -595,5 +596,461 @@ class busola {
     public static function resolve_exam_url(): string {
         $info = self::resolve_exam_info();
         return $info['examurl'];
+    }
+
+    /**
+     * Build the context for the Kokpit view (/my/).
+     *
+     * All courses, quiz attempts, results, calendar events, and exam links
+     * are dynamically fetched from Moodle database/APIs according to AGENTS.md.
+     *
+     * @return array|null
+     */
+    public static function get_kokpit_context(): ?array {
+        global $USER, $DB;
+
+        if (!isloggedin() || isguestuser()) {
+            return null;
+        }
+
+        $firstname = !empty($USER->firstname) ? $USER->firstname : 'Kursancie';
+
+        // 1. Enrolled courses and last accessed course.
+        $mycourses = enrol_get_my_courses('id, fullname, shortname, category, summary, summaryformat');
+        $enrolledids = [];
+        $lastaccessedcourse = null;
+        $latesttimeaccess = 0;
+
+        foreach ($mycourses as $course) {
+            if ($course->id == SITEID) {
+                continue;
+            }
+            $enrolledids[] = (int) $course->id;
+
+            $lastaccessrec = $DB->get_record('user_lastaccess', ['userid' => $USER->id, 'courseid' => $course->id], 'timeaccess');
+            $timeaccess = $lastaccessrec ? (int) $lastaccessrec->timeaccess : 0;
+            if ($timeaccess > $latesttimeaccess) {
+                $latesttimeaccess = $timeaccess;
+                $lastaccessedcourse = $course;
+            }
+        }
+
+        if (!$lastaccessedcourse && !empty($mycourses)) {
+            foreach ($mycourses as $course) {
+                if ($course->id != SITEID) {
+                    $lastaccessedcourse = $course;
+                    break;
+                }
+            }
+        }
+
+        // 2. Continue card data.
+        $continuecard = null;
+        if ($lastaccessedcourse) {
+            $imageinfo = self::resolve_course_image_and_badge($lastaccessedcourse);
+            $categoryname = $imageinfo['categoryname'];
+            $bgcolor = $imageinfo['bgcolor'];
+            $iconurl = $imageinfo['iconurl'];
+            $shortname = strtoupper(trim($lastaccessedcourse->shortname ?? ''));
+            $fullname = mb_strtolower($lastaccessedcourse->fullname ?? '');
+            $catnamelower = mb_strtolower($categoryname);
+
+            if (str_contains($catnamelower, 'motor') || (!str_contains($catnamelower, 'żegl') && !str_contains($catnamelower, 'zegl') && ($shortname === 'SM' || $shortname === 'MSM' || str_contains($fullname, 'motorowod')))) {
+                $illustration = 'motor';
+            } else if (str_contains($catnamelower, 'dodatk') || str_contains($catnamelower, 'radio') || str_contains($shortname, 'SRC') || str_contains($fullname, 'radio')) {
+                $illustration = 'extra';
+            } else {
+                $illustration = 'sail';
+            }
+
+            // Look for recent quiz attempt in this course or overall.
+            $lastattempt = null;
+            try {
+                $sql = "
+                    SELECT qa.id, qa.quiz, qa.attempt, qa.sumgrades, qa.timefinish,
+                           q.name AS quizname, q.sumgrades AS quizsumgrades,
+                           cm.id AS cmid
+                    FROM {quiz_attempts} qa
+                    JOIN {quiz} q ON q.id = qa.quiz
+                    JOIN {modules} m ON m.name = 'quiz'
+                    LEFT JOIN {course_modules} cm ON cm.module = m.id AND cm.instance = q.id AND cm.course = q.course
+                    WHERE qa.userid = :userid AND q.course = :courseid AND qa.state = 'finished'
+                    ORDER BY qa.timefinish DESC
+                ";
+                $attempts = $DB->get_records_sql($sql, ['userid' => $USER->id, 'courseid' => $lastaccessedcourse->id], 0, 1);
+                if (!empty($attempts)) {
+                    $lastattempt = reset($attempts);
+                }
+            } catch (\Exception $e) {
+                // Silently fall back.
+            }
+
+            if (!$lastattempt && !empty($enrolledids)) {
+                try {
+                    list($insql, $inparams) = $DB->get_in_or_equal($enrolledids, SQL_PARAMS_NAMED, 'attc');
+                    $sql = "
+                        SELECT qa.id, qa.quiz, qa.attempt, qa.sumgrades, qa.timefinish,
+                               q.name AS quizname, q.sumgrades AS quizsumgrades,
+                               cm.id AS cmid
+                        FROM {quiz_attempts} qa
+                        JOIN {quiz} q ON q.id = qa.quiz
+                        JOIN {modules} m ON m.name = 'quiz'
+                        LEFT JOIN {course_modules} cm ON cm.module = m.id AND cm.instance = q.id AND cm.course = q.course
+                        WHERE qa.userid = :userid AND q.course $insql AND qa.state = 'finished'
+                        ORDER BY qa.timefinish DESC
+                    ";
+                    $params = array_merge(['userid' => $USER->id], $inparams);
+                    $attempts = $DB->get_records_sql($sql, $params, 0, 1);
+                    if (!empty($attempts)) {
+                        $lastattempt = reset($attempts);
+                    }
+                } catch (\Exception $e) {
+                    // Silently fall back.
+                }
+            }
+
+            if ($lastattempt) {
+                $quizname = format_string($lastattempt->quizname);
+                $quizsum = (float) ($lastattempt->quizsumgrades ?? 0);
+                $usersum = (float) ($lastattempt->sumgrades ?? 0);
+                if ($quizsum > 0) {
+                    $scoredisplay = round($usersum) . '/' . round($quizsum);
+                    $subtitle = 'Ostatnio: ' . $quizname . ' · wynik ' . $scoredisplay;
+                } else {
+                    $subtitle = 'Ostatnio: ' . $quizname;
+                }
+                $btntext = get_string('kokpit_btn_retry', 'theme_ebusola');
+                if (empty($btntext) || $btntext === '[[kokpit_btn_retry]]') {
+                    $btntext = 'Rozwiąż ponownie';
+                }
+                $btnurl = $lastattempt->cmid
+                    ? (new moodle_url('/mod/quiz/view.php', ['id' => $lastattempt->cmid]))->out(false)
+                    : (new moodle_url('/course/view.php', ['id' => $lastaccessedcourse->id]))->out(false);
+            } else {
+                $progress = null;
+                if (class_exists('\core_completion\progress')) {
+                    $progress = \core_completion\progress::get_course_progress_percentage($lastaccessedcourse, $USER->id);
+                }
+                $progressval = !is_null($progress) ? (int) floor($progress) : 0;
+                $subtitle = ($progressval > 0) ? 'Postęp kursu: ' . $progressval . '%' : 'Rozpocznij naukę w tym kursie';
+                $btntext = get_string('kokpit_btn_continue', 'theme_ebusola');
+                if (empty($btntext) || $btntext === '[[kokpit_btn_continue]]') {
+                    $btntext = 'Kontynuuj naukę';
+                }
+                $btnurl = (new moodle_url('/course/view.php', ['id' => $lastaccessedcourse->id]))->out(false);
+            }
+
+            $continuecard = [
+                'has_course' => true,
+                'course_id' => $lastaccessedcourse->id,
+                'course_name' => format_string($lastaccessedcourse->fullname),
+                'course_url' => (new moodle_url('/course/view.php', ['id' => $lastaccessedcourse->id]))->out(false),
+                'btn_url' => $btnurl,
+                'btn_text' => $btntext,
+                'subtitle' => $subtitle,
+                'bgcolor' => $bgcolor,
+                'iconurl' => $iconurl,
+                'hascustomicon' => !empty($iconurl),
+                'illustration' => $illustration,
+                'is_sail' => ($illustration === 'sail'),
+                'is_motor' => ($illustration === 'motor'),
+                'is_extra' => ($illustration === 'extra'),
+            ];
+        } else {
+            $continuecard = [
+                'has_course' => false,
+            ];
+        }
+
+        // 3. Recent Quiz Results (last 6 finished attempts).
+        $results = [];
+        try {
+            $sql = "
+                SELECT qa.id, qa.quiz, qa.attempt, qa.sumgrades, qa.timefinish,
+                       q.name AS quizname, q.course AS courseid, q.sumgrades AS quizsumgrades,
+                       c.fullname AS coursename, c.shortname AS courseshortname,
+                       cm.id AS cmid
+                FROM {quiz_attempts} qa
+                JOIN {quiz} q ON q.id = qa.quiz
+                JOIN {course} c ON c.id = q.course
+                JOIN {modules} m ON m.name = 'quiz'
+                LEFT JOIN {course_modules} cm ON cm.module = m.id AND cm.instance = q.id AND cm.course = q.course
+                WHERE qa.userid = :userid AND qa.state = 'finished'
+                ORDER BY qa.timefinish DESC
+            ";
+            $attemptrecs = $DB->get_records_sql($sql, ['userid' => $USER->id], 0, 6);
+            foreach ($attemptrecs as $ar) {
+                $quizsum = (float) ($ar->quizsumgrades ?? 0);
+                $usersum = (float) ($ar->sumgrades ?? 0);
+                if ($quizsum > 0) {
+                    $percent = (int) round(($usersum / $quizsum) * 100);
+                    $scoretext = round($usersum) . '/' . round($quizsum);
+                } else {
+                    $percent = 0;
+                    $scoretext = (string) round($usersum);
+                }
+                $passed = ($percent >= 75);
+
+                $dateformatted = self::format_polish_relative_date((int) $ar->timefinish);
+                $subtext = format_string($ar->coursename) . ' · ' . $dateformatted;
+
+                $url = $ar->cmid
+                    ? (new moodle_url('/mod/quiz/review.php', ['attempt' => $ar->id]))->out(false)
+                    : (new moodle_url('/course/view.php', ['id' => $ar->courseid]))->out(false);
+
+                $passedstr = get_string('kokpit_results_passed', 'theme_ebusola');
+                if (empty($passedstr) || $passedstr === '[[kokpit_results_passed]]') {
+                    $passedstr = 'Zaliczony';
+                }
+                $failedstr = get_string('kokpit_results_failed', 'theme_ebusola');
+                if (empty($failedstr) || $failedstr === '[[kokpit_results_failed]]') {
+                    $failedstr = 'Poniżej progu';
+                }
+
+                $results[] = [
+                    'id' => $ar->id,
+                    'quiz_name' => format_string($ar->quizname),
+                    'course_name' => format_string($ar->coursename),
+                    'score_text' => $scoretext,
+                    'percent' => $percent,
+                    'is_passed' => $passed,
+                    'is_failed' => !$passed,
+                    'status_label' => $passed ? $passedstr : $failedstr,
+                    'subtext' => $subtext,
+                    'url' => $url,
+                ];
+            }
+        } catch (\Exception $e) {
+            // Silently fall back.
+        }
+
+        // 4. Calendar computation.
+        $calm = optional_param('cal_m', (int) date('n'), PARAM_INT);
+        $caly = optional_param('cal_y', (int) date('Y'), PARAM_INT);
+        if ($calm < 1 || $calm > 12) {
+            $calm = (int) date('n');
+        }
+        if ($caly < 2000 || $caly > 2100) {
+            $caly = (int) date('Y');
+        }
+
+        $polishmonths = [
+            1 => 'Styczeń', 2 => 'Luty', 3 => 'Marzec', 4 => 'Kwiecień',
+            5 => 'Maj', 6 => 'Czerwiec', 7 => 'Lipiec', 8 => 'Sierpień',
+            9 => 'Wrzesień', 10 => 'Październik', 11 => 'Listopad', 12 => 'Grudzień',
+        ];
+        $monthname = $polishmonths[$calm] ?? date('F', mktime(0, 0, 0, $calm, 1, $caly));
+        $calendartitle = $monthname . ' ' . $caly;
+
+        $prevm = ($calm === 1) ? 12 : $calm - 1;
+        $prevy = ($calm === 1) ? $caly - 1 : $caly;
+        $nextm = ($calm === 12) ? 1 : $calm + 1;
+        $nexty = ($calm === 12) ? $caly + 1 : $caly;
+        $prevurl = (new moodle_url('/my/', ['cal_m' => $prevm, 'cal_y' => $prevy]))->out(false);
+        $nexturl = (new moodle_url('/my/', ['cal_m' => $nextm, 'cal_y' => $nexty]))->out(false);
+
+        $numdays = (int) date('t', mktime(0, 0, 0, $calm, 1, $caly));
+        $firstdayofweek = (int) date('N', mktime(0, 0, 0, $calm, 1, $caly)); // 1 (Pn) - 7 (Nd)
+        $leadingemptycount = $firstdayofweek - 1;
+        $leadingempties = [];
+        for ($i = 0; $i < $leadingemptycount; $i++) {
+            $leadingempties[] = ['empty' => true];
+        }
+
+        $todayd = (int) date('j');
+        $todaym = (int) date('n');
+        $todayy = (int) date('Y');
+        $istodaymonth = ($calm === $todaym && $caly === $todayy);
+
+        // Fetch events for current month from {event}.
+        $mstart = mktime(0, 0, 0, $calm, 1, $caly);
+        $mend = mktime(23, 59, 59, $calm, $numdays, $caly);
+        $eventdays = [];
+        try {
+            $params = [
+                'userid' => $USER->id,
+                'siteid' => SITEID,
+                'mstart' => $mstart,
+                'mend' => $mend,
+            ];
+            $coursewhere = "e.courseid = :siteid";
+            if (!empty($enrolledids)) {
+                list($einsql, $einparams) = $DB->get_in_or_equal($enrolledids, SQL_PARAMS_NAMED, 'ec');
+                $coursewhere .= " OR e.courseid $einsql";
+                $params = array_merge($params, $einparams);
+            }
+            $eventsql = "
+                SELECT e.id, e.name, e.timestart, e.courseid
+                FROM {event} e
+                WHERE (e.userid = :userid OR $coursewhere)
+                  AND e.timestart >= :mstart AND e.timestart <= :mend
+                  AND e.visible = 1
+                ORDER BY e.timestart ASC
+            ";
+            $monthrecs = $DB->get_records_sql($eventsql, $params);
+            foreach ($monthrecs as $me) {
+                $eday = (int) date('j', (int) $me->timestart);
+                $eventdays[$eday] = format_string($me->name);
+            }
+        } catch (\Exception $e) {
+            // Silently fall back.
+        }
+
+        $days = [];
+        for ($d = 1; $d <= $numdays; $d++) {
+            $istoday = ($istodaymonth && $d === $todayd);
+            $hasevent = isset($eventdays[$d]);
+            $eventtitle = $eventdays[$d] ?? '';
+            $days[] = [
+                'day' => $d,
+                'is_today' => $istoday,
+                'has_event' => $hasevent,
+                'event_title' => $eventtitle,
+                'is_normal' => (!$istoday && !$hasevent),
+            ];
+        }
+
+        $calendarurl = (new moodle_url('/calendar/view.php', ['view' => 'month']))->out(false);
+
+        // 5. Upcoming event.
+        $upcomingevent = null;
+        try {
+            $now = time();
+            $params = [
+                'userid' => $USER->id,
+                'siteid' => SITEID,
+                'now' => $now,
+            ];
+            $coursewhere = "e.courseid = :siteid";
+            if (!empty($enrolledids)) {
+                list($ueinsql, $ueinparams) = $DB->get_in_or_equal($enrolledids, SQL_PARAMS_NAMED, 'uec');
+                $coursewhere .= " OR e.courseid $ueinsql";
+                $params = array_merge($params, $ueinparams);
+            }
+            $upsql = "
+                SELECT e.id, e.name, e.timestart, e.courseid
+                FROM {event} e
+                WHERE (e.userid = :userid OR $coursewhere)
+                  AND e.timestart >= :now
+                  AND e.visible = 1
+                ORDER BY e.timestart ASC
+            ";
+            $uprecs = $DB->get_records_sql($upsql, $params, 0, 1);
+            if (!empty($uprecs)) {
+                $ue = reset($uprecs);
+                $tstart = (int) $ue->timestart;
+                $diffdays = (int) floor(($tstart - $now) / 86400);
+                if ($diffdays <= 0) {
+                    $reltext = 'Dziś, ' . date('H:i', $tstart);
+                } else if ($diffdays === 1) {
+                    $reltext = 'Jutro, ' . date('H:i', $tstart);
+                } else {
+                    $reltext = 'Za ' . $diffdays . ' ' . self::pluralize_days($diffdays);
+                }
+                $shortmonths = [
+                    1 => 'STY', 2 => 'LUT', 3 => 'MAR', 4 => 'KWI',
+                    5 => 'MAJ', 6 => 'CZE', 7 => 'LIP', 8 => 'SIE',
+                    9 => 'WRZ', 10 => 'PAŹ', 11 => 'LIS', 12 => 'GRU',
+                ];
+                $monthshort = $shortmonths[(int) date('n', $tstart)] ?? strtoupper(date('M', $tstart));
+                $daynum = date('j', $tstart);
+                $eventurl = (new moodle_url('/calendar/view.php', ['view' => 'day', 'time' => $tstart]))->out(false);
+
+                $upcomingevent = [
+                    'has_event' => true,
+                    'title' => format_string($ue->name),
+                    'month_short' => $monthshort,
+                    'day_num' => $daynum,
+                    'relative_text' => $reltext,
+                    'event_url' => $eventurl,
+                    'link_text' => 'Zobacz szczegóły',
+                ];
+            }
+        } catch (\Exception $e) {
+            // Silently fall back.
+        }
+
+        if (!$upcomingevent) {
+            $examinfo = self::resolve_exam_info();
+            $upcomingevent = [
+                'has_event' => false,
+                'is_exam_fallback' => true,
+                'title' => $examinfo['exam_title'],
+                'month_short' => 'EGZ',
+                'day_num' => '!',
+                'relative_text' => $examinfo['exam_desc'],
+                'event_url' => $examinfo['examurl'],
+                'link_text' => $examinfo['exam_btn_text'],
+            ];
+        }
+
+        return [
+            'firstname' => $firstname,
+            'continue_card' => $continuecard,
+            'results' => $results,
+            'has_results' => !empty($results),
+            'results_count' => count($results),
+            'calendar' => [
+                'title' => $calendartitle,
+                'prev_url' => $prevurl,
+                'next_url' => $nexturl,
+                'leading_empties' => $leadingempties,
+                'days' => $days,
+                'full_url' => $calendarurl,
+            ],
+            'upcoming_event' => $upcomingevent,
+            'homeurl' => (new moodle_url('/'))->out(false),
+            'dashboardurl' => (new moodle_url('/my/'))->out(false),
+            'allcoursesurl' => (new moodle_url('/my/courses.php'))->out(false),
+            'profileurl' => (new moodle_url('/user/profile.php', ['id' => $USER->id]))->out(false),
+            'messagesurl' => (new moodle_url('/message/index.php'))->out(false),
+            'is_kokpit_active' => true,
+        ];
+    }
+
+    /**
+     * Format a timestamp into a Polish relative/short date string.
+     *
+     * @param int $timestamp
+     * @return string
+     */
+    private static function format_polish_relative_date(int $timestamp): string {
+        $todaystart = strtotime('today midnight');
+        $yesterdaystart = strtotime('yesterday midnight');
+        $timehm = date('H:i', $timestamp);
+
+        if ($timestamp >= $todaystart) {
+            return 'dziś, ' . $timehm;
+        } else if ($timestamp >= $yesterdaystart && $timestamp < $todaystart) {
+            return 'wczoraj, ' . $timehm;
+        }
+
+        $shortmonths = [
+            1 => 'stycznia', 2 => 'lutego', 3 => 'marca', 4 => 'kwietnia',
+            5 => 'maja', 6 => 'czerwca', 7 => 'lipca', 8 => 'sierpnia',
+            9 => 'września', 10 => 'października', 11 => 'listopada', 12 => 'grudnia',
+        ];
+        $day = (int) date('j', $timestamp);
+        $mon = (int) date('n', $timestamp);
+        $year = (int) date('Y', $timestamp);
+        $currentyear = (int) date('Y');
+
+        if ($year === $currentyear) {
+            return $day . ' ' . ($shortmonths[$mon] ?? date('M', $timestamp));
+        }
+        return $day . ' ' . ($shortmonths[$mon] ?? date('M', $timestamp)) . ' ' . $year;
+    }
+
+    /**
+     * Polish plural form for days count.
+     *
+     * @param int $days
+     * @return string
+     */
+    private static function pluralize_days(int $days): string {
+        if ($days === 1) {
+            return 'dzień';
+        }
+        return 'dni';
     }
 }

@@ -1,0 +1,196 @@
+{{!
+    Szablon widoku Kokpit (/my/) motywu eBusola.
+    Wszystkie kursy, próby testów, kalendarz i wydarzenia pobierane dynamicznie z Moodle API/DB (AGENTS.md).
+}}
+<div class="busola-kokpit-wrapper">
+    {{#busola_kokpit}}
+    <main class="busola-kokpit-container">
+        <header class="busola-kokpit-header">
+            <h1 class="busola-kokpit-title">{{#str}}kokpit_title, theme_ebusola{{/str}}</h1>
+            <p class="busola-kokpit-subtitle">{{#str}}kokpit_subtitle, theme_ebusola{{/str}}</p>
+        </header>
+
+        <div class="busola-kokpit-grid">
+            <!-- KOLUMNA GŁÓWNA -->
+            <div class="busola-kokpit-main">
+                {{#continue_card}}
+                {{#has_course}}
+                <a href="{{btn_url}}" class="bcard busola-kokpit-continue-card">
+                    <div class="busola-kokpit-continue-thumb" style="background: {{bgcolor}};">
+                        {{#hascustomicon}}
+                            <img src="{{iconurl}}" alt="{{course_name}}" class="busola-kokpit-continue-img" loading="eager" width="180" height="180">
+                        {{/hascustomicon}}
+                        {{^hascustomicon}}
+                            {{#is_motor}}
+                                <svg viewBox="0 0 160 100" width="150" height="94" aria-hidden="true" class="busola-kokpit-thumb-svg"><rect x="24" y="48" width="12" height="22" rx="3" fill="#FF7A1A" stroke="#141B5E" stroke-width="2.5"></rect><path d="M32 62 H132 L120 80 H48 Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path><path d="M66 62 L80 42 H104 L112 62" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path><path d="M14 93 q8 -7 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path></svg>
+                            {{/is_motor}}
+                            {{#is_sail}}
+                                <svg viewBox="0 0 160 100" width="150" height="94" aria-hidden="true" class="busola-kokpit-thumb-svg"><path d="M78 14 V76" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path><path d="M78 20 L42 66 H78 Z" fill="#FF7A1A" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path><path d="M82 24 L118 66 H82 Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path><path d="M36 76 H124 L112 90 H48 Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path></svg>
+                            {{/is_sail}}
+                            {{#is_extra}}
+                                <svg viewBox="0 0 160 100" width="150" height="94" aria-hidden="true" class="busola-kokpit-thumb-svg"><circle cx="80" cy="50" r="32" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5"></circle><path d="M80 26 V34 M80 66 V74 M56 50 H64 M96 50 H104" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path><polygon points="80,36 86,48 80,64 74,48" fill="#FF7A1A" stroke="#141B5E" stroke-width="2" stroke-linejoin="round"></polygon></svg>
+                            {{/is_extra}}
+                        {{/hascustomicon}}
+                    </div>
+                    <div class="busola-kokpit-continue-body">
+                        <span class="busola-kokpit-continue-tag">{{#str}}kokpit_continue_tag, theme_ebusola{{/str}}</span>
+                        <span class="busola-kokpit-continue-title">{{course_name}}</span>
+                        <span class="busola-kokpit-continue-sub">{{subtitle}}</span>
+                        <span class="busola-kokpit-continue-btn">
+                            {{btn_text}}
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                        </span>
+                    </div>
+                </a>
+                {{/has_course}}
+                {{/continue_card}}
+
+                <section class="busola-kokpit-results-card" aria-labelledby="k-wyniki">
+                    <div class="busola-kokpit-results-head">
+                        <h2 id="k-wyniki" class="busola-kokpit-results-title">{{#str}}kokpit_results_title, theme_ebusola{{/str}}</h2>
+                        <span class="busola-kokpit-results-threshold">{{#str}}kokpit_results_threshold, theme_ebusola{{/str}}</span>
+                    </div>
+
+                    {{#has_results}}
+                    <ul class="busola-kokpit-results-list">
+                        {{#results}}
+                        <li class="busola-kokpit-result-item">
+                            {{#is_passed}}
+                            <span class="busola-kokpit-badge-passed" aria-label="Wynik {{score_text}}">{{score_text}}</span>
+                            {{/is_passed}}
+                            {{#is_failed}}
+                            <span class="busola-kokpit-badge-failed" aria-label="Wynik {{score_text}}">{{score_text}}</span>
+                            {{/is_failed}}
+
+                            <div class="busola-kokpit-result-info">
+                                <a href="{{url}}" class="busola-kokpit-result-name">{{quiz_name}}</a>
+                                <div class="busola-kokpit-result-meta">{{subtext}}</div>
+                            </div>
+
+                            {{#is_passed}}
+                            <span class="busola-kokpit-status-passed">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+                                {{status_label}}
+                            </span>
+                            {{/is_passed}}
+                            {{#is_failed}}
+                            <span class="busola-kokpit-status-failed">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+                                {{status_label}}
+                            </span>
+                            {{/is_failed}}
+                        </li>
+                        {{/results}}
+                    </ul>
+                    {{/has_results}}
+
+                    {{^has_results}}
+                    <div class="busola-kokpit-results-empty">
+                        <p>{{#str}}kokpit_results_empty, theme_ebusola{{/str}}</p>
+                        <a href="{{allcoursesurl}}" class="busola-kokpit-btn-empty">{{#str}}mycourses_browse, theme_ebusola{{/str}}</a>
+                    </div>
+                    {{/has_results}}
+                </section>
+            </div>
+
+            <!-- KOLUMNA BOCZNA -->
+            <aside class="busola-kokpit-sidebar" aria-label="Kalendarz i wydarzenia">
+                {{#calendar}}
+                <section class="busola-kokpit-calendar-card" aria-labelledby="k-kal">
+                    <div class="busola-kokpit-cal-header">
+                        <a href="{{prev_url}}" class="busola-kokpit-cal-nav" aria-label="{{#str}}kokpit_calendar_prev_month, theme_ebusola{{/str}}">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
+                        </a>
+                        <h2 id="k-kal" class="busola-kokpit-cal-title">{{title}}</h2>
+                        <a href="{{next_url}}" class="busola-kokpit-cal-nav" aria-label="{{#str}}kokpit_calendar_next_month, theme_ebusola{{/str}}">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
+                        </a>
+                    </div>
+
+                    <div class="busola-kokpit-cal-grid">
+                        <span class="busola-kokpit-cal-dow">Pn</span>
+                        <span class="busola-kokpit-cal-dow">Wt</span>
+                        <span class="busola-kokpit-cal-dow">Śr</span>
+                        <span class="busola-kokpit-cal-dow">Cz</span>
+                        <span class="busola-kokpit-cal-dow">Pt</span>
+                        <span class="busola-kokpit-cal-dow">So</span>
+                        <span class="busola-kokpit-cal-dow">Nd</span>
+
+                        {{#leading_empties}}
+                        <span class="busola-kokpit-cal-cell is-empty"></span>
+                        {{/leading_empties}}
+
+                        {{#days}}
+                        <span class="busola-kokpit-cal-cell">
+                            {{#is_today}}
+                            <span class="busola-kokpit-day-today" aria-label="Dzisiaj, {{day}}">{{day}}</span>
+                            {{/is_today}}
+                            {{#has_event}}
+                            <span class="busola-kokpit-day-event" aria-label="{{day}}, {{event_title}}">{{day}}</span>
+                            {{/has_event}}
+                            {{#is_normal}}
+                            <span class="busola-kokpit-day-normal">{{day}}</span>
+                            {{/is_normal}}
+                        </span>
+                        {{/days}}
+                    </div>
+
+                    <a href="{{full_url}}" class="busola-kokpit-cal-link">
+                        {{#str}}kokpit_calendar_full, theme_ebusola{{/str}}
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                    </a>
+                </section>
+                {{/calendar}}
+
+                {{#upcoming_event}}
+                <section class="busola-kokpit-event-card" aria-labelledby="k-wyd">
+                    <h2 id="k-wyd" class="busola-kokpit-event-tag">{{#str}}kokpit_event_title, theme_ebusola{{/str}}</h2>
+                    <div class="busola-kokpit-event-row">
+                        <div class="busola-kokpit-event-datebox">
+                            <span class="busola-kokpit-event-mon">{{month_short}}</span>
+                            <span class="busola-kokpit-event-day">{{day_num}}</span>
+                        </div>
+                        <div class="busola-kokpit-event-details">
+                            <div class="busola-kokpit-event-name">{{title}}</div>
+                            <div class="busola-kokpit-event-rel">{{relative_text}}</div>
+                        </div>
+                    </div>
+                    <a href="{{event_url}}" class="busola-kokpit-event-link">
+                        {{#is_exam_fallback}}
+                            {{#str}}kokpit_event_info_link, theme_ebusola{{/str}}
+                        {{/is_exam_fallback}}
+                        {{^is_exam_fallback}}
+                            {{link_text}}
+                        {{/is_exam_fallback}}
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                    </a>
+                </section>
+                {{/upcoming_event}}
+            </aside>
+        </div>
+
+        {{#user_is_editing}}
+        <section class="busola-editing-zone p-4 mt-4 w-100">
+            <div class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom busola-editing-header">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="busola-editing-icon">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </span>
+                    <div>
+                        <h3 class="busola-editing-title">{{#str}}kokpit_edit_zone_title, theme_ebusola{{/str}}</h3>
+                        <p class="busola-editing-desc">{{#str}}kokpit_edit_zone_desc, theme_ebusola{{/str}}</p>
+                    </div>
+                </div>
+                <span class="badge bg-primary text-white px-3 py-2 busola-editing-badge">{{#str}}edit_zone_badge, theme_ebusola{{/str}}</span>
+            </div>
+
+            <div class="busola-editing-content">
+                {{{ output.main_content }}}
+            </div>
+        </section>
+        {{/user_is_editing}}
+    </main>
+
+    {{> theme_ebusola/ebusola/busola_bottom_nav }}
+    {{/busola_kokpit}}
+</div>

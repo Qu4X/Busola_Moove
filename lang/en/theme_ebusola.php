@@ -131,6 +131,26 @@ $string['guest_nav_home'] = 'Home';
 $string['guest_nav_courses'] = 'Courses';
 $string['guest_nav_exams'] = 'Exams';
 $string['guest_nav_login'] = 'Log in';
+
+// Kokpit (/my/) view strings.
+$string['kokpit_title'] = 'Kokpit';
+$string['kokpit_subtitle'] = 'Your test scores and upcoming events.';
+$string['kokpit_continue_tag'] = 'CONTINUE';
+$string['kokpit_btn_retry'] = 'Retake test';
+$string['kokpit_btn_continue'] = 'Continue learning';
+$string['kokpit_results_title'] = 'Recent results';
+$string['kokpit_results_threshold'] = 'Passing threshold: 75%';
+$string['kokpit_results_passed'] = 'Passed';
+$string['kokpit_results_failed'] = 'Below threshold';
+$string['kokpit_results_empty'] = 'No completed quizzes yet. Start learning in a chosen course!';
+$string['kokpit_calendar_title'] = 'Calendar';
+$string['kokpit_calendar_full'] = 'Full calendar';
+$string['kokpit_calendar_prev_month'] = 'Previous month';
+$string['kokpit_calendar_next_month'] = 'Next month';
+$string['kokpit_event_title'] = 'UPCOMING EVENT';
+$string['kokpit_event_info_link'] = 'Exam information';
+$string['kokpit_edit_zone_title'] = 'Kokpit management';
+$string['kokpit_edit_zone_desc'] = 'Section visible to administrators in edit mode (add and configure kokpit blocks).';
 $string['enablewhatsappbutton'] = 'Enable WhatsApp floating button';
 $string['enablewhatsappbutton_desc'] = 'Show a floating WhatsApp contact button on every page, using the WhatsApp number configured above.';
 $string['facebook'] = 'Facebook URL';

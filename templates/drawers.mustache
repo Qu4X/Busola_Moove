@@ -102,7 +102,7 @@
             {{/closebuttonicon}}
         {{/ theme_boost/drawer}}
     {{/hasblocks}}
-    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#is_busola_dashboard}}has-busola-dashboard p-0{{/is_busola_dashboard}} {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container" {{#is_busola_dashboard}}style="padding-left:0 !important; padding-right:0 !important; max-width:100% !important;"{{/is_busola_dashboard}}>
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#is_busola_dashboard}}has-busola-dashboard p-0{{/is_busola_dashboard}} {{#is_busola_kokpit}}has-busola-dashboard has-busola-kokpit p-0{{/is_busola_kokpit}} {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container" {{#is_busola_dashboard}}style="padding-left:0 !important; padding-right:0 !important; max-width:100% !important;"{{/is_busola_dashboard}} {{#is_busola_kokpit}}style="padding-left:0 !important; padding-right:0 !important; max-width:100% !important;"{{/is_busola_kokpit}}>
 
         {{#is_busola_dashboard}}
             {{> theme_ebusola/ebusola/busola_dashboard }}
@@ -113,7 +113,17 @@
             {{/user_is_editing}}
         {{/is_busola_dashboard}}
 
+        {{#is_busola_kokpit}}
+            {{> theme_ebusola/ebusola/busola_kokpit }}
+            {{^user_is_editing}}
+                <div class="d-none">
+                    {{{ output.main_content }}}
+                </div>
+            {{/user_is_editing}}
+        {{/is_busola_kokpit}}
+
         {{^is_busola_dashboard}}
+        {{^is_busola_kokpit}}
         {{{ output.full_header }}}
 
         <div id="topofscroll" class="main-inner">
@@ -185,6 +195,7 @@
                 </div>
             </div>
         </div>
+        {{/is_busola_kokpit}}
         {{/is_busola_dashboard}}
         {{{ output.standard_after_main_region_html }}}
     </div>

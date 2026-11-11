@@ -106,3 +106,23 @@ $string['guest_nav_home'] = 'Start';
 $string['guest_nav_courses'] = 'Kursy';
 $string['guest_nav_exams'] = 'Egzaminy';
 $string['guest_nav_login'] = 'Logowanie';
+
+// Napisy widoku Kokpit (/my/).
+$string['kokpit_title'] = 'Kokpit';
+$string['kokpit_subtitle'] = 'Twoje wyniki i najbliższe wydarzenia.';
+$string['kokpit_continue_tag'] = 'KONTYNUUJ';
+$string['kokpit_btn_retry'] = 'Rozwiąż ponownie';
+$string['kokpit_btn_continue'] = 'Kontynuuj naukę';
+$string['kokpit_results_title'] = 'Ostatnie wyniki';
+$string['kokpit_results_threshold'] = 'Próg zaliczenia: 75%';
+$string['kokpit_results_passed'] = 'Zaliczony';
+$string['kokpit_results_failed'] = 'Poniżej progu';
+$string['kokpit_results_empty'] = 'Brak rozwiązanych testów. Rozpocznij naukę w wybranym kursie!';
+$string['kokpit_calendar_title'] = 'Kalendarz';
+$string['kokpit_calendar_full'] = 'Pełny kalendarz';
+$string['kokpit_calendar_prev_month'] = 'Poprzedni miesiąc';
+$string['kokpit_calendar_next_month'] = 'Następny miesiąc';
+$string['kokpit_event_title'] = 'NAJBLIŻSZE WYDARZENIE';
+$string['kokpit_event_info_link'] = 'Informacje o egzaminach';
+$string['kokpit_edit_zone_title'] = 'Zarządzanie kokpitem';
+$string['kokpit_edit_zone_desc'] = 'Sekcja widoczna dla administratorów w trybie edycji (dodawanie i konfiguracja bloków kokpitu).';

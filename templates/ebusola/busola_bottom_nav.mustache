@@ -2,7 +2,7 @@
     Dolna belka nawigacyjna na urządzeniach mobilnych (< 768px).
 }}
 <nav class="busola-bottom-nav d-flex d-md-none" aria-label="Nawigacja mobilna">
-    <a href="{{homeurl}}" class="busola-bottom-nav-item active">
+    <a href="{{homeurl}}" class="busola-bottom-nav-item {{#is_home_active}}active{{/is_home_active}}">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
             <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -16,7 +16,7 @@
         </svg>
         <span>Kursy</span>
     </a>
-    <a href="{{dashboardurl}}" class="busola-bottom-nav-item">
+    <a href="{{dashboardurl}}" class="busola-bottom-nav-item {{#is_kokpit_active}}active{{/is_kokpit_active}}">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="3" y="3" width="7" height="9" rx="1.5"></rect>
             <rect x="14" y="3" width="7" height="5" rx="1.5"></rect>
