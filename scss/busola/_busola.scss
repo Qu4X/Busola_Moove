@@ -6577,3 +6577,9 @@ body#page-mod-h5pactivity-view {
         }
     }
 }
+
+// H5P embed (iframe z mod_h5pactivity): przezroczyste tło, żeby nie było jaśniejszego prostokąta w trybie jasnym
+body.pagelayout-embedded.path-h5p,
+body.path-h5p.h5p-embed {
+    background-color: transparent !important;
+}
