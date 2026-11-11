@@ -160,6 +160,7 @@ $string['mycourses_search_placeholder'] = 'Search courses';
 $string['mycourses_search_aria'] = 'Search courses';
 $string['mycourses_filter_aria'] = 'Filter courses';
 $string['mycourses_filter_all'] = 'All courses';
+$string['mycourses_filter_all_short'] = 'All';
 $string['mycourses_filter_inprogress'] = 'In progress';
 $string['mycourses_filter_notstarted'] = 'Not started';
 $string['mycourses_filter_completed'] = 'Completed';

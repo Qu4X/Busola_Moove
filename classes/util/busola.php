@@ -1090,10 +1090,15 @@ class busola {
         }
 
         if (empty($validcourses)) {
+            $filterallshort = get_string('mycourses_filter_all_short', 'theme_ebusola');
+            if (empty($filterallshort) || $filterallshort === '[[mycourses_filter_all_short]]') {
+                $filterallshort = 'Wszystkie';
+            }
             return [
                 'has_courses' => false,
                 'total_courses' => 0,
                 'summary_text' => '0 kursów',
+                'filter_all_short' => $filterallshort,
                 'categories' => [],
                 'homeurl' => (new moodle_url('/'))->out(false),
                 'dashboardurl' => (new moodle_url('/my/'))->out(false),
@@ -1346,11 +1351,17 @@ class busola {
         $categoriestext = ($totalcategories === 1) ? '1 kategorii' : ($totalcategories . ' kategoriach');
         $summarytext = $coursestext . ' w ' . $categoriestext;
 
+        $filterallshort = get_string('mycourses_filter_all_short', 'theme_ebusola');
+        if (empty($filterallshort) || $filterallshort === '[[mycourses_filter_all_short]]') {
+            $filterallshort = 'Wszystkie';
+        }
+
         return [
             'has_courses' => true,
             'total_courses' => $totalcourses,
             'total_categories' => $totalcategories,
             'summary_text' => $summarytext,
+            'filter_all_short' => $filterallshort,
             'categories' => $categories,
             'homeurl' => (new moodle_url('/'))->out(false),
             'dashboardurl' => (new moodle_url('/my/'))->out(false),
