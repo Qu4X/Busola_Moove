@@ -105,13 +105,27 @@ $courseurl = $PAGE->course ? new \core\url('/course/view.php', ['id' => $PAGE->c
 $ismycoursespage = (strpos($PAGE->url->get_path(), '/my/courses.php') !== false || $PAGE->pagelayout === 'mycourses');
 $issiteindex = ($PAGE->pagetype === 'site-index');
 $ismyindex = ($PAGE->pagetype === 'my-index' && !$ismycoursespage);
+$isuserprofile = ($PAGE->pagetype === 'user-profile' || strpos($PAGE->url->get_path(), '/user/profile.php') !== false);
+$isuseredit = ($PAGE->pagetype === 'user-edit' || $PAGE->pagetype === 'user-editadvanced' || strpos($PAGE->url->get_path(), '/user/edit.php') !== false || strpos($PAGE->url->get_path(), '/user/editadvanced.php') !== false);
+$isuserchangepassword = ($PAGE->pagetype === 'login-change_password' || strpos($PAGE->url->get_path(), '/login/change_password.php') !== false);
 
 $isbusoladashboard = false;
 $isbusolakokpit = false;
 $isbusolamycourses = false;
+$isbusolaprofile = false;
 $busolahub = null;
 $busolakokpit = null;
 $busolamycourses = null;
+$busolaprofile = null;
+
+if ($isuseredit) {
+    $extraclasses[] = 'has-busola-form';
+    $extraclasses[] = 'has-busola-user-edit';
+}
+if ($isuserchangepassword) {
+    $extraclasses[] = 'has-busola-form';
+    $extraclasses[] = 'has-busola-change-password';
+}
 
 if (isloggedin() && !isguestuser()) {
     if ($issiteindex) {
@@ -133,6 +147,23 @@ if (isloggedin() && !isguestuser()) {
             $isbusolamycourses = true;
             $extraclasses[] = 'has-busola-dashboard';
             $extraclasses[] = 'has-busola-mycourses';
+        }
+    } else if ($isuserprofile) {
+        $targetuserid = optional_param('id', 0, PARAM_INT);
+        if (!$targetuserid && $PAGE->context && $PAGE->context->contextlevel == CONTEXT_USER) {
+            $targetuserid = (int) $PAGE->context->instanceid;
+        }
+        if (!$targetuserid) {
+            $targetuserid = (int) $USER->id;
+        }
+        $targetuser = ($targetuserid == (int) $USER->id) ? $USER : $DB->get_record('user', ['id' => $targetuserid]);
+        if ($targetuser) {
+            $busolaprofile = \theme_ebusola\util\busola::get_profile_context($targetuser);
+            if ($busolaprofile) {
+                $isbusolaprofile = true;
+                $extraclasses[] = 'has-busola-dashboard';
+                $extraclasses[] = 'has-busola-profile';
+            }
         }
     }
 }
@@ -180,6 +211,11 @@ if ($isbusolakokpit) {
 if ($isbusolamycourses) {
     $templatecontext['is_busola_mycourses'] = true;
     $templatecontext['busola_mycourses'] = $busolamycourses;
+}
+
+if ($isbusolaprofile) {
+    $templatecontext['is_busola_profile'] = true;
+    $templatecontext['busola_profile'] = $busolaprofile;
 }
 
 echo $OUTPUT->render_from_template('theme_ebusola/drawers', $templatecontext);

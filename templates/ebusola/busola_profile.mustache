@@ -1,0 +1,537 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_ebusola/ebusola/busola_profile
+
+    Busola user profile view matching Profile.dc.html mockup.
+}}
+<style id="busola-profile-style">
+.has-busola-profile {
+    background-color: #F5F6FB !important;
+}
+.busola-profile-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 32px 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    color: #3A4163;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.busola-profile-hero {
+    background: #141B5E;
+    border-radius: 24px;
+    padding: 28px 32px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px 28px;
+    position: relative;
+    overflow: hidden;
+}
+.busola-profile-radar-bg {
+    position: absolute;
+    right: -80px;
+    top: -120px;
+    opacity: 0.1;
+    pointer-events: none;
+}
+.busola-profile-avatar-wrap {
+    position: relative;
+    display: flex;
+    flex: 0 0 96px;
+    width: 96px;
+    height: 96px;
+}
+.busola-profile-avatar-img {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #FFFFFF;
+    box-shadow: 0 4px 12px rgba(20, 27, 94, 0.15);
+}
+.busola-profile-avatar-svg {
+    display: block;
+    flex: 0 0 96px;
+    width: 96px;
+    height: 96px;
+}
+.busola-profile-hero-meta {
+    position: relative;
+    flex: 1 1 280px;
+    min-width: 0;
+}
+.busola-profile-name {
+    margin: 0;
+    font-size: 40px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #FFFFFF;
+}
+.busola-profile-summary {
+    margin: 6px 0 0;
+    font-size: 16px;
+    color: #CBD1F3;
+}
+.busola-profile-edit-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 0 24px;
+    box-sizing: border-box;
+    border-radius: 14px;
+    background: #FF7A1A;
+    color: #141B5E;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    transition: transform 0.18s ease, background-color 0.18s ease;
+}
+.busola-profile-edit-btn:hover {
+    background: #e56a12;
+    color: #141B5E;
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+.busola-profile-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: flex-start;
+}
+.busola-profile-col {
+    flex: 1 1 440px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.busola-profile-card {
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 24px 26px;
+    box-shadow: 0 1px 2px rgba(20, 27, 94, 0.06), 0 8px 24px rgba(20, 27, 94, 0.06);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.busola-profile-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(20, 27, 94, 0.08), 0 16px 36px rgba(20, 27, 94, 0.12);
+}
+.busola-profile-card-title {
+    margin: 0 0 16px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #141B5E;
+    letter-spacing: -0.01em;
+}
+.busola-profile-fields-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px 24px;
+}
+.busola-profile-field-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #5B6280;
+    margin-bottom: 2px;
+}
+.busola-profile-field-val {
+    font-size: 16px;
+    color: #141B5E;
+    font-weight: 600;
+    word-break: break-word;
+}
+.busola-profile-links-list {
+    margin-top: -4px;
+}
+.busola-profile-link-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 48px;
+    padding: 6px 0;
+    border-top: 1px solid #E8EBF6;
+    text-decoration: none;
+    color: #141B5E;
+    font-weight: 600;
+    font-size: 15px;
+    transition: color 0.15s ease, padding-left 0.15s ease;
+}
+.busola-profile-link-row:hover {
+    color: #FF7A1A;
+    padding-left: 4px;
+    text-decoration: none;
+}
+.busola-profile-courses-list {
+    margin-top: -12px;
+}
+.busola-profile-course-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-top: 1px solid #E8EBF6;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.15s ease;
+}
+.busola-profile-course-item:hover {
+    text-decoration: none;
+}
+.busola-profile-course-item:hover .busola-profile-course-title {
+    color: #B93C00;
+}
+.busola-profile-course-thumb {
+    flex: 0 0 72px;
+    width: 72px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.busola-profile-course-info {
+    flex: 1;
+    min-width: 0;
+}
+.busola-profile-course-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #141B5E;
+    line-height: 1.2;
+    transition: color 0.15s ease;
+}
+.busola-profile-course-meta {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.busola-profile-mini-bar {
+    flex: 1;
+    display: flex;
+    gap: 4px;
+    max-width: 140px;
+}
+.busola-profile-mini-segment {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+    background: #E3E7F4;
+}
+.busola-profile-mini-segment.is-done {
+    background: #FF7A1A;
+}
+.busola-profile-mini-segment.is-done.is-completed {
+    background: #141B5E;
+}
+.busola-profile-progress-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #141B5E;
+    white-space: nowrap;
+}
+.busola-profile-completed-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #141B5E;
+}
+.busola-profile-notstarted-label {
+    font-size: 14px;
+    color: #5B6280;
+}
+.busola-profile-empty-text {
+    margin: 16px 0 0;
+    font-size: 15px;
+    color: #5B6280;
+}
+.busola-profile-test-last {
+    margin: 0 0 12px;
+    color: #3A4163;
+    font-size: 15px;
+}
+.busola-profile-test-highlight {
+    color: #141B5E;
+    font-weight: 700;
+}
+.busola-profile-all-grades-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: #141B5E;
+    text-decoration: none;
+    border-bottom: 2px solid #FF7A1A;
+    padding-bottom: 1px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+.busola-profile-all-grades-link:hover {
+    color: #FF7A1A;
+    text-decoration: none;
+}
+.busola-profile-mobile-desc {
+    margin: 0 0 14px;
+    color: #3A4163;
+    font-size: 15px;
+}
+.busola-profile-qr-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 20px;
+    border-radius: 14px;
+    border: 2px solid #141B5E;
+    color: #141B5E;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+.busola-profile-qr-btn:hover {
+    background: #141B5E;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+</style>
+<main class="busola-profile-wrapper">
+    <!-- HERO SECTION -->
+    <section class="busola-profile-hero">
+        <svg viewBox="0 0 400 400" width="360" height="360" aria-hidden="true" class="busola-profile-radar-bg" fill="none" stroke="#FFFFFF" stroke-width="1.5">
+            <circle cx="200" cy="200" r="190"></circle>
+            <circle cx="200" cy="200" r="140"></circle>
+            <circle cx="200" cy="200" r="90"></circle>
+            <path d="M200 0V400M0 200H400"></path>
+        </svg>
+
+        <div class="busola-profile-avatar-wrap">
+            {{#busola_profile.has_custom_avatar}}
+                <img src="{{busola_profile.avatar_url}}" alt="{{busola_profile.fullname}}" class="busola-profile-avatar-img">
+            {{/busola_profile.has_custom_avatar}}
+            {{^busola_profile.has_custom_avatar}}
+                <svg width="96" height="96" viewBox="0 0 100 100" role="img" aria-label="Awatar" class="busola-profile-avatar-svg">
+                    <circle cx="50" cy="50" r="48" fill="#FFFFFF" stroke="#141B5E" stroke-width="4"></circle>
+                    <circle cx="50" cy="50" r="38" fill="#141B5E"></circle>
+                    <path d="M50 22L60 50L50 78L40 50Z" fill="#FF7A1A" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round" transform="rotate(35 50 50)"></path>
+                    <circle cx="50" cy="50" r="4" fill="#141B5E"></circle>
+                </svg>
+            {{/busola_profile.has_custom_avatar}}
+        </div>
+
+        <div class="busola-profile-hero-meta">
+            <h1 class="busola-profile-name">{{busola_profile.fullname}}</h1>
+            <p class="busola-profile-summary">{{busola_profile.stats_summary}}</p>
+        </div>
+
+        {{#busola_profile.can_edit}}
+            <a href="{{busola_profile.edit_url}}" class="busola-profile-edit-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 20h4L19 9l-4-4L4 16z"></path>
+                </svg>
+                <span>{{#str}}profile_btn_edit, theme_ebusola{{/str}}</span>
+            </a>
+        {{/busola_profile.can_edit}}
+    </section>
+
+    <!-- TWO-COLUMN GRID -->
+    <div class="busola-profile-grid">
+        <!-- LEFT COLUMN -->
+        <div class="busola-profile-col">
+            <!-- DANE UŻYTKOWNIKA -->
+            <section class="busola-profile-card">
+                <h2 class="busola-profile-card-title">{{#str}}profile_user_data, theme_ebusola{{/str}}</h2>
+                <div class="busola-profile-fields-grid">
+                    <div class="busola-profile-field">
+                        <div class="busola-profile-field-label">{{#str}}profile_email, theme_ebusola{{/str}}</div>
+                        <div class="busola-profile-field-val">{{busola_profile.email}}</div>
+                    </div>
+                    <div class="busola-profile-field">
+                        <div class="busola-profile-field-label">{{#str}}profile_country, theme_ebusola{{/str}}</div>
+                        <div class="busola-profile-field-val">{{busola_profile.country}}</div>
+                    </div>
+                    <div class="busola-profile-field">
+                        <div class="busola-profile-field-label">{{#str}}profile_city, theme_ebusola{{/str}}</div>
+                        <div class="busola-profile-field-val">{{busola_profile.city}}</div>
+                    </div>
+                    <div class="busola-profile-field">
+                        <div class="busola-profile-field-label">{{#str}}profile_timezone, theme_ebusola{{/str}}</div>
+                        <div class="busola-profile-field-val">{{busola_profile.timezone}}</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AKTYWNOŚĆ LOGOWANIA -->
+            <section class="busola-profile-card">
+                <h2 class="busola-profile-card-title">{{#str}}profile_login_activity, theme_ebusola{{/str}}</h2>
+                <div class="busola-profile-fields-grid">
+                    <div class="busola-profile-field">
+                        <div class="busola-profile-field-label">{{#str}}profile_first_access, theme_ebusola{{/str}}</div>
+                        <div class="busola-profile-field-val">{{busola_profile.first_login}}</div>
+                    </div>
+                    <div class="busola-profile-field">
+                        <div class="busola-profile-field-label">{{#str}}profile_last_access, theme_ebusola{{/str}}</div>
+                        <div class="busola-profile-field-val">{{busola_profile.last_login}}</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PRYWATNOŚĆ I ZASADY -->
+            <section class="busola-profile-card">
+                <h2 class="busola-profile-card-title">{{#str}}profile_privacy_policies, theme_ebusola{{/str}}</h2>
+                <div class="busola-profile-links-list">
+                    {{#busola_profile.has_policy}}
+                        <a href="{{busola_profile.policy_url}}" class="busola-profile-link-row">
+                            <span>{{#str}}profile_policy_agreements, theme_ebusola{{/str}}</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M9 6l6 6-6 6"></path>
+                            </svg>
+                        </a>
+                    {{/busola_profile.has_policy}}
+                    {{#busola_profile.has_data_privacy}}
+                        <a href="{{busola_profile.data_privacy_url}}" class="busola-profile-link-row">
+                            <span>{{#str}}profile_data_summary, theme_ebusola{{/str}}</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M9 6l6 6-6 6"></path>
+                            </svg>
+                        </a>
+                    {{/busola_profile.has_data_privacy}}
+                </div>
+            </section>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="busola-profile-col">
+            <!-- MOJE KURSY -->
+            <section class="busola-profile-card">
+                <h2 class="busola-profile-card-title">{{#str}}profile_my_courses, theme_ebusola{{/str}}</h2>
+                <div class="busola-profile-courses-list">
+                    {{#busola_profile.has_courses}}
+                        {{#busola_profile.courses}}
+                            <a href="{{url}}" class="busola-profile-course-item">
+                                <div class="busola-profile-course-thumb" style="background:{{card_bg}}">
+                                    {{#is_sail}}
+                                        <svg viewBox="0 0 160 100" width="58" height="36" aria-hidden="true">
+                                            <path d="M80 8V72" stroke="#141B5E" stroke-width="3" stroke-linecap="round" fill="none"></path>
+                                            <path d="M84 12L84 64L128 64Z" fill="#141B5E"></path>
+                                            <path d="M76 24L76 64L46 64Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                                            <path d="M34 70H130L118 84H48Z" fill="#FF7A1A" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                                            <path d="M14 93 q8 -7 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path>
+                                        </svg>
+                                    {{/is_sail}}
+                                    {{#is_motor}}
+                                        <svg viewBox="0 0 160 100" width="58" height="36" aria-hidden="true">
+                                            <rect x="24" y="48" width="12" height="22" rx="3" fill="#FF7A1A" stroke="#141B5E" stroke-width="2.5"></rect>
+                                            <path d="M32 62 H132 L120 80 H48 Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                                            <path d="M66 62 L80 42 H104 L112 62" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                                            <path d="M14 93 q8 -7 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path>
+                                        </svg>
+                                    {{/is_motor}}
+                                    {{#is_extra}}
+                                        <svg viewBox="0 0 160 100" width="58" height="36" aria-hidden="true">
+                                            <path d="M104 40V12" stroke="#141B5E" stroke-width="3" stroke-linecap="round" fill="none"></path>
+                                            <path d="M96 18q8-9 16 0M90 12q14-15 28 0" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path>
+                                            <rect x="30" y="40" width="100" height="48" rx="8" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5"></rect>
+                                            <rect x="40" y="49" width="44" height="14" rx="3" fill="#141B5E"></rect>
+                                            <rect x="40" y="70" width="24" height="12" rx="3" fill="#FF7A1A"></rect>
+                                            <circle cx="106" cy="68" r="9" fill="none" stroke="#141B5E" stroke-width="2.5"></circle>
+                                        </svg>
+                                    {{/is_extra}}
+                                </div>
+                                <div class="busola-profile-course-info">
+                                    <div class="busola-profile-course-title">{{fullname}}</div>
+                                    <div class="busola-profile-course-meta">
+                                        {{#is_in_progress}}
+                                            <div class="busola-profile-mini-bar">
+                                                {{#segments}}
+                                                    <div class="busola-profile-mini-segment {{#is_done}}is-done{{/is_done}}"></div>
+                                                {{/segments}}
+                                            </div>
+                                            <span class="busola-profile-progress-label">{{progress_label}}</span>
+                                        {{/is_in_progress}}
+                                        {{#is_completed}}
+                                            <div class="busola-profile-mini-bar">
+                                                {{#segments}}
+                                                    <div class="busola-profile-mini-segment is-done is-completed"></div>
+                                                {{/segments}}
+                                            </div>
+                                            <span class="busola-profile-completed-label">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                    <path d="M5 12.5l4.5 4.5L19 7.5"></path>
+                                                </svg>
+                                                {{#str}}course_status_done, theme_ebusola{{/str}}
+                                            </span>
+                                        {{/is_completed}}
+                                        {{#is_not_started}}
+                                            <span class="busola-profile-notstarted-label">{{#str}}mycourses_not_started, theme_ebusola{{/str}}</span>
+                                        {{/is_not_started}}
+                                    </div>
+                                </div>
+                            </a>
+                        {{/busola_profile.courses}}
+                    {{/busola_profile.has_courses}}
+                    {{^busola_profile.has_courses}}
+                        <p class="busola-profile-empty-text">{{#str}}profile_no_courses, theme_ebusola{{/str}}</p>
+                    {{/busola_profile.has_courses}}
+                </div>
+            </section>
+
+            <!-- WYNIKI TESTÓW -->
+            <section class="busola-profile-card">
+                <h2 class="busola-profile-card-title">{{#str}}profile_test_results, theme_ebusola{{/str}}</h2>
+                {{#busola_profile.has_last_test}}
+                    <p class="busola-profile-test-last">{{#str}}profile_last_test, theme_ebusola{{/str}} <strong class="busola-profile-test-highlight">{{busola_profile.last_test}}</strong></p>
+                {{/busola_profile.has_last_test}}
+                {{^busola_profile.has_last_test}}
+                    <p class="busola-profile-test-last">{{#str}}profile_no_quizzes, theme_ebusola{{/str}}</p>
+                {{/busola_profile.has_last_test}}
+                <a href="{{busola_profile.all_grades_url}}" class="busola-profile-all-grades-link">
+                    <span>{{#str}}profile_all_results, theme_ebusola{{/str}}</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M5 12h14M13 6l6 6-6 6"></path>
+                    </svg>
+                </a>
+            </section>
+
+            <!-- APLIKACJA MOBILNA -->
+            <section class="busola-profile-card">
+                <h2 class="busola-profile-card-title">{{#str}}profile_mobile_app, theme_ebusola{{/str}}</h2>
+                <p class="busola-profile-mobile-desc">{{#str}}profile_mobile_app_desc, theme_ebusola{{/str}}</p>
+                <a href="{{busola_profile.mobile_url}}" class="busola-profile-qr-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                        <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                        <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+                        <path d="M14 14h3v3h-3zM20 14v0M17 20h4M20 17v3"></path>
+                    </svg>
+                    <span>{{#str}}profile_show_qr, theme_ebusola{{/str}}</span>
+                </a>
+            </section>
+        </div>
+    </div>
+</main>

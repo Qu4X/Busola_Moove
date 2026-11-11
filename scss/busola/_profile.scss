@@ -1,0 +1,567 @@
+// ==========================================================================
+// Busola User Profile & Account Forms (_profile.scss)
+// ==========================================================================
+// Implements View 6: Profile (Profile.dc.html), Edit Profile (EditProfile.dc.html),
+// and Change Password (ChangePassword.dc.html) according to AGENTS.md rules.
+
+// --------------------------------------------------------------------------
+// 1. User Profile View (/user/profile.php)
+// --------------------------------------------------------------------------
+.has-busola-profile {
+    background-color: #F5F6FB !important;
+}
+
+.busola-profile-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 32px 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    color: #3A4163;
+    font-size: 16px;
+    line-height: 1.5;
+
+    // HERO SECTION
+    .busola-profile-hero {
+        background: #141B5E;
+        border-radius: 24px;
+        padding: 28px 32px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 20px 28px;
+        position: relative;
+        overflow: hidden;
+
+        .busola-profile-radar-bg {
+            position: absolute;
+            right: -80px;
+            top: -120px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .busola-profile-avatar-wrap {
+            position: relative;
+            display: flex;
+            flex: 0 0 96px;
+            width: 96px;
+            height: 96px;
+
+            .busola-profile-avatar-img {
+                width: 96px;
+                height: 96px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 4px solid #FFFFFF;
+                box-shadow: 0 4px 12px rgba(20, 27, 94, 0.15);
+            }
+
+            .busola-profile-avatar-svg {
+                display: block;
+                flex: 0 0 96px;
+                width: 96px;
+                height: 96px;
+            }
+        }
+
+        .busola-profile-hero-meta {
+            position: relative;
+            flex: 1 1 280px;
+            min-width: 0;
+
+            .busola-profile-name {
+                margin: 0;
+                font-size: 40px;
+                line-height: 1.1;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+                color: #FFFFFF;
+            }
+
+            .busola-profile-summary {
+                margin: 6px 0 0;
+                font-size: 16px;
+                color: #CBD1F3;
+            }
+        }
+
+        .busola-profile-edit-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 48px;
+            padding: 0 24px;
+            box-sizing: border-box;
+            border-radius: 14px;
+            background: #FF7A1A;
+            color: #141B5E;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            transition: transform 0.18s ease, background-color 0.18s ease;
+
+            &:hover {
+                background: #e56a12;
+                color: #141B5E;
+                transform: translateY(-2px);
+                text-decoration: none;
+            }
+        }
+    }
+
+    // TWO-COLUMN GRID
+    .busola-profile-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        align-items: flex-start;
+
+        .busola-profile-col {
+            flex: 1 1 440px;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+    }
+
+    // CARDS
+    .busola-profile-card {
+        background: #FFFFFF;
+        border-radius: 20px;
+        padding: 24px 26px;
+        box-shadow: 0 1px 2px rgba(20, 27, 94, 0.06), 0 8px 24px rgba(20, 27, 94, 0.06);
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(20, 27, 94, 0.08), 0 16px 36px rgba(20, 27, 94, 0.12);
+        }
+
+        .busola-profile-card-title {
+            margin: 0 0 16px;
+            font-size: 20px;
+            font-weight: 800;
+            color: #141B5E;
+            letter-spacing: -0.01em;
+        }
+    }
+
+    // FIELDS GRID (DANE UŻYTKOWNIKA & AKTYWNOŚĆ LOGOWANIA)
+    .busola-profile-fields-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 18px 24px;
+
+        .busola-profile-field {
+            .busola-profile-field-label {
+                font-size: 13px;
+                font-weight: 700;
+                color: #5B6280;
+                margin-bottom: 2px;
+            }
+
+            .busola-profile-field-val {
+                font-size: 16px;
+                color: #141B5E;
+                font-weight: 600;
+                word-break: break-word;
+            }
+        }
+    }
+
+    // LINKS LIST (PRYWATNOŚĆ I ZASADY)
+    .busola-profile-links-list {
+        margin-top: -4px;
+
+        .busola-profile-link-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-height: 48px;
+            padding: 6px 0;
+            border-top: 1px solid #E8EBF6;
+            text-decoration: none;
+            color: #141B5E;
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.15s ease, padding-left 0.15s ease;
+
+            &:hover {
+                color: #FF7A1A;
+                padding-left: 4px;
+                text-decoration: none;
+            }
+
+            svg {
+                flex-shrink: 0;
+            }
+        }
+    }
+
+    // COURSES LIST (MOJE KURSY)
+    .busola-profile-courses-list {
+        margin-top: -12px;
+
+        .busola-profile-course-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-top: 1px solid #E8EBF6;
+            text-decoration: none;
+            color: inherit;
+            transition: background-color 0.15s ease;
+
+            &:hover {
+                text-decoration: none;
+
+                .busola-profile-course-title {
+                    color: #B93C00;
+                }
+            }
+
+            .busola-profile-course-thumb {
+                flex: 0 0 72px;
+                width: 72px;
+                height: 56px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .busola-profile-course-info {
+                flex: 1;
+                min-width: 0;
+
+                .busola-profile-course-title {
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: #141B5E;
+                    line-height: 1.2;
+                    transition: color 0.15s ease;
+                }
+
+                .busola-profile-course-meta {
+                    margin-top: 6px;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+
+                    .busola-profile-mini-bar {
+                        flex: 1;
+                        display: flex;
+                        gap: 4px;
+                        max-width: 140px;
+
+                        .busola-profile-mini-segment {
+                            flex: 1;
+                            height: 8px;
+                            border-radius: 4px;
+                            background: #E3E7F4;
+
+                            &.is-done {
+                                background: #FF7A1A;
+                            }
+
+                            &.is-completed {
+                                background: #141B5E;
+                            }
+                        }
+                    }
+
+                    .busola-profile-progress-label {
+                        font-size: 14px;
+                        font-weight: 700;
+                        color: #141B5E;
+                        white-space: nowrap;
+                    }
+
+                    .busola-profile-completed-label {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 4px;
+                        font-size: 14px;
+                        font-weight: 700;
+                        color: #141B5E;
+                    }
+
+                    .busola-profile-notstarted-label {
+                        font-size: 14px;
+                        color: #5B6280;
+                    }
+                }
+            }
+        }
+
+        .busola-profile-empty-text {
+            margin: 16px 0 0;
+            font-size: 15px;
+            color: #5B6280;
+        }
+    }
+
+    // WYNIKI TESTÓW
+    .busola-profile-test-last {
+        margin: 0 0 12px;
+        color: #3A4163;
+        font-size: 15px;
+
+        .busola-profile-test-highlight {
+            color: #141B5E;
+            font-weight: 700;
+        }
+    }
+
+    .busola-profile-all-grades-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        color: #141B5E;
+        text-decoration: none;
+        border-bottom: 2px solid #FF7A1A;
+        padding-bottom: 1px;
+        transition: color 0.15s ease, border-color 0.15s ease;
+
+        &:hover {
+            color: #FF7A1A;
+            text-decoration: none;
+        }
+    }
+
+    // APLIKACJA MOBILNA
+    .busola-profile-mobile-desc {
+        margin: 0 0 14px;
+        color: #3A4163;
+        font-size: 15px;
+    }
+
+    .busola-profile-qr-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 0 20px;
+        border-radius: 14px;
+        border: 2px solid #141B5E;
+        color: #141B5E;
+        font-weight: 700;
+        font-size: 15px;
+        text-decoration: none;
+        transition: background-color 0.15s ease, color 0.15s ease;
+
+        &:hover {
+            background: #141B5E;
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// 2. Edit Profile & Change Password Forms Styling (Moodle mform)
+// --------------------------------------------------------------------------
+#page-user-edit,
+#page-user-editadvanced,
+#page-login-change_password,
+body.has-busola-user-edit,
+body.has-busola-change-password {
+    background-color: #F5F6FB !important;
+
+    #page-content {
+        max-width: 888px;
+        margin: 0 auto;
+        padding: 28px 24px 64px;
+    }
+
+    #page-header {
+        max-width: 888px;
+        margin: 0 auto;
+        padding: 20px 24px 0;
+        background: transparent !important;
+
+        .breadcrumb {
+            background: transparent;
+            padding: 0;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #5B6280;
+
+            a {
+                color: #141B5E;
+                font-weight: 600;
+                text-decoration: none;
+
+                &:hover {
+                    color: #FF7A1A;
+                    text-decoration: none;
+                }
+            }
+        }
+
+        h1, .page-header-headings h1 {
+            font-size: 40px;
+            line-height: 1.1;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #141B5E;
+            margin: 0 0 16px;
+        }
+    }
+
+    // Card containers for Moodle fieldsets
+    form.mform fieldset.collapsible,
+    form.mform fieldset {
+        background: #FFFFFF;
+        border-radius: 20px;
+        padding: 26px 28px;
+        box-shadow: 0 1px 2px rgba(20, 27, 94, 0.06), 0 8px 24px rgba(20, 27, 94, 0.06);
+        border: none !important;
+        margin-bottom: 24px;
+
+        legend.ftoggler,
+        legend {
+            font-size: 22px;
+            font-weight: 800;
+            color: #141B5E;
+            letter-spacing: -0.01em;
+            border-bottom: none !important;
+            padding: 0 0 16px 0;
+            margin-bottom: 16px;
+            width: 100%;
+
+            a.fheader {
+                color: #141B5E;
+                text-decoration: none;
+
+                &:hover {
+                    color: #B93C00;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+    // Input fields & labels
+    .form-group.row.fitem {
+        margin-bottom: 18px;
+
+        .col-form-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #141B5E;
+            padding-top: 10px;
+
+            .req, .text-danger {
+                color: #B93C00 !important;
+            }
+        }
+
+        .form-control,
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        select.form-control,
+        select.custom-select {
+            min-height: 48px;
+            height: 48px;
+            border: 1.5px solid #C9CEE6;
+            border-radius: 12px;
+            background: #FFFFFF;
+            padding: 0 14px;
+            font-size: 16px;
+            color: #141B5E;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+            &:focus {
+                border-color: #141B5E;
+                box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.4);
+                outline: none;
+            }
+        }
+
+        textarea.form-control {
+            border: 1.5px solid #C9CEE6;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-size: 15px;
+            color: #141B5E;
+            font-family: inherit;
+
+            &:focus {
+                border-color: #141B5E;
+                box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.4);
+                outline: none;
+            }
+        }
+    }
+
+    // Sticky action buttons bar
+    #fgroup_id_buttonar,
+    .form-buttons {
+        position: sticky;
+        bottom: 0;
+        background: #FFFFFF;
+        box-shadow: 0 -1px 0 rgba(20, 27, 94, 0.1), 0 -8px 24px rgba(20, 27, 94, 0.06);
+        padding: 16px 32px;
+        z-index: 100;
+        margin: 24px 0 0;
+        border-radius: 16px 16px 0 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+
+        .btn-primary,
+        input[type="submit"].btn-primary,
+        #id_submitbutton {
+            min-height: 52px;
+            padding: 0 28px;
+            border: 0;
+            border-radius: 14px;
+            background: #FF7A1A;
+            color: #141B5E;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 17px;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+
+            &:hover {
+                background: #e56a12;
+                color: #141B5E;
+            }
+        }
+
+        .btn-secondary,
+        input[type="submit"].btn-secondary,
+        #id_cancel {
+            min-height: 52px;
+            padding: 0 24px;
+            border: 2px solid #C9CEE6;
+            border-radius: 14px;
+            background: transparent;
+            color: #141B5E;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+
+            &:hover {
+                background: #F5F6FB;
+                color: #141B5E;
+            }
+        }
+    }
+}

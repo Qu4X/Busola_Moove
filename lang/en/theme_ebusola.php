@@ -198,6 +198,31 @@ $string['course_close_section'] = 'Close section {$a}';
 $string['course_edit_zone_title'] = 'Course page management';
 $string['course_edit_zone_desc'] = 'Section visible to administrators in edit mode (manage sections and activities).';
 
+// User profile page (/user/profile.php) strings.
+$string['profile_title'] = 'User profile';
+$string['profile_btn_edit'] = 'Edit profile';
+$string['profile_user_data'] = 'User details';
+$string['profile_email'] = 'Email address';
+$string['profile_country'] = 'Country';
+$string['profile_city'] = 'City';
+$string['profile_timezone'] = 'Timezone';
+$string['profile_login_activity'] = 'Login activity';
+$string['profile_first_access'] = 'First login';
+$string['profile_last_access'] = 'Last login';
+$string['profile_privacy_policies'] = 'Privacy & policies';
+$string['profile_policy_agreements'] = 'Policies and agreements';
+$string['profile_data_summary'] = 'Data retention summary';
+$string['profile_my_courses'] = 'My courses';
+$string['profile_test_results'] = 'Quiz results';
+$string['profile_last_test'] = 'Recent quiz:';
+$string['profile_all_results'] = 'All grades';
+$string['profile_mobile_app'] = 'Mobile app';
+$string['profile_mobile_app_desc'] = 'Log in to the Busola app by scanning a QR code.';
+$string['profile_show_qr'] = 'Show QR code';
+$string['profile_no_quizzes'] = 'No completed quizzes yet';
+$string['profile_no_courses'] = 'No enrolled courses';
+
+
 
 $string['enablewhatsappbutton'] = 'Enable WhatsApp floating button';
 $string['enablewhatsappbutton_desc'] = 'Show a floating WhatsApp contact button on every page, using the WhatsApp number configured above.';

@@ -173,4 +173,29 @@ $string['course_close_section'] = 'Zamknij dział {$a}';
 $string['course_edit_zone_title'] = 'Zarządzanie stroną kursu';
 $string['course_edit_zone_desc'] = 'Sekcja widoczna dla administratorów w trybie edycji (dodawanie i edycja sekcji oraz aktywności).';
 
+// Napisy widoku profilu (/user/profile.php).
+$string['profile_title'] = 'Profil użytkownika';
+$string['profile_btn_edit'] = 'Edytuj profil';
+$string['profile_user_data'] = 'Dane użytkownika';
+$string['profile_email'] = 'Adres e-mail';
+$string['profile_country'] = 'Kraj';
+$string['profile_city'] = 'Miejscowość';
+$string['profile_timezone'] = 'Strefa czasowa';
+$string['profile_login_activity'] = 'Aktywność logowania';
+$string['profile_first_access'] = 'Pierwsze logowanie';
+$string['profile_last_access'] = 'Ostatnie logowanie';
+$string['profile_privacy_policies'] = 'Prywatność i zasady';
+$string['profile_policy_agreements'] = 'Zasady i zgody';
+$string['profile_data_summary'] = 'Podsumowanie przechowywania danych';
+$string['profile_my_courses'] = 'Moje kursy';
+$string['profile_test_results'] = 'Wyniki testów';
+$string['profile_last_test'] = 'Ostatni test:';
+$string['profile_all_results'] = 'Wszystkie wyniki';
+$string['profile_mobile_app'] = 'Aplikacja mobilna';
+$string['profile_mobile_app_desc'] = 'Zaloguj się w aplikacji Busola, skanując kod QR.';
+$string['profile_show_qr'] = 'Pokaż kod QR';
+$string['profile_no_quizzes'] = 'Brak rozwiązanych testów';
+$string['profile_no_courses'] = 'Brak zapisanych kursów';
+
+
 

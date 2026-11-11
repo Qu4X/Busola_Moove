@@ -1727,5 +1727,326 @@ class busola {
         ];
     }
 
+    /**
+     * Helper for Polish pluralization forms.
+     *
+     * @param int $count Number of items.
+     * @param string $one Singular nominative (np. "kurs", "dział zaliczony").
+     * @param string $few Plural nominative 2-4 (np. "kursy", "działy zaliczone").
+     * @param string $many Plural genitive 5+ (np. "kursów", "działów zaliczonych").
+     * @return string
+     */
+    public static function pluralize_pl(int $count, string $one, string $few, string $many): string {
+        $abs = abs($count);
+        $mod10 = $abs % 10;
+        $mod100 = $abs % 100;
+
+        if ($abs === 1) {
+            return $one;
+        }
+        if ($mod10 >= 2 && $mod10 <= 4 && ($mod100 < 10 || $mod100 >= 20)) {
+            return $few;
+        }
+        return $many;
+    }
+
+    /**
+     * Build the context for the Busola User Profile view (/user/profile.php).
+     *
+     * All user info, enrolled courses, progress bars, test results, and login dates
+     * are dynamically fetched according to AGENTS.md architectural rules.
+     *
+     * @param object|null $targetuser User object (defaults to current $USER).
+     * @return array|null
+     */
+    public static function get_profile_context(?object $targetuser = null): ?array {
+        global $USER, $DB, $CFG, $PAGE;
+
+        if (!isloggedin() || isguestuser()) {
+            return null;
+        }
+
+        $user = $targetuser ?: $USER;
+        if (empty($user) || empty($user->id)) {
+            $user = $USER;
+        }
+
+        // Full name and first name.
+        $fullname = fullname($user);
+        $firstname = !empty($user->firstname) ? $user->firstname : $fullname;
+
+        // Initials.
+        $firstinitial = !empty($user->firstname) ? mb_substr($user->firstname, 0, 1) : 'J';
+        $lastinitial = !empty($user->lastname) ? mb_substr($user->lastname, 0, 1) : 'K';
+        $initials = mb_strtoupper($firstinitial . $lastinitial);
+
+        // Edit permission check.
+        $canedit = false;
+        if (is_siteadmin()) {
+            $canedit = true;
+        } else if ($user->id == $USER->id) {
+            $canedit = has_capability('moodle/user:editownprofile', \context_system::instance());
+        } else {
+            $usercontext = \context_user::instance($user->id, IGNORE_MISSING);
+            if ($usercontext) {
+                $canedit = has_capability('moodle/user:update', $usercontext);
+            }
+        }
+        $editurl = (new \moodle_url('/user/edit.php', ['id' => $user->id]))->out(false);
+
+        // Avatar.
+        $avatarurl = null;
+        $hascustomavatar = false;
+        if (!empty($user->picture) && (int)$user->picture > 0) {
+            $userpicture = new \user_picture($user);
+            $userpicture->size = 100;
+            $avatarurl = $userpicture->get_url($PAGE)->out(false);
+            $hascustomavatar = true;
+        }
+
+        // Enrolled courses.
+        $enrolledcourses = enrol_get_all_users_courses($user->id, true, 'id, fullname, shortname, category');
+        $courseids = [];
+        foreach ($enrolledcourses as $c) {
+            if ($c->id != SITEID) {
+                $courseids[] = (int) $c->id;
+            }
+        }
+
+        // Section counts per course.
+        $sectioncounts = [];
+        if (!empty($courseids)) {
+            try {
+                list($insql, $inparams) = $DB->get_in_or_equal($courseids, SQL_PARAMS_NAMED, 'pscnt');
+                $sql = "
+                    SELECT course, COUNT(id) AS cnt
+                    FROM {course_sections}
+                    WHERE course $insql AND section > 0
+                    GROUP BY course
+                ";
+                $counts = $DB->get_records_sql($sql, $inparams);
+                foreach ($counts as $cid => $row) {
+                    $sectioncounts[(int) $cid] = (int) $row->cnt;
+                }
+            } catch (\Exception $e) {
+                // Silently fall back.
+            }
+        }
+
+        $validcourses = [];
+        $totalcompletedsections = 0;
+
+        foreach ($enrolledcourses as $c) {
+            if ($c->id == SITEID) {
+                continue;
+            }
+
+            $cid = (int) $c->id;
+            $coursefullname = format_string($c->fullname);
+            $imageinfo = self::resolve_course_image_and_badge($c);
+            $categoryname = $imageinfo['categoryname'];
+            $shortname = strtoupper(trim($c->shortname ?? ''));
+            $cfullnamelower = mb_strtolower($c->fullname ?? '');
+            $catnamelower = mb_strtolower($categoryname);
+
+            if (str_contains($catnamelower, 'motor') || (!str_contains($catnamelower, 'żegl') && !str_contains($catnamelower, 'zegl') && ($shortname === 'SM' || $shortname === 'MSM' || str_contains($cfullnamelower, 'motorowod')))) {
+                $illustration = 'motor';
+                $cardbg = '#DCF0F3';
+            } else if (str_contains($catnamelower, 'dodatk') || str_contains($catnamelower, 'radio') || str_contains($shortname, 'SRC') || str_contains($cfullnamelower, 'radio')) {
+                $illustration = 'extra';
+                $cardbg = '#FFE8D4';
+            } else {
+                $illustration = 'sail';
+                $cardbg = '#E3E8FB';
+            }
+
+            // Completion progress.
+            $progress = null;
+            if (class_exists('\core_completion\progress')) {
+                $progress = \core_completion\progress::get_course_progress_percentage($c, $user->id);
+            }
+            $progressval = !is_null($progress) ? (int) round($progress) : 0;
+
+            $totalsections = $sectioncounts[$cid] ?? 6;
+            if ($totalsections <= 0) {
+                $totalsections = 6;
+            }
+
+            $isnotstarted = ($progressval === 0);
+            $iscompleted = ($progressval >= 100);
+            $isinprogress = ($progressval > 0 && $progressval < 100);
+
+            // Mockup displays a 6-segment progress indicator.
+            $displaysegments = min(6, max(1, $totalsections));
+            $completedsegments = (int) round(($progressval / 100) * $displaysegments);
+            if ($isinprogress && $completedsegments === 0) {
+                $completedsegments = 1;
+            }
+            if ($isinprogress && $completedsegments === $displaysegments) {
+                $completedsegments = max(1, $displaysegments - 1);
+            }
+            if ($iscompleted) {
+                $completedsegments = $displaysegments;
+            }
+
+            $completedactual = (int) round(($progressval / 100) * $totalsections);
+            if ($isinprogress && $completedactual === 0) {
+                $completedactual = 1;
+            }
+            if ($isinprogress && $completedactual === $totalsections) {
+                $completedactual = max(1, $totalsections - 1);
+            }
+            if ($iscompleted) {
+                $completedactual = $totalsections;
+            }
+
+            $totalcompletedsections += $completedactual;
+
+            $segments = [];
+            for ($s = 1; $s <= $displaysegments; $s++) {
+                $segments[] = [
+                    'is_done' => ($s <= $completedsegments),
+                    'is_completed_course' => $iscompleted,
+                ];
+            }
+
+            $progresslabel = '';
+            if ($isinprogress) {
+                $progresslabel = $completedactual . ' z ' . $totalsections;
+            }
+
+            $validcourses[] = [
+                'id' => $cid,
+                'fullname' => $coursefullname,
+                'url' => (new \moodle_url('/course/view.php', ['id' => $cid]))->out(false),
+                'illustration' => $illustration,
+                'is_motor' => ($illustration === 'motor'),
+                'is_extra' => ($illustration === 'extra'),
+                'is_sail' => ($illustration === 'sail'),
+                'card_bg' => $cardbg,
+                'is_not_started' => $isnotstarted,
+                'is_in_progress' => $isinprogress,
+                'is_completed' => $iscompleted,
+                'progress_label' => $progresslabel,
+                'segments' => $segments,
+            ];
+        }
+
+        $coursescount = count($validcourses);
+        $coursesphrase = self::pluralize_pl($coursescount, 'kurs', 'kursy', 'kursów');
+        $sectionsphrase = self::pluralize_pl($totalcompletedsections, 'dział zaliczony', 'działy zaliczone', 'działów zaliczonych');
+        $statssummary = "{$coursescount} {$coursesphrase} · {$totalcompletedsections} {$sectionsphrase}";
+
+        // Country name.
+        $countryname = '–';
+        if (!empty($user->country)) {
+            $countries = get_string_manager()->get_list_of_countries();
+            $countryname = $countries[$user->country] ?? $user->country;
+        }
+
+        // Timezone.
+        $timezone = !empty($user->timezone) ? $user->timezone : \core_date::get_user_timezone($user);
+        if ($timezone === '99' || empty($timezone)) {
+            $timezone = \core_date::get_server_timezone();
+        }
+
+        // Polish months map for robust date rendering.
+        $plmonths = [
+            1 => 'stycznia', 2 => 'lutego', 3 => 'marca', 4 => 'kwietnia',
+            5 => 'maja', 6 => 'czerwca', 7 => 'lipca', 8 => 'sierpnia',
+            9 => 'września', 10 => 'października', 11 => 'listopada', 12 => 'grudnia'
+        ];
+
+        $firstlogintxt = '–';
+        if (!empty($user->firstaccess)) {
+            $m = (int) date('n', $user->firstaccess);
+            $monthname = $plmonths[$m] ?? date('M', $user->firstaccess);
+            $firstlogintxt = date('j', $user->firstaccess) . ' ' . $monthname . ' ' . date('Y', $user->firstaccess);
+        }
+
+        $lastlogintxt = '–';
+        if (!empty($user->lastaccess)) {
+            $todaystart = strtotime('today midnight');
+            if ($user->lastaccess >= $todaystart) {
+                $lastlogintxt = 'Dziś, ' . date('H:i', $user->lastaccess);
+            } else if ($user->lastaccess >= ($todaystart - 86400)) {
+                $lastlogintxt = 'Wczoraj, ' . date('H:i', $user->lastaccess);
+            } else {
+                $m = (int) date('n', $user->lastaccess);
+                $monthname = $plmonths[$m] ?? date('M', $user->lastaccess);
+                $lastlogintxt = date('j', $user->lastaccess) . ' ' . $monthname . ' ' . date('Y', $user->lastaccess) . ', ' . date('H:i', $user->lastaccess);
+            }
+        }
+
+        // Privacy & policy links.
+        $haspolicy = false;
+        $policyurl = null;
+        if (class_exists('\tool_policy\api') || file_exists($CFG->dirroot . '/admin/tool/policy/index.php')) {
+            $haspolicy = true;
+            $policyurl = (new \moodle_url('/admin/tool/policy/index.php'))->out(false);
+        }
+        $hasdataprivacy = false;
+        $dataprivacyurl = null;
+        if (file_exists($CFG->dirroot . '/admin/tool/dataprivacy/summary.php')) {
+            $hasdataprivacy = true;
+            $dataprivacyurl = (new \moodle_url('/admin/tool/dataprivacy/summary.php'))->out(false);
+        }
+
+        // Recent test attempt.
+        $lastattemptinfo = null;
+        try {
+            $sql = "
+                SELECT qa.id, qa.quiz, qa.sumgrades, qa.timefinish,
+                       q.name AS quizname, q.sumgrades AS quizsumgrades
+                FROM {quiz_attempts} qa
+                JOIN {quiz} q ON q.id = qa.quiz
+                WHERE qa.userid = :userid AND qa.state = 'finished'
+                ORDER BY qa.timefinish DESC
+            ";
+            $recentattempts = $DB->get_records_sql($sql, ['userid' => $user->id], 0, 1);
+            if (!empty($recentattempts)) {
+                $ra = reset($recentattempts);
+                $quizname = format_string($ra->quizname);
+                $grade = (float) ($ra->sumgrades ?? 0);
+                $maxgrade = (float) ($ra->quizsumgrades ?? 0);
+                $formattedgrade = (floor($grade) == $grade) ? (string)(int)$grade : number_format($grade, 1);
+                $formattedmax = (floor($maxgrade) == $maxgrade) ? (string)(int)$maxgrade : number_format($maxgrade, 1);
+                $lastattemptinfo = "{$quizname}, {$formattedgrade}/{$formattedmax}";
+            }
+        } catch (\Exception $e) {
+            // Silently fall back.
+        }
+
+        $allgradesurl = (new \moodle_url('/grade/report/overview/index.php', ['id' => $user->id]))->out(false);
+        $mobileurl = (new \moodle_url('/admin/tool/mobile/index.php'))->out(false);
+
+        return [
+            'userid' => $user->id,
+            'fullname' => $fullname,
+            'firstname' => $firstname,
+            'initials' => $initials,
+            'avatar_url' => $avatarurl,
+            'has_custom_avatar' => $hascustomavatar,
+            'can_edit' => $canedit,
+            'edit_url' => $editurl,
+            'stats_summary' => $statssummary,
+            'email' => $user->email,
+            'country' => $countryname,
+            'city' => !empty($user->city) ? $user->city : '–',
+            'timezone' => $timezone,
+            'first_login' => $firstlogintxt,
+            'last_login' => $lastlogintxt,
+            'has_policy' => $haspolicy,
+            'policy_url' => $policyurl,
+            'has_data_privacy' => $hasdataprivacy,
+            'data_privacy_url' => $dataprivacyurl,
+            'courses' => $validcourses,
+            'has_courses' => !empty($validcourses),
+            'last_test' => $lastattemptinfo,
+            'has_last_test' => !empty($lastattemptinfo),
+            'all_grades_url' => $allgradesurl,
+            'mobile_url' => $mobileurl,
+        ];
+    }
 
 }
