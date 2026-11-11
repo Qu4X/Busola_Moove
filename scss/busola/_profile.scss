@@ -424,18 +424,47 @@ body.has-busola-change-password {
     }
 
     // Input fields & labels
+    .fitem,
     .form-group.row.fitem {
         margin-bottom: 18px;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
 
         .col-form-label {
             font-size: 14px;
             font-weight: 700;
             color: #141B5E;
-            padding-top: 10px;
+            padding: 0 0 6px 0 !important;
+            margin: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            flex: 0 0 auto !important;
+            text-align: left !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+
+            label {
+                margin: 0 !important;
+                font-size: 14px !important;
+                font-weight: 700 !important;
+                color: #141B5E !important;
+            }
 
             .req, .text-danger {
                 color: #B93C00 !important;
+                font-weight: 700 !important;
+                margin-left: 2px !important;
             }
+        }
+
+        .felement {
+            width: 100% !important;
+            max-width: 100% !important;
+            flex: 1 1 auto !important;
+            padding: 0 !important;
+            margin: 0 !important;
         }
 
         .form-control,
@@ -443,6 +472,7 @@ body.has-busola-change-password {
         input[type="password"],
         input[type="email"],
         select.form-control,
+        select.form-select,
         select.custom-select {
             min-height: 48px;
             height: 48px;
@@ -454,6 +484,8 @@ body.has-busola-change-password {
             color: #141B5E;
             font-family: inherit;
             box-sizing: border-box;
+            width: 100% !important;
+            max-width: 100% !important;
             transition: border-color 0.15s ease, box-shadow 0.15s ease;
 
             &:focus {

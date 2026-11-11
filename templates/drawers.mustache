@@ -102,7 +102,7 @@
             {{/closebuttonicon}}
         {{/ theme_boost/drawer}}
     {{/hasblocks}}
-    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#is_busola_dashboard}}has-busola-dashboard p-0{{/is_busola_dashboard}} {{#is_busola_kokpit}}has-busola-dashboard has-busola-kokpit p-0{{/is_busola_kokpit}} {{#is_busola_mycourses}}has-busola-dashboard has-busola-mycourses p-0{{/is_busola_mycourses}} {{#is_busola_profile}}has-busola-dashboard has-busola-profile p-0{{/is_busola_profile}} {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container" {{#is_busola_dashboard}}style="padding-left:0 !important; padding-right:0 !important; max-width:100% !important;"{{/is_busola_dashboard}} {{#is_busola_kokpit}}style="padding-left:0 !important; padding-right:0 !important; max-width:100% !important;"{{/is_busola_kokpit}} {{#is_busola_mycourses}}style="padding-left:0 !important; padding-right:0 !important; max-width:100% !important;"{{/is_busola_mycourses}} {{#is_busola_profile}}style="padding-left:0 !important; padding-right:0 !important; max-width:100% !important;"{{/is_busola_profile}}>
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#is_busola_dashboard}}has-busola-dashboard p-0{{/is_busola_dashboard}} {{#is_busola_kokpit}}has-busola-dashboard has-busola-kokpit p-0{{/is_busola_kokpit}} {{#is_busola_mycourses}}has-busola-dashboard has-busola-mycourses p-0{{/is_busola_mycourses}} {{#is_busola_profile}}has-busola-dashboard has-busola-profile p-0{{/is_busola_profile}} {{#is_busola_user_edit}}has-busola-user-edit{{/is_busola_user_edit}} {{#is_busola_change_password}}has-busola-change-password{{/is_busola_change_password}} {{#is_busola_calendar}}has-busola-calendar{{/is_busola_calendar}} {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container" {{#is_busola_dashboard}}style="padding-left:0 !important; padding-right:0 !important; max-width:100% !important;"{{/is_busola_dashboard}} {{#is_busola_kokpit}}style="padding-left:0 !important; padding-right:0 !important; max-width:100% !important;"{{/is_busola_kokpit}} {{#is_busola_mycourses}}style="padding-left:0 !important; padding-right:0 !important; max-width:100% !important;"{{/is_busola_mycourses}} {{#is_busola_profile}}style="padding-left:0 !important; padding-right:0 !important; max-width:100% !important;"{{/is_busola_profile}}>
 
         {{#is_busola_dashboard}}
             {{> theme_ebusola/ebusola/busola_dashboard }}
@@ -144,7 +144,22 @@
         {{^is_busola_kokpit}}
         {{^is_busola_mycourses}}
         {{^is_busola_profile}}
+        {{#is_busola_user_edit}}
+            {{> theme_ebusola/ebusola/busola_account_header }}
+        {{/is_busola_user_edit}}
+        {{#is_busola_change_password}}
+            {{> theme_ebusola/ebusola/busola_account_header }}
+        {{/is_busola_change_password}}
+        {{#is_busola_calendar}}
+            {{> theme_ebusola/ebusola/busola_calendar_header }}
+        {{/is_busola_calendar}}
+        {{^is_busola_user_edit}}
+        {{^is_busola_change_password}}
+        {{^is_busola_calendar}}
         {{{ output.full_header }}}
+        {{/is_busola_calendar}}
+        {{/is_busola_change_password}}
+        {{/is_busola_user_edit}}
 
         <div id="topofscroll" class="main-inner">
             <div class="drawer-toggles d-flex">
