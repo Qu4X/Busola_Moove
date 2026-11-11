@@ -2864,189 +2864,6 @@ section.busola-section-discover {
             gap: 8px !important;
         }
     }
-
-    /* 10. Responsywny widok dla niezalogowanych użytkowników (Guest Mobile) */
-    .busola-guest-hero {
-        position: relative !important;
-        overflow: hidden !important;
-        width: 100% !important;
-        max-width: 100vw !important;
-
-        .busola-guest-radar {
-            position: absolute !important;
-            max-width: 240px !important;
-            max-height: 240px !important;
-            width: 240px !important;
-            height: 240px !important;
-            right: -30px !important;
-            top: -40px !important;
-            pointer-events: none !important;
-            overflow: hidden !important;
-        }
-
-        .busola-guest-hero-container {
-            padding: 24px 16px 0 !important;
-            gap: 16px !important;
-        }
-
-        .busola-guest-hero-content {
-            flex: 1 1 100% !important;
-            width: 100% !important;
-
-            .busola-guest-hero-title {
-                font-size: 34px !important;
-                line-height: 1.08 !important;
-                letter-spacing: -.02em !important;
-            }
-
-            .busola-guest-hero-subtitle {
-                font-size: 15px !important;
-                margin-top: 8px !important;
-                line-height: 1.4 !important;
-            }
-
-            .busola-guest-hero-actions {
-                margin-top: 18px !important;
-                display: flex !important;
-                flex-direction: column !important;
-                gap: 10px !important;
-                width: 100% !important;
-
-                .busola-btn-primary {
-                    width: 100% !important;
-                    min-height: 48px !important;
-                    justify-content: center !important;
-                    box-sizing: border-box !important;
-                    font-size: 16px !important;
-                }
-
-                .busola-btn-secondary {
-                    width: 100% !important;
-                    min-height: 46px !important;
-                    justify-content: center !important;
-                    box-sizing: border-box !important;
-                    font-size: 15px !important;
-                }
-            }
-        }
-
-        /* Ukrycie karty "Jak to działa" na ekranie powitalnym mobile wg makiety */
-        .busola-howitworks-card {
-            display: none !important;
-        }
-
-        .busola-guest-wave {
-            display: block !important;
-            vertical-align: bottom !important;
-            width: 100% !important;
-            height: 32px !important;
-            margin-top: 16px !important;
-            margin-bottom: -1px !important;
-            position: relative !important;
-
-            path {
-                fill: var(--busola-bg-canvas) !important;
-            }
-        }
-    }
-
-    .busola-guest-courses-section {
-        width: 100% !important;
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-
-        .busola-section-title {
-            font-size: 22px !important;
-            margin-bottom: 12px !important;
-        }
-
-        .busola-guest-courses-grid {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 10px !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            box-sizing: border-box !important;
-        }
-
-        .busola-guest-card {
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: center !important;
-            padding: 12px !important;
-            border-radius: 18px !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            box-sizing: border-box !important;
-            gap: 14px !important;
-            box-shadow: 0 1px 2px rgba(20, 27, 94, .06), 0 6px 16px rgba(20, 27, 94, .05) !important;
-
-            .busola-guest-card-header {
-                flex: 0 0 72px !important;
-                width: 72px !important;
-                height: 60px !important;
-                min-height: 60px !important;
-                border-radius: 12px !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-
-                .busola-guest-card-badge {
-                    display: none !important;
-                }
-
-                .busola-guest-card-img,
-                .busola-guest-card-svg {
-                    width: 58px !important;
-                    height: 36px !important;
-                    max-width: 58px !important;
-                    max-height: 36px !important;
-                    object-fit: contain !important;
-                    margin: 0 !important;
-                }
-            }
-
-            .busola-guest-card-body {
-                padding: 0 !important;
-                flex: 1 1 auto !important;
-                min-width: 0 !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: center !important;
-
-                .busola-guest-card-cat-label {
-                    display: block !important;
-                    font-size: 11px !important;
-                    font-weight: 700 !important;
-                    color: var(--busola-text-secondary) !important;
-                    margin-bottom: 2px !important;
-                }
-
-                .busola-guest-card-title {
-                    font-size: 16px !important;
-                    font-weight: 700 !important;
-                    color: var(--busola-text-primary) !important;
-                    line-height: 1.2 !important;
-                    min-height: 0 !important;
-                    margin: 0 !important;
-                    white-space: normal !important;
-                }
-
-                .busola-guest-card-footer {
-                    display: none !important;
-                }
-            }
-
-            .busola-guest-card-arrow {
-                display: block !important;
-                flex: 0 0 20px !important;
-                color: var(--busola-text-primary) !important;
-                margin-left: auto !important;
-            }
-        }
-    }
 }
 
 /* --------------------------------------------------------------------------
@@ -3384,6 +3201,196 @@ section.busola-section-discover {
         }
     }
 }
+
+/* 4. Responsywny widok mobilny dla niezalogowanych (< 768px) */
+@media (max-width: 767.98px) {
+    .busola-guest-hero {
+        position: relative !important;
+        overflow: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+
+        .busola-guest-radar {
+            position: absolute !important;
+            max-width: 240px !important;
+            max-height: 240px !important;
+            width: 240px !important;
+            height: 240px !important;
+            right: -30px !important;
+            top: -40px !important;
+            pointer-events: none !important;
+            overflow: hidden !important;
+        }
+
+        .busola-guest-hero-container {
+            padding: 24px 16px 0 !important;
+            gap: 16px !important;
+        }
+
+        .busola-guest-hero-content {
+            flex: 1 1 100% !important;
+            width: 100% !important;
+
+            .busola-guest-hero-title {
+                font-size: 36px !important;
+                line-height: 1.05 !important;
+                letter-spacing: -.025em !important;
+            }
+
+            .busola-guest-hero-subtitle {
+                font-size: 16px !important;
+                margin-top: 10px !important;
+                line-height: 1.45 !important;
+            }
+
+            .busola-guest-hero-actions {
+                margin-top: 18px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 10px !important;
+                width: 100% !important;
+
+                .busola-btn-primary {
+                    width: 100% !important;
+                    min-height: 50px !important;
+                    justify-content: center !important;
+                    box-sizing: border-box !important;
+                    font-size: 16px !important;
+                }
+
+                .busola-btn-secondary {
+                    width: 100% !important;
+                    min-height: 48px !important;
+                    justify-content: center !important;
+                    box-sizing: border-box !important;
+                    font-size: 16px !important;
+                }
+            }
+        }
+
+        .busola-howitworks-card {
+            display: none !important;
+        }
+
+        .busola-guest-wave {
+            display: block !important;
+            vertical-align: bottom !important;
+            width: 100% !important;
+            height: 32px !important;
+            margin-top: 20px !important;
+            margin-bottom: -1px !important;
+            position: relative !important;
+
+            path {
+                fill: var(--busola-bg-canvas) !important;
+            }
+        }
+    }
+
+    .busola-guest-wrapper .busola-main-container {
+        padding: 12px 16px 32px !important;
+        gap: 28px !important;
+    }
+
+    .busola-guest-courses-section {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+
+        .busola-section-title {
+            font-size: 22px !important;
+            margin-bottom: 12px !important;
+        }
+
+        .busola-guest-courses-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 10px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .busola-guest-card {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            padding: 12px !important;
+            border-radius: 18px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            gap: 14px !important;
+            box-shadow: 0 1px 2px rgba(20, 27, 94, .06), 0 6px 16px rgba(20, 27, 94, .05) !important;
+
+            .busola-guest-card-header {
+                flex: 0 0 72px !important;
+                width: 72px !important;
+                height: 60px !important;
+                min-height: 60px !important;
+                border-radius: 12px !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+
+                .busola-guest-card-badge {
+                    display: none !important;
+                }
+
+                .busola-guest-card-img,
+                .busola-guest-card-svg {
+                    width: 58px !important;
+                    height: 36px !important;
+                    max-width: 58px !important;
+                    max-height: 36px !important;
+                    object-fit: contain !important;
+                    margin: 0 !important;
+                }
+            }
+
+            .busola-guest-card-body {
+                padding: 0 !important;
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+
+                .busola-guest-card-cat-label {
+                    display: block !important;
+                    font-size: 11px !important;
+                    font-weight: 700 !important;
+                    color: var(--busola-text-secondary) !important;
+                    margin-bottom: 2px !important;
+                }
+
+                .busola-guest-card-title {
+                    font-size: 16px !important;
+                    font-weight: 700 !important;
+                    color: var(--busola-text-primary) !important;
+                    line-height: 1.2 !important;
+                    min-height: 0 !important;
+                    margin: 0 !important;
+                    white-space: normal !important;
+                }
+
+                .busola-guest-card-footer {
+                    display: none !important;
+                }
+            }
+
+            .busola-guest-card-arrow {
+                display: block !important;
+                flex: 0 0 20px !important;
+                color: var(--busola-text-primary) !important;
+                margin-left: auto !important;
+            }
+        }
+    }
+}
+
 
 
 

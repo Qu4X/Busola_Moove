@@ -45,6 +45,20 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return string HTML fragment.
      */
     public function standard_head_html() {
+        global $CFG;
+        $versionfile = $CFG->dirroot . '/theme/ebusola/version.php';
+        if (is_readable($versionfile)) {
+            $plugin = new \stdClass();
+            include($versionfile);
+            if (!empty($plugin->version)) {
+                $compiledver = (int) get_config('theme_ebusola', 'compiled_theme_version');
+                if ($compiledver !== (int) $plugin->version) {
+                    set_config('compiled_theme_version', (int) $plugin->version, 'theme_ebusola');
+                    theme_reset_all_caches();
+                }
+            }
+        }
+
         $output = parent::standard_head_html();
 
         $googleanalyticscode = "<script
