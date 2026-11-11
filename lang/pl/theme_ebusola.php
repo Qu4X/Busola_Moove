@@ -128,3 +128,27 @@ $string['kokpit_event_title'] = 'NAJBLIŻSZE WYDARZENIE';
 $string['kokpit_event_info_link'] = 'Informacje o egzaminach';
 $string['kokpit_edit_zone_title'] = 'Zarządzanie kokpitem';
 $string['kokpit_edit_zone_desc'] = 'Sekcja widoczna dla administratorów w trybie edycji (dodawanie i konfiguracja bloków kokpitu).';
+
+// Napisy widoku Moje kursy (/my/courses.php).
+$string['mycourses_page_title'] = 'Moje kursy';
+$string['mycourses_search_placeholder'] = 'Szukaj kursu';
+$string['mycourses_search_aria'] = 'Szukaj kursu';
+$string['mycourses_filter_aria'] = 'Filtruj kursy';
+$string['mycourses_filter_all'] = 'Wszystkie kursy';
+$string['mycourses_filter_inprogress'] = 'W trakcie';
+$string['mycourses_filter_notstarted'] = 'Nierozpoczęte';
+$string['mycourses_filter_completed'] = 'Ukończone';
+$string['mycourses_filter_favourites'] = 'Ulubione';
+$string['mycourses_sort_aria'] = 'Sortuj kursy';
+$string['mycourses_sort_name'] = 'Sortuj: nazwa';
+$string['mycourses_sort_lastaccess'] = 'Sortuj: ostatnio otwarte';
+$string['mycourses_view_grid'] = 'Widok kart';
+$string['mycourses_view_list'] = 'Widok listy';
+$string['mycourses_not_started'] = 'Jeszcze nie zacząłeś';
+$string['mycourses_completed'] = 'Ukończono';
+$string['mycourses_fav_add'] = 'Dodaj do ulubionych: {$a}';
+$string['mycourses_fav_remove'] = 'Usuń z ulubionych: {$a}';
+$string['mycourses_no_results'] = 'Brak kursów spełniających wybrane kryteria.';
+$string['mycourses_edit_zone_title'] = 'Zarządzanie stroną Moje kursy';
+$string['mycourses_edit_zone_desc'] = 'Sekcja widoczna dla administratorów w trybie edycji (dodawanie i konfiguracja bloków).';
+

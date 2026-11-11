@@ -108,8 +108,10 @@ $ismyindex = ($PAGE->pagetype === 'my-index' && !$ismycoursespage);
 
 $isbusoladashboard = false;
 $isbusolakokpit = false;
+$isbusolamycourses = false;
 $busolahub = null;
 $busolakokpit = null;
+$busolamycourses = null;
 
 if (isloggedin() && !isguestuser()) {
     if ($issiteindex) {
@@ -124,6 +126,13 @@ if (isloggedin() && !isguestuser()) {
             $isbusolakokpit = true;
             $extraclasses[] = 'has-busola-dashboard';
             $extraclasses[] = 'has-busola-kokpit';
+        }
+    } else if ($ismycoursespage) {
+        $busolamycourses = \theme_ebusola\util\busola::get_mycourses_page_context();
+        if ($busolamycourses) {
+            $isbusolamycourses = true;
+            $extraclasses[] = 'has-busola-dashboard';
+            $extraclasses[] = 'has-busola-mycourses';
         }
     }
 }
@@ -166,6 +175,11 @@ if ($isbusoladashboard) {
 if ($isbusolakokpit) {
     $templatecontext['is_busola_kokpit'] = true;
     $templatecontext['busola_kokpit'] = $busolakokpit;
+}
+
+if ($isbusolamycourses) {
+    $templatecontext['is_busola_mycourses'] = true;
+    $templatecontext['busola_mycourses'] = $busolamycourses;
 }
 
 echo $OUTPUT->render_from_template('theme_ebusola/drawers', $templatecontext);

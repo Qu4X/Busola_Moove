@@ -153,6 +153,30 @@ $string['kokpit_event_title'] = 'UPCOMING EVENT';
 $string['kokpit_event_info_link'] = 'Exam information';
 $string['kokpit_edit_zone_title'] = 'Kokpit management';
 $string['kokpit_edit_zone_desc'] = 'Section visible to administrators in edit mode (add and configure kokpit blocks).';
+
+// My courses page (/my/courses.php) strings.
+$string['mycourses_page_title'] = 'My courses';
+$string['mycourses_search_placeholder'] = 'Search courses';
+$string['mycourses_search_aria'] = 'Search courses';
+$string['mycourses_filter_aria'] = 'Filter courses';
+$string['mycourses_filter_all'] = 'All courses';
+$string['mycourses_filter_inprogress'] = 'In progress';
+$string['mycourses_filter_notstarted'] = 'Not started';
+$string['mycourses_filter_completed'] = 'Completed';
+$string['mycourses_filter_favourites'] = 'Favourites';
+$string['mycourses_sort_aria'] = 'Sort courses';
+$string['mycourses_sort_name'] = 'Sort: name';
+$string['mycourses_sort_lastaccess'] = 'Sort: last accessed';
+$string['mycourses_view_grid'] = 'Card view';
+$string['mycourses_view_list'] = 'List view';
+$string['mycourses_not_started'] = 'Not started yet';
+$string['mycourses_completed'] = 'Completed';
+$string['mycourses_fav_add'] = 'Add to favourites: {$a}';
+$string['mycourses_fav_remove'] = 'Remove from favourites: {$a}';
+$string['mycourses_no_results'] = 'No courses match the selected criteria.';
+$string['mycourses_edit_zone_title'] = 'My courses page management';
+$string['mycourses_edit_zone_desc'] = 'Section visible to administrators in edit mode (add and configure blocks).';
+
 $string['enablewhatsappbutton'] = 'Enable WhatsApp floating button';
 $string['enablewhatsappbutton_desc'] = 'Show a floating WhatsApp contact button on every page, using the WhatsApp number configured above.';
 $string['facebook'] = 'Facebook URL';

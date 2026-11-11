@@ -3682,7 +3682,8 @@ body.darkmode {
     width: 100%;
 }
 
-.has-busola-kokpit {
+.has-busola-kokpit,
+.has-busola-mycourses {
     #page {
         padding: 0 !important;
         max-width: 100% !important;
@@ -4268,7 +4269,556 @@ body.darkmode,
     }
 }
 
+/* ==========================================================================
+   WIDOK 3: MOJE KURSY (/my/courses.php)
+   ========================================================================== */
+.busola-mycourses-wrapper {
+    background-color: var(--busola-bg-canvas);
+    min-height: calc(100vh - 72px);
+    width: 100%;
+    color: var(--busola-text-body, #3A4163);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.busola-mycourses-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 32px 72px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.busola-mycourses-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 24px;
+
+    .busola-mycourses-title {
+        margin: 0;
+        font-size: 44px;
+        line-height: 1.08;
+        font-weight: 800;
+        letter-spacing: -.025em;
+        color: var(--busola-text-primary, #141B5E);
+    }
+
+    .busola-mycourses-summary {
+        font-size: 15px;
+        color: var(--busola-text-secondary, #5B6280);
+    }
+}
+
+.busola-mycourses-toolbar {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+
+    .busola-mycourses-search-wrap {
+        flex: 1 1 300px;
+        min-width: 0;
+        position: relative;
+
+        .busola-mycourses-search-icon {
+            position: absolute;
+            left: 16px;
+            top: 14px;
+            pointer-events: none;
+            stroke: var(--busola-text-secondary, #5B6280);
+        }
+
+        .busola-mycourses-search-input {
+            width: 100%;
+            box-sizing: border-box;
+            height: 48px;
+            padding: 0 16px 0 46px;
+            border: 0;
+            border-radius: 14px;
+            background: var(--busola-card-bg, #FFFFFF);
+            font-family: inherit;
+            font-size: 16px;
+            color: var(--busola-text-primary, #141B5E);
+            box-shadow: var(--busola-shadow-sm, 0 1px 2px rgba(20,27,94,.06));
+            outline: none;
+            transition: box-shadow .18s ease;
+
+            &:focus {
+                box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.35);
+            }
+
+            &::placeholder {
+                color: var(--busola-text-secondary, #5B6280);
+                opacity: 0.8;
+            }
+        }
+    }
+
+    .busola-mycourses-select {
+        height: 48px;
+        padding: 0 16px;
+        border: 0;
+        border-radius: 14px;
+        background: var(--busola-card-bg, #FFFFFF);
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--busola-text-primary, #141B5E);
+        box-shadow: var(--busola-shadow-sm, 0 1px 2px rgba(20,27,94,.06));
+        cursor: pointer;
+        outline: none;
+        transition: box-shadow .18s ease;
+
+        &:focus {
+            box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.35);
+        }
+    }
+
+    .busola-mycourses-view-switch {
+        display: flex;
+        background: var(--busola-card-bg, #FFFFFF);
+        border-radius: 14px;
+        padding: 4px;
+        box-shadow: var(--busola-shadow-sm, 0 1px 2px rgba(20,27,94,.06));
+
+        .busola-mycourses-view-btn {
+            width: 44px;
+            height: 40px;
+            border: 0;
+            border-radius: 10px;
+            background: transparent;
+            color: var(--busola-text-primary, #141B5E);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color .18s ease, color .18s ease;
+
+            &.is-active {
+                background: var(--busola-primary-dark, #141B5E);
+                color: #FFFFFF;
+            }
+
+            &:not(.is-active):hover {
+                background: var(--busola-cat-sail-bg, #E3E8FB);
+            }
+        }
+    }
+}
+
+.busola-mycourses-sections {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.busola-mycourses-category {
+    .busola-mycourses-cat-title {
+        margin: 0 0 20px;
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: -.01em;
+        color: var(--busola-text-primary, #141B5E);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .busola-mycourses-cat-badge {
+            padding: 2px 10px;
+            border-radius: 999px;
+            background: var(--busola-cat-sail-bg, #E3E8FB);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--busola-text-primary, #141B5E);
+        }
+    }
+}
+
+.busola-mycourses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.busola-mycourses-card-item {
+    position: relative;
+}
+
+.busola-mycourses-card {
+    display: block;
+    background: var(--busola-card-bg, #FFFFFF);
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--busola-text-body, #3A4163);
+    box-shadow: 0 1px 2px rgba(20,27,94,.06), 0 8px 24px rgba(20,27,94,.06);
+    transition: transform .18s ease, box-shadow .18s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 2px 4px rgba(20,27,94,.08), 0 16px 36px rgba(20,27,94,.12);
+        text-decoration: none;
+        color: var(--busola-text-body, #3A4163);
+    }
+
+    .busola-mycourses-card-thumb {
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+
+        .busola-mycourses-thumb-svg {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .busola-mycourses-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .busola-mycourses-card-body {
+        padding: 18px 22px 22px;
+
+        .busola-mycourses-card-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--busola-text-primary, #141B5E);
+            line-height: 1.25;
+        }
+
+        .busola-mycourses-card-progress {
+            margin-top: 12px;
+
+            .busola-mycourses-notstarted {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--busola-text-secondary, #5B6280);
+
+                .busola-mycourses-dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 4px;
+                    background: var(--busola-primary-brand, #FF7A1A);
+                    flex-shrink: 0;
+                }
+            }
+
+            .busola-mycourses-prog-row {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+
+                .busola-mycourses-segments {
+                    flex: 1;
+                    display: flex;
+                    gap: 4px;
+
+                    .busola-mycourses-seg {
+                        flex: 1;
+                        height: 8px;
+                        border-radius: 4px;
+                        background: #E3E7F4;
+                        transition: background-color .18s ease;
+
+                        &.is-done {
+                            background: var(--busola-primary-brand, #FF7A1A);
+                        }
+                    }
+                }
+
+                .busola-mycourses-prog-text {
+                    font-size: 14px;
+                    font-weight: 700;
+                    color: var(--busola-text-primary, #141B5E);
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+}
+
+.busola-mycourses-fav-btn {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 22px;
+    background: var(--busola-card-bg, #FFFFFF);
+    color: var(--busola-text-primary, #141B5E);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(20,27,94,.12);
+    transition: transform .18s ease, box-shadow .18s ease, color .18s ease;
+    z-index: 2;
+
+    &:hover {
+        transform: scale(1.08);
+        box-shadow: 0 4px 12px rgba(20,27,94,.18);
+    }
+
+    &.is-fav {
+        color: var(--busola-primary-brand, #FF7A1A);
+    }
+}
+
+/* Widok listy */
+.busola-mycourses-sections.is-list-view {
+    .busola-mycourses-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .busola-mycourses-card-item {
+        display: flex;
+        align-items: center;
+        background: var(--busola-card-bg, #FFFFFF);
+        border-radius: 20px;
+        box-shadow: 0 1px 2px rgba(20,27,94,.06), 0 8px 24px rgba(20,27,94,.06);
+        padding: 12px 18px 12px 12px;
+        transition: transform .18s ease, box-shadow .18s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(20,27,94,.08), 0 16px 36px rgba(20,27,94,.12);
+        }
+    }
+
+    .busola-mycourses-card {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+        flex: 1 1 auto;
+        min-width: 0;
+        box-shadow: none !important;
+        border-radius: 0;
+        background: transparent;
+        transform: none !important;
+
+        .busola-mycourses-card-thumb {
+            width: 130px;
+            height: 82px;
+            flex: 0 0 130px;
+            border-radius: 12px;
+
+            .busola-mycourses-thumb-svg {
+                transform: scale(0.85);
+                margin-top: 0;
+            }
+        }
+
+        .busola-mycourses-card-body {
+            padding: 0;
+            display: flex;
+            flex: 1 1 auto;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            min-width: 0;
+
+            .busola-mycourses-card-title {
+                font-size: 18px;
+                flex: 1 1 auto;
+            }
+
+            .busola-mycourses-card-progress {
+                margin-top: 0;
+                flex: 0 0 260px;
+                width: 260px;
+            }
+        }
+    }
+
+    .busola-mycourses-fav-btn {
+        position: static;
+        flex: 0 0 44px;
+        margin-left: 16px;
+        box-shadow: none;
+        background: var(--busola-surface-subtle, #F5F6FB);
+
+        &:hover {
+            box-shadow: 0 2px 8px rgba(20,27,94,.12);
+        }
+    }
+}
+
+.busola-mycourses-empty {
+    padding: 48px 24px;
+    text-align: center;
+    background: var(--busola-card-bg, #FFFFFF);
+    border-radius: 20px;
+    box-shadow: 0 1px 2px rgba(20,27,94,.06);
+
+    .busola-mycourses-empty-text {
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--busola-text-secondary, #5B6280);
+        margin: 0;
+    }
+}
+
+/* Dark mode dla Moich kursów */
+body.moove-darkmode,
+[data-bs-theme="dark"],
+html[data-bs-theme="dark"],
+body.darkmode,
+[data-colourmode="dark"] {
+    .busola-mycourses-wrapper {
+        background-color: var(--busola-bg, #0F1333);
+    }
+
+    .busola-mycourses-header {
+        .busola-mycourses-title {
+            color: #FFFFFF !important;
+        }
+        .busola-mycourses-summary {
+            color: #A6B0D5 !important;
+        }
+    }
+
+    .busola-mycourses-toolbar {
+        .busola-mycourses-search-wrap {
+            .busola-mycourses-search-icon {
+                stroke: #A6B0D5 !important;
+            }
+            .busola-mycourses-search-input {
+                background: #1A1F4D !important;
+                color: #FFFFFF !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                box-shadow: none !important;
+
+                &::placeholder {
+                    color: #A6B0D5 !important;
+                }
+            }
+        }
+
+        .busola-mycourses-select {
+            background: #1A1F4D !important;
+            color: #FFFFFF !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: none !important;
+
+            option {
+                background: #1A1F4D;
+                color: #FFFFFF;
+            }
+        }
+
+        .busola-mycourses-view-switch {
+            background: #1A1F4D !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+
+            .busola-mycourses-view-btn {
+                color: #A6B0D5 !important;
+
+                &.is-active {
+                    background: #FF7A1A !important;
+                    color: #141B5E !important;
+                }
+
+                &:not(.is-active):hover {
+                    background: rgba(255, 255, 255, 0.1) !important;
+                }
+            }
+        }
+    }
+
+    .busola-mycourses-category {
+        .busola-mycourses-cat-title {
+            color: #FFFFFF !important;
+
+            .busola-mycourses-cat-badge {
+                background: rgba(255, 255, 255, 0.12) !important;
+                color: #FFFFFF !important;
+            }
+        }
+    }
+
+    .busola-mycourses-card {
+        background: #1A1F4D !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+
+        .busola-mycourses-card-body {
+            .busola-mycourses-card-title {
+                color: #FFFFFF !important;
+            }
+
+            .busola-mycourses-card-progress {
+                .busola-mycourses-notstarted {
+                    color: #A6B0D5 !important;
+                }
+
+                .busola-mycourses-prog-row {
+                    .busola-mycourses-segments .busola-mycourses-seg {
+                        background: rgba(255, 255, 255, 0.16) !important;
+
+                        &.is-done {
+                            background: #FF7A1A !important;
+                        }
+                    }
+
+                    .busola-mycourses-prog-text {
+                        color: #FFFFFF !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .busola-mycourses-fav-btn {
+        background: #1A1F4D !important;
+        color: #FFFFFF !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+
+        &.is-fav {
+            color: #FF7A1A !important;
+        }
+    }
+
+    .busola-mycourses-sections.is-list-view {
+        .busola-mycourses-card-item {
+            background: #1A1F4D !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        }
+        .busola-mycourses-card {
+            background: transparent !important;
+            border: 0 !important;
+        }
+        .busola-mycourses-fav-btn {
+            background: rgba(255, 255, 255, 0.08) !important;
+        }
+    }
+
+    .busola-mycourses-empty {
+        background: #1A1F4D !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+
+        .busola-mycourses-empty-text {
+            color: #A6B0D5 !important;
+        }
+    }
+}
+
 /* 4. Responsywny widok mobilny dla niezalogowanych (< 768px) */
+
 @media (max-width: 767.98px) {
     .busola-guest-hero {
         position: relative !important;

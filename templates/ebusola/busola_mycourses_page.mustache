@@ -1,0 +1,363 @@
+{{!
+    Szablon widoku Moje kursy (/my/courses.php) motywu eBusola.
+    Wszystkie kursy, postęp, sekcje, kategorie i ulubione pobierane dynamicznie z Moodle API/DB (AGENTS.md).
+}}
+<div class="busola-mycourses-wrapper">
+    {{#busola_mycourses}}
+    <main class="busola-mycourses-container">
+        <!-- 1. NAGŁÓWEK I PODSUMOWANIE -->
+        <div class="busola-mycourses-header">
+            <h1 class="busola-mycourses-title">{{#str}}mycourses_page_title, theme_ebusola{{/str}}</h1>
+            <span class="busola-mycourses-summary">{{summary_text}}</span>
+        </div>
+
+        <!-- 2. PASEK NARZĘDZI (WYSZUKIWARKA, FILTRY, SORTOWANIE, PRZEŁĄCZNIK WIDOKU) -->
+        <div class="busola-mycourses-toolbar">
+            <div class="busola-mycourses-search-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5B6280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="busola-mycourses-search-icon">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="M20 20l-4-4"></path>
+                </svg>
+                <input type="search" class="busola-mycourses-search-input" id="busola-mycourses-search" aria-label="{{#str}}mycourses_search_aria, theme_ebusola{{/str}}" placeholder="{{#str}}mycourses_search_placeholder, theme_ebusola{{/str}}">
+            </div>
+
+            <select class="busola-mycourses-select" id="busola-mycourses-filter" aria-label="{{#str}}mycourses_filter_aria, theme_ebusola{{/str}}">
+                <option value="all">{{#str}}mycourses_filter_all, theme_ebusola{{/str}}</option>
+                <option value="inprogress">{{#str}}mycourses_filter_inprogress, theme_ebusola{{/str}}</option>
+                <option value="notstarted">{{#str}}mycourses_filter_notstarted, theme_ebusola{{/str}}</option>
+                <option value="completed">{{#str}}mycourses_filter_completed, theme_ebusola{{/str}}</option>
+                <option value="favourites">{{#str}}mycourses_filter_favourites, theme_ebusola{{/str}}</option>
+            </select>
+
+            <select class="busola-mycourses-select" id="busola-mycourses-sort" aria-label="{{#str}}mycourses_sort_aria, theme_ebusola{{/str}}">
+                <option value="name">{{#str}}mycourses_sort_name, theme_ebusola{{/str}}</option>
+                <option value="lastaccess">{{#str}}mycourses_sort_lastaccess, theme_ebusola{{/str}}</option>
+            </select>
+
+            <div class="busola-mycourses-view-switch" role="group" aria-label="{{#str}}mycourses_view_grid, theme_ebusola{{/str}}">
+                <button type="button" class="busola-mycourses-view-btn is-active" data-view="grid" aria-label="{{#str}}mycourses_view_grid, theme_ebusola{{/str}}" aria-pressed="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="4" y="4" width="7" height="7" rx="1.5"></rect>
+                        <rect x="13" y="4" width="7" height="7" rx="1.5"></rect>
+                        <rect x="4" y="13" width="7" height="7" rx="1.5"></rect>
+                        <rect x="13" y="13" width="7" height="7" rx="1.5"></rect>
+                    </svg>
+                </button>
+                <button type="button" class="busola-mycourses-view-btn" data-view="list" aria-label="{{#str}}mycourses_view_list, theme_ebusola{{/str}}" aria-pressed="false">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. KATEGORIE I KARTY KURSÓW -->
+        <div class="busola-mycourses-sections" id="busola-mycourses-sections">
+            {{#categories}}
+            <section class="busola-mycourses-category" data-cat-id="{{id}}" aria-labelledby="mk-cat-{{id}}">
+                <h2 id="mk-cat-{{id}}" class="busola-mycourses-cat-title">
+                    {{name}} <span class="busola-mycourses-cat-badge">{{count}}</span>
+                </h2>
+                <div class="busola-mycourses-grid">
+                    {{#courses}}
+                    <div class="busola-mycourses-card-item"
+                         data-course-id="{{id}}"
+                         data-course-name="{{fullname}}"
+                         data-course-title="{{fullname_lower}}"
+                         data-course-status="{{status}}"
+                         data-course-favourite="{{#is_favourite}}1{{/is_favourite}}{{^is_favourite}}0{{/is_favourite}}"
+                         data-course-lastaccess="{{lastaccess}}">
+                        <a href="{{url}}" class="bcard busola-mycourses-card">
+                            <div class="busola-mycourses-card-thumb" style="background: {{bgcolor}};">
+                                {{#hascustomicon}}
+                                    <img src="{{iconurl}}" alt="{{fullname}}" loading="lazy" decoding="async" class="busola-mycourses-card-img" width="170" height="106">
+                                {{/hascustomicon}}
+                                {{^hascustomicon}}
+                                    {{#is_sail}}
+                                        <svg viewBox="0 0 160 100" width="170" height="106" aria-hidden="true" class="busola-mycourses-thumb-svg">
+                                            <path d="M80 8V72" stroke="#141B5E" stroke-width="3" stroke-linecap="round" fill="none"></path>
+                                            <path d="M84 12L84 64L128 64Z" fill="#141B5E"></path>
+                                            <path d="M76 24L76 64L46 64Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                                            <path d="M34 70H130L118 84H48Z" fill="#FF7A1A" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                                            <path d="M14 93 q8 -7 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path>
+                                        </svg>
+                                    {{/is_sail}}
+                                    {{#is_motor}}
+                                        <svg viewBox="0 0 160 100" width="170" height="106" aria-hidden="true" class="busola-mycourses-thumb-svg">
+                                            <rect x="24" y="48" width="12" height="22" rx="3" fill="#FF7A1A" stroke="#141B5E" stroke-width="2.5"></rect>
+                                            <path d="M32 62 H132 L120 80 H48 Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                                            <path d="M66 62 L80 42 H104 L112 62" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                                            <path d="M14 93 q8 -7 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path>
+                                        </svg>
+                                    {{/is_motor}}
+                                    {{#is_extra}}
+                                        <svg viewBox="0 0 160 100" width="170" height="106" aria-hidden="true" class="busola-mycourses-thumb-svg">
+                                            <path d="M104 40V12" stroke="#141B5E" stroke-width="3" stroke-linecap="round" fill="none"></path>
+                                            <path d="M96 18q8-9 16 0M90 12q14-15 28 0" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path>
+                                            <rect x="30" y="40" width="100" height="48" rx="8" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5"></rect>
+                                            <rect x="40" y="49" width="44" height="14" rx="3" fill="#141B5E"></rect>
+                                            <rect x="40" y="70" width="24" height="12" rx="3" fill="#FF7A1A"></rect>
+                                            <circle cx="106" cy="68" r="9" fill="none" stroke="#141B5E" stroke-width="2.5"></circle>
+                                        </svg>
+                                    {{/is_extra}}
+                                {{/hascustomicon}}
+                            </div>
+                            <div class="busola-mycourses-card-body">
+                                <div class="busola-mycourses-card-title">{{fullname}}</div>
+                                <div class="busola-mycourses-card-progress">
+                                    {{#is_not_started}}
+                                        <div class="busola-mycourses-notstarted">
+                                            <span class="busola-mycourses-dot" aria-hidden="true"></span>
+                                            <span>{{#str}}mycourses_not_started, theme_ebusola{{/str}}</span>
+                                        </div>
+                                    {{/is_not_started}}
+                                    {{^is_not_started}}
+                                        <div class="busola-mycourses-prog-row">
+                                            <div class="busola-mycourses-segments" aria-label="{{progress_label}}">
+                                                {{#segments}}
+                                                    <div class="busola-mycourses-seg {{#is_done}}is-done{{/is_done}}"></div>
+                                                {{/segments}}
+                                            </div>
+                                            <span class="busola-mycourses-prog-text">{{progress_label}}</span>
+                                        </div>
+                                    {{/is_not_started}}
+                                </div>
+                            </div>
+                        </a>
+                        <button type="button"
+                                class="busola-mycourses-fav-btn {{#is_favourite}}is-fav{{/is_favourite}}"
+                                data-action="toggle-fav"
+                                data-courseid="{{id}}"
+                                data-coursename="{{fullname}}"
+                                aria-label="{{fav_aria_label}}"
+                                aria-pressed="{{#is_favourite}}true{{/is_favourite}}{{^is_favourite}}false{{/is_favourite}}">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="{{#is_favourite}}#FF7A1A{{/is_favourite}}{{^is_favourite}}none{{/is_favourite}}" stroke="{{#is_favourite}}#FF7A1A{{/is_favourite}}{{^is_favourite}}currentColor{{/is_favourite}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="busola-mycourses-fav-star">
+                                <path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8 6.8 19.6l1-5.8L3.5 9.7l5.9-.8z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    {{/courses}}
+                </div>
+            </section>
+            {{/categories}}
+
+            <div class="busola-mycourses-empty d-none" id="busola-mycourses-empty">
+                <p class="busola-mycourses-empty-text">{{#str}}mycourses_no_results, theme_ebusola{{/str}}</p>
+            </div>
+        </div>
+
+        <!-- 4. STREFA EDYCJI DLA ADMINISTRATORÓW -->
+        {{#user_is_editing}}
+        <section class="busola-editing-zone p-4 mt-4 w-100">
+            <div class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom busola-editing-header">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="busola-editing-icon">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </span>
+                    <div>
+                        <h3 class="busola-editing-title">{{#str}}mycourses_edit_zone_title, theme_ebusola{{/str}}</h3>
+                        <p class="busola-editing-desc">{{#str}}mycourses_edit_zone_desc, theme_ebusola{{/str}}</p>
+                    </div>
+                </div>
+                <span class="badge bg-primary text-white px-3 py-2 busola-editing-badge">{{#str}}edit_zone_badge, theme_ebusola{{/str}}</span>
+            </div>
+
+            <div class="busola-editing-content">
+                {{{ output.main_content }}}
+            </div>
+        </section>
+        {{/user_is_editing}}
+    </main>
+
+    {{> theme_ebusola/ebusola/busola_bottom_nav }}
+    {{/busola_mycourses}}
+</div>
+
+{{#js}}
+require(['core/ajax', 'core/str'], function(Ajax, Str) {
+    var searchInput = document.getElementById('busola-mycourses-search');
+    var filterSelect = document.getElementById('busola-mycourses-filter');
+    var sortSelect = document.getElementById('busola-mycourses-sort');
+    var sectionsWrap = document.getElementById('busola-mycourses-sections');
+    var emptyNotice = document.getElementById('busola-mycourses-empty');
+    var viewBtns = document.querySelectorAll('.busola-mycourses-view-btn');
+
+    // 1. Obsługa przełącznika widoku (Karty vs Lista).
+    var savedView = localStorage.getItem('busola_mycourses_view') || 'grid';
+    function setView(view) {
+        if (!sectionsWrap) return;
+        if (view === 'list') {
+            sectionsWrap.classList.add('is-list-view');
+        } else {
+            sectionsWrap.classList.remove('is-list-view');
+        }
+        viewBtns.forEach(function(btn) {
+            var isCurrent = (btn.getAttribute('data-view') === view);
+            btn.classList.toggle('is-active', isCurrent);
+            btn.setAttribute('aria-pressed', isCurrent ? 'true' : 'false');
+        });
+        localStorage.setItem('busola_mycourses_view', view);
+    }
+    setView(savedView);
+
+    viewBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var targetView = btn.getAttribute('data-view');
+            setView(targetView);
+        });
+    });
+
+    // 2. Filtrowanie i wyszukiwanie na żywo.
+    function applyFilterAndSearch() {
+        if (!sectionsWrap) return;
+        var query = (searchInput ? searchInput.value : '').trim().toLowerCase();
+        var filterVal = (filterSelect ? filterSelect.value : 'all');
+        var sortVal = (sortSelect ? sortSelect.value : 'name');
+
+        var anyVisibleOverall = false;
+        var categories = sectionsWrap.querySelectorAll('.busola-mycourses-category');
+
+        categories.forEach(function(cat) {
+            var grid = cat.querySelector('.busola-mycourses-grid');
+            if (!grid) return;
+
+            var items = Array.from(grid.querySelectorAll('.busola-mycourses-card-item'));
+            var visibleCount = 0;
+
+            items.forEach(function(item) {
+                var title = item.getAttribute('data-course-title') || '';
+                var status = item.getAttribute('data-course-status') || '';
+                var isFav = item.getAttribute('data-course-favourite') === '1';
+
+                var matchesSearch = (!query || title.indexOf(query) !== -1);
+                var matchesFilter = true;
+
+                if (filterVal === 'inprogress') {
+                    matchesFilter = (status === 'inprogress');
+                } else if (filterVal === 'notstarted') {
+                    matchesFilter = (status === 'notstarted');
+                } else if (filterVal === 'completed') {
+                    matchesFilter = (status === 'completed');
+                } else if (filterVal === 'favourites') {
+                    matchesFilter = isFav;
+                }
+
+                if (matchesSearch && matchesFilter) {
+                    item.classList.remove('d-none');
+                    visibleCount++;
+                } else {
+                    item.classList.add('d-none');
+                }
+            });
+
+            // Sortowanie elementów w kategorii.
+            items.sort(function(a, b) {
+                if (sortVal === 'lastaccess') {
+                    var accA = parseInt(a.getAttribute('data-course-lastaccess') || '0', 10);
+                    var accB = parseInt(b.getAttribute('data-course-lastaccess') || '0', 10);
+                    return accB - accA;
+                } else {
+                    var nameA = a.getAttribute('data-course-name') || '';
+                    var nameB = b.getAttribute('data-course-name') || '';
+                    return nameA.localeCompare(nameB, 'pl');
+                }
+            });
+            items.forEach(function(item) {
+                grid.appendChild(item);
+            });
+
+            // Aktualizacja licznika i widoczności kategorii.
+            var badge = cat.querySelector('.busola-mycourses-cat-badge');
+            if (badge) {
+                badge.textContent = visibleCount;
+            }
+
+            if (visibleCount > 0) {
+                cat.classList.remove('d-none');
+                anyVisibleOverall = true;
+            } else {
+                cat.classList.add('d-none');
+            }
+        });
+
+        if (emptyNotice) {
+            if (anyVisibleOverall) {
+                emptyNotice.classList.add('d-none');
+            } else {
+                emptyNotice.classList.remove('d-none');
+            }
+        }
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('input', applyFilterAndSearch);
+    }
+    if (filterSelect) {
+        filterSelect.addEventListener('change', applyFilterAndSearch);
+    }
+    if (sortSelect) {
+        sortSelect.addEventListener('change', applyFilterAndSearch);
+    }
+
+    // 3. Obsługa AJAX dodawania/usuwania z ulubionych.
+    document.addEventListener('click', function(e) {
+        var favBtn = e.target.closest('[data-action="toggle-fav"]');
+        if (!favBtn) return;
+        e.preventDefault();
+        e.stopPropagation();
+
+        var courseId = parseInt(favBtn.getAttribute('data-courseid'), 10);
+        var courseName = favBtn.getAttribute('data-coursename') || '';
+        var cardItem = favBtn.closest('.busola-mycourses-card-item');
+        if (!courseId || !cardItem) return;
+
+        var isCurrentlyFav = (cardItem.getAttribute('data-course-favourite') === '1');
+        var newFavState = !isCurrentlyFav;
+
+        // Natychmiastowa aktualizacja stanu UI (optymistyczna).
+        cardItem.setAttribute('data-course-favourite', newFavState ? '1' : '0');
+        favBtn.classList.toggle('is-fav', newFavState);
+        favBtn.setAttribute('aria-pressed', newFavState ? 'true' : 'false');
+
+        var starSvg = favBtn.querySelector('.busola-mycourses-fav-star');
+        if (starSvg) {
+            starSvg.setAttribute('fill', newFavState ? '#FF7A1A' : 'none');
+            starSvg.setAttribute('stroke', newFavState ? '#FF7A1A' : 'currentColor');
+        }
+
+        // Aktualizacja etykiety dostępności aria-label.
+        var strKey = newFavState ? 'mycourses_fav_remove' : 'mycourses_fav_add';
+        Str.get_string(strKey, 'theme_ebusola', courseName).then(function(s) {
+            favBtn.setAttribute('aria-label', s);
+        });
+
+        // Jeśli aktywny filtr to "favourites", przefiltruj widok.
+        if (filterSelect && filterSelect.value === 'favourites') {
+            applyFilterAndSearch();
+        }
+
+        // Wywołanie Moodle webservice.
+        Ajax.call([{
+            methodname: 'core_course_set_favourite_courses',
+            args: {
+                courses: [{
+                    id: courseId,
+                    favourite: newFavState
+                }]
+            }
+        }])[0].catch(function(err) {
+            // W razie błędu wycofaj zmianę.
+            cardItem.setAttribute('data-course-favourite', isCurrentlyFav ? '1' : '0');
+            favBtn.classList.toggle('is-fav', isCurrentlyFav);
+            favBtn.setAttribute('aria-pressed', isCurrentlyFav ? 'true' : 'false');
+            if (starSvg) {
+                starSvg.setAttribute('fill', isCurrentlyFav ? '#FF7A1A' : 'none');
+                starSvg.setAttribute('stroke', isCurrentlyFav ? '#FF7A1A' : 'currentColor');
+            }
+            if (filterSelect && filterSelect.value === 'favourites') {
+                applyFilterAndSearch();
+            }
+        });
+    });
+});
+{{/js}}

@@ -1059,4 +1059,306 @@ class busola {
         }
         return 'dni';
     }
+
+    /**
+     * Build the context for the My Courses page (/my/courses.php).
+     *
+     * All enrolled courses, visible sections counts, completion progress, favourites,
+     * and category groupings are dynamically pulled from Moodle APIs and the database
+     * without any N+1 queries according to AGENTS.md and ADR 0001.
+     *
+     * @return array|null
+     */
+    public static function get_mycourses_page_context(): ?array {
+        global $USER, $DB;
+
+        if (!isloggedin() || isguestuser()) {
+            return null;
+        }
+
+        $mycourses = enrol_get_my_courses('id, fullname, shortname, category, summary, summaryformat, visible');
+        $courseids = [];
+        $validcourses = [];
+
+        foreach ($mycourses as $course) {
+            if ($course->id == SITEID) {
+                continue;
+            }
+            $cid = (int) $course->id;
+            $courseids[] = $cid;
+            $validcourses[$cid] = $course;
+        }
+
+        if (empty($validcourses)) {
+            return [
+                'has_courses' => false,
+                'total_courses' => 0,
+                'summary_text' => '0 kursów',
+                'categories' => [],
+                'homeurl' => (new moodle_url('/'))->out(false),
+                'dashboardurl' => (new moodle_url('/my/'))->out(false),
+                'allcoursesurl' => (new moodle_url('/my/courses.php'))->out(false),
+                'profileurl' => (new moodle_url('/user/profile.php', ['id' => $USER->id]))->out(false),
+                'is_courses_active' => true,
+            ];
+        }
+
+        // Single SQL query for visible sections count per course.
+        $sectionscounts = [];
+        try {
+            list($insql, $inparams) = $DB->get_in_or_equal($courseids, SQL_PARAMS_NAMED, 'sc');
+            $sql = "
+                SELECT course, COUNT(id) AS total_sections
+                FROM {course_sections}
+                WHERE course $insql AND section > 0 AND visible = 1
+                GROUP BY course
+            ";
+            $secrecs = $DB->get_records_sql($sql, $inparams);
+            foreach ($secrecs as $sr) {
+                $sectionscounts[(int) $sr->course] = (int) $sr->total_sections;
+            }
+        } catch (\Exception $e) {
+            // Silently fall back.
+        }
+
+        // Single SQL query for favourites.
+        $favourites = [];
+        try {
+            list($finsql, $finparams) = $DB->get_in_or_equal($courseids, SQL_PARAMS_NAMED, 'fc');
+            $sql = "
+                SELECT itemid
+                FROM {favourite}
+                WHERE component = 'core_course'
+                  AND itemtype = 'courses'
+                  AND userid = :userid
+                  AND itemid $finsql
+            ";
+            $fparams = array_merge(['userid' => $USER->id], $finparams);
+            $favrecs = $DB->get_records_sql($sql, $fparams);
+            foreach ($favrecs as $fr) {
+                $favourites[(int) $fr->itemid] = true;
+            }
+        } catch (\Exception $e) {
+            // Silently fall back.
+        }
+
+        // Single SQL query for user_lastaccess.
+        $lastaccesses = [];
+        try {
+            list($lainsql, $lainparams) = $DB->get_in_or_equal($courseids, SQL_PARAMS_NAMED, 'lac');
+            $sql = "
+                SELECT courseid, timeaccess
+                FROM {user_lastaccess}
+                WHERE userid = :userid
+                  AND courseid $lainsql
+            ";
+            $laparams = array_merge(['userid' => $USER->id], $lainparams);
+            $larecs = $DB->get_records_sql($sql, $laparams);
+            foreach ($larecs as $lr) {
+                $lastaccesses[(int) $lr->courseid] = (int) $lr->timeaccess;
+            }
+        } catch (\Exception $e) {
+            // Silently fall back.
+        }
+
+        // All visible categories.
+        $catmap = self::get_all_categories_map();
+        $catorder = [];
+        try {
+            $catrecs = $DB->get_records('course_categories', ['visible' => 1], 'sortorder ASC', 'id, name, sortorder');
+            foreach ($catrecs as $cr) {
+                $catorder[(int) $cr->id] = (int) $cr->sortorder;
+            }
+        } catch (\Exception $e) {
+            // Silently fall back.
+        }
+
+        // Process courses and group by category.
+        $categorygroups = [];
+        foreach ($validcourses as $cid => $course) {
+            $catid = (int) ($course->category ?? 0);
+            $catname = $catmap[$catid] ?? '';
+            if (empty($catname)) {
+                $catname = get_string('course_cat_default', 'theme_ebusola');
+                if (empty($catname) || $catname === '[[course_cat_default]]') {
+                    $catname = 'Kursy';
+                }
+            }
+
+            // Category color and illustration.
+            $shortname = strtoupper(trim($course->shortname ?? ''));
+            $fullname = format_string($course->fullname);
+            $fullnamelower = mb_strtolower($fullname);
+            $catnamelower = mb_strtolower($catname);
+
+            if (str_contains($catnamelower, 'motor') || (!str_contains($catnamelower, 'żegl') && !str_contains($catnamelower, 'zegl') && ($shortname === 'SM' || $shortname === 'MSM' || str_contains($fullnamelower, 'motorowod')))) {
+                $illustration = 'motor';
+                $bgcolor = 'var(--busola-cat-motor-bg)';
+            } else if (str_contains($catnamelower, 'dodatk') || str_contains($catnamelower, 'radio') || str_contains($shortname, 'SRC') || str_contains($fullnamelower, 'radio')) {
+                $illustration = 'extra';
+                $bgcolor = 'var(--busola-cat-extra-bg)';
+            } else {
+                $illustration = 'sail';
+                $bgcolor = 'var(--busola-cat-sail-bg)';
+            }
+
+            // Course image from overviewfiles.
+            $iconurl = null;
+            try {
+                $coursecontext = \context_course::instance($cid);
+                $fs = get_file_storage();
+                $files = $fs->get_area_files($coursecontext->id, 'course', 'overviewfiles', 0, 'itemid, filepath, filename', false);
+                foreach ($files as $file) {
+                    if ($file->is_valid_image()) {
+                        $iconurl = \moodle_url::make_file_url(
+                            '/pluginfile.php',
+                            '/' . $file->get_contextid() . '/' . $file->get_component() . '/' . $file->get_filearea() . $file->get_filepath() . $file->get_filename()
+                        )->out(false);
+                        break;
+                    }
+                }
+            } catch (\Exception $e) {
+                // Silently fall back.
+            }
+
+            // Completion progress.
+            $progress = null;
+            if (class_exists('\core_completion\progress')) {
+                $progress = \core_completion\progress::get_course_progress_percentage($course, $USER->id);
+            }
+            $progressval = !is_null($progress) ? (int) round($progress) : 0;
+
+            // Visible sections count: default to 6 if 0.
+            $totalsections = $sectionscounts[$cid] ?? 0;
+            if ($totalsections <= 0) {
+                $totalsections = 6;
+            }
+
+            $isnotstarted = ($progressval === 0);
+            $iscompleted = ($progressval >= 100);
+            $isinprogress = ($progressval > 0 && $progressval < 100);
+
+            if ($iscompleted) {
+                $status = 'completed';
+            } else if ($isinprogress) {
+                $status = 'inprogress';
+            } else {
+                $status = 'notstarted';
+            }
+
+            // Segments calculation.
+            $displaysegments = min(12, max(1, $totalsections));
+            $completedsegments = (int) round(($progressval / 100) * $displaysegments);
+            if ($isinprogress && $completedsegments === 0) {
+                $completedsegments = 1;
+            }
+            if ($isinprogress && $completedsegments === $displaysegments) {
+                $completedsegments = max(1, $displaysegments - 1);
+            }
+            if ($iscompleted) {
+                $completedsegments = $displaysegments;
+            }
+
+            $segments = [];
+            for ($s = 1; $s <= $displaysegments; $s++) {
+                $segments[] = [
+                    'is_done' => ($s <= $completedsegments),
+                ];
+            }
+
+            $completedactual = (int) round(($progressval / 100) * $totalsections);
+            if ($isinprogress && $completedactual === 0) {
+                $completedactual = 1;
+            }
+            if ($isinprogress && $completedactual === $totalsections) {
+                $completedactual = max(1, $totalsections - 1);
+            }
+
+            if ($iscompleted) {
+                $progresslabel = get_string('mycourses_completed', 'theme_ebusola') . ' (' . $totalsections . ' z ' . $totalsections . ')';
+            } else if ($isinprogress) {
+                $progresslabel = $completedactual . ' z ' . $totalsections;
+            } else {
+                $progresslabel = '';
+            }
+
+            $isfavourite = !empty($favourites[$cid]);
+            $favarialabel = $isfavourite
+                ? get_string('mycourses_fav_remove', 'theme_ebusola', $fullname)
+                : get_string('mycourses_fav_add', 'theme_ebusola', $fullname);
+
+            $lastaccess = $lastaccesses[$cid] ?? 0;
+
+            $coursedata = [
+                'id' => $cid,
+                'fullname' => $fullname,
+                'fullname_lower' => $fullnamelower,
+                'shortname' => $course->shortname,
+                'url' => (new moodle_url('/course/view.php', ['id' => $cid]))->out(false),
+                'categoryname' => $catname,
+                'bgcolor' => $bgcolor,
+                'iconurl' => $iconurl,
+                'hascustomicon' => !empty($iconurl),
+                'illustration' => $illustration,
+                'is_sail' => ($illustration === 'sail'),
+                'is_motor' => ($illustration === 'motor'),
+                'is_extra' => ($illustration === 'extra'),
+                'progress' => $progressval,
+                'is_not_started' => $isnotstarted,
+                'is_in_progress' => $isinprogress,
+                'is_completed' => $iscompleted,
+                'status' => $status,
+                'total_sections' => $totalsections,
+                'completed_sections' => $completedactual,
+                'segments' => $segments,
+                'progress_label' => $progresslabel,
+                'is_favourite' => $isfavourite,
+                'fav_aria_label' => $favarialabel,
+                'lastaccess' => $lastaccess,
+            ];
+
+            if (!isset($categorygroups[$catid])) {
+                $categorygroups[$catid] = [
+                    'id' => $catid,
+                    'name' => $catname,
+                    'sortorder' => $catorder[$catid] ?? $catid,
+                    'courses' => [],
+                ];
+            }
+            $categorygroups[$catid]['courses'][] = $coursedata;
+        }
+
+        // Sort categories by sortorder.
+        uasort($categorygroups, function($a, $b) {
+            return ($a['sortorder'] ?? 0) <=> ($b['sortorder'] ?? 0);
+        });
+
+        $categories = [];
+        foreach ($categorygroups as $cg) {
+            $cg['count'] = count($cg['courses']);
+            $categories[] = $cg;
+        }
+
+        $totalcourses = count($validcourses);
+        $totalcategories = count($categories);
+
+        $coursestext = self::pluralize_courses($totalcourses);
+        $categoriestext = ($totalcategories === 1) ? '1 kategorii' : ($totalcategories . ' kategoriach');
+        $summarytext = $coursestext . ' w ' . $categoriestext;
+
+        return [
+            'has_courses' => true,
+            'total_courses' => $totalcourses,
+            'total_categories' => $totalcategories,
+            'summary_text' => $summarytext,
+            'categories' => $categories,
+            'homeurl' => (new moodle_url('/'))->out(false),
+            'dashboardurl' => (new moodle_url('/my/'))->out(false),
+            'allcoursesurl' => (new moodle_url('/my/courses.php'))->out(false),
+            'profileurl' => (new moodle_url('/user/profile.php', ['id' => $USER->id]))->out(false),
+            'messagesurl' => (new moodle_url('/message/index.php'))->out(false),
+            'is_courses_active' => true,
+        ];
+    }
+
 }
