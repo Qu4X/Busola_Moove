@@ -6,6 +6,10 @@
 [data-bs-theme="light"] {
     // 1. Podstawowe powierzchnie (Surfaces)
     --busola-bg-canvas: #F5F6FB;
+    --busola-navbar-bg: #FFFFFF;
+    --busola-navbar-border: rgba(20, 27, 94, 0.08);
+    --busola-navbar-link: #5B6280;
+    --busola-navbar-link-active: #141B5E;
     --busola-surface-card: #FFFFFF;
     --busola-surface-subtle: #F1F4FA;
     --busola-surface-hover: #F0F2FC;
@@ -69,19 +73,30 @@
     --busola-edit-zone-border: #CBD1F3;
     --busola-edit-zone-title: #141B5E;
     --busola-edit-zone-sub: #5B6280;
+
+    // 11. Zmienne bazowe kompatybilności z motywem Moove
+    --moove-navbar-bg-color: #FFFFFF;
 }
 
-[data-bs-theme="dark"] {
-    // 1. Podstawowe powierzchnie (Surfaces)
-    --busola-bg-canvas: #0B0E2A;
-    --busola-surface-card: #15193B;
-    --busola-surface-subtle: #1C224B;
-    --busola-surface-hover: #262D63;
-    --busola-surface-selected: #2B233D;
-    --busola-surface-border: #2D3768;
+[data-bs-theme="dark"],
+html[data-bs-theme="dark"],
+body.moove-darkmode,
+body.darkmode,
+[data-colourmode="dark"] {
+    // 1. Podstawowe powierzchnie (Surfaces - per makieta DarkHeader)
+    --busola-bg-canvas: #0A0E2A;
+    --busola-navbar-bg: #0D1236;
+    --busola-navbar-border: rgba(255, 255, 255, 0.08);
+    --busola-navbar-link: #A9B0D6;
+    --busola-navbar-link-active: #FFFFFF;
+    --busola-surface-card: #141A48;
+    --busola-surface-subtle: #1B2256;
+    --busola-surface-hover: #1E2660;
+    --busola-surface-selected: #242D70;
+    --busola-surface-border: rgba(255, 255, 255, 0.1);
 
-    // 2. Sekcja Hero
-    --busola-hero-bg: #07091C;
+    // 2. Sekcja Hero (per makieta DarkHeader: #131B63)
+    --busola-hero-bg: #131B63;
     --busola-hero-title: #FFFFFF;
     --busola-hero-subtitle: #CBD1F3;
     --busola-hero-pill-bg: rgba(255, 255, 255, 0.12);
@@ -89,9 +104,9 @@
 
     // 3. Typografia i teksty
     --busola-text-primary: #FFFFFF;
-    --busola-text-secondary: #94A3B8;
-    --busola-text-muted: #64748B;
-    --busola-text-inverse: #0B0E2A;
+    --busola-text-secondary: #A9B0D6;
+    --busola-text-muted: #8890B5;
+    --busola-text-inverse: #0A0E2A;
 
     // 4. Akcenty marki Busola
     --busola-accent-orange: #FF7A1A;
@@ -133,10 +148,14 @@
     --busola-progress-bar-active: #FF7A1A;
 
     // 10. Strefa edycyjna
-    --busola-edit-zone-bg: #15193B;
-    --busola-edit-zone-border: #2D3768;
+    --busola-edit-zone-bg: #141A48;
+    --busola-edit-zone-border: #242B5C;
     --busola-edit-zone-title: #FFFFFF;
-    --busola-edit-zone-sub: #94A3B8;
+    --busola-edit-zone-sub: #A9B0D6;
+
+    // 11. Nadpisania zmiennych Moove w trybie ciemnym
+    --moove-navbar-bg-color: #0D1236;
+    --moove-secondary-navigation-bg-color: #0A0E2A;
 }
 
 // Stałe tokeny promieni zaokrągleń
