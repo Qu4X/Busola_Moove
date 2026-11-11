@@ -6548,3 +6548,32 @@ body#page-mod-h5pactivity-view {
         overflow: visible;
     }
 }
+
+// H5P: zmniejszenie pustej przestrzeni między tytułem a odtwarzaczem
+body#page-mod-h5pactivity-view {
+    // Kontener przełącznika szuflad zajmuje 55px w przepływie (sam przełącznik jest fixed)
+    .drawer-toggles {
+        height: 0 !important;
+        min-height: 0 !important;
+    }
+
+    #page-header {
+        padding-bottom: 8px !important;
+    }
+
+    #region-main {
+        padding-top: 0 !important;
+
+        .activity-header:empty {
+            display: none;
+        }
+
+        > div > .d-flex.justify-content-end.mb-3 {
+            margin-bottom: 8px !important;
+
+            &:not(:has(a, button)) {
+                display: none !important;
+            }
+        }
+    }
+}
