@@ -51,6 +51,14 @@
             </div>
         </div>
 
+        <!-- 2b. MOBILNE PIGUŁKI FILTRÓW (< 768px) -->
+        <div class="busola-mycourses-mobile-pills" role="group" aria-label="{{#str}}mycourses_filter_aria, theme_ebusola{{/str}}">
+            <button type="button" class="busola-mycourses-pill is-active" data-filter="all" aria-pressed="true">{{#str}}mycourses_filter_all_short, theme_ebusola{{/str}}</button>
+            <button type="button" class="busola-mycourses-pill" data-filter="inprogress" aria-pressed="false">{{#str}}mycourses_filter_inprogress, theme_ebusola{{/str}}</button>
+            <button type="button" class="busola-mycourses-pill" data-filter="notstarted" aria-pressed="false">{{#str}}mycourses_filter_notstarted, theme_ebusola{{/str}}</button>
+            <button type="button" class="busola-mycourses-pill" data-filter="favourites" aria-pressed="false">{{#str}}mycourses_filter_favourites, theme_ebusola{{/str}}</button>
+        </div>
+
         <!-- 3. KATEGORIE I KARTY KURSÓW -->
         <div class="busola-mycourses-sections" id="busola-mycourses-sections">
             {{#categories}}
@@ -292,9 +300,30 @@ require(['core/ajax', 'core/str'], function(Ajax, Str) {
     if (searchInput) {
         searchInput.addEventListener('input', applyFilterAndSearch);
     }
-    if (filterSelect) {
-        filterSelect.addEventListener('change', applyFilterAndSearch);
+    var filterPills = document.querySelectorAll('.busola-mycourses-pill');
+    function syncFilterPills(val) {
+        filterPills.forEach(function(pill) {
+            var isMatch = (pill.getAttribute('data-filter') === val);
+            pill.classList.toggle('is-active', isMatch);
+            pill.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+        });
     }
+    if (filterSelect) {
+        filterSelect.addEventListener('change', function() {
+            syncFilterPills(filterSelect.value);
+            applyFilterAndSearch();
+        });
+    }
+    filterPills.forEach(function(pill) {
+        pill.addEventListener('click', function() {
+            var targetFilter = pill.getAttribute('data-filter') || 'all';
+            if (filterSelect) {
+                filterSelect.value = targetFilter;
+            }
+            syncFilterPills(targetFilter);
+            applyFilterAndSearch();
+        });
+    });
     if (sortSelect) {
         sortSelect.addEventListener('change', applyFilterAndSearch);
     }

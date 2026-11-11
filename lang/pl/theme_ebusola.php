@@ -135,6 +135,7 @@ $string['mycourses_search_placeholder'] = 'Szukaj kursu';
 $string['mycourses_search_aria'] = 'Szukaj kursu';
 $string['mycourses_filter_aria'] = 'Filtruj kursy';
 $string['mycourses_filter_all'] = 'Wszystkie kursy';
+$string['mycourses_filter_all_short'] = 'Wszystkie';
 $string['mycourses_filter_inprogress'] = 'W trakcie';
 $string['mycourses_filter_notstarted'] = 'Nierozpoczęte';
 $string['mycourses_filter_completed'] = 'Ukończone';
