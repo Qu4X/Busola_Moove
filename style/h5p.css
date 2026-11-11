@@ -987,3 +987,42 @@ html body .h5p-question-evaluation-container {
     transform: none !important;
     animation: none !important;
 }
+
+/* ==========================================================================
+   11. UKŁAD AKCJI: Previous | Sprawdź (po sprawdzeniu: Pokaż odpowiedź, Powtórz) | Next
+   Nav QuestionSet jest rodzeństwem karty. Wciągamy go na wiersz przycisków (CSS only,
+   bez przenoszenia DOM - przenoszenie psuje stan QuestionSet).
+   ========================================================================== */
+@media (min-width: 601px) {
+    html body nav.h5p-navigation.qs-footer {
+        margin: -112px 0 60px 0 !important;
+        padding: 0 36px !important;
+        box-sizing: border-box !important;
+        position: relative !important;
+        z-index: 2 !important;
+        pointer-events: none !important;
+    }
+
+    html body nav.h5p-navigation.qs-footer button {
+        pointer-events: auto !important;
+    }
+
+    html body nav.h5p-navigation.qs-footer button.h5p-visibility-hidden {
+        pointer-events: none !important;
+    }
+
+    /* Po sprawdzeniu: pasek wyniku nad przyciskami, przyciski wyśrodkowane w wierszu akcji */
+    html body .h5p-question-evaluation-container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        height: auto !important;
+    }
+
+    html body .h5p-question-evaluation-container .h5p-question-buttons {
+        margin-top: 24px !important;
+        justify-content: center !important;
+        position: static !important;
+        float: none !important;
+    }
+}
