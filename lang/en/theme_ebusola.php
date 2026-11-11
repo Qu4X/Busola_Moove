@@ -110,6 +110,22 @@ $string['course_cat_motor'] = 'Motorboat courses';
 $string['course_cat_extra'] = 'Additional courses';
 $string['course_cat_default'] = 'Course';
 $string['all_category_courses_enrolled'] = 'You have already enrolled in all courses from this category.';
+
+// Guest / unauthenticated frontpage view strings.
+$string['guest_hero_title'] = 'Ahoy, sailor!';
+$string['guest_hero_subtitle'] = 'Online sailing and motorboat courses at your own pace. Log in to resume learning and practice tests.';
+$string['guest_hero_btn_login'] = 'Log in';
+$string['guest_hero_btn_browse'] = 'Browse courses';
+$string['guest_howitworks_title'] = 'HOW IT WORKS';
+$string['guest_howitworks_step1_title'] = 'Learn section by section';
+$string['guest_howitworks_step1_desc'] = 'Study materials, videos, and PDF presentations for each section.';
+$string['guest_howitworks_step2_title'] = 'Practice quizzes';
+$string['guest_howitworks_step2_desc'] = '15 randomized questions from the test bank each time. Repeat until mastered.';
+$string['guest_howitworks_step3_title'] = 'Pass the section';
+$string['guest_howitworks_step3_desc'] = 'Track your progress as the number of passed sections.';
+$string['guest_courses_title'] = 'Available courses';
+$string['guest_course_requires_login'] = 'Login required';
+$string['guest_course_view'] = 'View course';
 $string['enablewhatsappbutton'] = 'Enable WhatsApp floating button';
 $string['enablewhatsappbutton_desc'] = 'Show a floating WhatsApp contact button on every page, using the WhatsApp number configured above.';
 $string['facebook'] = 'Facebook URL';

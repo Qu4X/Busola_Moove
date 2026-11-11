@@ -1,0 +1,149 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_ebusola/ebusola/busola_guest
+
+    Widok strony głównej dla niezalogowanego użytkownika / gościa.
+    Zgodny z makietą Niezalogowany – Desktop (tryb jasny).
+}}
+<div class="busola-guest-wrapper">
+    <!-- 1. Sekcja Hero -->
+    <section class="busola-guest-hero" aria-label="{{#str}}guest_hero_title, theme_ebusola{{/str}}">
+        <!-- Znak wodny róża wiatrów / radar -->
+        <svg viewBox="0 0 400 400" width="560" height="560" aria-hidden="true" class="busola-guest-radar" fill="none" stroke="#FFFFFF" stroke-width="1.5">
+            <circle cx="200" cy="200" r="190"></circle>
+            <circle cx="200" cy="200" r="140"></circle>
+            <circle cx="200" cy="200" r="90"></circle>
+            <path d="M200 0V400M0 200H400M59 59L341 341M341 59L59 341"></path>
+        </svg>
+
+        <div class="busola-guest-hero-container">
+            <!-- Lewa kolumna Hero: Powitanie i przyciski CTA -->
+            <div class="busola-guest-hero-content">
+                <h1 class="busola-guest-hero-title">{{#str}}guest_hero_title, theme_ebusola{{/str}}</h1>
+                <p class="busola-guest-hero-subtitle">{{#str}}guest_hero_subtitle, theme_ebusola{{/str}}</p>
+                <div class="busola-guest-hero-actions">
+                    <a href="{{loginurl}}" class="busola-btn-primary">
+                        {{#str}}guest_hero_btn_login, theme_ebusola{{/str}}
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                    </a>
+                    <a href="#busola-guest-courses" class="busola-btn-secondary">
+                        {{#str}}guest_hero_btn_browse, theme_ebusola{{/str}}
+                    </a>
+                </div>
+            </div>
+
+            <!-- Prawa kolumna Hero: Karta "Jak to działa" -->
+            <div class="busola-howitworks-card">
+                <div class="busola-howitworks-tag">{{#str}}guest_howitworks_title, theme_ebusola{{/str}}</div>
+                <ol class="busola-howitworks-list">
+                    <li class="busola-howitworks-item">
+                        <span class="busola-howitworks-num">1</span>
+                        <div class="busola-howitworks-body">
+                            <div class="busola-howitworks-heading">{{#str}}guest_howitworks_step1_title, theme_ebusola{{/str}}</div>
+                            <div class="busola-howitworks-desc">{{#str}}guest_howitworks_step1_desc, theme_ebusola{{/str}}</div>
+                        </div>
+                    </li>
+                    <li class="busola-howitworks-item">
+                        <span class="busola-howitworks-num">2</span>
+                        <div class="busola-howitworks-body">
+                            <div class="busola-howitworks-heading">{{#str}}guest_howitworks_step2_title, theme_ebusola{{/str}}</div>
+                            <div class="busola-howitworks-desc">{{#str}}guest_howitworks_step2_desc, theme_ebusola{{/str}}</div>
+                        </div>
+                    </li>
+                    <li class="busola-howitworks-item">
+                        <span class="busola-howitworks-num">3</span>
+                        <div class="busola-howitworks-body">
+                            <div class="busola-howitworks-heading">{{#str}}guest_howitworks_step3_title, theme_ebusola{{/str}}</div>
+                            <div class="busola-howitworks-desc">{{#str}}guest_howitworks_step3_desc, theme_ebusola{{/str}}</div>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Fala przejścia na dole Hero z kolorem płótna -->
+        <svg viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true" class="busola-guest-wave">
+            <path d="M0 48V26C220 4 440 4 720 26S1200 50 1440 22V48Z"></path>
+        </svg>
+    </section>
+
+    <!-- 2. Główny kontener strony -->
+    <main class="busola-main-container">
+        <!-- Sekcja: Dostępne kursy -->
+        <section id="busola-guest-courses" class="busola-guest-courses-section" aria-labelledby="h-kursy">
+            <h2 id="h-kursy" class="busola-section-title">{{#str}}guest_courses_title, theme_ebusola{{/str}}</h2>
+            <div class="busola-guest-courses-grid">
+                {{#courses}}
+                    <a href="{{url}}" class="bcard busola-guest-card">
+                        <div class="busola-guest-card-header" style="background: {{bgcolor}};">
+                            <span class="busola-guest-card-badge">{{categoryname}}</span>
+                            {{#hascustomicon}}
+                                <img src="{{iconurl}}" alt="{{fullname}}" loading="lazy" decoding="async" width="180" height="112" class="busola-guest-card-img" />
+                            {{/hascustomicon}}
+                            {{^hascustomicon}}
+                                {{#is_sail}}
+                                    <svg viewBox="0 0 160 100" width="180" height="112" aria-hidden="true" class="busola-guest-card-svg">
+                                        <path d="M80 8V72" stroke="#141B5E" stroke-width="3" stroke-linecap="round" fill="none"></path>
+                                        <path d="M84 12L84 64L128 64Z" fill="#141B5E"></path>
+                                        <path d="M76 24L76 64L46 64Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                                        <path d="M34 70H130L118 84H48Z" fill="#FF7A1A" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                                        <path d="M14 93 q8 -7 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path>
+                                    </svg>
+                                {{/is_sail}}
+                                {{#is_motor}}
+                                    <svg viewBox="0 0 160 100" width="180" height="112" aria-hidden="true" class="busola-guest-card-svg">
+                                        <rect x="24" y="48" width="12" height="22" rx="3" fill="#FF7A1A" stroke="#141B5E" stroke-width="2.5"></rect>
+                                        <path d="M32 62 H132 L120 80 H48 Z" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                                        <path d="M66 62 L80 42 H104 L112 62" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linejoin="round"></path>
+                                        <path d="M14 93 q8 -7 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path>
+                                    </svg>
+                                {{/is_motor}}
+                                {{#is_extra}}
+                                    <svg viewBox="0 0 160 100" width="180" height="112" aria-hidden="true" class="busola-guest-card-svg">
+                                        <path d="M104 40V12" stroke="#141B5E" stroke-width="3" stroke-linecap="round" fill="none"></path>
+                                        <path d="M96 18q8-9 16 0M90 12q14-15 28 0" fill="none" stroke="#141B5E" stroke-width="2.5" stroke-linecap="round"></path>
+                                        <rect x="30" y="40" width="100" height="48" rx="8" fill="#FFFFFF" stroke="#141B5E" stroke-width="2.5"></rect>
+                                        <rect x="40" y="49" width="44" height="14" rx="3" fill="#141B5E"></rect>
+                                        <rect x="40" y="70" width="24" height="12" rx="3" fill="#FF7A1A"></rect>
+                                        <circle cx="106" cy="68" r="9" fill="none" stroke="#141B5E" stroke-width="2.5"></circle>
+                                    </svg>
+                                {{/is_extra}}
+                            {{/hascustomicon}}
+                        </div>
+                        <div class="busola-guest-card-body">
+                            <div class="busola-guest-card-title">{{fullname}}</div>
+                            <div class="busola-guest-card-footer">
+                                <span class="busola-guest-card-auth">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+                                    {{#str}}guest_course_requires_login, theme_ebusola{{/str}}
+                                </span>
+                                <span class="busola-guest-card-cta">
+                                    {{#str}}guest_course_view, theme_ebusola{{/str}}
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                {{/courses}}
+            </div>
+        </section>
+
+        <!-- Baner informacyjny: Egzaminy dla dorosłych -->
+        {{> theme_ebusola/ebusola/busola_exams }}
+    </main>
+</div>

@@ -220,7 +220,9 @@ body {
     flex: 1 0 auto;
 
     &.has-busola-dashboard,
-    &.drawers.has-busola-dashboard {
+    &.drawers.has-busola-dashboard,
+    &.has-busola-guest,
+    &.drawers.has-busola-guest {
         padding-left: 0 !important;
         padding-right: 0 !important;
         margin-left: 0 !important;
@@ -230,11 +232,14 @@ body {
         min-height: calc(100vh - 70px) !important;
         display: flex !important;
         flex-direction: column !important;
+        background-color: var(--busola-bg-canvas) !important;
     }
 }
 
 body.has-busola-dashboard #page,
-body.has-busola-dashboard #page.drawers {
+body.has-busola-dashboard #page.drawers,
+body.has-busola-guest #page,
+body.has-busola-guest #page.drawers {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
@@ -1921,6 +1926,42 @@ section.busola-section-discover {
    9. Navbar: Przełącznik trybu edycji, menu motywu i ikony
    -------------------------------------------------------------------------- */
 .navbar {
+    .usermenu {
+        .login {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0;
+
+            .divider {
+                display: none !important;
+            }
+
+            a {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 8px !important;
+                min-height: 44px !important;
+                padding: 0 24px !important;
+                box-sizing: border-box !important;
+                border-radius: var(--busola-radius-md) !important;
+                background: var(--busola-accent-orange) !important;
+                color: var(--busola-text-primary) !important;
+                font-weight: 700 !important;
+                font-size: 15px !important;
+                text-decoration: none !important;
+                transition: background-color .18s ease, transform .18s ease, box-shadow .18s ease !important;
+
+                &:hover {
+                    background-color: var(--busola-accent-orange-hover) !important;
+                    color: var(--busola-text-primary) !important;
+                    transform: translateY(-1px) !important;
+                    box-shadow: 0 2px 8px rgba(255, 122, 26, 0.25) !important;
+                }
+            }
+        }
+    }
+
     .colourmodemenu {
         margin: 0 0.4rem;
 
@@ -2814,5 +2855,334 @@ section.busola-section-discover {
         }
     }
 }
+
+/* --------------------------------------------------------------------------
+   11. Widok strony głównej dla niezalogowanych użytkowników (Guest View)
+   -------------------------------------------------------------------------- */
+.busola-guest-wrapper {
+    background: var(--busola-bg-canvas);
+    color: var(--busola-text-primary);
+    min-height: 100%;
+}
+
+/* 1. Sekcja Hero dla niezalogowanych */
+.busola-guest-hero {
+    background: var(--busola-hero-bg);
+    position: relative;
+    overflow: hidden;
+    color: #FFFFFF;
+
+    .busola-guest-radar {
+        position: absolute;
+        right: -120px;
+        top: -150px;
+        opacity: .1;
+        pointer-events: none;
+    }
+
+    .busola-guest-hero-container {
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 64px 32px 40px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 40px;
+        box-sizing: border-box;
+    }
+
+    .busola-guest-hero-content {
+        flex: 1 1 420px;
+        min-width: 0;
+
+        .busola-guest-hero-title {
+            margin: 0;
+            font-size: 56px;
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: -.025em;
+            color: var(--busola-hero-title);
+        }
+
+        .busola-guest-hero-subtitle {
+            margin: 16px 0 0;
+            font-size: 19px;
+            line-height: 1.5;
+            color: var(--busola-hero-subtitle);
+            max-width: 480px;
+        }
+
+        .busola-guest-hero-actions {
+            margin-top: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+
+            .busola-btn-primary {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                min-height: 52px;
+                padding: 0 28px;
+                box-sizing: border-box;
+                border-radius: var(--busola-radius-md);
+                background: var(--busola-accent-orange);
+                color: var(--busola-text-primary);
+                font-weight: 700;
+                font-size: 17px;
+                text-decoration: none;
+                transition: background-color .18s ease, transform .18s ease;
+
+                &:hover {
+                    background-color: var(--busola-accent-orange-hover);
+                    transform: translateY(-2px);
+                    color: var(--busola-text-primary);
+                }
+            }
+
+            .busola-btn-secondary {
+                display: inline-flex;
+                align-items: center;
+                min-height: 52px;
+                padding: 0 24px;
+                box-sizing: border-box;
+                border-radius: var(--busola-radius-md);
+                border: 2px solid #FFFFFF;
+                color: #FFFFFF;
+                font-weight: 700;
+                font-size: 16px;
+                text-decoration: none;
+                transition: background-color .18s ease, transform .18s ease;
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.12);
+                    color: #FFFFFF;
+                    transform: translateY(-2px);
+                }
+            }
+        }
+    }
+
+    /* Karta "Jak to działa" */
+    .busola-howitworks-card {
+        flex: 1 1 380px;
+        min-width: 0;
+        max-width: 520px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: var(--busola-radius-xl);
+        padding: 28px;
+        box-sizing: border-box;
+
+        .busola-howitworks-tag {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .14em;
+            color: #FFB27A;
+            margin-bottom: 16px;
+        }
+
+        .busola-howitworks-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+
+            .busola-howitworks-item {
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+
+                .busola-howitworks-num {
+                    flex: 0 0 36px;
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 18px;
+                    background: var(--busola-accent-orange);
+                    color: var(--busola-text-primary);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: 800;
+                    font-size: 16px;
+                }
+
+                .busola-howitworks-body {
+                    .busola-howitworks-heading {
+                        font-weight: 700;
+                        color: #FFFFFF;
+                        font-size: 17px;
+                    }
+
+                    .busola-howitworks-desc {
+                        font-size: 14px;
+                        color: var(--busola-hero-subtitle);
+                        margin-top: 2px;
+                        line-height: 1.4;
+                    }
+                }
+            }
+        }
+    }
+
+    /* Fala na dole sekcji Hero */
+    .busola-guest-wave {
+        display: block !important;
+        vertical-align: bottom !important;
+        width: 100% !important;
+        height: 48px !important;
+        position: relative !important;
+        margin-bottom: -1px !important;
+
+        path {
+            fill: var(--busola-bg-canvas);
+        }
+    }
+}
+
+/* 2. Główny kontener strony */
+.busola-guest-wrapper .busola-main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 32px 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+    box-sizing: border-box;
+
+    .busola-section-title {
+        margin: 0 0 24px;
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: -.015em;
+        color: var(--busola-text-primary);
+    }
+}
+
+/* 3. Sekcja: Dostępne kursy */
+.busola-guest-courses-section {
+    .busola-guest-courses-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+
+        @media (max-width: 991px) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        @media (max-width: 600px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .busola-guest-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--busola-surface-card);
+        border-radius: var(--busola-radius-lg);
+        overflow: hidden;
+        text-decoration: none;
+        color: var(--busola-text-secondary);
+        box-shadow: var(--busola-shadow-card);
+        transition: transform .18s ease, box-shadow .18s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 2px 4px rgba(20, 27, 94, .08), 0 16px 36px rgba(20, 27, 94, .12);
+            color: var(--busola-text-secondary);
+            text-decoration: none;
+        }
+
+        .busola-guest-card-header {
+            position: relative;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+            .busola-guest-card-badge {
+                position: absolute;
+                left: 16px;
+                top: 16px;
+                padding: 5px 12px;
+                border-radius: var(--busola-radius-full);
+                background: var(--busola-badge-bg);
+                color: var(--busola-badge-text);
+                font-size: 12px;
+                font-weight: 700;
+                box-shadow: var(--busola-badge-shadow);
+                z-index: 2;
+            }
+
+            .busola-guest-card-img {
+                max-height: 112px;
+                width: auto;
+                object-fit: contain;
+                margin-top: 14px;
+            }
+
+            .busola-guest-card-svg {
+                display: block;
+                margin-top: 14px;
+                max-width: 180px;
+                max-height: 112px;
+            }
+        }
+
+        .busola-guest-card-body {
+            padding: 18px 22px 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+
+            .busola-guest-card-title {
+                margin: 0;
+                font-size: 19px;
+                font-weight: 700;
+                color: var(--busola-text-primary);
+                line-height: 1.25;
+                min-height: 48px;
+            }
+
+            .busola-guest-card-footer {
+                margin-top: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+
+                .busola-guest-card-auth {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    font-size: 13px;
+                    color: var(--busola-text-secondary);
+                }
+
+                .busola-guest-card-cta {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    font-size: 15px;
+                    font-weight: 700;
+                    color: var(--busola-text-primary);
+                    border-bottom: 2px solid var(--busola-accent-orange);
+                    padding-bottom: 1px;
+                    transition: color .18s ease;
+
+                    &:hover {
+                        color: var(--busola-accent-red);
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 

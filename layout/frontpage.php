@@ -30,7 +30,7 @@ require_once($CFG->dirroot . '/course/lib.php');
 // Add block button in editing mode.
 $addblockbutton = $OUTPUT->addblockbutton();
 
-if (isloggedin()) {
+if (isloggedin() && !isguestuser()) {
     $courseindexopen = (get_user_preferences('drawer-open-index', true) == true);
     $blockdraweropen = (get_user_preferences('drawer-open-block') == true);
 } else {
@@ -45,6 +45,9 @@ if (defined('BEHAT_SITE_RUNNING') && get_user_preferences('behat_keep_drawer_clo
 $extraclasses = ['uses-drawers'];
 if ($courseindexopen) {
     $extraclasses[] = 'drawer-open-index';
+}
+if (!isloggedin() || isguestuser()) {
+    $extraclasses[] = 'has-busola-guest';
 }
 
 $blockshtml = $OUTPUT->blocks('side-pre');
@@ -122,11 +125,14 @@ $themesettings = new \theme_ebusola\util\settings();
 $templatecontext = array_merge($templatecontext, $themesettings->footer());
 
 $template = 'theme_ebusola/drawers';
-if (!isloggedin()) {
-    $templatecontext = array_merge($templatecontext, $themesettings->frontpage());
+if (!isloggedin() || isguestuser()) {
+    $guestdata = \theme_ebusola\util\busola::get_guest_frontpage_context();
+    $templatecontext['is_busola_guest'] = true;
+    $templatecontext['guest_hub'] = $guestdata;
+    $templatecontext = array_merge($templatecontext, $guestdata);
 
     $template = 'theme_ebusola/frontpage';
-} else if (!isguestuser()) {
+} else {
     $busoladata = \theme_ebusola\util\busola::get_dashboard_context();
     if ($busoladata) {
         $templatecontext['is_busola_dashboard'] = true;

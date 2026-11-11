@@ -58,6 +58,109 @@ class busola {
     }
 
     /**
+     * Build the context for the guest / unauthenticated frontpage view.
+     *
+     * All course names, categories, and exam info are dynamically pulled from Moodle
+     * APIs and database according to AGENTS.md architectural rules.
+     *
+     * @return array
+     */
+    public static function get_guest_frontpage_context(): array {
+        global $DB, $OUTPUT;
+
+        $catmap = self::get_all_categories_map();
+
+        $courses = [];
+        try {
+            $records = $DB->get_records('course', ['visible' => 1], 'sortorder ASC', 'id, fullname, shortname, category');
+            foreach ($records as $course) {
+                if ($course->id == SITEID) {
+                    continue;
+                }
+
+                $catid = (int) ($course->category ?? 0);
+                $categoryname = $catmap[$catid] ?? '';
+                if (empty($categoryname) && !empty($catid)) {
+                    $catrec = $DB->get_record('course_categories', ['id' => $catid], 'name');
+                    if ($catrec) {
+                        $categoryname = format_string($catrec->name);
+                    }
+                }
+                if (empty($categoryname)) {
+                    $categoryname = get_string('course_cat_default', 'theme_ebusola');
+                    if (empty($categoryname) || $categoryname === '[[course_cat_default]]') {
+                        $categoryname = 'Kurs';
+                    }
+                }
+
+                // Determine course illustration and background color.
+                $shortname = strtoupper(trim($course->shortname ?? ''));
+                $fullname = mb_strtolower($course->fullname ?? '');
+                $catnamelower = mb_strtolower($categoryname);
+
+                if (str_contains($shortname, 'SM') || str_contains($fullname, 'motorowod') || str_contains($catnamelower, 'motor')) {
+                    $illustration = 'motor';
+                    $bgcolor = '#DCF0F3';
+                } else if (str_contains($shortname, 'SRC') || str_contains($fullname, 'radio') || str_contains($catnamelower, 'dodatk') || str_contains($catnamelower, 'radio')) {
+                    $illustration = 'extra';
+                    $bgcolor = '#FFE8D4';
+                } else {
+                    $illustration = 'sail';
+                    $bgcolor = '#E3E8FB';
+                }
+
+                // Check overview files for uploaded image.
+                $iconurl = null;
+                try {
+                    $coursecontext = \context_course::instance($course->id);
+                    $fs = get_file_storage();
+                    $files = $fs->get_area_files($coursecontext->id, 'course', 'overviewfiles', 0, 'itemid, filepath, filename', false);
+                    foreach ($files as $file) {
+                        if ($file->is_valid_image()) {
+                            $iconurl = \moodle_url::make_file_url(
+                                '/pluginfile.php',
+                                '/' . $file->get_contextid() . '/' . $file->get_component() . '/' . $file->get_filearea() . $file->get_filepath() . $file->get_filename()
+                            )->out(false);
+                            break;
+                        }
+                    }
+                } catch (\Exception $e) {
+                    // Fall back to vector illustration.
+                }
+
+                $courses[] = [
+                    'id' => $course->id,
+                    'fullname' => format_string($course->fullname),
+                    'shortname' => $course->shortname,
+                    'url' => (new moodle_url('/course/view.php', ['id' => $course->id]))->out(false),
+                    'categoryname' => $categoryname,
+                    'bgcolor' => $bgcolor,
+                    'iconurl' => $iconurl,
+                    'hascustomicon' => !empty($iconurl),
+                    'illustration' => $illustration,
+                    'is_sail' => ($illustration === 'sail'),
+                    'is_motor' => ($illustration === 'motor'),
+                    'is_extra' => ($illustration === 'extra'),
+                ];
+            }
+        } catch (\Exception $e) {
+            // Silently fall back.
+        }
+
+        $examinfo = self::resolve_exam_info();
+
+        return [
+            'loginurl' => (new moodle_url('/login/index.php'))->out(false),
+            'courses' => $courses,
+            'has_courses' => !empty($courses),
+            'examurl' => $examinfo['examurl'],
+            'exam_title' => $examinfo['exam_title'],
+            'exam_desc' => $examinfo['exam_desc'],
+            'exam_btn_text' => $examinfo['exam_btn_text'],
+        ];
+    }
+
+    /**
      * Build the context for the Busola Hub (Hero, My Courses, Categories).
      *
      * @return array|null

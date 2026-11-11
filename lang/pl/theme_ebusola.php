@@ -85,3 +85,19 @@ $string['course_cat_motor'] = 'Kursy motorowodne';
 $string['course_cat_extra'] = 'Kursy dodatkowe';
 $string['course_cat_default'] = 'Kurs';
 $string['all_category_courses_enrolled'] = 'Masz już wszystkie kursy z tej kategorii.';
+
+// Napisy widoku strony głównej dla gości / niezalogowanych użytkowników.
+$string['guest_hero_title'] = 'Ahoj, żeglarzu!';
+$string['guest_hero_subtitle'] = 'Kursy żeglarskie i motorowodne online, w Twoim tempie. Zaloguj się, aby wrócić do nauki i testów.';
+$string['guest_hero_btn_login'] = 'Zaloguj się';
+$string['guest_hero_btn_browse'] = 'Przeglądaj kursy';
+$string['guest_howitworks_title'] = 'JAK TO DZIAŁA';
+$string['guest_howitworks_step1_title'] = 'Ucz się działami';
+$string['guest_howitworks_step1_desc'] = 'Materiały, filmy i prezentacje PDF dla każdego działu.';
+$string['guest_howitworks_step2_title'] = 'Rozwiązuj testy';
+$string['guest_howitworks_step2_desc'] = 'Za każdym razem 15 losowych pytań z bazy. Powtarzaj do skutku.';
+$string['guest_howitworks_step3_title'] = 'Zalicz dział';
+$string['guest_howitworks_step3_desc'] = 'Postęp widzisz jako liczbę zaliczonych działów.';
+$string['guest_courses_title'] = 'Dostępne kursy';
+$string['guest_course_requires_login'] = 'Wymaga logowania';
+$string['guest_course_view'] = 'Zobacz kurs';
