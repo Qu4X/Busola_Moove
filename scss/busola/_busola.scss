@@ -451,9 +451,63 @@ body.has-busola-guest #page.drawers {
     }
 }
 
-/* 2. Przełączniki na górnym pasku (tryb edycji i darkmode) */
+/* 2. Przełączniki na górnym pasku (tryb edycji, darkmode, powiadomienia i profil) */
 .popover-region-mylearning {
     display: none !important;
+}
+
+.navbar-nav {
+    .popover-region .popover-region-toggle {
+        border-radius: 12px;
+        background: transparent !important;
+
+        &::before,
+        &::after {
+            display: none !important;
+            content: none !important;
+        }
+    }
+
+    .popover-region-notifications .count-container,
+    .unread-count-container .badge,
+    .popover-region .count-container {
+        font-weight: 800 !important;
+        border-radius: 9px !important;
+    }
+
+    .popover-region-container {
+        border: 1px solid var(--busola-surface-border) !important;
+    }
+}
+
+.usermenu {
+    #user-menu-toggle,
+    .dropdown-toggle {
+        --bs-btn-bg: transparent !important;
+        --bs-btn-border-color: transparent !important;
+        --bs-btn-hover-bg: transparent !important;
+        --bs-btn-hover-border-color: transparent !important;
+        --bs-btn-active-bg: transparent !important;
+        --bs-btn-active-border-color: transparent !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 0 6px !important;
+
+        .userbutton .avatars .avatar img {
+            border-radius: 50% !important;
+        }
+
+        &:hover,
+        &:focus {
+            background: transparent !important;
+            background-color: transparent !important;
+            border-color: transparent !important;
+            box-shadow: none !important;
+        }
+    }
 }
 
 .editmode-switch-container {
@@ -485,28 +539,31 @@ body.has-busola-guest #page.drawers {
         justify-content: center;
         width: 24px;
         height: 24px;
-        margin-right: 6px;
+        margin-right: 6px !important;
         cursor: pointer;
     }
 
     .darkmode-icon {
-        width: 22px;
-        height: 22px;
+        width: 20px !important;
+        height: 20px !important;
+        margin: 0 !important;
         transition: transform 0.35s ease, opacity 0.2s ease, color 0.2s ease;
     }
 
     .icon-sun {
         display: inline-block;
         color: #F59E0B;
-        width: 22px;
-        height: 22px;
+        width: 20px !important;
+        height: 20px !important;
+        margin: 0 !important;
     }
 
     .icon-moon {
         display: none;
         color: #A5B4FC;
-        width: 20px;
-        height: 20px;
+        width: 20px !important;
+        height: 20px !important;
+        margin: 0 !important;
     }
 
     .icon-moon:last-child {
@@ -2001,24 +2058,39 @@ section.busola-section-discover {
 
 .secondary-navigation {
     background-color: var(--busola-surface-card) !important;
+    border-bottom: 1px solid var(--busola-navbar-border) !important;
     box-shadow: 0 1px 0 var(--busola-navbar-border) !important;
+    filter: none !important;
 
-    .moremenu .nav-tabs .nav-link {
-        color: var(--busola-text-secondary);
-        font-weight: 500;
-        font-size: 14px;
+    .moremenu .nav-tabs {
+        background-color: transparent !important;
         border: none !important;
-        border-radius: 10px;
-        height: 36px;
-        padding: 0 14px;
-        margin: 0 2px;
 
-        &.active {
-            background-color: var(--busola-surface-subtle);
-            color: var(--busola-text-primary);
-            font-weight: 700;
-            box-shadow: inset 0 -2px 0 var(--busola-accent-orange) !important;
+        .nav-link {
+            color: var(--busola-text-secondary) !important;
+            font-weight: 500 !important;
+            font-size: 14px !important;
             border: none !important;
+            border-radius: 10px !important;
+            height: 36px !important;
+            padding: 0 14px !important;
+            margin: 0 2px !important;
+            background-color: transparent !important;
+
+            &:hover,
+            &:focus {
+                color: var(--busola-text-primary) !important;
+                background-color: var(--busola-surface-hover) !important;
+            }
+
+            &.active {
+                background-color: var(--busola-surface-subtle) !important;
+                color: var(--busola-text-primary) !important;
+                font-weight: 700 !important;
+                box-shadow: inset 0 -2px 0 var(--busola-accent-orange) !important;
+                border: none !important;
+                border-radius: 10px !important;
+            }
         }
     }
 }
@@ -2202,14 +2274,13 @@ body.darkmode,
         .popover-region .count-container {
             background-color: #FF7A1A !important;
             color: #141B5E !important;
-            font-weight: 800 !important;
             box-shadow: 0 0 0 2px #0D1236 !important;
             border-radius: 9px !important;
         }
 
         .popover-region-container {
             background-color: #141A48 !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
             color: #F1F3FF !important;
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5) !important;
 
@@ -2276,8 +2347,6 @@ body.darkmode,
 
         label {
             color: #C5CBEA !important;
-            font-weight: 600 !important;
-            font-size: 14px !important;
         }
 
         .custom-switch {
