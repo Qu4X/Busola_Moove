@@ -150,14 +150,19 @@
         {{#is_busola_change_password}}
             {{> theme_ebusola/ebusola/busola_account_header }}
         {{/is_busola_change_password}}
+        {{#is_busola_preferences}}
+            {{> theme_ebusola/ebusola/busola_account_header }}
+        {{/is_busola_preferences}}
         {{#is_busola_calendar}}
             {{> theme_ebusola/ebusola/busola_calendar_header }}
         {{/is_busola_calendar}}
         {{^is_busola_user_edit}}
         {{^is_busola_change_password}}
+        {{^is_busola_preferences}}
         {{^is_busola_calendar}}
         {{{ output.full_header }}}
         {{/is_busola_calendar}}
+        {{/is_busola_preferences}}
         {{/is_busola_change_password}}
         {{/is_busola_user_edit}}
 

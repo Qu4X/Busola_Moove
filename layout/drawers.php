@@ -108,6 +108,7 @@ $ismyindex = ($PAGE->pagetype === 'my-index' && !$ismycoursespage);
 $isuserprofile = ($PAGE->pagetype === 'user-profile' || strpos($PAGE->url->get_path(), '/user/profile.php') !== false);
 $isuseredit = ($PAGE->pagetype === 'user-edit' || $PAGE->pagetype === 'user-editadvanced' || strpos($PAGE->url->get_path(), '/user/edit.php') !== false || strpos($PAGE->url->get_path(), '/user/editadvanced.php') !== false);
 $isuserchangepassword = ($PAGE->pagetype === 'login-change_password' || strpos($PAGE->url->get_path(), '/login/change_password.php') !== false);
+$isuserpreferences = ($PAGE->pagetype === 'user-preferences' || strpos($PAGE->url->get_path(), '/user/preferences.php') !== false);
 $iscalendar = ($PAGE->pagetype === 'calendar-view' || strpos($PAGE->url->get_path(), '/calendar/view.php') !== false);
 
 $isbusoladashboard = false;
@@ -126,6 +127,9 @@ if ($isuseredit) {
 if ($isuserchangepassword) {
     $extraclasses[] = 'has-busola-form';
     $extraclasses[] = 'has-busola-change-password';
+}
+if ($isuserpreferences) {
+    $extraclasses[] = 'has-busola-preferences';
 }
 if ($iscalendar) {
     $extraclasses[] = 'has-busola-calendar';
@@ -229,6 +233,11 @@ if ($isuseredit) {
 
 if ($isuserchangepassword) {
     $templatecontext['is_busola_change_password'] = true;
+    $templatecontext['busola_user_profile_url'] = (new \core\url('/user/profile.php'))->out(false);
+}
+
+if ($isuserpreferences) {
+    $templatecontext['is_busola_preferences'] = true;
     $templatecontext['busola_user_profile_url'] = (new \core\url('/user/profile.php'))->out(false);
 }
 

@@ -2,20 +2,20 @@
     Theme eBusola - Account forms custom header and critical styles for:
     - /user/edit.php, /user/editadvanced.php (Edycja profilu)
     - /login/change_password.php (Zmiana hasła)
+    - /user/preferences.php (Preferencje)
 }}
 <style id="busola-account-forms-style">
 /* -------------------------------------------------------------------------
-   Busola Account Forms: Edit Profile & Change Password
-   Matches Figma mockups:
-   - "Edycja profilu – desktop-html" & "Edycja profilu – mobile-html"
-   - "Zmiana hasła – desktop-html" & "Zmiana hasła – mobile-html"
+   Busola Account Pages: Edit Profile, Change Password & Preferences
    ------------------------------------------------------------------------- */
 
 #page-user-edit,
 #page-user-editadvanced,
 #page-login-change_password,
+#page-user-preferences,
 body.has-busola-user-edit,
-body.has-busola-change-password {
+body.has-busola-change-password,
+body.has-busola-preferences {
     background-color: #F5F6FB !important;
     color: #3A4163 !important;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
@@ -25,7 +25,8 @@ body.has-busola-change-password {
 /* Hide default Moodle boost header when busola header is rendered */
 #page-user-edit #page-header,
 #page-user-editadvanced #page-header,
-#page-login-change_password #page-header {
+#page-login-change_password #page-header,
+#page-user-preferences #page-header {
     display: none !important;
 }
 
@@ -33,12 +34,15 @@ body.has-busola-change-password {
 #page-user-edit .navbar.fixed-top .primary-navigation .navigation .nav-link.active,
 #page-user-editadvanced .navbar.fixed-top .primary-navigation .navigation .nav-link.active,
 #page-login-change_password .navbar.fixed-top .primary-navigation .navigation .nav-link.active,
+#page-user-preferences .navbar.fixed-top .primary-navigation .navigation .nav-link.active,
 #page-user-edit .moremenu .nav-link.active,
 #page-user-editadvanced .moremenu .nav-link.active,
 #page-login-change_password .moremenu .nav-link.active,
+#page-user-preferences .moremenu .nav-link.active,
 #page-user-edit .primary-navigation .nav-link.active,
 #page-user-editadvanced .primary-navigation .nav-link.active,
-#page-login-change_password .primary-navigation .nav-link.active {
+#page-login-change_password .primary-navigation .nav-link.active,
+#page-user-preferences .primary-navigation .nav-link.active {
     color: #3A4163 !important;
     border-bottom: none !important;
     box-shadow: none !important;
@@ -46,7 +50,8 @@ body.has-busola-change-password {
 }
 #page-user-edit .primary-navigation .nav-link.active::after,
 #page-user-editadvanced .primary-navigation .nav-link.active::after,
-#page-login-change_password .primary-navigation .nav-link.active::after {
+#page-login-change_password .primary-navigation .nav-link.active::after,
+#page-user-preferences .primary-navigation .nav-link.active::after {
     display: none !important;
 }
 
@@ -54,24 +59,28 @@ body.has-busola-change-password {
 #page-user-edit #user-menu-toggle,
 #page-user-editadvanced #user-menu-toggle,
 #page-login-change_password #user-menu-toggle,
+#page-user-preferences #user-menu-toggle,
 #page-user-edit .usermenu .userbutton,
 #page-user-editadvanced .usermenu .userbutton,
-#page-login-change_password .usermenu .userbutton {
+#page-login-change_password .usermenu .userbutton,
+#page-user-preferences .usermenu .userbutton {
     box-shadow: none !important;
     border: none !important;
 }
 
-/* 2. Container width and alignment: Single 824px centered column (exact match across breadcrumbs, h1 and cards) */
+/* 2. Container width and alignment */
 #page-user-edit #page.drawers,
 #page-user-editadvanced #page.drawers,
-#page-login-change_password #page.drawers {
+#page-login-change_password #page.drawers,
+#page-user-preferences #page.drawers {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
 
 #page-user-edit .drawer-toggles,
 #page-user-editadvanced .drawer-toggles,
-#page-login-change_password .drawer-toggles {
+#page-login-change_password .drawer-toggles,
+#page-user-preferences .drawer-toggles {
     display: none !important;
 }
 
@@ -81,6 +90,10 @@ body.has-busola-change-password {
     padding: 28px 0 20px !important;
     box-sizing: border-box !important;
     width: 100% !important;
+}
+
+#page-login-change_password .busola-account-header {
+    max-width: 560px !important;
 }
 
 .busola-account-header .busola-breadcrumb {
@@ -120,7 +133,9 @@ body.has-busola-change-password {
 /* TopOfScroll: Reset outer white box to transparent so cards sit directly on #F5F6FB */
 #page-user-edit #topofscroll,
 #page-user-editadvanced #topofscroll,
-body.has-busola-user-edit #topofscroll {
+#page-user-preferences #topofscroll,
+body.has-busola-user-edit #topofscroll,
+body.has-busola-preferences #topofscroll {
     max-width: 824px !important;
     margin: 0 auto !important;
     width: 100% !important;
@@ -137,7 +152,7 @@ body.has-busola-change-password #topofscroll {
     max-width: 560px !important;
     margin: 0 auto !important;
     width: 100% !important;
-    padding: 0 0 100px !important;
+    padding: 0 0 120px !important;
     box-sizing: border-box !important;
     background: transparent !important;
     border: none !important;
@@ -148,18 +163,23 @@ body.has-busola-change-password #topofscroll {
 #page-user-edit #page-content,
 #page-user-editadvanced #page-content,
 #page-login-change_password #page-content,
+#page-user-preferences #page-content,
 #page-user-edit #region-main,
 #page-user-editadvanced #region-main,
 #page-login-change_password #region-main,
+#page-user-preferences #region-main,
 #page-user-edit #region-main > div,
 #page-user-editadvanced #region-main > div,
 #page-login-change_password #region-main > div,
+#page-user-preferences #region-main > div,
 #page-user-edit #region-main > .card,
 #page-user-editadvanced #region-main > .card,
 #page-login-change_password #region-main > .card,
+#page-user-preferences #region-main > .card,
 #page-user-edit #region-main-box,
 #page-user-editadvanced #region-main-box,
 #page-login-change_password #region-main-box,
+#page-user-preferences #region-main-box,
 #page-user-edit form.mform,
 #page-user-editadvanced form.mform,
 #page-login-change_password form.mform {
@@ -174,7 +194,8 @@ body.has-busola-change-password #topofscroll {
 
 /* Hide redundant user heading (mockup has only the large page title) */
 #page-user-edit [role="main"] > h2:first-of-type,
-#page-user-editadvanced [role="main"] > h2:first-of-type {
+#page-user-editadvanced [role="main"] > h2:first-of-type,
+#page-user-preferences [role="main"] > h2:first-of-type {
     display: none !important;
 }
 
@@ -268,12 +289,52 @@ body.has-busola-change-password #topofscroll {
 }
 
 #page-user-edit .fitem,
-#page-user-editadvanced .fitem,
-#page-login-change_password .fitem {
+#page-user-editadvanced .fitem {
     margin-bottom: 0 !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
+}
+
+#page-login-change_password .fitem {
+    margin-bottom: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+}
+#page-login-change_password .fitem:last-child {
+    margin-bottom: 0 !important;
+}
+#page-login-change_password #fgroup_id_buttonar .fitem {
+    margin-bottom: 0 !important;
+}
+
+#page-login-change_password .form-control-static {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #141B5E !important;
+    padding: 6px 0 !important;
+}
+
+#page-login-change_password .form-check {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 14px !important;
+    color: #3A4163 !important;
+}
+
+#page-login-change_password .form-check input[type="checkbox"] {
+    margin: 0 !important;
+    width: 18px !important;
+    height: 18px !important;
+    cursor: pointer !important;
+}
+
+#page-login-change_password .form-check label {
+    margin: 0 !important;
+    cursor: pointer !important;
+    font-weight: 500 !important;
 }
 
 #page-user-edit .fitem .col-form-label,
@@ -672,10 +733,8 @@ body.has-busola-change-password #topofscroll {
 
 #page-user-edit #sticky-footer .sticky-footer-content,
 #page-user-editadvanced #sticky-footer .sticky-footer-content,
-#page-login-change_password #sticky-footer .sticky-footer-content,
 #page-user-edit #fgroup_id_buttonar .felement,
-#page-user-editadvanced #fgroup_id_buttonar .felement,
-#page-login-change_password #fgroup_id_buttonar .felement {
+#page-user-editadvanced #fgroup_id_buttonar .felement {
     max-width: 824px !important;
     margin: 0 auto !important;
     padding: 0 !important;
@@ -684,6 +743,34 @@ body.has-busola-change-password #topofscroll {
     justify-content: flex-start !important;
     gap: 12px !important;
     width: 100% !important;
+}
+
+#page-login-change_password #sticky-footer .sticky-footer-content,
+#page-login-change_password #fgroup_id_buttonar .felement {
+    max-width: 560px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    width: 100% !important;
+}
+
+#page-login-change_password #fgroup_id_buttonar .col-md-3 {
+    display: none !important;
+}
+
+#page-login-change_password #fgroup_id_buttonar .felement > div {
+    width: 100% !important;
+}
+
+#page-login-change_password #fgroup_id_buttonar .felement .d-flex {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
 }
 
 #page-user-edit #sticky-footer .fitem,
@@ -705,6 +792,94 @@ body.has-busola-change-password #topofscroll {
 #page-login-change_password #sticky-footer [data-groupname="buttonar"] .d-flex {
     gap: 12px !important;
     margin: 0 !important;
+}
+
+/* 8. Preferencje (/user/preferences.php) */
+#page-user-preferences .row {
+    margin: 0 !important;
+    gap: 20px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+#page-user-preferences .col-md-4 {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+}
+
+#page-user-preferences .card {
+    background: #FFFFFF !important;
+    border-radius: 20px !important;
+    padding: 26px 28px !important;
+    box-shadow: 0 1px 2px rgba(20,27,94,.06), 0 8px 24px rgba(20,27,94,.06) !important;
+    border: none !important;
+    margin-bottom: 20px !important;
+}
+
+#page-user-preferences .card .card-body {
+    padding: 0 !important;
+}
+
+#page-user-preferences .card .card-title {
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    color: #141B5E !important;
+    letter-spacing: -0.01em !important;
+    line-height: 1.2 !important;
+    margin: 0 0 20px 0 !important;
+    padding-bottom: 16px !important;
+    border-bottom: 1px solid #E8EBF6 !important;
+}
+
+#page-user-preferences .card ul.card-text {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+#page-user-preferences .card ul.card-text li {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+#page-user-preferences .card ul.card-text li a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 14px 18px !important;
+    border-radius: 12px !important;
+    background: #F8F9FD !important;
+    color: #141B5E !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: all .15s ease !important;
+    border: 1px solid transparent !important;
+}
+
+#page-user-preferences .card ul.card-text li a::after {
+    content: "›" !important;
+    font-size: 20px !important;
+    color: #8A91B8 !important;
+    line-height: 1 !important;
+    transition: transform .15s ease, color .15s ease !important;
+}
+
+#page-user-preferences .card ul.card-text li a:hover {
+    background: #FFFFFF !important;
+    border-color: #C9CEE6 !important;
+    color: #FF7A1A !important;
+    transform: translateX(2px) !important;
+    box-shadow: 0 2px 8px rgba(20,27,94,.06) !important;
+}
+
+#page-user-preferences .card ul.card-text li a:hover::after {
+    color: #FF7A1A !important;
+    transform: translateX(2px) !important;
 }
 
 #id_submitbutton,
@@ -768,7 +943,12 @@ form.mform > .fdescription.required:not(.busola-required-legend) {
 /* 8. Dark Mode */
 body.moove-darkmode#page-user-edit,
 body.moove-darkmode#page-user-editadvanced,
-body.moove-darkmode#page-login-change_password {
+body.moove-darkmode#page-login-change_password,
+body.moove-darkmode#page-user-preferences,
+#page-user-edit.moove-darkmode,
+#page-user-editadvanced.moove-darkmode,
+#page-login-change_password.moove-darkmode,
+#page-user-preferences.moove-darkmode {
     background-color: #0A0E2A !important;
     color: #CBD1F3 !important;
 }
@@ -782,7 +962,9 @@ body.moove-darkmode#page-login-change_password form.mform fieldset,
 body.moove-darkmode .busola-password-prompt-card,
 .moove-darkmode .busola-password-prompt-card,
 body.moove-darkmode .busola-other-settings-card,
-.moove-darkmode .busola-other-settings-card {
+.moove-darkmode .busola-other-settings-card,
+body.moove-darkmode#page-user-preferences .card,
+#page-user-preferences.moove-darkmode .card {
     background: #141B5E !important;
     color: #CBD1F3 !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25) !important;
@@ -804,8 +986,33 @@ body.moove-darkmode#page-login-change_password form.mform fieldset h3,
 #page-login-change_password.moove-darkmode form.mform fieldset h3,
 body.moove-darkmode .busola-password-prompt-card h2,
 .moove-darkmode .busola-password-prompt-card h2,
-body.moove-darkmode .busola-other-settings-title {
+body.moove-darkmode .busola-other-settings-title,
+body.moove-darkmode#page-user-preferences .card .card-title,
+#page-user-preferences.moove-darkmode .card .card-title {
     color: #FFFFFF !important;
+}
+
+body.moove-darkmode#page-user-preferences .card .card-title,
+#page-user-preferences.moove-darkmode .card .card-title {
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.moove-darkmode#page-user-preferences .card ul.card-text li a,
+#page-user-preferences.moove-darkmode .card ul.card-text li a {
+    background: #0F1547 !important;
+    color: #FFFFFF !important;
+}
+
+body.moove-darkmode#page-user-preferences .card ul.card-text li a::after,
+#page-user-preferences.moove-darkmode .card ul.card-text li a::after {
+    color: #8A91B8 !important;
+}
+
+body.moove-darkmode#page-user-preferences .card ul.card-text li a:hover,
+#page-user-preferences.moove-darkmode .card ul.card-text li a:hover {
+    background: #192266 !important;
+    border-color: #384594 !important;
+    color: #FF7A1A !important;
 }
 
 #page-user-edit.moove-darkmode .fitem .col-form-label label,
@@ -842,13 +1049,22 @@ body.moove-darkmode#page-login-change_password .fitem select {
     color: #FFFFFF !important;
 }
 
+body.moove-darkmode#page-login-change_password .form-control-static,
+#page-login-change_password.moove-darkmode .form-control-static,
+body.moove-darkmode#page-login-change_password .form-check,
+#page-login-change_password.moove-darkmode .form-check {
+    color: #CBD1F3 !important;
+}
+
 /* Sticky footer in dark mode */
 body.moove-darkmode#page-user-edit #sticky-footer,
 body.moove-darkmode#page-user-editadvanced #sticky-footer,
 body.moove-darkmode#page-login-change_password #sticky-footer,
+body.moove-darkmode#page-login-change_password #fgroup_id_buttonar,
 #page-user-edit.moove-darkmode #sticky-footer,
 #page-user-editadvanced.moove-darkmode #sticky-footer,
-#page-login-change_password.moove-darkmode #sticky-footer {
+#page-login-change_password.moove-darkmode #sticky-footer,
+#page-login-change_password.moove-darkmode #fgroup_id_buttonar {
     background-color: #141B5E !important;
     border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
     box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.08), 0 -8px 24px rgba(0, 0, 0, 0.3) !important;
@@ -980,17 +1196,19 @@ body.moove-darkmode .busola-other-settings-list fieldset .ftoggler > a.icons-col
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg>
         {{#is_busola_user_edit}}<span aria-current="page">Edytuj profil</span>{{/is_busola_user_edit}}
         {{#is_busola_change_password}}<span aria-current="page">Zmień hasło</span>{{/is_busola_change_password}}
+        {{#is_busola_preferences}}<span aria-current="page">Preferencje</span>{{/is_busola_preferences}}
     </nav>
     <h1 class="busola-account-title">
         {{#is_busola_user_edit}}Edytuj profil{{/is_busola_user_edit}}
         {{#is_busola_change_password}}Zmień hasło{{/is_busola_change_password}}
+        {{#is_busola_preferences}}Preferencje{{/is_busola_preferences}}
     </h1>
 </div>
 
-{{#is_busola_user_edit}}
+{{^is_busola_preferences}}
 <script>
 (function() {
-    function initBusolaUserEdit() {
+    function initBusolaAccountForms() {
         // 1. Injected Password Prompt Card
         var moodleSection = document.getElementById('id_moodle');
         if (moodleSection && !document.getElementById('busola-password-card')) {
@@ -1042,9 +1260,10 @@ body.moove-darkmode .busola-other-settings-list fieldset .ftoggler > a.icons-col
             otherElements.forEach(function(el) { list.appendChild(el); });
         }
 
-        // 4. Move required legend to sticky footer
+        // 4. Move required legend to sticky footer / action bar
         var reqLegend = document.querySelector('.fdescription.required:not(.busola-required-legend)');
-        var stickyContent = document.querySelector('#sticky-footer .sticky-footer-content');
+        var stickyContent = document.querySelector('#sticky-footer .sticky-footer-content') ||
+                            document.querySelector('#fgroup_id_buttonar .felement .d-flex');
         if (reqLegend && stickyContent && !stickyContent.querySelector('.busola-required-legend')) {
             var span = document.createElement('span');
             span.className = 'busola-required-legend';
@@ -1055,10 +1274,10 @@ body.moove-darkmode .busola-other-settings-list fieldset .ftoggler > a.icons-col
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initBusolaUserEdit);
+        document.addEventListener('DOMContentLoaded', initBusolaAccountForms);
     } else {
-        initBusolaUserEdit();
+        initBusolaAccountForms();
     }
 })();
 </script>
-{{/is_busola_user_edit}}
+{{/is_busola_preferences}}
