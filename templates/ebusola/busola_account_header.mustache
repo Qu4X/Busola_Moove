@@ -21,6 +21,7 @@ body.has-busola-change-password {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
 }
 
+/* 1. Header and navigation cleanups */
 /* Hide default Moodle boost header when busola header is rendered */
 #page-user-edit #page-header,
 #page-user-editadvanced #page-header,
@@ -28,44 +29,37 @@ body.has-busola-change-password {
     display: none !important;
 }
 
-/* Layout container sizing */
-#page-user-edit #topofscroll,
-#page-user-editadvanced #topofscroll,
-body.has-busola-user-edit #topofscroll {
+/* Remove active indicator from tabs on account pages */
+#page-user-edit .primary-navigation .nav-link.active,
+#page-user-editadvanced .primary-navigation .nav-link.active,
+#page-login-change_password .primary-navigation .nav-link.active {
+    color: #3A4163 !important;
+    border-bottom: none !important;
+}
+#page-user-edit .primary-navigation .nav-link.active::after,
+#page-user-editadvanced .primary-navigation .nav-link.active::after,
+#page-login-change_password .primary-navigation .nav-link.active::after {
+    display: none !important;
+}
+
+/* Account chip orange ring */
+#page-user-edit #user-menu-toggle,
+#page-user-editadvanced #user-menu-toggle,
+#page-login-change_password #user-menu-toggle,
+#page-user-edit .usermenu .userbutton,
+#page-user-editadvanced .usermenu .userbutton,
+#page-login-change_password .usermenu .userbutton {
+    box-shadow: 0 0 0 2px #FF7A1A !important;
+    border-radius: 22px !important;
+}
+
+/* 2. Container width and alignment: Single 888px centered column */
+.busola-account-header {
     max-width: 888px !important;
     margin: 0 auto !important;
+    padding: 28px 32px 20px !important;
+    box-sizing: border-box !important;
     width: 100% !important;
-    padding: 24px 20px 100px !important;
-}
-
-#page-login-change_password #topofscroll,
-body.has-busola-change-password #topofscroll {
-    max-width: 560px !important;
-    margin: 0 auto !important;
-    width: 100% !important;
-    padding: 24px 20px 100px !important;
-}
-
-/* Reset inner region card wrapping form */
-#page-user-edit #region-main,
-#page-user-editadvanced #region-main,
-#page-login-change_password #region-main,
-#page-user-edit #region-main > .card,
-#page-user-editadvanced #region-main > .card,
-#page-login-change_password #region-main > .card,
-#page-user-edit #region-main-box,
-#page-user-editadvanced #region-main-box,
-#page-login-change_password #region-main-box {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-/* Custom Busola Account Header */
-.busola-account-header {
-    margin-bottom: 24px;
 }
 
 .busola-account-header .busola-breadcrumb {
@@ -102,17 +96,67 @@ body.has-busola-change-password #topofscroll {
     color: #141B5E;
 }
 
+/* TopOfScroll: Reset outer white box to transparent so cards sit directly on #F5F6FB */
+#page-user-edit #topofscroll,
+#page-user-editadvanced #topofscroll,
+body.has-busola-user-edit #topofscroll {
+    max-width: 888px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    padding: 0 32px 100px !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+#page-login-change_password #topofscroll,
+body.has-busola-change-password #topofscroll {
+    max-width: 560px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    padding: 0 20px 100px !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+#page-user-edit #region-main,
+#page-user-editadvanced #region-main,
+#page-login-change_password #region-main,
+#page-user-edit #region-main > .card,
+#page-user-editadvanced #region-main > .card,
+#page-login-change_password #region-main > .card,
+#page-user-edit #region-main-box,
+#page-user-editadvanced #region-main-box,
+#page-login-change_password #region-main-box {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 /* Hide redundant user heading (mockup has only the large page title) */
 #page-user-edit [role="main"] > h2:first-of-type,
 #page-user-editadvanced [role="main"] > h2:first-of-type {
     display: none !important;
 }
 
-/* Cards: fieldsets & injected sections */
+/* Hide Expand all / Rozwiń wszystko */
+.collapsible-actions {
+    display: none !important;
+}
+
+/* 3. Cards: fieldsets, password card & other settings card */
 #page-user-edit form.mform fieldset,
 #page-user-editadvanced form.mform fieldset,
 #page-login-change_password form.mform fieldset,
-.busola-password-prompt-card {
+.busola-password-prompt-card,
+.busola-other-settings-card {
     background: #FFFFFF !important;
     border-radius: 20px !important;
     padding: 26px 28px !important;
@@ -123,34 +167,46 @@ body.has-busola-change-password #topofscroll {
     box-sizing: border-box !important;
 }
 
-/* Fieldset Legends / Titles */
+/* Section titles */
+#page-user-edit form.mform fieldset h3,
+#page-user-editadvanced form.mform fieldset h3,
+#page-login-change_password form.mform fieldset h3,
 #page-user-edit form.mform fieldset legend,
 #page-user-editadvanced form.mform fieldset legend,
 #page-login-change_password form.mform fieldset legend,
 .busola-password-prompt-card h2,
-#page-user-edit form.mform fieldset .ftoggler a,
-#page-user-editadvanced form.mform fieldset .ftoggler a,
-#page-login-change_password form.mform fieldset .ftoggler a {
+.busola-other-settings-title {
     font-size: 22px !important;
     font-weight: 800 !important;
     color: #141B5E !important;
     letter-spacing: -0.01em !important;
-    text-decoration: none !important;
-    margin: 0 0 16px 0 !important;
-    display: inline-block !important;
+    line-height: 1.2 !important;
+    margin: 0 0 20px 0 !important;
 }
 
-#page-user-edit form.mform fieldset .ftoggler,
-#page-user-editadvanced form.mform fieldset .ftoggler,
-#page-login-change_password form.mform fieldset .ftoggler {
+/* Sections 'Ogólne' & 'Zdjęcie profilowe' must always be expanded without chevron button */
+#id_moodle .ftoggler > a.icons-collapse-expand,
+#id_moodle_picture .ftoggler > a.icons-collapse-expand {
+    display: none !important;
+}
+
+#id_moodle #id_moodlecontainer,
+#id_moodle_picture #id_moodle_picturecontainer {
+    display: block !important;
+    height: auto !important;
+    visibility: visible !important;
+}
+
+#id_moodle .ftoggler,
+#id_moodle_picture .ftoggler {
     margin-bottom: 12px !important;
 }
 
-/* Form items: label on top of input */
+/* 4. Form Items: Fixed 24px label row + gap 20px */
 #page-user-edit .fitem,
 #page-user-editadvanced .fitem,
 #page-login-change_password .fitem {
-    margin-bottom: 16px !important;
+    margin-bottom: 0 !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
@@ -161,13 +217,17 @@ body.has-busola-change-password #topofscroll {
 #page-login-change_password .fitem .col-form-label {
     width: 100% !important;
     max-width: 100% !important;
-    flex: 0 0 auto !important;
-    padding: 0 0 6px 0 !important;
-    margin: 0 !important;
+    flex: 0 0 24px !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    max-height: 24px !important;
+    padding: 0 !important;
+    margin: 0 0 6px 0 !important;
     text-align: left !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
+    box-sizing: border-box !important;
 }
 
 #page-user-edit .fitem .col-form-label label,
@@ -177,15 +237,71 @@ body.has-busola-change-password #topofscroll {
     font-weight: 700 !important;
     color: #141B5E !important;
     margin: 0 !important;
+    line-height: 24px !important;
+    display: inline-block !important;
 }
 
-#page-user-edit .fitem .col-form-label .req,
-#page-user-edit .fitem .col-form-label .text-danger,
-#page-user-editadvanced .fitem .col-form-label .req,
-#page-login-change_password .fitem .col-form-label .req {
+/* Form label addon (help & required icons) */
+#page-user-edit .form-label-addon,
+#page-user-editadvanced .form-label-addon,
+#page-login-change_password .form-label-addon {
+    display: flex !important;
+    align-items: center !important;
+    height: 24px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Required fields: Hide orange exclamation circle, add red asterisk after label */
+#page-user-edit .form-label-addon .text-danger,
+#page-user-editadvanced .form-label-addon .text-danger,
+#page-login-change_password .form-label-addon .text-danger,
+#page-user-edit .form-label-addon .req,
+#page-user-editadvanced .form-label-addon .req,
+#page-login-change_password .form-label-addon .req {
+    display: none !important;
+}
+
+#page-user-edit .fitem .col-form-label:has(.text-danger) label::after,
+#page-user-editadvanced .fitem .col-form-label:has(.text-danger) label::after,
+#page-login-change_password .fitem .col-form-label:has(.text-danger) label::after,
+#page-user-edit .fitem:has([aria-required="true"]) .col-form-label label::after,
+#page-user-editadvanced .fitem:has([aria-required="true"]) .col-form-label label::after,
+#page-login-change_password .fitem:has([aria-required="true"]) .col-form-label label::after {
+    content: " *" !important;
     color: #B93C00 !important;
     font-weight: 700 !important;
-    margin-left: 2px !important;
+}
+
+/* Help icon: Outline #5B6280, 20px, 44x44px touch target */
+#page-user-edit .form-label-addon a[data-bs-toggle="popover"],
+#page-user-editadvanced .form-label-addon a[data-bs-toggle="popover"],
+#page-login-change_password .form-label-addon a[data-bs-toggle="popover"] {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: -10px -10px -10px 0 !important;
+    padding: 0 !important;
+    color: #5B6280 !important;
+    text-decoration: none !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+#page-user-edit .form-label-addon a[data-bs-toggle="popover"] i.icon,
+#page-user-editadvanced .form-label-addon a[data-bs-toggle="popover"] i.icon,
+#page-login-change_password .form-label-addon a[data-bs-toggle="popover"] i.icon {
+    font-size: 20px !important;
+    width: 20px !important;
+    height: 20px !important;
+    line-height: 20px !important;
+    color: #5B6280 !important;
+    font-weight: 400 !important;
 }
 
 #page-user-edit .fitem .felement,
@@ -203,59 +319,59 @@ body.has-busola-change-password #topofscroll {
 #page-user-edit .fitem input[type="email"],
 #page-user-edit .fitem input[type="password"],
 #page-user-edit .fitem select,
+#page-user-edit .form-control,
+#page-user-edit .form-select,
 #page-user-editadvanced .fitem input[type="text"],
 #page-user-editadvanced .fitem input[type="email"],
 #page-user-editadvanced .fitem input[type="password"],
 #page-user-editadvanced .fitem select,
+#page-user-editadvanced .form-control,
+#page-user-editadvanced .form-select,
 #page-login-change_password .fitem input[type="text"],
 #page-login-change_password .fitem input[type="password"],
-#page-login-change_password .fitem select {
+#page-login-change_password .form-control {
     height: 48px !important;
     min-height: 48px !important;
     border-radius: 12px !important;
     border: 1.5px solid #C9CEE6 !important;
-    background-color: #FFFFFF !important;
     padding: 0 14px !important;
     font-size: 16px !important;
-    font-family: inherit !important;
     color: #141B5E !important;
-    width: 100% !important;
-    max-width: 100% !important;
+    background-color: #FFFFFF !important;
     box-sizing: border-box !important;
+    width: 100% !important;
     transition: border-color .15s ease, box-shadow .15s ease !important;
 }
 
 #page-user-edit .fitem input:focus,
 #page-user-edit .fitem select:focus,
+#page-user-edit .form-control:focus,
+#page-user-edit .form-select:focus,
 #page-user-editadvanced .fitem input:focus,
 #page-user-editadvanced .fitem select:focus,
-#page-login-change_password .fitem input:focus {
+#page-user-editadvanced .form-control:focus,
+#page-user-editadvanced .form-select:focus,
+#page-login-change_password .fitem input:focus,
+#page-login-change_password .form-control:focus {
     border-color: #141B5E !important;
     box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.4) !important;
     outline: none !important;
 }
 
-/* Static text in form (e.g. username on change_password) */
-#page-login-change_password #fitem_id_username .felement {
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    color: #141B5E !important;
-    padding-top: 4px !important;
-}
-
-/* Multi-column grid on desktop for "Ogólne" */
+/* Multi-column grid on desktop for "Ogólne" (20px gap) */
 @media (min-width: 768px) {
     #page-user-edit #id_moodle .fcontainer,
     #page-user-editadvanced #id_moodle .fcontainer {
         display: flex !important;
         flex-wrap: wrap !important;
-        gap: 16px 20px !important;
+        gap: 20px !important;
     }
     #page-user-edit #fitem_id_firstname,
     #page-user-edit #fitem_id_lastname,
     #page-user-editadvanced #fitem_id_firstname,
     #page-user-editadvanced #fitem_id_lastname {
         flex: 1 1 calc(50% - 10px) !important;
+        max-width: calc(50% - 10px) !important;
         min-width: 240px !important;
         margin-bottom: 0 !important;
     }
@@ -264,6 +380,7 @@ body.has-busola-change-password #topofscroll {
     #page-user-editadvanced #fitem_id_email,
     #page-user-editadvanced #fitem_id_maildisplay {
         flex: 1 1 calc(50% - 10px) !important;
+        max-width: calc(50% - 10px) !important;
         min-width: 240px !important;
         margin-bottom: 0 !important;
     }
@@ -273,48 +390,189 @@ body.has-busola-change-password #topofscroll {
     #page-user-editadvanced #fitem_id_city,
     #page-user-editadvanced #fitem_id_country,
     #page-user-editadvanced #fitem_id_timezone {
-        flex: 1 1 calc(33.333% - 14px) !important;
+        flex: 1 1 calc(33.333% - 13.33px) !important;
+        max-width: calc(33.333% - 13.33px) !important;
         min-width: 180px !important;
         margin-bottom: 0 !important;
     }
     #page-user-edit #fitem_id_description_editor,
     #page-user-editadvanced #fitem_id_description_editor {
         flex: 1 1 100% !important;
+        max-width: 100% !important;
         width: 100% !important;
         margin-bottom: 0 !important;
     }
 }
 
-/* Filemanager in User Picture section */
-#page-user-edit #id_moodle_picture .filemanager,
-#page-user-editadvanced #id_moodle_picture .filemanager,
-#page-user-edit #id_moodle_picture .filepicker-filelist,
-#page-user-editadvanced #id_moodle_picture .filepicker-filelist {
+/* TinyMCE Editor styling */
+#page-user-edit .tox-tinymce,
+#page-user-editadvanced .tox-tinymce {
+    border: 1.5px solid #C9CEE6 !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+/* 5. Zdjęcie profilowe: 2 columns */
+@media (min-width: 768px) {
+    .busola-picture-row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 24px !important;
+        align-items: flex-start !important;
+    }
+    .busola-picture-left-col {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 12px !important;
+        flex: 0 0 140px !important;
+    }
+    .busola-picture-right-col {
+        flex: 1 1 320px !important;
+        min-width: 0 !important;
+    }
+}
+
+#fitem_id_currentpicture .col-form-label,
+#fitem_id_imagefile .col-form-label {
+    display: none !important;
+}
+
+#fitem_id_currentpicture .felement {
+    width: auto !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+#fitem_id_currentpicture .userpicture {
+    width: 96px !important;
+    height: 96px !important;
+    border-radius: 50% !important;
+    border: 4px solid #141B5E !important;
+    box-sizing: border-box !important;
+    object-fit: cover !important;
+    display: block !important;
+}
+
+#id_deletepicture {
+    width: 20px !important;
+    height: 20px !important;
+    border: 2px solid #8A91B8 !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    margin-right: 8px !important;
+}
+
+#id_moodle_picture .form-check {
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 15px !important;
+    color: #3A4163 !important;
+}
+
+#id_moodle_picture .form-check label {
+    margin: 0 !important;
+    cursor: pointer !important;
+    font-weight: 500 !important;
+}
+
+/* Remove outer dashed border on filemanager, keep only one on dropzone */
+.filemanager {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+.filemanager-container,
+.dndupload-target {
     border: 2px dashed #C9CEE6 !important;
     border-radius: 16px !important;
     background: #F5F6FB !important;
-    padding: 20px !important;
-    text-align: center !important;
 }
 
-/* Sticky Bottom Action Bar (#sticky-footer & #fgroup_id_buttonar) */
+#fitem_id_imagefile .fp-restrictions,
+#fitem_id_imagefile .form-filetypes-descriptions,
+#fitem_id_imagefile .form-filetypes-descriptions ul,
+#fitem_id_imagefile .form-filetypes-descriptions li {
+    font-size: 13px !important;
+    color: #5B6280 !important;
+    margin-top: 6px !important;
+    margin-bottom: 4px !important;
+    line-height: 1.4 !important;
+}
+
+#fitem_id_imagealt {
+    margin-top: 16px !important;
+    width: 100% !important;
+}
+
+/* 6. Pozostałe ustawienia (Grouped card) */
+.busola-other-settings-list fieldset {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    border-top: 1px solid #E8EBF6 !important;
+}
+
+.busola-other-settings-list fieldset .d-flex.align-items-center.mb-2 {
+    min-height: 56px !important;
+    margin-bottom: 0 !important;
+    padding: 0 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    cursor: pointer !important;
+}
+
+.busola-other-settings-list fieldset .ftoggler {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin: 0 !important;
+}
+
+.busola-other-settings-list fieldset h3 {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    color: #141B5E !important;
+    margin: 0 !important;
+    order: 1 !important;
+}
+
+.busola-other-settings-list fieldset .ftoggler > a.icons-collapse-expand {
+    order: 2 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    color: #141B5E !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* 7. Sticky Bottom Action Bar */
 #page-user-edit #sticky-footer,
 #page-user-editadvanced #sticky-footer,
 #page-login-change_password #sticky-footer,
 #page-user-edit #fgroup_id_buttonar,
 #page-user-editadvanced #fgroup_id_buttonar,
 #page-login-change_password #fgroup_id_buttonar {
-    position: fixed !important;
+    position: sticky !important;
     bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
     z-index: 1040 !important;
     background: #FFFFFF !important;
     box-shadow: 0 -1px 0 rgba(20, 27, 94, 0.1), 0 -8px 24px rgba(20, 27, 94, 0.06) !important;
-    padding: 12px 24px !important;
+    padding: 14px 32px !important;
     margin: 0 !important;
     border: none !important;
-    border-top: 1px solid #E8EBF6 !important;
 }
 
 #page-user-edit #sticky-footer .sticky-footer-content,
@@ -323,32 +581,43 @@ body.has-busola-change-password #topofscroll {
 #page-user-edit #fgroup_id_buttonar .felement,
 #page-user-editadvanced #fgroup_id_buttonar .felement,
 #page-login-change_password #fgroup_id_buttonar .felement {
-    max-width: 888px !important;
+    max-width: 824px !important;
     margin: 0 auto !important;
+    padding: 0 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: flex-start !important;
-    gap: 14px !important;
-    flex-wrap: wrap !important;
-}
-
-#page-login-change_password #sticky-footer .sticky-footer-content,
-#page-login-change_password #fgroup_id_buttonar .felement {
-    max-width: 560px !important;
-}
-
-#page-user-edit #sticky-footer .sticky-footer-content > .d-flex,
-#page-user-editadvanced #sticky-footer .sticky-footer-content > .d-flex,
-#page-login-change_password #sticky-footer .sticky-footer-content > .d-flex {
     gap: 12px !important;
-    align-items: center !important;
+    width: 100% !important;
 }
 
-/* Submit and Cancel buttons */
+#page-user-edit #sticky-footer .fitem,
+#page-user-editadvanced #sticky-footer .fitem,
+#page-login-change_password #sticky-footer .fitem {
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+}
+
+#page-user-edit #sticky-footer [data-groupname="buttonar"],
+#page-user-editadvanced #sticky-footer [data-groupname="buttonar"],
+#page-login-change_password #sticky-footer [data-groupname="buttonar"] {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#page-user-edit #sticky-footer [data-groupname="buttonar"] .d-flex,
+#page-user-editadvanced #sticky-footer [data-groupname="buttonar"] .d-flex,
+#page-login-change_password #sticky-footer [data-groupname="buttonar"] .d-flex {
+    gap: 12px !important;
+    margin: 0 !important;
+}
+
+#id_submitbutton,
 #page-user-edit #id_submitbutton,
 #page-user-editadvanced #id_submitbutton,
 #page-login-change_password #id_submitbutton {
     min-height: 52px !important;
+    height: 52px !important;
     padding: 0 28px !important;
     border-radius: 14px !important;
     background: #FF7A1A !important;
@@ -362,17 +631,17 @@ body.has-busola-change-password #topofscroll {
     transition: background .15s ease, transform .15s ease !important;
 }
 
-#page-user-edit #id_submitbutton:hover,
-#page-user-editadvanced #id_submitbutton:hover,
-#page-login-change_password #id_submitbutton:hover {
+#id_submitbutton:hover {
     background: #E86A10 !important;
     transform: translateY(-1px) !important;
 }
 
+#id_cancel,
 #page-user-edit #id_cancel,
 #page-user-editadvanced #id_cancel,
 #page-login-change_password #id_cancel {
     min-height: 52px !important;
+    height: 52px !important;
     padding: 0 24px !important;
     border: 2px solid #C9CEE6 !important;
     border-radius: 14px !important;
@@ -385,53 +654,28 @@ body.has-busola-change-password #topofscroll {
     transition: border-color .15s ease, background .15s ease !important;
 }
 
-#page-user-edit #id_cancel:hover,
-#page-user-editadvanced #id_cancel:hover,
-#page-login-change_password #id_cancel:hover {
+#id_cancel:hover {
     border-color: #141B5E !important;
-    background: rgba(20, 27, 94, 0.04) !important;
 }
 
-/* -------------------------------------------------------------------------
-   Dark Mode Support
-   ------------------------------------------------------------------------- */
-[data-bs-theme="dark"] #page-user-edit,
-[data-bs-theme="dark"] #page-user-editadvanced,
-[data-bs-theme="dark"] #page-login-change_password,
-body.darkmode.has-busola-user-edit,
-body.darkmode.has-busola-change-password,
-body.moove-darkmode.has-busola-user-edit,
-body.moove-darkmode.has-busola-change-password,
-.moove-darkmode.has-busola-user-edit,
-.moove-darkmode.has-busola-change-password,
-.theme-dark.has-busola-user-edit,
-.theme-dark.has-busola-change-password {
-    background-color: #0B0F32 !important;
+.busola-required-legend {
+    margin-left: auto !important;
+    font-size: 14px !important;
+    color: #5B6280 !important;
+    white-space: nowrap !important;
+}
+
+/* Hide raw required description above footer */
+form.mform > .fdescription.required:not(.busola-required-legend) {
+    display: none !important;
+}
+
+/* 8. Dark Mode */
+body.moove-darkmode#page-user-edit,
+body.moove-darkmode#page-user-editadvanced,
+body.moove-darkmode#page-login-change_password {
+    background-color: #0A0E2A !important;
     color: #CBD1F3 !important;
-}
-
-[data-bs-theme="dark"] .busola-account-header .busola-breadcrumb,
-body.darkmode .busola-account-header .busola-breadcrumb,
-body.moove-darkmode .busola-account-header .busola-breadcrumb,
-.moove-darkmode .busola-account-header .busola-breadcrumb,
-.theme-dark .busola-account-header .busola-breadcrumb {
-    color: #A3ABD0 !important;
-}
-
-[data-bs-theme="dark"] .busola-account-header .busola-breadcrumb a,
-body.darkmode .busola-account-header .busola-breadcrumb a,
-body.moove-darkmode .busola-account-header .busola-breadcrumb a,
-.moove-darkmode .busola-account-header .busola-breadcrumb a,
-.theme-dark .busola-account-header .busola-breadcrumb a {
-    color: #FFFFFF !important;
-}
-
-[data-bs-theme="dark"] .busola-account-header .busola-account-title,
-body.darkmode .busola-account-header .busola-account-title,
-body.moove-darkmode .busola-account-header .busola-account-title,
-.moove-darkmode .busola-account-header .busola-account-title,
-.theme-dark .busola-account-header .busola-account-title {
-    color: #FFFFFF !important;
 }
 
 body.moove-darkmode#page-user-edit form.mform fieldset,
@@ -442,62 +686,31 @@ body.moove-darkmode#page-login-change_password form.mform fieldset,
 #page-login-change_password.moove-darkmode form.mform fieldset,
 body.moove-darkmode .busola-password-prompt-card,
 .moove-darkmode .busola-password-prompt-card,
-[data-bs-theme="dark"] #page-user-edit form.mform fieldset,
-[data-bs-theme="dark"] #page-user-editadvanced form.mform fieldset,
-[data-bs-theme="dark"] #page-login-change_password form.mform fieldset,
-[data-bs-theme="dark"] .busola-password-prompt-card,
-body.darkmode #page-user-edit form.mform fieldset,
-body.darkmode #page-user-editadvanced form.mform fieldset,
-body.darkmode #page-login-change_password form.mform fieldset,
-body.darkmode .busola-password-prompt-card,
-.theme-dark #page-user-edit form.mform fieldset,
-.theme-dark #page-user-editadvanced form.mform fieldset,
-.theme-dark #page-login-change_password form.mform fieldset,
-.theme-dark .busola-password-prompt-card {
+body.moove-darkmode .busola-other-settings-card,
+.moove-darkmode .busola-other-settings-card {
     background: #141B5E !important;
     color: #CBD1F3 !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25) !important;
 }
 
-body.moove-darkmode#page-user-edit form.mform fieldset legend,
-body.moove-darkmode#page-user-editadvanced form.mform fieldset legend,
-body.moove-darkmode#page-login-change_password form.mform fieldset legend,
-#page-user-edit.moove-darkmode form.mform fieldset legend,
-#page-user-editadvanced.moove-darkmode form.mform fieldset legend,
-#page-login-change_password.moove-darkmode form.mform fieldset legend,
-body.moove-darkmode#page-user-edit form.mform fieldset .ftoggler a,
-body.moove-darkmode#page-user-editadvanced form.mform fieldset .ftoggler a,
-body.moove-darkmode#page-login-change_password form.mform fieldset .ftoggler a,
-#page-user-edit.moove-darkmode form.mform fieldset .ftoggler a,
-#page-user-editadvanced.moove-darkmode form.mform fieldset .ftoggler a,
-#page-login-change_password.moove-darkmode form.mform fieldset .ftoggler a,
-body.moove-darkmode#page-user-edit .ftoggler a,
-body.moove-darkmode#page-user-editadvanced .ftoggler a,
-body.moove-darkmode#page-login-change_password .ftoggler a,
-#page-user-edit.moove-darkmode .ftoggler a,
-#page-user-editadvanced.moove-darkmode .ftoggler a,
-#page-login-change_password.moove-darkmode .ftoggler a,
-body.moove-darkmode .busola-password-prompt-card h2,
-.moove-darkmode .busola-password-prompt-card h2,
-[data-bs-theme="dark"] #page-user-edit form.mform fieldset legend,
-[data-bs-theme="dark"] #page-user-editadvanced form.mform fieldset legend,
-[data-bs-theme="dark"] #page-login-change_password form.mform fieldset legend,
-[data-bs-theme="dark"] .busola-password-prompt-card h2,
-[data-bs-theme="dark"] .ftoggler a,
-body.darkmode .ftoggler a,
-body.moove-darkmode .ftoggler a,
-.moove-darkmode .ftoggler a,
-.theme-dark .ftoggler a {
+body.moove-darkmode .busola-account-header .busola-account-title {
     color: #FFFFFF !important;
 }
 
-body.moove-darkmode#page-user-edit .collapsible-actions a,
-body.moove-darkmode#page-user-editadvanced .collapsible-actions a,
-#page-user-edit.moove-darkmode .collapsible-actions a,
-#page-user-editadvanced.moove-darkmode .collapsible-actions a,
-body.moove-darkmode .collapsible-actions a,
-.moove-darkmode .collapsible-actions a {
+body.moove-darkmode .busola-account-header .busola-breadcrumb a {
     color: #CBD1F3 !important;
+}
+
+body.moove-darkmode#page-user-edit form.mform fieldset h3,
+body.moove-darkmode#page-user-editadvanced form.mform fieldset h3,
+body.moove-darkmode#page-login-change_password form.mform fieldset h3,
+#page-user-edit.moove-darkmode form.mform fieldset h3,
+#page-user-editadvanced.moove-darkmode form.mform fieldset h3,
+#page-login-change_password.moove-darkmode form.mform fieldset h3,
+body.moove-darkmode .busola-password-prompt-card h2,
+.moove-darkmode .busola-password-prompt-card h2,
+body.moove-darkmode .busola-other-settings-title {
+    color: #FFFFFF !important;
 }
 
 #page-user-edit.moove-darkmode .fitem .col-form-label label,
@@ -511,15 +724,7 @@ body.moove-darkmode#page-login-change_password .fitem .col-form-label label,
 #page-login-change_password.moove-darkmode .fitem label,
 body.moove-darkmode#page-user-edit .fitem label,
 body.moove-darkmode#page-user-editadvanced .fitem label,
-body.moove-darkmode#page-login-change_password .fitem label,
-[data-bs-theme="dark"]#page-user-edit .fitem .col-form-label label,
-[data-bs-theme="dark"]#page-user-editadvanced .fitem .col-form-label label,
-[data-bs-theme="dark"]#page-login-change_password .fitem .col-form-label label,
-[data-bs-theme="dark"] .fitem .col-form-label label,
-body.darkmode .fitem .col-form-label label,
-body.moove-darkmode .fitem .col-form-label label,
-.moove-darkmode .fitem .col-form-label label,
-.theme-dark .fitem .col-form-label label {
+body.moove-darkmode#page-login-change_password .fitem label {
     color: #FFFFFF !important;
 }
 
@@ -536,44 +741,9 @@ body.moove-darkmode#page-user-edit textarea,
 body.moove-darkmode#page-user-editadvanced .fitem input,
 body.moove-darkmode#page-user-editadvanced .fitem select,
 body.moove-darkmode#page-login-change_password .fitem input,
-body.moove-darkmode#page-login-change_password .fitem select,
-[data-bs-theme="dark"] #page-user-edit .fitem input,
-[data-bs-theme="dark"] #page-user-edit .fitem select,
-[data-bs-theme="dark"] #page-user-edit textarea,
-[data-bs-theme="dark"] #page-user-editadvanced .fitem input,
-[data-bs-theme="dark"] #page-user-editadvanced .fitem select,
-[data-bs-theme="dark"] #page-login-change_password .fitem input,
-[data-bs-theme="dark"] #page-login-change_password .fitem select,
-[data-bs-theme="dark"] .fitem input[type="text"],
-[data-bs-theme="dark"] .fitem input[type="email"],
-[data-bs-theme="dark"] .fitem input[type="password"],
-[data-bs-theme="dark"] .fitem select,
-body.darkmode .fitem input[type="text"],
-body.darkmode .fitem input[type="email"],
-body.darkmode .fitem input[type="password"],
-body.darkmode .fitem select,
-body.moove-darkmode .fitem input[type="text"],
-body.moove-darkmode .fitem input[type="email"],
-body.moove-darkmode .fitem input[type="password"],
-body.moove-darkmode .fitem select,
-.moove-darkmode .fitem input[type="text"],
-.moove-darkmode .fitem input[type="email"],
-.moove-darkmode .fitem input[type="password"],
-.moove-darkmode .fitem select,
-.theme-dark .fitem input[type="text"],
-.theme-dark .fitem input[type="email"],
-.theme-dark .fitem input[type="password"],
-.theme-dark .fitem select {
+body.moove-darkmode#page-login-change_password .fitem select {
     background-color: #0F1547 !important;
     border-color: #2C3675 !important;
-    color: #FFFFFF !important;
-}
-
-[data-bs-theme="dark"] #page-login-change_password #fitem_id_username .felement,
-body.darkmode #page-login-change_password #fitem_id_username .felement,
-body.moove-darkmode #page-login-change_password #fitem_id_username .felement,
-.moove-darkmode #page-login-change_password #fitem_id_username .felement,
-.theme-dark #page-login-change_password #fitem_id_username .felement {
     color: #FFFFFF !important;
 }
 
@@ -583,20 +753,7 @@ body.moove-darkmode#page-user-editadvanced #sticky-footer,
 body.moove-darkmode#page-login-change_password #sticky-footer,
 #page-user-edit.moove-darkmode #sticky-footer,
 #page-user-editadvanced.moove-darkmode #sticky-footer,
-#page-login-change_password.moove-darkmode #sticky-footer,
-[data-bs-theme="dark"]#page-user-edit #sticky-footer,
-[data-bs-theme="dark"]#page-user-editadvanced #sticky-footer,
-[data-bs-theme="dark"]#page-login-change_password #sticky-footer,
-body.moove-darkmode #sticky-footer,
-.moove-darkmode #sticky-footer,
-[data-bs-theme="dark"] #sticky-footer,
-[data-bs-theme="dark"] #page-user-edit #fgroup_id_buttonar,
-[data-bs-theme="dark"] #page-user-editadvanced #fgroup_id_buttonar,
-[data-bs-theme="dark"] #page-login-change_password #fgroup_id_buttonar,
-body.darkmode #fgroup_id_buttonar,
-body.moove-darkmode #fgroup_id_buttonar,
-.moove-darkmode #fgroup_id_buttonar,
-.theme-dark #fgroup_id_buttonar {
+#page-login-change_password.moove-darkmode #sticky-footer {
     background-color: #141B5E !important;
     border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
     box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.08), 0 -8px 24px rgba(0, 0, 0, 0.3) !important;
@@ -608,99 +765,92 @@ body.moove-darkmode#page-user-editadvanced #id_cancel,
 body.moove-darkmode#page-login-change_password #id_cancel,
 #page-user-edit.moove-darkmode #id_cancel,
 #page-user-editadvanced.moove-darkmode #id_cancel,
-#page-login-change_password.moove-darkmode #id_cancel,
-[data-bs-theme="dark"]#page-user-edit #id_cancel,
-[data-bs-theme="dark"]#page-user-editadvanced #id_cancel,
-[data-bs-theme="dark"]#page-login-change_password #id_cancel,
-[data-bs-theme="dark"] #id_cancel,
-body.darkmode #id_cancel,
-body.moove-darkmode #id_cancel,
-.moove-darkmode #id_cancel,
-.theme-dark #id_cancel {
+#page-login-change_password.moove-darkmode #id_cancel {
     border-color: rgba(255, 255, 255, 0.25) !important;
     background: transparent !important;
     color: #FFFFFF !important;
 }
 
-body.moove-darkmode .busola-password-prompt-card p,
-.moove-darkmode .busola-password-prompt-card p {
+body.moove-darkmode .busola-required-legend {
     color: #CBD1F3 !important;
 }
 
-[data-bs-theme="dark"] .busola-password-prompt-card .btn-change-password-link,
-body.moove-darkmode .busola-password-prompt-card .btn-change-password-link,
-.moove-darkmode .busola-password-prompt-card .btn-change-password-link {
+body.moove-darkmode .busola-password-prompt-card p {
+    color: #CBD1F3 !important;
+}
+
+body.moove-darkmode .busola-password-prompt-card .btn-change-password-link {
     border-color: #CBD1F3 !important;
     color: #FFFFFF !important;
 }
 
-/* TinyMCE & Filemanager Dark Mode */
-body.moove-darkmode .tox.tox-tinymce {
-    border-color: #2C3675 !important;
-}
-body.moove-darkmode .tox .tox-menubar,
-body.moove-darkmode .tox .tox-toolbar,
-body.moove-darkmode .tox .tox-toolbar__primary,
-body.moove-darkmode .tox .tox-toolbar__overflow,
-body.moove-darkmode .tox .tox-statusbar {
-    background-color: #141B5E !important;
-    border-color: #2C3675 !important;
-}
-body.moove-darkmode .tox .tox-tbtn svg,
-body.moove-darkmode .tox .tox-mbtn__select-label,
-body.moove-darkmode .tox .tox-statusbar {
-    fill: #CBD1F3 !important;
-    color: #CBD1F3 !important;
-}
-body.moove-darkmode .filemanager .fp-navbar {
-    background-color: #141B5E !important;
-    border-color: #2C3675 !important;
-}
-body.moove-darkmode .filemanager-container,
-body.moove-darkmode .filepicker-filelist,
-body.moove-darkmode .dndupload-target {
-    background-color: #0F1547 !important;
-    border-color: #2C3675 !important;
-    color: #CBD1F3 !important;
+body.moove-darkmode #fitem_id_currentpicture .userpicture {
+    border-color: #FFFFFF !important;
 }
 
-/* -------------------------------------------------------------------------
-   Mobile Responsiveness (< 768px)
-   ------------------------------------------------------------------------- */
+body.moove-darkmode #fitem_id_imagefile .fp-restrictions,
+body.moove-darkmode #fitem_id_imagefile .form-filetypes-descriptions,
+body.moove-darkmode #fitem_id_imagefile .form-filetypes-descriptions ul,
+body.moove-darkmode #fitem_id_imagefile .form-filetypes-descriptions li {
+    color: #A9B0D6 !important;
+}
+
+body.moove-darkmode .filemanager-container,
+body.moove-darkmode .dndupload-target {
+    border-color: #2C3675 !important;
+    background: #0F1547 !important;
+}
+
+body.moove-darkmode .busola-other-settings-list fieldset {
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.moove-darkmode .busola-other-settings-list fieldset h3 {
+    color: #FFFFFF !important;
+}
+
+body.moove-darkmode .busola-other-settings-list fieldset .ftoggler > a.icons-collapse-expand {
+    color: #FFFFFF !important;
+}
+
+/* 9. Mobile Responsiveness (< 768px) */
 @media (max-width: 767.98px) {
+    .busola-account-header {
+        padding: 20px 16px 14px !important;
+    }
+
+    .busola-account-header .busola-account-title {
+        font-size: 28px !important;
+    }
+
     #page-user-edit #topofscroll,
     #page-user-editadvanced #topofscroll,
     #page-login-change_password #topofscroll,
     body.has-busola-user-edit #topofscroll,
     body.has-busola-change-password #topofscroll {
-        padding: 16px 14px 90px !important;
-    }
-
-    .busola-account-header .busola-account-title {
-        font-size: 24px !important;
-        margin-bottom: 14px !important;
+        padding: 0 16px 90px !important;
     }
 
     #page-user-edit form.mform fieldset,
     #page-user-editadvanced form.mform fieldset,
     #page-login-change_password form.mform fieldset,
-    .busola-password-prompt-card {
+    .busola-password-prompt-card,
+    .busola-other-settings-card {
         padding: 18px 16px !important;
         border-radius: 16px !important;
     }
 
-    #page-user-edit #fgroup_id_buttonar,
-    #page-user-editadvanced #fgroup_id_buttonar,
-    #page-login-change_password #fgroup_id_buttonar {
+    #page-user-edit #sticky-footer,
+    #page-user-editadvanced #sticky-footer,
+    #page-login-change_password #sticky-footer {
         padding: 12px 16px !important;
     }
 
-    #page-user-edit #fgroup_id_buttonar .felement,
-    #page-user-editadvanced #fgroup_id_buttonar .felement,
-    #page-login-change_password #fgroup_id_buttonar .felement {
-        display: flex !important;
-        flex-direction: row !important;
+    #page-user-edit #sticky-footer .sticky-footer-content,
+    #page-user-editadvanced #sticky-footer .sticky-footer-content,
+    #page-login-change_password #sticky-footer .sticky-footer-content {
         gap: 10px !important;
+        flex-wrap: wrap !important;
     }
 
     #id_submitbutton {
@@ -713,6 +863,12 @@ body.moove-darkmode .dndupload-target {
     #id_cancel {
         min-height: 48px !important;
         padding: 0 16px !important;
+    }
+
+    .busola-required-legend {
+        width: 100% !important;
+        text-align: right !important;
+        margin-top: 4px !important;
     }
 }
 </style>
@@ -732,20 +888,76 @@ body.moove-darkmode .dndupload-target {
 
 {{#is_busola_user_edit}}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var moodleSection = document.getElementById('id_moodle');
-    if (moodleSection && !document.getElementById('busola-password-card')) {
-        var card = document.createElement('section');
-        card.id = 'busola-password-card';
-        card.className = 'busola-password-prompt-card';
-        var changePwdUrl = (typeof M !== 'undefined' && M.cfg ? M.cfg.wwwroot : '') + '/login/change_password.php';
-        card.innerHTML = '<h2 style="margin:0 0 14px;font-size:22px;font-weight:800;letter-spacing:-.01em">Hasło</h2>' +
-            '<p style="margin:0 0 14px;font-size:15px">Aby zmienić hasło, podaj obecne i ustaw nowe.</p>' +
-            '<a href="' + changePwdUrl + '" class="btn-change-password-link" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border-radius:12px;border:2px solid currentColor;font-weight:700;font-size:15px;text-decoration:none">' +
-            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>' +
-            'Zmień hasło</a>';
-        moodleSection.parentNode.insertBefore(card, moodleSection.nextSibling);
+(function() {
+    function initBusolaUserEdit() {
+        // 1. Injected Password Prompt Card
+        var moodleSection = document.getElementById('id_moodle');
+        if (moodleSection && !document.getElementById('busola-password-card')) {
+            var card = document.createElement('section');
+            card.id = 'busola-password-card';
+            card.className = 'busola-password-prompt-card';
+            var changePwdUrl = (typeof M !== 'undefined' && M.cfg ? M.cfg.wwwroot : '') + '/login/change_password.php';
+            card.innerHTML = '<h2 style="margin:0 0 14px;font-size:22px;font-weight:800;letter-spacing:-.01em">Hasło</h2>' +
+                '<p style="margin:0 0 14px;font-size:15px;color:inherit">Aby zmienić hasło, podaj obecne i ustaw nowe.</p>' +
+                '<a href="' + changePwdUrl + '" class="btn-change-password-link" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border-radius:12px;border:2px solid currentColor;font-weight:700;font-size:15px;text-decoration:none">' +
+                '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>' +
+                'Zmień hasło</a>';
+            moodleSection.parentNode.insertBefore(card, moodleSection.nextSibling);
+        }
+
+        // 2. Picture layout: 2 columns (Avatar + Delete on left, Dropzone on right)
+        var picFs = document.getElementById('id_moodle_picture');
+        var currPic = document.getElementById('fitem_id_currentpicture');
+        var delPic = document.querySelector('input[name="deletepicture"]');
+        var delPicItem = delPic ? delPic.closest('.fitem') : null;
+        var imageFile = document.getElementById('fitem_id_imagefile');
+        if (picFs && currPic && imageFile && !picFs.querySelector('.busola-picture-row')) {
+            var row = document.createElement('div');
+            row.className = 'busola-picture-row';
+            var leftCol = document.createElement('div');
+            leftCol.className = 'busola-picture-left-col';
+            var rightCol = document.createElement('div');
+            rightCol.className = 'busola-picture-right-col';
+            
+            currPic.parentNode.insertBefore(row, currPic);
+            leftCol.appendChild(currPic);
+            if (delPicItem) leftCol.appendChild(delPicItem);
+            rightCol.appendChild(imageFile);
+            
+            row.appendChild(leftCol);
+            row.appendChild(rightCol);
+        }
+
+        // 3. Group Other Settings into single card
+        var otherIds = ['id_moodle_additional_names', 'id_moodle_interests', 'id_moodle_optional', 'id_category_3'];
+        var otherElements = otherIds.map(function(id) { return document.getElementById(id); }).filter(Boolean);
+        if (otherElements.length > 0 && !document.querySelector('.busola-other-settings-card')) {
+            var first = otherElements[0];
+            var otherCard = document.createElement('section');
+            otherCard.className = 'busola-other-settings-card';
+            otherCard.innerHTML = '<h3 class="busola-other-settings-title">Pozostałe ustawienia</h3><div class="busola-other-settings-list"></div>';
+            first.parentNode.insertBefore(otherCard, first);
+            var list = otherCard.querySelector('.busola-other-settings-list');
+            otherElements.forEach(function(el) { list.appendChild(el); });
+        }
+
+        // 4. Move required legend to sticky footer
+        var reqLegend = document.querySelector('.fdescription.required:not(.busola-required-legend)');
+        var stickyContent = document.querySelector('#sticky-footer .sticky-footer-content');
+        if (reqLegend && stickyContent && !stickyContent.querySelector('.busola-required-legend')) {
+            var span = document.createElement('span');
+            span.className = 'busola-required-legend';
+            span.innerHTML = '<span style="color:#B93C00;font-weight:700">*</span> Pole wymagane';
+            stickyContent.appendChild(span);
+            reqLegend.style.display = 'none';
+        }
     }
-});
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBusolaUserEdit);
+    } else {
+        initBusolaUserEdit();
+    }
+})();
 </script>
 {{/is_busola_user_edit}}
