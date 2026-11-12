@@ -6528,7 +6528,8 @@ body.darkmode,
 
 // ==========================================================================
 // Strona aktywności H5P (mod_hvp oraz mod_h5pactivity):
-// tło za kartą z tokenów (bez białego/szarego pasa), ukrycie nagłówka kontekstowego
+// tło za kartą z tokenów (bez białego/szarego pasa), ukrycie nagłówka kontekstowego,
+// redukcja pustego odstępu między breadcrumb a odtwarzaczem oraz stylowanie breadcrumb
 // ==========================================================================
 body#page-mod-h5pactivity-view,
 body#page-mod-hvp-view,
@@ -6551,30 +6552,41 @@ body.path-mod-hvp {
         border: 0 !important;
     }
 
-    #region-main {
-        overflow: visible;
-    }
-}
+    /* Redukcja pustego odstępu między okruszkami a wideo */
+    #page-header {
+        padding-top: 14px !important;
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
 
-// H5P: zmniejszenie pustej przestrzeni między tytułem a odtwarzaczem
-body#page-mod-h5pactivity-view,
-body#page-mod-hvp-view,
-body.path-mod-hvp {
-    // Kontener przełącznika szuflad zajmuje 55px w przepływie (sam przełącznik jest fixed)
+        .d-flex.align-items-center:empty,
+        > .w-100 > .d-flex.align-items-center {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    }
+
     .drawer-toggles {
         height: 0 !important;
         min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
     }
 
-    #page-header {
-        padding-bottom: 8px !important;
+    #topofscroll {
+        padding-top: 8px !important;
+        margin-top: 0 !important;
     }
 
     #region-main {
         padding-top: 0 !important;
+        margin-top: 0 !important;
+        overflow: visible;
 
-        .activity-header:empty {
-            display: none;
+        .activity-header:empty,
+        .activity-header {
+            margin: 0 !important;
+            padding: 0 !important;
         }
 
         > div > .d-flex.justify-content-end.mb-3 {
@@ -6583,6 +6595,80 @@ body.path-mod-hvp {
             &:not(:has(a, button)) {
                 display: none !important;
             }
+        }
+    }
+
+    /* Okruszki nawigacyjne (Breadcrumbs) - tryb jasny */
+    .breadcrumb {
+        margin-bottom: 0 !important;
+        padding: 0 !important;
+        font-size: 13px !important;
+        line-height: 1.4 !important;
+        display: flex !important;
+        align-items: center !important;
+
+        .breadcrumb-item {
+            display: inline-flex !important;
+            align-items: center !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            color: #5B6280 !important;
+
+            a {
+                color: #5B6280 !important;
+                font-weight: 600 !important;
+                text-decoration: none !important;
+                transition: color .15s ease !important;
+
+                &:hover {
+                    color: #141B5E !important;
+                }
+            }
+
+            + .breadcrumb-item::before {
+                color: #9AA0BE !important;
+                font-size: 11px !important;
+                padding: 0 8px !important;
+                content: "\f054" !important;
+            }
+
+            span,
+            &.active {
+                color: #141B5E !important;
+                font-weight: 700 !important;
+            }
+        }
+    }
+}
+
+/* Okruszki nawigacyjne w trybie ciemnym */
+body.darkmode#page-mod-h5pactivity-view,
+body.darkmode#page-mod-hvp-view,
+body.darkmode.path-mod-hvp,
+body.moove-darkmode#page-mod-h5pactivity-view,
+body.moove-darkmode#page-mod-hvp-view,
+body.moove-darkmode.path-mod-hvp,
+[data-bs-theme="dark"] body#page-mod-h5pactivity-view,
+[data-bs-theme="dark"] body#page-mod-hvp-view,
+[data-bs-theme="dark"] body.path-mod-hvp {
+    .breadcrumb .breadcrumb-item {
+        color: #A3ABD0 !important;
+
+        a {
+            color: #A3ABD0 !important;
+
+            &:hover {
+                color: #FFFFFF !important;
+            }
+        }
+
+        + .breadcrumb-item::before {
+            color: #6C74A2 !important;
+        }
+
+        span,
+        &.active {
+            color: #FFFFFF !important;
         }
     }
 }
