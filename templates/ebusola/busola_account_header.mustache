@@ -30,11 +30,19 @@ body.has-busola-change-password {
 }
 
 /* Remove active indicator from tabs on account pages */
+#page-user-edit .navbar.fixed-top .primary-navigation .navigation .nav-link.active,
+#page-user-editadvanced .navbar.fixed-top .primary-navigation .navigation .nav-link.active,
+#page-login-change_password .navbar.fixed-top .primary-navigation .navigation .nav-link.active,
+#page-user-edit .moremenu .nav-link.active,
+#page-user-editadvanced .moremenu .nav-link.active,
+#page-login-change_password .moremenu .nav-link.active,
 #page-user-edit .primary-navigation .nav-link.active,
 #page-user-editadvanced .primary-navigation .nav-link.active,
 #page-login-change_password .primary-navigation .nav-link.active {
     color: #3A4163 !important;
     border-bottom: none !important;
+    box-shadow: none !important;
+    font-weight: 500 !important;
 }
 #page-user-edit .primary-navigation .nav-link.active::after,
 #page-user-editadvanced .primary-navigation .nav-link.active::after,
@@ -510,6 +518,10 @@ body.has-busola-change-password #topofscroll {
 }
 
 /* 6. Pozostałe ustawienia (Grouped card) */
+#page-user-edit form.mform .busola-other-settings-list fieldset,
+#page-user-edit form.mform .busola-other-settings-list fieldset.collapsible,
+#page-user-editadvanced form.mform .busola-other-settings-list fieldset,
+#page-user-editadvanced form.mform .busola-other-settings-list fieldset.collapsible,
 .busola-other-settings-list fieldset {
     background: transparent !important;
     box-shadow: none !important;
@@ -801,8 +813,14 @@ body.moove-darkmode .dndupload-target {
     background: #0F1547 !important;
 }
 
+body.moove-darkmode#page-user-edit form.mform .busola-other-settings-list fieldset,
+body.moove-darkmode#page-user-edit form.mform .busola-other-settings-list fieldset.collapsible,
+body.moove-darkmode#page-user-editadvanced form.mform .busola-other-settings-list fieldset,
+body.moove-darkmode#page-user-editadvanced form.mform .busola-other-settings-list fieldset.collapsible,
 body.moove-darkmode .busola-other-settings-list fieldset {
     border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
 
 body.moove-darkmode .busola-other-settings-list fieldset h3 {
