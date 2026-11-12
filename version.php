@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
 $plugin->component = 'theme_ebusola';
 
 // This is the version of the plugin.
-$plugin->version = 2026111150;
+$plugin->version = 2026111152;
 
 // This is the named version.
 $plugin->release = '1.0.0 (Moove 5.3.1 base)';
