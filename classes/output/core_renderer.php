@@ -175,13 +175,45 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
+        $pagetype = $this->page->pagetype ?? '';
+        $sitecontext = \context_course::instance(SITEID);
+        $canadminedit = is_siteadmin() ||
+            has_capability('moodle/course:update', $sitecontext) ||
+            has_capability('moodle/site:manageblocks', $sitecontext);
+
+        // Personal / student views: Kokpit (my-index), user profile (user-profile),
+        // and account subpages (user-*). In eBusola these are custom student views;
+        // regular non-admin users must NEVER see the edit switch here even if Moodle
+        // core grants user_allowed_editing() for personal block customization.
+        $ispersonalview = ($pagetype === 'my-index' ||
+            $pagetype === 'user-profile' ||
+            strpos($pagetype, 'user-') === 0 ||
+            strpos($pagetype, 'my-') === 0);
+
+        if ($ispersonalview) {
+            if (!$canadminedit) {
+                return '';
+            }
+        }
+
+        // In course context, only teachers/managers/admins who can edit course content
+        // should see the edit switch.
+        if ($this->page->context instanceof \context_course && $this->page->course->id != SITEID) {
+            $cancourseedit = is_siteadmin() ||
+                has_capability('moodle/course:update', $this->page->context) ||
+                has_capability('moodle/course:manageactivities', $this->page->context) ||
+                can_edit_in_category($this->page->course->category);
+            if (!$cancourseedit) {
+                return '';
+            }
+        }
+
         if ($this->page->user_allowed_editing()) {
             return parent::edit_switch();
         }
 
         // On frontpage or custom dashboard layouts, check site-level editing capability.
-        $sitecontext = \context_course::instance(SITEID);
-        if (has_capability('moodle/course:update', $sitecontext) || has_capability('moodle/site:manageblocks', $sitecontext)) {
+        if ($canadminedit) {
             $url = new \moodle_url('/editmode.php');
             $context = [
                 'legacyseturl' => $url->out(false),
