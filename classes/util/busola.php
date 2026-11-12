@@ -37,87 +37,6 @@ class busola {
      *
      * @return array<int, string>
      */
-    /**
-     * Get MUC coursemetadata cache instance safely.
-     *
-     * @return \cache|null
-     */
-    private static function get_coursemetadata_cache(): ?\cache {
-        static $cache = null;
-        if ($cache === null) {
-            try {
-                $cache = \cache::make('theme_ebusola', 'coursemetadata');
-            } catch (\Exception $e) {
-                $cache = false;
-            }
-        }
-        return $cache ?: null;
-    }
-
-    /**
-     * Batch fetch user last access for an array of course IDs in a single query (ADR-0001 Rules #17 & #18).
-     *
-     * @param int $userid
-     * @param array $courseids
-     * @return array<int, int> Map of courseid => timeaccess
-     */
-    private static function get_user_lastaccess_map(int $userid, array $courseids): array {
-        global $DB;
-        static $useraccesscache = [];
-
-        if (empty($courseids) || empty($userid)) {
-            return [];
-        }
-
-        $needed = [];
-        $result = [];
-
-        foreach ($courseids as $cid) {
-            $cid = (int) $cid;
-            if ($cid <= 0 || $cid == SITEID) {
-                continue;
-            }
-            if (isset($useraccesscache[$userid][$cid])) {
-                $result[$cid] = $useraccesscache[$userid][$cid];
-            } else {
-                $needed[] = $cid;
-            }
-        }
-
-        if (!empty($needed)) {
-            try {
-                list($insql, $inparams) = $DB->get_in_or_equal($needed, SQL_PARAMS_NAMED, 'lac');
-                $sql = "SELECT courseid, timeaccess FROM {user_lastaccess} WHERE userid = :userid AND courseid $insql";
-                $records = $DB->get_records_sql($sql, array_merge(['userid' => $userid], $inparams));
-                foreach ($needed as $cid) {
-                    $useraccesscache[$userid][$cid] = 0;
-                }
-                foreach ($records as $r) {
-                    $useraccesscache[$userid][(int) $r->courseid] = (int) $r->timeaccess;
-                    $result[(int) $r->courseid] = (int) $r->timeaccess;
-                }
-                foreach ($needed as $cid) {
-                    if (!isset($result[$cid])) {
-                        $result[$cid] = $useraccesscache[$userid][$cid];
-                    }
-                }
-            } catch (\Exception $e) {
-                // Silently fall back to zeros.
-                foreach ($needed as $cid) {
-                    $result[$cid] = 0;
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Cache and retrieve visible course categories mapping: catid => category name.
-     * Backed by MUC application cache (ADR-0001 Rules #17 & #18).
-     *
-     * @return array<int, string>
-     */
     private static function get_all_categories_map(): array {
         global $DB;
         static $catmap = null;
@@ -125,23 +44,11 @@ class busola {
             return $catmap;
         }
 
-        $cache = self::get_coursemetadata_cache();
-        if ($cache) {
-            $cached = $cache->get('categories_map');
-            if (is_array($cached)) {
-                $catmap = $cached;
-                return $catmap;
-            }
-        }
-
         $catmap = [];
         try {
             $categories = $DB->get_records('course_categories', ['visible' => 1], 'sortorder ASC', 'id, name, parent');
             foreach ($categories as $cat) {
                 $catmap[(int) $cat->id] = format_string($cat->name);
-            }
-            if ($cache && !empty($catmap)) {
-                $cache->set('categories_map', $catmap);
             }
         } catch (\Exception $e) {
             // Silently fall back.
@@ -282,15 +189,6 @@ class busola {
         $lastaccessedcourse = null;
         $latesttimeaccess = 0;
 
-        // Batch prefetch lastaccess for all enrolled courses (ADR-0001 Rules #17 & #18).
-        $mycourseids = [];
-        foreach ($mycourses as $c) {
-            if ($c->id != SITEID) {
-                $mycourseids[] = (int) $c->id;
-            }
-        }
-        $lastaccessmap = self::get_user_lastaccess_map($USER->id, $mycourseids);
-
         foreach ($mycourses as $course) {
             if ($course->id == SITEID) {
                 continue;
@@ -318,8 +216,9 @@ class busola {
                 $notstartedcount++;
             }
 
-            // Check last access time (batched from map).
-            $timeaccess = $lastaccessmap[(int) $course->id] ?? 0;
+            // Check last access time.
+            $lastaccessrec = $DB->get_record('user_lastaccess', ['userid' => $USER->id, 'courseid' => $course->id], 'timeaccess');
+            $timeaccess = $lastaccessrec ? (int) $lastaccessrec->timeaccess : 0;
 
             // Course image and category color derived dynamically.
             $imageinfo = self::resolve_course_image_and_badge($course);
@@ -539,38 +438,23 @@ class busola {
         ];
         $bgcolor = $pastelcolors[$catid % count($pastelcolors)];
 
-        // Check if course overview image is cached in MUC (ADR-0001 Rule #18).
-        $cache = self::get_coursemetadata_cache();
-        $cachekey = 'cimg_' . (int) $course->id;
+        // Check if course has an overview image uploaded in Moodle course settings.
         $iconurl = null;
-
-        if ($cache) {
-            $cachedicon = $cache->get($cachekey);
-            if ($cachedicon !== false && $cachedicon !== null) {
-                $iconurl = $cachedicon ?: null;
-            }
-        }
-
-        if ($iconurl === null) {
-            try {
-                $coursecontext = \context_course::instance($course->id);
-                $fs = get_file_storage();
-                $files = $fs->get_area_files($coursecontext->id, 'course', 'overviewfiles', 0, 'itemid, filepath, filename', false);
-                foreach ($files as $file) {
-                    if ($file->is_valid_image()) {
-                        $iconurl = \moodle_url::make_file_url(
-                            '/pluginfile.php',
-                            '/' . $file->get_contextid() . '/' . $file->get_component() . '/' . $file->get_filearea() . $file->get_filepath() . $file->get_filename()
-                        )->out(false);
-                        break;
-                    }
+        try {
+            $coursecontext = \context_course::instance($course->id);
+            $fs = get_file_storage();
+            $files = $fs->get_area_files($coursecontext->id, 'course', 'overviewfiles', 0, 'itemid, filepath, filename', false);
+            foreach ($files as $file) {
+                if ($file->is_valid_image()) {
+                    $iconurl = \moodle_url::make_file_url(
+                        '/pluginfile.php',
+                        '/' . $file->get_contextid() . '/' . $file->get_component() . '/' . $file->get_filearea() . $file->get_filepath() . $file->get_filename()
+                    )->out(false);
+                    break;
                 }
-                if ($cache) {
-                    $cache->set($cachekey, $iconurl ?: '');
-                }
-            } catch (\Exception $e) {
-                // Fall back to theme default icon.
             }
+        } catch (\Exception $e) {
+            // Fall back to theme default icon.
         }
 
         if (empty($iconurl)) {
@@ -737,22 +621,14 @@ class busola {
         $lastaccessedcourse = null;
         $latesttimeaccess = 0;
 
-        // Batch fetch lastaccess for all enrolled courses (ADR-0001 Rules #17 & #18).
-        $kokpitcourseids = [];
-        foreach ($mycourses as $c) {
-            if ($c->id != SITEID) {
-                $kokpitcourseids[] = (int) $c->id;
-            }
-        }
-        $kokpitaccessmap = self::get_user_lastaccess_map($USER->id, $kokpitcourseids);
-
         foreach ($mycourses as $course) {
             if ($course->id == SITEID) {
                 continue;
             }
             $enrolledids[] = (int) $course->id;
 
-            $timeaccess = $kokpitaccessmap[(int) $course->id] ?? 0;
+            $lastaccessrec = $DB->get_record('user_lastaccess', ['userid' => $USER->id, 'courseid' => $course->id], 'timeaccess');
+            $timeaccess = $lastaccessrec ? (int) $lastaccessrec->timeaccess : 0;
             if ($timeaccess > $latesttimeaccess) {
                 $latesttimeaccess = $timeaccess;
                 $lastaccessedcourse = $course;

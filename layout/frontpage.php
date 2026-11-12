@@ -15,23 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * A drawer based layout for the frontpage - eBusola.
+ * A drawer based layout for the Eskada theme.
  *
  * @package    theme_ebusola
- * @copyright  2026 Szkoła Żeglarstwa Busola
+ * @copyright  2025 Willian Mano - willianmanoaraujo@gmail.com
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/behat/lib.php');
+require_once($CFG->dirroot . '/course/lib.php');
 
 // Add block button in editing mode.
 $addblockbutton = $OUTPUT->addblockbutton();
 
-$isguest = (!isloggedin() || isguestuser());
-
-if (isloggedin()) {
+if (isloggedin() && !isguestuser()) {
     $courseindexopen = (get_user_preferences('drawer-open-index', true) == true);
     $blockdraweropen = (get_user_preferences('drawer-open-block') == true);
 } else {
@@ -47,33 +46,22 @@ $extraclasses = ['uses-drawers'];
 if ($courseindexopen) {
     $extraclasses[] = 'drawer-open-index';
 }
-if ($isguest) {
+if (!isloggedin() || isguestuser()) {
     $extraclasses[] = 'has-busola-guest';
 }
 
-// Optimization per ADR-0001 Rule #11: Skip rendering drawers and side-blocks on guest frontpage when outside editing mode.
-if ($isguest && !$PAGE->user_is_editing()) {
-    $blockshtml = '';
-    $hasblocks = false;
-    $blockdraweropen = false;
-    $courseindex = '';
-    $courseindexopen = false;
-    $addcontentblockbutton = '';
-    $contentblocks = '';
-    $extraclasses = array_values(array_diff($extraclasses, ['drawer-open-index']));
-} else {
-    $blockshtml = $OUTPUT->blocks('side-pre');
-    $hasblocks = (strpos($blockshtml, 'data-block=') !== false || !empty($addblockbutton));
-    $addcontentblockbutton = $OUTPUT->addblockbutton('content');
-    $contentblocks = $OUTPUT->custom_block_region('content');
+$blockshtml = $OUTPUT->blocks('side-pre');
+$hasblocks = (strpos($blockshtml, 'data-block=') !== false || !empty($addblockbutton));
 
-    if (!$hasblocks) {
-        $blockdraweropen = false;
-    }
-    $courseindex = core_course_drawer();
-    if (!$courseindex) {
-        $courseindexopen = false;
-    }
+$addcontentblockbutton = $OUTPUT->addblockbutton('content');
+$contentblocks = $OUTPUT->custom_block_region('content');
+
+if (!$hasblocks) {
+    $blockdraweropen = false;
+}
+$courseindex = core_course_drawer();
+if (!$courseindex) {
+    $courseindexopen = false;
 }
 
 $forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
@@ -107,12 +95,6 @@ $header = $PAGE->activityheader;
 $headercontent = $header->export_for_template($renderer);
 
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
-
-$busolaguest = null;
-if ($isguest) {
-    $busolaguest = \theme_ebusola\util\busola::get_guest_frontpage_context();
-}
-
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => \core\context\course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
@@ -135,8 +117,6 @@ $templatecontext = [
     'addblockbutton' => $addblockbutton,
     'addcontentblockbutton' => $addcontentblockbutton,
     'contentblocks' => $contentblocks,
-    'is_busola_guest' => $isguest,
-    'busola_guest' => $busolaguest,
     'user_is_editing' => $PAGE->user_is_editing(),
 ];
 
@@ -144,4 +124,20 @@ $themesettings = new \theme_ebusola\util\settings();
 
 $templatecontext = array_merge($templatecontext, $themesettings->footer());
 
-echo $OUTPUT->render_from_template('theme_ebusola/frontpage', $templatecontext);
+$template = 'theme_ebusola/drawers';
+if (!isloggedin() || isguestuser()) {
+    $guestdata = \theme_ebusola\util\busola::get_guest_frontpage_context();
+    $templatecontext['is_busola_guest'] = true;
+    $templatecontext['guest_hub'] = $guestdata;
+    $templatecontext = array_merge($templatecontext, $guestdata);
+
+    $template = 'theme_ebusola/frontpage';
+} else {
+    $busoladata = \theme_ebusola\util\busola::get_dashboard_context();
+    if ($busoladata) {
+        $templatecontext['is_busola_dashboard'] = true;
+        $templatecontext['busola_hub'] = $busoladata;
+    }
+}
+
+echo $OUTPUT->render_from_template($template, $templatecontext);
