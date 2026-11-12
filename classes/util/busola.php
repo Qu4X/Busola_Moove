@@ -2044,6 +2044,11 @@ class busola {
             'last_test' => $lastattemptinfo,
             'has_last_test' => !empty($lastattemptinfo),
             'all_grades_url' => $allgradesurl,
+            'homeurl' => (new \moodle_url('/'))->out(false),
+            'dashboardurl' => (new \moodle_url('/my/'))->out(false),
+            'allcoursesurl' => (new \moodle_url('/my/courses.php'))->out(false),
+            'profileurl' => (new \moodle_url('/user/profile.php', ['id' => $user->id]))->out(false),
+            'is_profile_active' => true,
         ];
     }
 
