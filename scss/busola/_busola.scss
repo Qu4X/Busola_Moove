@@ -6691,3 +6691,19 @@ section.busola-section-discover,
     contain-intrinsic-size: auto 400px;
 }
 
+
+/* Ukrycie paska secondary-navigation na dedykowanym widoku kursu Busola */
+body.has-busola-course:not(.editing) .secondary-navigation.d-print-none.moove,
+body#page-course-view-topics.has-busola-course:not(.editing) .secondary-navigation,
+body#page-course-view-weeks.has-busola-course:not(.editing) .secondary-navigation {
+    display: none !important;
+}
+
+/* Ukrycie standardowego activity-header w widoku testu / quizu */
+body.path-mod-quiz #page-header .activity-header,
+body#page-mod-quiz-view #page-header .activity-header,
+body#page-mod-quiz-attempt #page-header .activity-header,
+body#page-mod-quiz-summary #page-header .activity-header,
+body#page-mod-quiz-review #page-header .activity-header {
+    display: none !important;
+}
