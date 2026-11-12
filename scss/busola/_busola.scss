@@ -6699,11 +6699,16 @@ body#page-course-view-weeks.has-busola-course:not(.editing) .secondary-navigatio
     display: none !important;
 }
 
-/* Ukrycie standardowego activity-header w widoku testu / quizu */
-body.path-mod-quiz #page-header .activity-header,
-body#page-mod-quiz-view #page-header .activity-header,
-body#page-mod-quiz-attempt #page-header .activity-header,
-body#page-mod-quiz-summary #page-header .activity-header,
-body#page-mod-quiz-review #page-header .activity-header {
+/* Ukrycie standardowego activity-header w widoku testu / quizu / H5P */
+body.path-mod-quiz .activity-header,
+body#page-mod-quiz-view .activity-header,
+body#page-mod-quiz-attempt .activity-header,
+body#page-mod-quiz-summary .activity-header,
+body#page-mod-quiz-review .activity-header,
+body.path-mod-h5pactivity .activity-header,
+body#page-mod-h5pactivity-view .activity-header,
+body.path-mod-hvp .activity-header,
+body#page-mod-hvp-view .activity-header,
+.activity-header[data-for="page-activity-header"] {
     display: none !important;
 }

@@ -1541,7 +1541,7 @@ class busola {
                 $cmname = format_string($cm->name);
                 $lowname = mb_strtolower($cmname);
 
-                if ($modname === 'quiz') {
+                if ($modname === 'quiz' || str_contains($lowname, 'quiz') || str_contains($lowname, 'test')) {
                     $hasquiz = true;
                     $acttype = 'quiz';
                     $qbest = $quizbestscores[$cm->instance] ?? null;
