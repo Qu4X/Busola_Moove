@@ -50,22 +50,37 @@ body.has-busola-change-password {
     display: none !important;
 }
 
-/* Account chip orange ring */
+/* Account chip orange ring: single ring on toggle button only */
 #page-user-edit #user-menu-toggle,
 #page-user-editadvanced #user-menu-toggle,
-#page-login-change_password #user-menu-toggle,
-#page-user-edit .usermenu .userbutton,
-#page-user-editadvanced .usermenu .userbutton,
-#page-login-change_password .usermenu .userbutton {
+#page-login-change_password #user-menu-toggle {
     box-shadow: 0 0 0 2px #FF7A1A !important;
     border-radius: 22px !important;
 }
+#page-user-edit .usermenu .userbutton,
+#page-user-editadvanced .usermenu .userbutton,
+#page-login-change_password .usermenu .userbutton {
+    box-shadow: none !important;
+}
 
-/* 2. Container width and alignment: Single 888px centered column */
+/* 2. Container width and alignment: Single 824px centered column (exact match across breadcrumbs, h1 and cards) */
+#page-user-edit #page.drawers,
+#page-user-editadvanced #page.drawers,
+#page-login-change_password #page.drawers {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+#page-user-edit .drawer-toggles,
+#page-user-editadvanced .drawer-toggles,
+#page-login-change_password .drawer-toggles {
+    display: none !important;
+}
+
 .busola-account-header {
-    max-width: 888px !important;
+    max-width: 824px !important;
     margin: 0 auto !important;
-    padding: 28px 32px 20px !important;
+    padding: 28px 0 20px !important;
     box-sizing: border-box !important;
     width: 100% !important;
 }
@@ -108,10 +123,10 @@ body.has-busola-change-password {
 #page-user-edit #topofscroll,
 #page-user-editadvanced #topofscroll,
 body.has-busola-user-edit #topofscroll {
-    max-width: 888px !important;
+    max-width: 824px !important;
     margin: 0 auto !important;
     width: 100% !important;
-    padding: 0 32px 100px !important;
+    padding: 0 0 100px !important;
     box-sizing: border-box !important;
     background: transparent !important;
     border: none !important;
@@ -124,7 +139,7 @@ body.has-busola-change-password #topofscroll {
     max-width: 560px !important;
     margin: 0 auto !important;
     width: 100% !important;
-    padding: 0 20px 100px !important;
+    padding: 0 0 100px !important;
     box-sizing: border-box !important;
     background: transparent !important;
     border: none !important;
@@ -132,20 +147,31 @@ body.has-busola-change-password #topofscroll {
     border-radius: 0 !important;
 }
 
+#page-user-edit #page-content,
+#page-user-editadvanced #page-content,
+#page-login-change_password #page-content,
 #page-user-edit #region-main,
 #page-user-editadvanced #region-main,
 #page-login-change_password #region-main,
+#page-user-edit #region-main > div,
+#page-user-editadvanced #region-main > div,
+#page-login-change_password #region-main > div,
 #page-user-edit #region-main > .card,
 #page-user-editadvanced #region-main > .card,
 #page-login-change_password #region-main > .card,
 #page-user-edit #region-main-box,
 #page-user-editadvanced #region-main-box,
-#page-login-change_password #region-main-box {
+#page-login-change_password #region-main-box,
+#page-user-edit form.mform,
+#page-user-editadvanced form.mform,
+#page-login-change_password form.mform {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
     margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
 }
 
 /* Hide redundant user heading (mockup has only the large page title) */
@@ -210,7 +236,39 @@ body.has-busola-change-password #topofscroll {
     margin-bottom: 12px !important;
 }
 
-/* 4. Form Items: Fixed 24px label row + gap 20px */
+/* 4. Form Items: Fixed 24px label row + gap 20px, zero negative margins */
+#page-user-edit .fitem.row,
+#page-user-edit .fitem,
+#page-user-edit .row,
+#page-user-editadvanced .fitem.row,
+#page-user-editadvanced .fitem,
+#page-user-editadvanced .row,
+#page-login-change_password .fitem.row,
+#page-login-change_password .fitem,
+#page-login-change_password .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    --bs-gutter-x: 0 !important;
+}
+
+#page-user-edit .fitem > .col-md-3,
+#page-user-edit .fitem > .col-md-9,
+#page-user-edit .fitem > .col-form-label,
+#page-user-edit .fitem > .felement,
+#page-user-editadvanced .fitem > .col-md-3,
+#page-user-editadvanced .fitem > .col-md-9,
+#page-user-editadvanced .fitem > .col-form-label,
+#page-user-editadvanced .fitem > .felement,
+#page-login-change_password .fitem > .col-md-3,
+#page-login-change_password .fitem > .col-md-9,
+#page-login-change_password .fitem > .col-form-label,
+#page-login-change_password .fitem > .felement {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+}
+
 #page-user-edit .fitem,
 #page-user-editadvanced .fitem,
 #page-login-change_password .fitem {
@@ -260,7 +318,7 @@ body.has-busola-change-password #topofscroll {
     padding: 0 !important;
 }
 
-/* Required fields: Hide orange exclamation circle, add red asterisk after label */
+/* Required fields: Hide orange exclamation circle, add red asterisk ONLY on truly required fields */
 #page-user-edit .form-label-addon .text-danger,
 #page-user-editadvanced .form-label-addon .text-danger,
 #page-login-change_password .form-label-addon .text-danger,
@@ -270,12 +328,15 @@ body.has-busola-change-password #topofscroll {
     display: none !important;
 }
 
-#page-user-edit .fitem .col-form-label:has(.text-danger) label::after,
-#page-user-editadvanced .fitem .col-form-label:has(.text-danger) label::after,
-#page-login-change_password .fitem .col-form-label:has(.text-danger) label::after,
-#page-user-edit .fitem:has([aria-required="true"]) .col-form-label label::after,
-#page-user-editadvanced .fitem:has([aria-required="true"]) .col-form-label label::after,
-#page-login-change_password .fitem:has([aria-required="true"]) .col-form-label label::after {
+#page-user-edit #fitem_id_firstname .col-form-label label::after,
+#page-user-edit #fitem_id_lastname .col-form-label label::after,
+#page-user-edit #fitem_id_email .col-form-label label::after,
+#page-user-editadvanced #fitem_id_firstname .col-form-label label::after,
+#page-user-editadvanced #fitem_id_lastname .col-form-label label::after,
+#page-user-editadvanced #fitem_id_email .col-form-label label::after,
+#page-login-change_password #fitem_id_password .col-form-label label::after,
+#page-login-change_password #fitem_id_newpassword1 .col-form-label label::after,
+#page-login-change_password #fitem_id_newpassword2 .col-form-label label::after {
     content: " *" !important;
     color: #B93C00 !important;
     font-weight: 700 !important;
@@ -469,15 +530,18 @@ body.has-busola-change-password #topofscroll {
     border: 2px solid #8A91B8 !important;
     border-radius: 6px !important;
     cursor: pointer !important;
-    margin-right: 8px !important;
+    margin: 0 !important;
+    float: none !important;
 }
 
 #id_moodle_picture .form-check {
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
-    margin: 0 !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin: 0 auto !important;
     padding: 0 !important;
-    font-size: 15px !important;
+    font-size: 14px !important;
     color: #3A4163 !important;
 }
 
@@ -485,18 +549,22 @@ body.has-busola-change-password #topofscroll {
     margin: 0 !important;
     cursor: pointer !important;
     font-weight: 500 !important;
+    white-space: nowrap !important;
 }
 
 /* Remove outer dashed border on filemanager, keep only one on dropzone */
-.filemanager {
+#id_moodle_picture .filemanager,
+#id_moodle_picture .filemanager-container,
+#id_moodle_picture .filemanager .card,
+#id_moodle_picture .fm-empty-container {
     border: none !important;
     background: transparent !important;
+    box-shadow: none !important;
     padding: 0 !important;
 }
 
-.filemanager-container,
-.dndupload-target {
-    border: 2px dashed #C9CEE6 !important;
+#id_moodle_picture .dndupload-target {
+    border: 1.5px dashed #C9CEE6 !important;
     border-radius: 16px !important;
     background: #F5F6FB !important;
 }
@@ -570,19 +638,36 @@ body.has-busola-change-password #topofscroll {
     height: auto !important;
 }
 
-/* 7. Sticky Bottom Action Bar */
+#page-user-edit .busola-other-settings-list .fitem,
+#page-user-editadvanced .busola-other-settings-list .fitem {
+    margin-bottom: 20px !important;
+}
+#page-user-edit .busola-other-settings-list .fitem:last-child,
+#page-user-editadvanced .busola-other-settings-list .fitem:last-child {
+    margin-bottom: 0 !important;
+}
+#page-user-edit .busola-other-settings-list .fcontainer,
+#page-user-editadvanced .busola-other-settings-list .fcontainer {
+    padding: 16px 0 20px 0 !important;
+}
+
+/* 7. Sticky Bottom Action Bar: Full viewport width, pinned to window bottom */
 #page-user-edit #sticky-footer,
 #page-user-editadvanced #sticky-footer,
 #page-login-change_password #sticky-footer,
 #page-user-edit #fgroup_id_buttonar,
 #page-user-editadvanced #fgroup_id_buttonar,
 #page-login-change_password #fgroup_id_buttonar {
-    position: sticky !important;
+    position: fixed !important;
     bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
     z-index: 1040 !important;
     background: #FFFFFF !important;
     box-shadow: 0 -1px 0 rgba(20, 27, 94, 0.1), 0 -8px 24px rgba(20, 27, 94, 0.06) !important;
-    padding: 14px 32px !important;
+    padding: 14px 0 !important;
     margin: 0 !important;
     border: none !important;
 }
