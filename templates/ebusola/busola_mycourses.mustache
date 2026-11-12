@@ -17,7 +17,7 @@
             <div class="busola-card-banner cat-{{type}}">
                 <span class="busola-card-badge">{{categoryname}}</span>
                 {{#hascustomicon}}
-                    <img src="{{iconurl}}" alt="{{fullname}}" class="busola-card-img" />
+                    <img src="{{iconurl}}" alt="{{fullname}}" class="busola-card-img" loading="lazy" decoding="async" width="160" height="100" />
                 {{/hascustomicon}}
                 {{^hascustomicon}}
                     <svg viewBox="0 0 160 100" width="160" height="100" aria-hidden="true" class="busola-card-svg">

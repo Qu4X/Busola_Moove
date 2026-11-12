@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * A drawer based layout for the Eskada theme.
+ * A drawer based layout for the eBusola theme.
  *
  * @package    theme_ebusola
- * @copyright  2025 Willian Mano - willianmanoaraujo@gmail.com
+ * @copyright  2026 Szkoła Żeglarstwa Busola
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -47,25 +47,48 @@ if ($courseindexopen) {
     $extraclasses[] = 'drawer-open-index';
 }
 
-$blockshtml = $OUTPUT->blocks('side-pre');
-$hasblocks = (strpos($blockshtml, 'data-block=') !== false || !empty($addblockbutton));
+$isbusolacourse = false;
+$busolacourse = null;
 
-$addcontentblockbutton = $OUTPUT->addblockbutton('content');
-$contentblocks = $OUTPUT->custom_block_region('content');
+if ($PAGE->course && $PAGE->course->id != SITEID && isloggedin() && !isguestuser()) {
+    $busolacourse = \theme_ebusola\util\busola::get_course_view_context($PAGE->course);
+    if ($busolacourse) {
+        $isbusolacourse = true;
+        $extraclasses[] = 'has-busola-dashboard';
+        $extraclasses[] = 'has-busola-course';
+    }
+}
 
-if (!$hasblocks) {
+// Optimization per ADR-0001 Rule #11: Skip rendering drawers and blocks when custom course view is active outside edit mode.
+if ($isbusolacourse && !$PAGE->user_is_editing()) {
+    $blockshtml = '';
+    $hasblocks = false;
     $blockdraweropen = false;
-}
-
-$themesettings = new \theme_ebusola\util\settings();
-if (!$themesettings->enablecourseindex) {
     $courseindex = '';
-} else {
-    $courseindex = core_course_drawer();
-}
-
-if (!$courseindex) {
     $courseindexopen = false;
+    $addcontentblockbutton = '';
+    $contentblocks = '';
+    $extraclasses = array_values(array_diff($extraclasses, ['drawer-open-index']));
+} else {
+    $blockshtml = $OUTPUT->blocks('side-pre');
+    $hasblocks = (strpos($blockshtml, 'data-block=') !== false || !empty($addblockbutton));
+    $addcontentblockbutton = $OUTPUT->addblockbutton('content');
+    $contentblocks = $OUTPUT->custom_block_region('content');
+
+    if (!$hasblocks) {
+        $blockdraweropen = false;
+    }
+
+    $themesettings = new \theme_ebusola\util\settings();
+    if (!$themesettings->enablecourseindex) {
+        $courseindex = '';
+    } else {
+        $courseindex = core_course_drawer();
+    }
+
+    if (!$courseindex) {
+        $courseindexopen = false;
+    }
 }
 
 $forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
@@ -105,25 +128,6 @@ $coursefullname = ($PAGE->course?->fullname) ? format_string(
 ) : '';
 $courseurl = $PAGE->course ? new \core\url('/course/view.php', ['id' => $PAGE->course->id]) : null;
 
-$isbusolacourse = false;
-$busolacourse = null;
-
-if ($PAGE->course && $PAGE->course->id != SITEID && isloggedin() && !isguestuser()) {
-    $busolacourse = \theme_ebusola\util\busola::get_course_view_context($PAGE->course);
-    if ($busolacourse) {
-        $isbusolacourse = true;
-        $extraclasses[] = 'has-busola-dashboard';
-        $extraclasses[] = 'has-busola-course';
-        if (!$PAGE->user_is_editing()) {
-            $courseindex = '';
-            $courseindexopen = false;
-            $hasblocks = false;
-            $blockdraweropen = false;
-            $extraclasses = array_values(array_diff($extraclasses, ['drawer-open-index']));
-        }
-    }
-}
-
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => \core\context\course::instance(SITEID), "escape" => false]),
@@ -154,7 +158,9 @@ $templatecontext = [
     'user_is_editing' => $PAGE->user_is_editing(),
 ];
 
-$themesettings = new \theme_ebusola\util\settings();
+if (!isset($themesettings)) {
+    $themesettings = new \theme_ebusola\util\settings();
+}
 
 $templatecontext = array_merge($templatecontext, $themesettings->footer());
 

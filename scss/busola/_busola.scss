@@ -1,3 +1,4 @@
+@import 'fonts';
 /* ==========================================================================
    eBusola Custom Styles & Dashboard Layout
    ========================================================================== */
@@ -6678,3 +6679,15 @@ body.pagelayout-embedded.path-h5p,
 body.path-h5p.h5p-embed {
     background-color: transparent !important;
 }
+
+@import 'account_forms';
+@import 'calendar';
+
+/* Performance optimizations per ADR-0001 Rules #4 & #15 */
+section.busola-section-discover,
+.busola-mycourses-category-group,
+.busola-guest-faq {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 400px;
+}
+

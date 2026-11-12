@@ -80,19 +80,9 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $output .= str_replace("GOOGLE-ANALYTICS-CODE", trim($theme->settings->googleanalytics), $googleanalyticscode);
         }
 
-        $output .= '<link rel="preconnect" href="https://fonts.googleapis.com">
-                   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">';
-
-        $sitefont = isset($theme->settings->fontsite) ? $theme->settings->fontsite : 'Moodle';
-
-        if ($sitefont != 'Moodle') {
-            $output .= '<link rel="preconnect" href="https://fonts.googleapis.com">
-                       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                       <link href="https://fonts.googleapis.com/css2?family='
-                . $sitefont .
-                ':ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">';
-        }
+        // Preload primary text font locally per ADR-0001 Rules #5 & #7 (no external CDN calls).
+        $fontlatin = $this->page->theme->font_url('PlusJakartaSans-latin.woff2', 'theme');
+        $output .= '<link rel="preload" href="' . $fontlatin->out(false) . '" as="font" type="font/woff2" crossorigin>';
 
         return $output;
     }

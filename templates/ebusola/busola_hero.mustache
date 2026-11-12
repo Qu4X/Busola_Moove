@@ -34,7 +34,7 @@
         <a href="{{lastcourse.url}}" class="busola-hero-card">
             <div class="busola-hero-card-icon cat-{{lastcourse.type}}">
                 {{#lastcourse.hascustomicon}}
-                    <img src="{{lastcourse.iconurl}}" alt="{{lastcourse.fullname}}" class="busola-course-img" />
+                    <img src="{{lastcourse.iconurl}}" alt="{{lastcourse.fullname}}" class="busola-course-img" loading="eager" fetchpriority="high" decoding="async" width="140" height="88" />
                 {{/lastcourse.hascustomicon}}
                 {{^lastcourse.hascustomicon}}
                     <svg viewBox="0 0 160 100" width="140" height="88" aria-hidden="true">

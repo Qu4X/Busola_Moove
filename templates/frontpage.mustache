@@ -40,11 +40,11 @@
 
     <!-- Global Footer (ALWAYS outside #page, directly in #page-wrapper per PAGES_GUIDELINES.md) -->
     {{> theme_ebusola/footer }}
-    {{> theme_ebusola/whatsapp_button }}
 </div>
 
 </body>
 </html>
+{{#hasblocks}}
 {{#js}}
     M.util.js_pending('theme_boost/loader');
     require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
@@ -52,3 +52,4 @@
         M.util.js_complete('theme_boost/loader');
     });
 {{/js}}
+{{/hasblocks}}
