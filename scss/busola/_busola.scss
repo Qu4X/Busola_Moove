@@ -6527,10 +6527,17 @@ body.darkmode,
 
 
 // ==========================================================================
-// Strona aktywności H5P: tło za kartą quizu z tokenów (bez białego/szarego pasa)
+// Strona aktywności H5P (mod_hvp oraz mod_h5pactivity):
+// tło za kartą z tokenów (bez białego/szarego pasa), ukrycie nagłówka kontekstowego
 // ==========================================================================
-body#page-mod-h5pactivity-view {
+body#page-mod-h5pactivity-view,
+body#page-mod-hvp-view,
+body.path-mod-hvp {
     background-color: var(--busola-bg-canvas) !important;
+
+    .page-context-header {
+        display: none !important;
+    }
 
     #page,
     #page-wrapper,
@@ -6550,7 +6557,9 @@ body#page-mod-h5pactivity-view {
 }
 
 // H5P: zmniejszenie pustej przestrzeni między tytułem a odtwarzaczem
-body#page-mod-h5pactivity-view {
+body#page-mod-h5pactivity-view,
+body#page-mod-hvp-view,
+body.path-mod-hvp {
     // Kontener przełącznika szuflad zajmuje 55px w przepływie (sam przełącznik jest fixed)
     .drawer-toggles {
         height: 0 !important;
