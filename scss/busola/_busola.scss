@@ -6851,3 +6851,12 @@ body.path-mod-h5pactivity #page-header .d-flex.align-items-center:has(.header-ac
 body.path-mod-hvp #page-header .d-flex.align-items-center:has(.header-actions-container) {
     display: none !important;
 }
+
+// H5P embed: mobilny margines pod fixed navbar (60px) przesuwał zawartość ramki w dół i ucinał
+// nawigację Previous/Next poza wysokością iframe. W osadzeniu nie ma navbara.
+body.pagelayout-embedded #page,
+body.pagelayout-embedded #page.drawers,
+body.h5p-embed #page,
+body.h5p-embed #page.drawers {
+    margin-top: 0 !important;
+}
