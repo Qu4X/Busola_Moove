@@ -72,7 +72,6 @@ function theme_ebusola_get_extra_scss($theme) {
 
     // Sets the login background image.
     $loginbackgroundimageurl = $theme->setting_file_url('loginbgimg', 'loginbgimg');
-    $backgroundposition = '';
     $isdefaultloginimage = empty($loginbackgroundimageurl);
     if ($isdefaultloginimage) {
         // Use the default login background image.
@@ -80,13 +79,11 @@ function theme_ebusola_get_extra_scss($theme) {
             'login_background',
             'theme',
         );
-        // Set the default background position to center.
-        $backgroundposition = 'background-position: center;';
     }
-    $content .= 'body.pagelayout-login #page .login-layout-left { ';
-    $content .= "background-image: url('$loginbackgroundimageurl'); ";
-    $content .= "background-size: cover; {$backgroundposition}";
-    $content .= ' }';
+    $content .= 'body.pagelayout-login #page { ';
+    $content .= "background-image: url('$loginbackgroundimageurl') !important; ";
+    $content .= 'background-size: cover; background-repeat: no-repeat; background-position: center; ';
+    $content .= '}';
 
     // Remove the watermark to indicate the image is AI-generated when not the default Moodle image.
     if (!$isdefaultloginimage) {
