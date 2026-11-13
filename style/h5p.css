@@ -1100,3 +1100,10 @@ html body button.h5p-theme-button.h5p-theme-primary-cta:active:not(:disabled) {
         color: #fff !important;
     }
 }
+
+/* Mobile: licznik „Pytanie X z Y” do lewej, w linii z paskiem postępu */
+@media (max-width: 600px) {
+    html body .busola-question-counter {
+        justify-content: flex-start !important;
+    }
+}
