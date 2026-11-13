@@ -2152,6 +2152,8 @@ section.busola-section-discover {
     .moremenu .nav-tabs {
         background-color: transparent !important;
         border: none !important;
+        height: 100%;
+        align-items: center;
 
         .nav-link {
             color: var(--busola-text-secondary) !important;
