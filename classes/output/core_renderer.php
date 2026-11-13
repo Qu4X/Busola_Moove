@@ -82,7 +82,18 @@ class core_renderer extends \theme_boost\output\core_renderer {
 
         // Preload primary text font locally per ADR-0001 Rules #5 & #7 (no external CDN calls).
         $fontlatin = $this->page->theme->font_url('PlusJakartaSans-latin.woff2', 'theme');
-        $output .= '<link rel="preload" href="' . $fontlatin->out(false) . '" as="font" type="font/woff2" crossorigin>';
+        $output .= '<link rel="preload" href="' . $fontlatin->out(false) . '" as="font" type="font/woff2" crossorigin>' . "\n";
+
+        // Inject SEO meta description on frontpage.
+        if ($this->page->pagelayout === 'frontpage' || $this->page->url->compare(new \moodle_url('/'), URL_MATCH_BASE)) {
+            $frontpagedesc = !empty($theme->settings->frontpagedescription) ? trim($theme->settings->frontpagedescription) : '';
+            if (empty($frontpagedesc)) {
+                $frontpagedesc = get_string('frontpagedescription_default', 'theme_ebusola');
+            }
+            if (!empty($frontpagedesc)) {
+                $output .= '<meta name="description" content="' . s($frontpagedesc) . '">' . "\n";
+            }
+        }
 
         return $output;
     }
@@ -288,6 +299,36 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         return $this->get_logo();
+    }
+
+    /**
+     * Check if a separate dark mode logo is configured.
+     *
+     * @return bool
+     */
+    public function has_logo_dark() {
+        $logodark = $this->get_theme_logo_dark_url();
+        return !empty($logodark);
+    }
+
+    /**
+     * Get configured or default logo width in pixels.
+     *
+     * @return int
+     */
+    public function get_logo_width() {
+        $theme = theme_config::load('ebusola');
+        return !empty($theme->settings->logowidth) ? (int) $theme->settings->logowidth : 216;
+    }
+
+    /**
+     * Get configured or default logo height in pixels.
+     *
+     * @return int
+     */
+    public function get_logo_height() {
+        $theme = theme_config::load('ebusola');
+        return !empty($theme->settings->logoheight) ? (int) $theme->settings->logoheight : 59;
     }
 
     /**

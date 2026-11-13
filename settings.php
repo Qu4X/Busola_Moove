@@ -46,6 +46,27 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configstoredfile($name, $title, $description, 'logo', 0, $opts);
     $page->add($setting);
 
+    // Logo display width (px) - required for SVG and layout stability.
+    $name = 'theme_ebusola/logowidth';
+    $title = get_string('logowidth', 'theme_ebusola');
+    $description = get_string('logowidthdesc', 'theme_ebusola');
+    $setting = new admin_setting_configtext($name, $title, $description, 216, PARAM_INT);
+    $page->add($setting);
+
+    // Logo display height (px) - required for SVG and layout stability.
+    $name = 'theme_ebusola/logoheight';
+    $title = get_string('logoheight', 'theme_ebusola');
+    $description = get_string('logoheightdesc', 'theme_ebusola');
+    $setting = new admin_setting_configtext($name, $title, $description, 59, PARAM_INT);
+    $page->add($setting);
+
+    // SEO Meta description for frontpage.
+    $name = 'theme_ebusola/frontpagedescription';
+    $title = get_string('frontpagedescription', 'theme_ebusola');
+    $description = get_string('frontpagedescriptiondesc', 'theme_ebusola');
+    $setting = new admin_setting_configtextarea($name, $title, $description, '', PARAM_RAW_TRIMMED);
+    $page->add($setting);
+
     // Favicon setting.
     $name = 'theme_ebusola/favicon';
     $title = get_string('favicon', 'theme_ebusola');
