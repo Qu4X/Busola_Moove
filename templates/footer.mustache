@@ -28,10 +28,10 @@ along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
                 <a href="{{{homeurl}}}" class="busola-footer-logo-link" aria-label="{{sitename}}">
                     {{# output.should_display_logo }}
                         {{#output.get_logo_dark}}
-                            <img src="{{output.get_logo_dark}}" class="footer-logo mb-2" alt="{{sitename}}" />
+                            <img src="{{output.get_logo_dark}}" class="footer-logo mb-2" alt="{{sitename}}" width="{{output.get_logo_width}}" height="{{output.get_logo_height}}" loading="lazy" decoding="async" />
                         {{/output.get_logo_dark}}
                         {{^output.get_logo_dark}}
-                            <img src="{{output.get_logo}}" class="footer-logo mb-2" alt="{{sitename}}" />
+                            <img src="{{output.get_logo}}" class="footer-logo mb-2" alt="{{sitename}}" width="{{output.get_logo_width}}" height="{{output.get_logo_height}}" loading="lazy" decoding="async" />
                         {{/output.get_logo_dark}}
                     {{/ output.should_display_logo }}
                     {{^ output.should_display_logo }}
