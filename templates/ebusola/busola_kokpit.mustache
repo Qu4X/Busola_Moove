@@ -18,7 +18,12 @@
                 <a href="{{btn_url}}" class="bcard busola-kokpit-continue-card">
                     <div class="busola-kokpit-continue-thumb" style="background: {{bgcolor}};">
                         {{#hascustomicon}}
-                            <img src="{{iconurl}}" alt="{{course_name}}" class="busola-kokpit-continue-img" loading="eager" width="180" height="180">
+                            {{#hasinlinesvg}}
+                                {{{inlinesvg}}}
+                            {{/hasinlinesvg}}
+                            {{^hasinlinesvg}}
+                                <img src="{{iconurl}}" alt="{{course_name}}" class="busola-kokpit-continue-img" loading="eager" width="180" height="180">
+                            {{/hasinlinesvg}}
                         {{/hascustomicon}}
                         {{^hascustomicon}}
                             {{#is_motor}}

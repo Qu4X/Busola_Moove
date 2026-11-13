@@ -109,24 +109,8 @@ class busola {
                     $bgcolor = 'var(--busola-cat-sail-bg)';
                 }
 
-                // Check overview files for uploaded image.
-                $iconurl = null;
-                try {
-                    $coursecontext = \context_course::instance($course->id);
-                    $fs = get_file_storage();
-                    $files = $fs->get_area_files($coursecontext->id, 'course', 'overviewfiles', 0, 'itemid, filepath, filename', false);
-                    foreach ($files as $file) {
-                        if ($file->is_valid_image()) {
-                            $iconurl = \moodle_url::make_file_url(
-                                '/pluginfile.php',
-                                '/' . $file->get_contextid() . '/' . $file->get_component() . '/' . $file->get_filearea() . $file->get_filepath() . $file->get_filename()
-                            )->out(false);
-                            break;
-                        }
-                    }
-                } catch (\Exception $e) {
-                    // Fall back to vector illustration.
-                }
+                // Check overview files for uploaded image or inline SVG.
+                $iconinfo = self::resolve_course_overview_icon((int) $course->id);
 
                 $courses[] = [
                     'id' => $course->id,
@@ -135,8 +119,10 @@ class busola {
                     'url' => (new moodle_url('/course/view.php', ['id' => $course->id]))->out(false),
                     'categoryname' => $categoryname,
                     'bgcolor' => $bgcolor,
-                    'iconurl' => $iconurl,
-                    'hascustomicon' => !empty($iconurl),
+                    'iconurl' => $iconinfo['iconurl'],
+                    'inlinesvg' => $iconinfo['inlinesvg'],
+                    'hasinlinesvg' => $iconinfo['hasinlinesvg'],
+                    'hascustomicon' => $iconinfo['hascustomicon'],
                     'illustration' => $illustration,
                     'is_sail' => ($illustration === 'sail'),
                     'is_motor' => ($illustration === 'motor'),
@@ -236,7 +222,9 @@ class busola {
                 'categoryname' => $imageinfo['categoryname'],
                 'bgcolor' => $imageinfo['bgcolor'],
                 'iconurl' => $imageinfo['iconurl'],
-                'hascustomicon' => !empty($imageinfo['iconurl']),
+                'inlinesvg' => $imageinfo['inlinesvg'],
+                'hasinlinesvg' => $imageinfo['hasinlinesvg'],
+                'hascustomicon' => $imageinfo['hascustomicon'],
                 'type' => $imageinfo['type'],
                 'progress_color' => $iscompleted ? '#141B5E' : '#FF7A1A',
             ];
@@ -401,6 +389,112 @@ class busola {
     }
 
     /**
+     * Resolve course overview icon (either inline tokenized SVG or image URL).
+     *
+     * @param int $courseid
+     * @return array{iconurl: ?string, inlinesvg: ?string, hasinlinesvg: bool, hascustomicon: bool}
+     */
+    private static function resolve_course_overview_icon(int $courseid): array {
+        $result = [
+            'iconurl' => null,
+            'inlinesvg' => null,
+            'hasinlinesvg' => false,
+            'hascustomicon' => false,
+        ];
+
+        try {
+            $coursecontext = \context_course::instance($courseid);
+            $fs = get_file_storage();
+            $files = $fs->get_area_files($coursecontext->id, 'course', 'overviewfiles', 0, 'itemid, filepath, filename', false);
+            foreach ($files as $file) {
+                $filename = strtolower($file->get_filename());
+                $mimetype = strtolower($file->get_mimetype());
+                $issvg = ($mimetype === 'image/svg+xml' || str_ends_with($filename, '.svg'));
+
+                if ($issvg) {
+                    $svg = self::sanitize_and_tokenize_svg($file->get_content());
+                    if ($svg !== null) {
+                        $result['inlinesvg'] = $svg;
+                        $result['hasinlinesvg'] = true;
+                        $result['hascustomicon'] = true;
+                        return $result;
+                    }
+                }
+
+                if ($file->is_valid_image() || $issvg) {
+                    $result['iconurl'] = \moodle_url::make_file_url(
+                        '/pluginfile.php',
+                        '/' . $file->get_contextid() . '/' . $file->get_component() . '/' . $file->get_filearea() . $file->get_filepath() . $file->get_filename()
+                    )->out(false);
+                    $result['hascustomicon'] = true;
+                    return $result;
+                }
+            }
+        } catch (\Exception $e) {
+            // Fall back to default illustration.
+        }
+
+        return $result;
+    }
+
+    /**
+     * Sanitize an uploaded SVG and map known Busola palette colors to CSS theme tokens.
+     *
+     * @param string $raw Raw SVG file contents.
+     * @return string|null Sanitized SVG markup or null if invalid.
+     */
+    private static function sanitize_and_tokenize_svg(string $raw): ?string {
+        if (trim($raw) === '' || stripos($raw, '<svg') === false) {
+            return null;
+        }
+
+        // Remove XML prolog, DOCTYPE, scripts, foreignObject, and inline event handlers.
+        $svg = preg_replace('/<\?xml[^>]*\?>/i', '', $raw);
+        $svg = preg_replace('/<!DOCTYPE[^>]*>/i', '', $svg);
+        $svg = preg_replace('/<script\b[^>]*>.*?<\/script>/is', '', $svg);
+        $svg = preg_replace('/<foreignObject\b[^>]*>.*?<\/foreignObject>/is', '', $svg);
+        $svg = preg_replace('/\s+on[a-z]+\s*=\s*(?:"[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', $svg);
+        $svg = preg_replace('/javascript\s*:/i', '', $svg);
+
+        // Extract the <svg>...</svg> element.
+        if (!preg_match('/<svg\b[^>]*>.*<\/svg>/is', $svg, $matches)) {
+            return null;
+        }
+        $svg = $matches[0];
+
+        // Normalize root <svg> attributes: strip percentage width/height and apply theme class + aria-hidden.
+        $svg = preg_replace_callback('/^<svg\b([^>]*)>/i', function ($m) {
+            $attrs = $m[1];
+            $attrs = preg_replace('/\s+(?:width|height|aria-hidden)\s*=\s*(?:"[^"]*"|\'[^\']*\')/i', '', $attrs);
+            if (preg_match('/\sclass\s*=\s*"([^"]*)"/i', $attrs, $cm)) {
+                $attrs = preg_replace('/\sclass\s*=\s*"[^"]*"/i', ' class="' . htmlspecialchars($cm[1] . ' busola-custom-svg', ENT_QUOTES) . '"', $attrs);
+            } else {
+                $attrs .= ' class="busola-custom-svg"';
+            }
+            return '<svg' . $attrs . ' aria-hidden="true">';
+        }, $svg, 1);
+
+        // Map known Busola hex & rgb palette colors to CSS custom properties for Light/Dark mode.
+        $replacements = [
+            // Navy accent (#141B5E / #15195D / rgb(20, 27, 94)).
+            '/#(?:141b5e|15195d)(?![0-9a-fA-F])/i' => 'var(--busola-svg-navy, #141B5E)',
+            '/rgb\(\s*20\s*,\s*27\s*,\s*94\s*\)/i' => 'var(--busola-svg-navy, #141B5E)',
+            // Orange accent (#FF7A1A / #FF751F / rgb(255, 122, 26)).
+            '/#(?:ff7a1a|ff751f)(?![0-9a-fA-F])/i' => 'var(--busola-svg-accent, #FF7A1A)',
+            '/rgb\(\s*255\s*,\s*122\s*,\s*26\s*\)/i' => 'var(--busola-svg-accent, #FF7A1A)',
+            // Outline (#000000 / #000 / rgb(0, 0, 0) / rgb(5, 6, 5)).
+            '/#(?:000000|000)(?![0-9a-fA-F])/i' => 'var(--busola-svg-outline, #000000)',
+            '/rgb\(\s*(?:0|5)\s*,\s*(?:0|6)\s*,\s*(?:0|5)\s*\)/i' => 'var(--busola-svg-outline, #000000)',
+            // Surface (#FFFFFF / #FFF / rgb(255, 255, 255)).
+            '/#(?:ffffff|fff)(?![0-9a-fA-F])/i' => 'var(--busola-svg-surface, #FFFFFF)',
+            '/rgb\(\s*255\s*,\s*255\s*,\s*255\s*\)/i' => 'var(--busola-svg-surface, #FFFFFF)',
+        ];
+        $svg = preg_replace(array_keys($replacements), array_values($replacements), $svg);
+
+        return $svg;
+    }
+
+    /**
      * Resolve badge category, background pastel color, and image.
      * Category name is dynamically fetched from Moodle's course categories.
      *
@@ -438,26 +532,11 @@ class busola {
         ];
         $bgcolor = $pastelcolors[$catid % count($pastelcolors)];
 
-        // Check if course has an overview image uploaded in Moodle course settings.
-        $iconurl = null;
-        try {
-            $coursecontext = \context_course::instance($course->id);
-            $fs = get_file_storage();
-            $files = $fs->get_area_files($coursecontext->id, 'course', 'overviewfiles', 0, 'itemid, filepath, filename', false);
-            foreach ($files as $file) {
-                if ($file->is_valid_image()) {
-                    $iconurl = \moodle_url::make_file_url(
-                        '/pluginfile.php',
-                        '/' . $file->get_contextid() . '/' . $file->get_component() . '/' . $file->get_filearea() . $file->get_filepath() . $file->get_filename()
-                    )->out(false);
-                    break;
-                }
-            }
-        } catch (\Exception $e) {
-            // Fall back to theme default icon.
-        }
+        // Check if course has an overview image or SVG uploaded in Moodle course settings.
+        $iconinfo = self::resolve_course_overview_icon((int) $course->id);
+        $iconurl = $iconinfo['iconurl'];
 
-        if (empty($iconurl)) {
+        if (!$iconinfo['hascustomicon']) {
             $shortname = strtoupper(trim($course->shortname ?? ''));
             $fullname = mb_strtolower($course->fullname ?? '');
             if (str_contains($shortname, 'JSM') || (str_contains($fullname, 'jachtowy') && str_contains($fullname, 'morski'))) {
@@ -476,6 +555,9 @@ class busola {
             'categoryname' => $categoryname,
             'bgcolor' => $bgcolor,
             'iconurl' => $iconurl,
+            'inlinesvg' => $iconinfo['inlinesvg'],
+            'hasinlinesvg' => $iconinfo['hasinlinesvg'],
+            'hascustomicon' => $iconinfo['hascustomicon'],
             'type' => 'course',
         ];
     }
@@ -754,7 +836,9 @@ class busola {
                 'subtitle_short' => $subtitleshort,
                 'bgcolor' => $bgcolor,
                 'iconurl' => $iconurl,
-                'hascustomicon' => !empty($iconurl),
+                'inlinesvg' => $imageinfo['inlinesvg'],
+                'hasinlinesvg' => $imageinfo['hasinlinesvg'],
+                'hascustomicon' => $imageinfo['hascustomicon'],
                 'illustration' => $illustration,
                 'is_sail' => ($illustration === 'sail'),
                 'is_motor' => ($illustration === 'motor'),
@@ -1207,24 +1291,9 @@ class busola {
                 $bgcolor = 'var(--busola-cat-sail-bg)';
             }
 
-            // Course image from overviewfiles.
-            $iconurl = null;
-            try {
-                $coursecontext = \context_course::instance($cid);
-                $fs = get_file_storage();
-                $files = $fs->get_area_files($coursecontext->id, 'course', 'overviewfiles', 0, 'itemid, filepath, filename', false);
-                foreach ($files as $file) {
-                    if ($file->is_valid_image()) {
-                        $iconurl = \moodle_url::make_file_url(
-                            '/pluginfile.php',
-                            '/' . $file->get_contextid() . '/' . $file->get_component() . '/' . $file->get_filearea() . $file->get_filepath() . $file->get_filename()
-                        )->out(false);
-                        break;
-                    }
-                }
-            } catch (\Exception $e) {
-                // Silently fall back.
-            }
+            // Course image or tokenized inline SVG from overviewfiles.
+            $imageinfo = self::resolve_course_overview_icon((int) $cid);
+            $iconurl = $imageinfo['iconurl'];
 
             // Completion progress.
             $progress = null;
@@ -1303,7 +1372,9 @@ class busola {
                 'categoryname' => $catname,
                 'bgcolor' => $bgcolor,
                 'iconurl' => $iconurl,
-                'hascustomicon' => !empty($iconurl),
+                'inlinesvg' => $imageinfo['inlinesvg'],
+                'hasinlinesvg' => $imageinfo['hasinlinesvg'],
+                'hascustomicon' => $imageinfo['hascustomicon'],
                 'illustration' => $illustration,
                 'is_sail' => ($illustration === 'sail'),
                 'is_motor' => ($illustration === 'motor'),

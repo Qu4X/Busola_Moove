@@ -68,6 +68,11 @@
     --busola-edit-zone-title: #141B5E;
     --busola-edit-zone-sub: #5B6280;
 
+    --busola-svg-outline: #000000;
+    --busola-svg-navy: #141B5E;
+    --busola-svg-surface: #FFFFFF;
+    --busola-svg-accent: #FF7A1A;
+
     --moove-navbar-bg-color: #FFFFFF;
 }
 
@@ -136,6 +141,11 @@ body.darkmode,
     --busola-edit-zone-title: #FFFFFF;
     --busola-edit-zone-sub: #A9B0D6;
 
+    --busola-svg-outline: #E2E8F0;
+    --busola-svg-navy: #5B6EE1;
+    --busola-svg-surface: #1B2256;
+    --busola-svg-accent: #FF8F3D;
+
     --moove-navbar-bg-color: #0D1236;
     --moove-secondary-navigation-bg-color: #0A0E2A;
 }
@@ -196,6 +206,52 @@ body.moove-darkmode .navbar-brand .logo.light,
 body.darkmode .navbar-brand .logo.light,
 [data-colourmode="dark"] .navbar-brand .logo.light {
     display: none !important;
+}
+
+/* Tokenized inline course SVG illustrations (light & dark mode adaptive) */
+.busola-custom-svg {
+    fill: var(--busola-svg-outline);
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.busola-card-banner .busola-custom-svg {
+    max-width: 130px;
+    max-height: 110px;
+    margin-top: 14px;
+}
+
+.busola-hero-card-icon .busola-custom-svg {
+    width: 140px;
+    height: 88px;
+}
+
+.busola-kokpit-continue-thumb .busola-custom-svg {
+    width: 150px;
+    height: 94px;
+}
+
+.busola-mycourses-card-thumb .busola-custom-svg {
+    width: 170px;
+    height: 106px;
+}
+
+.busola-guest-card-header .busola-custom-svg {
+    width: 180px;
+    height: 112px;
+}
+
+@media (max-width: 767.98px) {
+    .busola-guest-card-header .busola-custom-svg {
+        width: 58px !important;
+        height: 36px !important;
+        max-width: 58px !important;
+        max-height: 36px !important;
+        margin: 0 !important;
+    }
 }
 
 /* --------------------------------------------------------------------------

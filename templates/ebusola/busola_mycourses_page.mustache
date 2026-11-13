@@ -78,7 +78,12 @@
                         <a href="{{url}}" class="bcard busola-mycourses-card">
                             <div class="busola-mycourses-card-thumb" style="background: {{bgcolor}};">
                                 {{#hascustomicon}}
-                                    <img src="{{iconurl}}" alt="{{fullname}}" loading="lazy" decoding="async" class="busola-mycourses-card-img" width="170" height="106">
+                                    {{#hasinlinesvg}}
+                                        {{{inlinesvg}}}
+                                    {{/hasinlinesvg}}
+                                    {{^hasinlinesvg}}
+                                        <img src="{{iconurl}}" alt="{{fullname}}" loading="lazy" decoding="async" class="busola-mycourses-card-img" width="170" height="106">
+                                    {{/hasinlinesvg}}
                                 {{/hascustomicon}}
                                 {{^hascustomicon}}
                                     {{#is_sail}}

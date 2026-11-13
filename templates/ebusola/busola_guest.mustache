@@ -93,7 +93,12 @@
                         <div class="busola-guest-card-header" style="background: {{bgcolor}};">
                             <span class="busola-guest-card-badge">{{categoryname}}</span>
                             {{#hascustomicon}}
-                                <img src="{{iconurl}}" alt="{{fullname}}" loading="lazy" decoding="async" width="180" height="112" class="busola-guest-card-img" />
+                                {{#hasinlinesvg}}
+                                    {{{inlinesvg}}}
+                                {{/hasinlinesvg}}
+                                {{^hasinlinesvg}}
+                                    <img src="{{iconurl}}" alt="{{fullname}}" loading="lazy" decoding="async" width="180" height="112" class="busola-guest-card-img" />
+                                {{/hasinlinesvg}}
                             {{/hascustomicon}}
                             {{^hascustomicon}}
                                 {{#is_sail}}
