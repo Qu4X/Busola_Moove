@@ -181,6 +181,8 @@ body {
 .navbar-brand {
     .logo {
         padding: 7px 21px;
+        width: auto;
+        object-fit: contain;
     }
 
     .logo.dark {
