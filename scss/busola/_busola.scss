@@ -1,3 +1,4 @@
+@import 'fonts';
 /* ==========================================================================
    eBusola Custom Styles & Dashboard Layout
    ========================================================================== */
@@ -1652,10 +1653,14 @@ section.busola-section-discover {
         width: 100% !important;
         height: 48px !important;
         position: relative !important;
-        margin-bottom: -1px !important;
+        bottom: -2px !important;
+        margin-bottom: -2px !important;
+        overflow: visible !important;
 
         path {
             fill: var(--busola-bg-canvas);
+            stroke: var(--busola-bg-canvas);
+            stroke-width: 1px;
         }
     }
 }
@@ -2944,11 +2949,15 @@ body.darkmode {
             width: 100% !important;
             height: 33px !important;
             margin-top: 14px !important;
-            margin-bottom: -1px !important;
+            bottom: -2px !important;
+            margin-bottom: -2px !important;
             position: relative !important;
+            overflow: visible !important;
 
             path {
                 fill: var(--busola-bg-canvas) !important;
+                stroke: var(--busola-bg-canvas) !important;
+                stroke-width: 1px !important;
             }
         }
     }
@@ -3100,10 +3109,12 @@ body.darkmode {
     .busola-exam-banner {
         padding: 24px 20px !important;
         border-radius: 22px !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
+        display: grid !important;
+        grid-template-columns: 48px 1fr !important;
+        align-items: center !important;
+        column-gap: 14px !important;
+        row-gap: 12px !important;
         text-align: left !important;
-        gap: 16px !important;
         height: auto !important;
         min-height: 0 !important;
         flex: 0 0 auto !important;
@@ -3112,26 +3123,39 @@ body.darkmode {
         box-sizing: border-box !important;
 
         .busola-exam-icon-wrap {
+            grid-column: 1 !important;
+            grid-row: 1 !important;
             flex: 0 0 48px !important;
             width: 48px !important;
             height: 48px !important;
             border-radius: 14px !important;
+            margin: 0 !important;
         }
 
         .busola-exam-content {
-            flex: 0 0 auto !important;
-            width: 100% !important;
+            grid-column: 1 / -1 !important;
+            display: contents !important;
 
             .busola-exam-title {
+                grid-column: 2 !important;
+                grid-row: 1 !important;
                 font-size: 20px !important;
+                line-height: 1.2 !important;
+                margin: 0 !important;
+                align-self: center !important;
             }
             .busola-exam-desc {
+                grid-column: 1 / -1 !important;
+                grid-row: 2 !important;
                 font-size: 14px !important;
-                margin-top: 6px !important;
+                line-height: 1.4 !important;
+                margin: 0 !important;
             }
         }
 
         .busola-exam-btn {
+            grid-column: 1 / -1 !important;
+            grid-row: 3 !important;
             flex: 0 0 auto !important;
             width: 100% !important;
             justify-content: center !important;
@@ -3516,10 +3540,14 @@ body.darkmode {
         width: 100% !important;
         height: 48px !important;
         position: relative !important;
-        margin-bottom: -1px !important;
+        bottom: -2px !important;
+        margin-bottom: -2px !important;
+        overflow: visible !important;
 
         path {
             fill: var(--busola-bg-canvas);
+            stroke: var(--busola-bg-canvas);
+            stroke-width: 1px;
         }
     }
 }
@@ -5812,11 +5840,15 @@ body.darkmode,
             width: 100% !important;
             height: 32px !important;
             margin-top: 20px !important;
-            margin-bottom: -1px !important;
+            bottom: -2px !important;
+            margin-bottom: -2px !important;
             position: relative !important;
+            overflow: visible !important;
 
             path {
                 fill: var(--busola-bg-canvas) !important;
+                stroke: var(--busola-bg-canvas) !important;
+                stroke-width: 1px !important;
             }
         }
     }
@@ -6677,4 +6709,46 @@ body.moove-darkmode.path-mod-hvp,
 body.pagelayout-embedded.path-h5p,
 body.path-h5p.h5p-embed {
     background-color: transparent !important;
+}
+
+@import 'account_forms';
+@import 'calendar';
+
+/* Performance optimizations per ADR-0001 Rules #4 & #15 */
+section.busola-section-discover,
+.busola-mycourses-category-group,
+.busola-guest-faq {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 400px;
+}
+
+
+/* Ukrycie paska secondary-navigation na widoku kursu oraz widokach testu/quizu/H5P */
+body.has-busola-course:not(.editing) .secondary-navigation.d-print-none.moove,
+body#page-course-view-topics.has-busola-course:not(.editing) .secondary-navigation,
+body#page-course-view-weeks.has-busola-course:not(.editing) .secondary-navigation,
+body.path-mod-quiz:not(.editing) .secondary-navigation,
+body.path-mod-h5pactivity:not(.editing) .secondary-navigation,
+body.path-mod-hvp:not(.editing) .secondary-navigation {
+    display: none !important;
+}
+
+/* Ukrycie standardowego activity-header oraz wiersza nagłówka kontekstowego (z tytułem, ikoną i statusem) w widoku testu / quizu / H5P */
+body.path-mod-quiz .activity-header,
+body#page-mod-quiz-view .activity-header,
+body#page-mod-quiz-attempt .activity-header,
+body#page-mod-quiz-summary .activity-header,
+body#page-mod-quiz-review .activity-header,
+body.path-mod-h5pactivity .activity-header,
+body#page-mod-h5pactivity-view .activity-header,
+body.path-mod-hvp .activity-header,
+body#page-mod-hvp-view .activity-header,
+.activity-header[data-for="page-activity-header"],
+body.path-mod-quiz #page-header .d-flex.align-items-center:has(.page-context-header),
+body.path-mod-h5pactivity #page-header .d-flex.align-items-center:has(.page-context-header),
+body.path-mod-hvp #page-header .d-flex.align-items-center:has(.page-context-header),
+body.path-mod-quiz #page-header .d-flex.align-items-center:has(.header-actions-container),
+body.path-mod-h5pactivity #page-header .d-flex.align-items-center:has(.header-actions-container),
+body.path-mod-hvp #page-header .d-flex.align-items-center:has(.header-actions-container) {
+    display: none !important;
 }

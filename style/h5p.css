@@ -4,7 +4,7 @@
  * Fully supports Light Mode and Dark Mode via Design Tokens
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+/* Font Plus Jakarta Sans is inherited from parent window or loaded by Moodle font subsystem */
 
 /* ==========================================================================
    1. DESIGN TOKENS (LIGHT MODE DEFAULT, EXPLICIT DARK MODE)

@@ -34,7 +34,7 @@
         <a href="{{lastcourse.url}}" class="busola-hero-card">
             <div class="busola-hero-card-icon cat-{{lastcourse.type}}">
                 {{#lastcourse.hascustomicon}}
-                    <img src="{{lastcourse.iconurl}}" alt="{{lastcourse.fullname}}" class="busola-course-img" />
+                    <img src="{{lastcourse.iconurl}}" alt="{{lastcourse.fullname}}" class="busola-course-img" loading="eager" fetchpriority="high" decoding="async" width="140" height="88" />
                 {{/lastcourse.hascustomicon}}
                 {{^lastcourse.hascustomicon}}
                     <svg viewBox="0 0 160 100" width="140" height="88" aria-hidden="true">
@@ -71,6 +71,6 @@
 
     <!-- Falowana krzywa przejścia na dole sekcji hero z tokenem tła -->
     <svg viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true" class="busola-hero-wave">
-        <path d="M0 48V26C220 4 440 4 720 26S1200 50 1440 22V48Z"></path>
+        <path d="M0 50V26C220 4 440 4 720 26S1200 50 1440 22V50Z"></path>
     </svg>
 </section>

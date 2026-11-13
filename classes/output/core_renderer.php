@@ -80,18 +80,19 @@ class core_renderer extends \theme_boost\output\core_renderer {
             $output .= str_replace("GOOGLE-ANALYTICS-CODE", trim($theme->settings->googleanalytics), $googleanalyticscode);
         }
 
-        $output .= '<link rel="preconnect" href="https://fonts.googleapis.com">
-                   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">';
+        // Preload primary text font locally per ADR-0001 Rules #5 & #7 (no external CDN calls).
+        $fontlatin = $this->page->theme->font_url('PlusJakartaSans-latin.woff2', 'theme');
+        $output .= '<link rel="preload" href="' . $fontlatin->out(false) . '" as="font" type="font/woff2" crossorigin>' . "\n";
 
-        $sitefont = isset($theme->settings->fontsite) ? $theme->settings->fontsite : 'Moodle';
-
-        if ($sitefont != 'Moodle') {
-            $output .= '<link rel="preconnect" href="https://fonts.googleapis.com">
-                       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                       <link href="https://fonts.googleapis.com/css2?family='
-                . $sitefont .
-                ':ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">';
+        // Inject SEO meta description on frontpage.
+        if ($this->page->pagelayout === 'frontpage' || $this->page->url->compare(new \moodle_url('/'), URL_MATCH_BASE)) {
+            $frontpagedesc = !empty($theme->settings->frontpagedescription) ? trim($theme->settings->frontpagedescription) : '';
+            if (empty($frontpagedesc)) {
+                $frontpagedesc = get_string('frontpagedescription_default', 'theme_ebusola');
+            }
+            if (!empty($frontpagedesc)) {
+                $output .= '<meta name="description" content="' . s($frontpagedesc) . '">' . "\n";
+            }
         }
 
         return $output;
@@ -185,13 +186,45 @@ class core_renderer extends \theme_boost\output\core_renderer {
             return '';
         }
 
+        $pagetype = $this->page->pagetype ?? '';
+        $sitecontext = \context_course::instance(SITEID);
+        $canadminedit = is_siteadmin() ||
+            has_capability('moodle/course:update', $sitecontext) ||
+            has_capability('moodle/site:manageblocks', $sitecontext);
+
+        // Personal / student views: Kokpit (my-index), user profile (user-profile),
+        // and account subpages (user-*). In eBusola these are custom student views;
+        // regular non-admin users must NEVER see the edit switch here even if Moodle
+        // core grants user_allowed_editing() for personal block customization.
+        $ispersonalview = ($pagetype === 'my-index' ||
+            $pagetype === 'user-profile' ||
+            strpos($pagetype, 'user-') === 0 ||
+            strpos($pagetype, 'my-') === 0);
+
+        if ($ispersonalview) {
+            if (!$canadminedit) {
+                return '';
+            }
+        }
+
+        // In course context, only teachers/managers/admins who can edit course content
+        // should see the edit switch.
+        if ($this->page->context instanceof \context_course && $this->page->course->id != SITEID) {
+            $cancourseedit = is_siteadmin() ||
+                has_capability('moodle/course:update', $this->page->context) ||
+                has_capability('moodle/course:manageactivities', $this->page->context) ||
+                can_edit_in_category($this->page->course->category);
+            if (!$cancourseedit) {
+                return '';
+            }
+        }
+
         if ($this->page->user_allowed_editing()) {
             return parent::edit_switch();
         }
 
         // On frontpage or custom dashboard layouts, check site-level editing capability.
-        $sitecontext = \context_course::instance(SITEID);
-        if (has_capability('moodle/course:update', $sitecontext) || has_capability('moodle/site:manageblocks', $sitecontext)) {
+        if ($canadminedit) {
             $url = new \moodle_url('/editmode.php');
             $context = [
                 'legacyseturl' => $url->out(false),
@@ -266,6 +299,36 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         return $this->get_logo();
+    }
+
+    /**
+     * Check if a separate dark mode logo is configured.
+     *
+     * @return bool
+     */
+    public function has_logo_dark() {
+        $logodark = $this->get_theme_logo_dark_url();
+        return !empty($logodark);
+    }
+
+    /**
+     * Get configured or default logo width in pixels.
+     *
+     * @return int
+     */
+    public function get_logo_width() {
+        $theme = theme_config::load('ebusola');
+        return !empty($theme->settings->logowidth) ? (int) $theme->settings->logowidth : 216;
+    }
+
+    /**
+     * Get configured or default logo height in pixels.
+     *
+     * @return int
+     */
+    public function get_logo_height() {
+        $theme = theme_config::load('ebusola');
+        return !empty($theme->settings->logoheight) ? (int) $theme->settings->logoheight : 59;
     }
 
     /**

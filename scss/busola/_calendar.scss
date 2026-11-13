@@ -1,0 +1,548 @@
+// ==========================================================================
+// eBusola Calendar View: /calendar/view.php
+// Extracted from busola_calendar_header.mustache per ADR-0001 Rules #3 & #13
+// ==========================================================================
+
+/* -------------------------------------------------------------------------
+   Busola Calendar View: /calendar/view.php
+   Matches Figma mockups:
+   - "Kalendarz – desktop-html" & "Kalendarz – mobile-html"
+   ------------------------------------------------------------------------- */
+
+#page-calendar-view,
+body.has-busola-calendar {
+    background-color: #F5F6FB !important;
+    color: #3A4163 !important;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+}
+
+/* Hide default Moodle boost header on calendar page */
+#page-calendar-view #page-header {
+    display: none !important;
+}
+
+/* Reset page drawers gutters and hide drawer toggles */
+#page-calendar-view #page.drawers {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+#page-calendar-view .drawer-toggles {
+    display: none !important;
+}
+
+/* Layout container sizing and column alignment */
+#page-calendar-view .busola-calendar-header {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 28px 24px 0 !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+}
+
+#page-calendar-view #topofscroll,
+body.has-busola-calendar #topofscroll {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    padding: 0 24px 72px !important;
+    box-sizing: border-box !important;
+}
+
+/* Reset inner region card wrapping calendar */
+#page-calendar-view #region-main,
+#page-calendar-view #region-main > div,
+#page-calendar-view #region-main > .card,
+#page-calendar-view #region-main-box,
+#page-calendar-view #page-content {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Calendar Breadcrumbs & Header */
+.busola-calendar-header .busola-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #5B6280;
+    margin-bottom: 8px;
+}
+
+.busola-calendar-header .busola-breadcrumb a {
+    color: #5B6280;
+    text-decoration: none;
+    transition: color .15s ease;
+}
+
+.busola-calendar-header .busola-breadcrumb a:hover {
+    color: #141B5E;
+}
+
+.busola-calendar-header .busola-breadcrumb svg {
+    color: #9AA0BE;
+    flex-shrink: 0;
+}
+
+.busola-calendar-header .busola-breadcrumb span[aria-current="page"] {
+    color: #141B5E;
+    font-weight: 700;
+}
+
+.busola-calendar-header .busola-calendar-title {
+    margin: 0 0 20px;
+    font-size: 32px;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #141B5E;
+}
+
+/* Main calendar header actions bar */
+.maincalendar .header.d-flex {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px 16px !important;
+    margin-bottom: 16px !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+/* View selector pill button */
+.maincalendar [data-region="view-selector"] .dropdown-toggle {
+    background: #E3E8FB !important;
+    border: none !important;
+    color: #141B5E !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    min-height: 44px !important;
+    padding: 0 18px !important;
+    box-shadow: 0 1px 3px rgba(20,27,94,.12) !important;
+}
+
+/* New Event button */
+.maincalendar .header a[href*="event/edit.php"],
+.maincalendar .header button[data-action="new-event-button"],
+.maincalendar .header .btn-primary {
+    background: #FF7A1A !important;
+    border: none !important;
+    color: #141B5E !important;
+    border-radius: 14px !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    min-height: 48px !important;
+    padding: 0 22px !important;
+    box-shadow: 0 2px 8px rgba(255, 122, 26, 0.3) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    transition: background .15s ease, transform .15s ease !important;
+}
+
+.maincalendar .header .btn-primary:hover,
+.maincalendar .header a[href*="event/edit.php"]:hover {
+    background: #E86A10 !important;
+    transform: translateY(-1px) !important;
+    color: #141B5E !important;
+}
+
+/* Month controls navigation bar */
+.maincalendar .controls,
+.maincalendar .calendar-controls {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    margin: 20px 0 16px !important;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+.maincalendar .calendar-controls .previous,
+.maincalendar .calendar-controls .next {
+    width: auto !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    padding: 0 16px !important;
+    gap: 8px !important;
+    border-radius: 12px !important;
+    background: #FFFFFF !important;
+    border: 1.5px solid #C9CEE6 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #141B5E !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    white-space: nowrap !important;
+    box-shadow: 0 1px 2px rgba(20,27,94,.05) !important;
+    transition: background .15s ease, border-color .15s ease, transform .15s ease !important;
+}
+
+.maincalendar .calendar-controls .previous:hover,
+.maincalendar .calendar-controls .next:hover {
+    border-color: #141B5E !important;
+    background: #F5F6FB !important;
+    color: #141B5E !important;
+    transform: translateY(-1px) !important;
+}
+
+.maincalendar .calendar-controls .previous .arrow,
+.maincalendar .calendar-controls .next .arrow {
+    font-size: 13px !important;
+    line-height: 1 !important;
+    color: #141B5E !important;
+}
+
+.maincalendar .calendar-controls .previous .arrow_text,
+.maincalendar .calendar-controls .next .arrow_text {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    text-transform: capitalize !important;
+    color: #141B5E !important;
+}
+
+.maincalendar .calendar-controls .current {
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.015em !important;
+    color: #141B5E !important;
+    text-align: center !important;
+    margin: 0 !important;
+    text-transform: capitalize !important;
+}
+
+.maincalendar .calendar-controls .drop-target-title {
+    display: none !important;
+}
+
+/* Month Table Grid */
+table.calendarmonth {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    border: 1px solid #E8EBF6 !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    background: #FFFFFF !important;
+    width: 100% !important;
+    box-shadow: 0 1px 2px rgba(20,27,94,.04), 0 8px 24px rgba(20,27,94,.04) !important;
+}
+
+table.calendarmonth thead th {
+    padding: 12px 10px !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.06em !important;
+    color: #5B6280 !important;
+    background: #F5F6FB !important;
+    border-right: 1px solid #E8EBF6 !important;
+    border-bottom: 1px solid #E8EBF6 !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+}
+
+table.calendarmonth thead th:last-child {
+    border-right: none !important;
+}
+
+table.calendarmonth tbody td.day {
+    min-height: 120px !important;
+    height: 120px !important;
+    box-sizing: border-box !important;
+    padding: 8px !important;
+    background: #FFFFFF !important;
+    border-right: 1px solid #E8EBF6 !important;
+    border-bottom: 1px solid #E8EBF6 !important;
+    vertical-align: top !important;
+    transition: background .15s ease !important;
+}
+
+table.calendarmonth tbody td.day:last-child {
+    border-right: none !important;
+}
+
+table.calendarmonth tbody tr:last-child td.day {
+    border-bottom: none !important;
+}
+
+table.calendarmonth tbody td.day.weekend {
+    background: #FAFBFE !important;
+}
+
+table.calendarmonth tbody td.day:hover {
+    background: #F0F3FC !important;
+}
+
+table.calendarmonth tbody td.day .day-number-circle {
+    width: 28px !important;
+    height: 28px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    color: #141B5E !important;
+    border-radius: 14px !important;
+}
+
+table.calendarmonth tbody td.day.today .day-number-circle {
+    background: #141B5E !important;
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+}
+
+table.calendarmonth tbody td.day.othermonth .day-number-circle,
+table.calendarmonth tbody td.day.othermonth .day-number {
+    color: #9AA0BE !important;
+}
+
+/* Event badges inside day cells */
+table.calendarmonth [data-region="event-item"],
+table.calendarmonth .calendar-event-item,
+table.calendarmonth .event {
+    display: block !important;
+    margin-top: 4px !important;
+    padding: 5px 8px !important;
+    border-radius: 8px !important;
+    background: #E3E8FB !important;
+    color: #141B5E !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    line-height: 1.25 !important;
+    border-left: 3px solid #141B5E !important;
+    transition: transform .15s ease, box-shadow .15s ease !important;
+}
+
+table.calendarmonth [data-region="event-item"]:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 6px rgba(20,27,94,.12) !important;
+}
+
+/* -------------------------------------------------------------------------
+   Dark Mode Support
+   ------------------------------------------------------------------------- */
+[data-bs-theme="dark"] #page-calendar-view,
+body.darkmode.has-busola-calendar,
+body.moove-darkmode.has-busola-calendar,
+.moove-darkmode.has-busola-calendar,
+.theme-dark.has-busola-calendar {
+    background-color: #0B0F32 !important;
+    color: #CBD1F3 !important;
+}
+
+[data-bs-theme="dark"] .busola-calendar-header .busola-breadcrumb,
+[data-bs-theme="dark"] .busola-calendar-header .busola-breadcrumb a,
+body.darkmode .busola-calendar-header .busola-breadcrumb,
+body.darkmode .busola-calendar-header .busola-breadcrumb a,
+body.moove-darkmode .busola-calendar-header .busola-breadcrumb,
+body.moove-darkmode .busola-calendar-header .busola-breadcrumb a,
+.moove-darkmode .busola-calendar-header .busola-breadcrumb,
+.moove-darkmode .busola-calendar-header .busola-breadcrumb a,
+.theme-dark .busola-calendar-header .busola-breadcrumb,
+.theme-dark .busola-calendar-header .busola-breadcrumb a {
+    color: #A3ABD0 !important;
+}
+
+[data-bs-theme="dark"] .busola-calendar-header .busola-breadcrumb a:hover,
+body.darkmode .busola-calendar-header .busola-breadcrumb a:hover,
+body.moove-darkmode .busola-calendar-header .busola-breadcrumb a:hover {
+    color: #FFFFFF !important;
+}
+
+[data-bs-theme="dark"] .busola-calendar-header .busola-breadcrumb svg,
+body.darkmode .busola-calendar-header .busola-breadcrumb svg,
+body.moove-darkmode .busola-calendar-header .busola-breadcrumb svg {
+    color: #6C74A2 !important;
+}
+
+[data-bs-theme="dark"] .busola-calendar-header .busola-breadcrumb span[aria-current="page"],
+body.darkmode .busola-calendar-header .busola-breadcrumb span[aria-current="page"],
+body.moove-darkmode .busola-calendar-header .busola-breadcrumb span[aria-current="page"] {
+    color: #FFFFFF !important;
+}
+
+[data-bs-theme="dark"] .busola-calendar-header .busola-calendar-title,
+body.darkmode .busola-calendar-header .busola-calendar-title,
+body.moove-darkmode .busola-calendar-header .busola-calendar-title,
+.moove-darkmode .busola-calendar-header .busola-calendar-title,
+.theme-dark .busola-calendar-header .busola-calendar-title {
+    color: #FFFFFF !important;
+}
+
+[data-bs-theme="dark"] .maincalendar .calendar-controls .current,
+body.darkmode .maincalendar .calendar-controls .current,
+body.moove-darkmode .maincalendar .calendar-controls .current,
+.moove-darkmode .maincalendar .calendar-controls .current,
+.theme-dark .maincalendar .calendar-controls .current {
+    color: #FFFFFF !important;
+}
+
+[data-bs-theme="dark"] .maincalendar .calendar-controls .previous,
+[data-bs-theme="dark"] .maincalendar .calendar-controls .next,
+body.darkmode .maincalendar .calendar-controls .previous,
+body.darkmode .maincalendar .calendar-controls .next,
+body.moove-darkmode .maincalendar .calendar-controls .previous,
+body.moove-darkmode .maincalendar .calendar-controls .next,
+.moove-darkmode .maincalendar .calendar-controls .previous,
+.moove-darkmode .maincalendar .calendar-controls .next,
+.theme-dark .maincalendar .calendar-controls .previous,
+.theme-dark .maincalendar .calendar-controls .next {
+    background: #141B5E !important;
+    border-color: #2C3675 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,.25) !important;
+}
+
+[data-bs-theme="dark"] .maincalendar .calendar-controls .previous:hover,
+[data-bs-theme="dark"] .maincalendar .calendar-controls .next:hover,
+body.darkmode .maincalendar .calendar-controls .previous:hover,
+body.darkmode .maincalendar .calendar-controls .next:hover,
+body.moove-darkmode .maincalendar .calendar-controls .previous:hover,
+body.moove-darkmode .maincalendar .calendar-controls .next:hover,
+.moove-darkmode .maincalendar .calendar-controls .previous:hover,
+.moove-darkmode .maincalendar .calendar-controls .next:hover,
+.theme-dark .maincalendar .calendar-controls .previous:hover,
+.theme-dark .maincalendar .calendar-controls .next:hover {
+    border-color: #FF7A1A !important;
+    background: #1B2474 !important;
+    color: #FFFFFF !important;
+}
+
+[data-bs-theme="dark"] .maincalendar .calendar-controls .previous .arrow,
+[data-bs-theme="dark"] .maincalendar .calendar-controls .next .arrow,
+[data-bs-theme="dark"] .maincalendar .calendar-controls .previous .arrow_text,
+[data-bs-theme="dark"] .maincalendar .calendar-controls .next .arrow_text,
+body.darkmode .maincalendar .calendar-controls .previous .arrow,
+body.darkmode .maincalendar .calendar-controls .next .arrow,
+body.darkmode .maincalendar .calendar-controls .previous .arrow_text,
+body.darkmode .maincalendar .calendar-controls .next .arrow_text,
+body.moove-darkmode .maincalendar .calendar-controls .previous .arrow,
+body.moove-darkmode .maincalendar .calendar-controls .next .arrow,
+body.moove-darkmode .maincalendar .calendar-controls .previous .arrow_text,
+body.moove-darkmode .maincalendar .calendar-controls .next .arrow_text {
+    color: #FFFFFF !important;
+}
+
+[data-bs-theme="dark"] table.calendarmonth,
+body.darkmode table.calendarmonth,
+body.moove-darkmode table.calendarmonth,
+.moove-darkmode table.calendarmonth,
+.theme-dark table.calendarmonth {
+    background: #141B5E !important;
+    border-color: #2C3675 !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25) !important;
+}
+
+[data-bs-theme="dark"] table.calendarmonth thead th,
+body.darkmode table.calendarmonth thead th,
+body.moove-darkmode table.calendarmonth thead th,
+.moove-darkmode table.calendarmonth thead th,
+.theme-dark table.calendarmonth thead th {
+    background: #0F1547 !important;
+    color: #A3ABD0 !important;
+    border-color: #2C3675 !important;
+}
+
+[data-bs-theme="dark"] table.calendarmonth tbody td.day,
+body.darkmode table.calendarmonth tbody td.day,
+body.moove-darkmode table.calendarmonth tbody td.day,
+.moove-darkmode table.calendarmonth tbody td.day,
+.theme-dark table.calendarmonth tbody td.day {
+    background: #141B5E !important;
+    border-color: #2C3675 !important;
+}
+
+[data-bs-theme="dark"] table.calendarmonth tbody td.day.weekend,
+body.darkmode table.calendarmonth tbody td.day.weekend,
+body.moove-darkmode table.calendarmonth tbody td.day.weekend,
+.moove-darkmode table.calendarmonth tbody td.day.weekend,
+.theme-dark table.calendarmonth tbody td.day.weekend {
+    background: #10164D !important;
+}
+
+[data-bs-theme="dark"] table.calendarmonth tbody td.day:hover,
+body.darkmode table.calendarmonth tbody td.day:hover,
+body.moove-darkmode table.calendarmonth tbody td.day:hover,
+.moove-darkmode table.calendarmonth tbody td.day:hover,
+.theme-dark table.calendarmonth tbody td.day:hover {
+    background: #1A2268 !important;
+}
+
+[data-bs-theme="dark"] table.calendarmonth tbody td.day .day-number-circle,
+body.darkmode table.calendarmonth tbody td.day .day-number-circle,
+body.moove-darkmode table.calendarmonth tbody td.day .day-number-circle,
+.moove-darkmode table.calendarmonth tbody td.day .day-number-circle,
+.theme-dark table.calendarmonth tbody td.day .day-number-circle {
+    color: #CBD1F3 !important;
+}
+
+[data-bs-theme="dark"] table.calendarmonth tbody td.day.today .day-number-circle,
+body.darkmode table.calendarmonth tbody td.day.today .day-number-circle,
+body.moove-darkmode table.calendarmonth tbody td.day.today .day-number-circle,
+.moove-darkmode table.calendarmonth tbody td.day.today .day-number-circle,
+.theme-dark table.calendarmonth tbody td.day.today .day-number-circle {
+    background: #FF7A1A !important;
+    color: #141B5E !important;
+}
+
+[data-bs-theme="dark"] table.calendarmonth tbody td.day.othermonth .day-number-circle,
+table.calendarmonth tbody td.day.othermonth .day-number {
+    color: #6C74A2 !important;
+}
+
+/* -------------------------------------------------------------------------
+   Mobile Responsiveness (< 768px)
+   ------------------------------------------------------------------------- */
+@media (max-width: 767.98px) {
+    #page-calendar-view .busola-calendar-header {
+        padding: 16px 14px 0 !important;
+    }
+
+    #page-calendar-view #topofscroll,
+    body.has-busola-calendar #topofscroll {
+        padding: 0 14px 72px !important;
+    }
+
+    .busola-calendar-header .busola-calendar-title {
+        font-size: 24px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .maincalendar .calendar-controls .current {
+        font-size: 18px !important;
+    }
+
+    .maincalendar .calendar-controls .previous,
+    .maincalendar .calendar-controls .next {
+        width: 38px !important;
+        min-width: 38px !important;
+        height: 38px !important;
+        padding: 0 !important;
+    }
+
+    .maincalendar .calendar-controls .previous .arrow_text,
+    .maincalendar .calendar-controls .next .arrow_text {
+        display: none !important;
+    }
+
+    table.calendarmonth tbody td.day {
+        height: auto !important;
+        min-height: 48px !important;
+        padding: 4px 2px !important;
+    }
+
+    table.calendarmonth tbody td.day .day-number-circle {
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 13px !important;
+    }
+}
