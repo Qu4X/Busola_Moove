@@ -133,11 +133,9 @@
 
         {{#is_busola_profile}}
             {{> theme_ebusola/ebusola/busola_profile }}
-            {{^user_is_editing}}
-                <div class="d-none">
-                    {{{ output.main_content }}}
-                </div>
-            {{/user_is_editing}}
+            <div class="d-none">
+                {{{ output.main_content }}}
+            </div>
         {{/is_busola_profile}}
 
         {{^is_busola_dashboard}}
