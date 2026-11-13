@@ -6869,3 +6869,27 @@ body.h5p-embed #page.drawers {
         margin-left: calc(50% - 50vw + 8px) !important;
     }
 }
+
+// H5P mobile: bez przycisku szuflady (nachodził na pasek postępu), breadcrumbs do lewej, w linii z kartą
+@media (max-width: 600px) {
+    body#page-mod-h5pactivity-view {
+        .drawer-toggler.drawer-left-toggle {
+            display: none !important;
+        }
+
+        #page-navbar {
+            justify-content: flex-start !important;
+            margin-left: -16px;
+
+            nav {
+                width: 100%;
+            }
+
+            .breadcrumb {
+                justify-content: flex-start !important;
+                padding-left: 0 !important;
+                margin-left: 0 !important;
+            }
+        }
+    }
+}
