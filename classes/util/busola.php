@@ -526,9 +526,9 @@ class busola {
 
         // Deterministic pastel token background based on category ID.
         $pastelcolors = [
-            '#E3E8FB', // Lilac
-            '#DCF0F3', // Mint
-            '#FFE8D4', // Peach
+            'var(--busola-cat-sail-bg)',
+            'var(--busola-cat-motor-bg)',
+            'var(--busola-cat-extra-bg)',
         ];
         $bgcolor = $pastelcolors[$catid % count($pastelcolors)];
 
