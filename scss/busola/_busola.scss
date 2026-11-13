@@ -6860,3 +6860,12 @@ body.h5p-embed #page,
 body.h5p-embed #page.drawers {
     margin-top: 0 !important;
 }
+
+// H5P mobile: odtwarzacz prawie od krawędzi do krawędzi (8px marginesu), bo padding #page + .main-inner zabierał ~48px z każdej strony
+@media (max-width: 600px) {
+    body#page-mod-h5pactivity-view #region-main iframe.h5p-player {
+        width: calc(100vw - 16px) !important;
+        max-width: none !important;
+        margin-left: calc(50% - 50vw + 8px) !important;
+    }
+}
