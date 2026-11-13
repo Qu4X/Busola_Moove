@@ -227,8 +227,10 @@ body.darkmode .navbar-brand .logo.light,
 }
 
 .busola-hero-card-icon .busola-custom-svg {
-    width: 150px;
-    height: 94px;
+    width: 210px;
+    height: 132px;
+    max-width: 90%;
+    max-height: 150px;
 }
 
 .busola-kokpit-continue-thumb .busola-custom-svg {
