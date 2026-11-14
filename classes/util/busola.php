@@ -1444,6 +1444,22 @@ class busola {
     }
 
     /**
+     * Check whether a course module should be displayed in Busola course cards.
+     *
+     * Excludes hidden modules (visible = 0), restricted/inaccessible modules,
+     * stealth modules not shown on the course page, and modules pending deletion.
+     *
+     * @param \cm_info $cm
+     * @return bool
+     */
+    private static function is_cm_visible_in_busola(\cm_info $cm): bool {
+        return $cm->visible
+            && $cm->uservisible
+            && !$cm->deletioninprogress
+            && $cm->is_visible_on_course_page();
+    }
+
+    /**
      * Build the context for the Course view page (/course/view.php).
      *
      * All sections, activities, completion status, quiz attempts, scores, and glossary
@@ -1537,7 +1553,11 @@ class busola {
         // 4. Iterate course modules in section 0 for Glossary or search whole course.
         $glossarycm = null;
         foreach ($modinfo->get_cms() as $cm) {
-            if (!$cm->uservisible) {
+            if (!self::is_cm_visible_in_busola($cm)) {
+                continue;
+            }
+            $cmsec = $cm->get_section_info();
+            if (!$cmsec || !$cmsec->visible || !$cmsec->uservisible) {
                 continue;
             }
             $modname = $cm->modname;
@@ -1568,7 +1588,7 @@ class busola {
             if ($secnum < 1) {
                 continue;
             }
-            if (!$sec->uservisible && !$sec->visible) {
+            if (!$sec->visible || !$sec->uservisible || $sec->is_delegated()) {
                 continue;
             }
 
@@ -1604,7 +1624,7 @@ class busola {
             $modids = $modinfo->sections[$secnum] ?? [];
             foreach ($modids as $cmid) {
                 $cm = $modinfo->cms[$cmid] ?? null;
-                if (!$cm || !$cm->uservisible) {
+                if (!$cm || !self::is_cm_visible_in_busola($cm)) {
                     continue;
                 }
 
@@ -1892,7 +1912,7 @@ class busola {
                 $sql = "
                     SELECT course, COUNT(id) AS cnt
                     FROM {course_sections}
-                    WHERE course $insql AND section > 0
+                    WHERE course $insql AND section > 0 AND visible = 1
                     GROUP BY course
                 ";
                 $counts = $DB->get_records_sql($sql, $inparams);
